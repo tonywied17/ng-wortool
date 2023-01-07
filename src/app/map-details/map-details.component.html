@@ -1,0 +1,148 @@
+<h3 class="text-[#88887b] text-base font-serif text-3xl mb-4">
+    {{currentMap.map}}
+
+    <span class="text-slate-200/80 text-lg px-4 font-serif"><br>{{currentMap.campaign}}
+        Map</span>
+
+    <button mat-icon-button class="float-right" [matMenuTriggerFor]="optMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #optMenu="matMenu" xPosition="before" class="bg-[#646258bb] backdrop-blur-sm">
+        <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item><i
+                class="mr-5 fa-sharp fa-solid fa-bookmark"></i> Bookmark</button>
+        <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item><i
+                class="mr-5 fa-sharp fa-solid fa-share-nodes"></i> Share</button>
+    </mat-menu>
+
+
+</h3>
+
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4 row-span-full h-[60vh] w-full">
+
+    <div class="lg:row-start-1 lg:row-span-3 lg:col-span-2 lg:col-start-1 col-span-1">
+
+        <div class="rounded-lg w-full h-full relative">
+
+            <div class="w-full p-5">
+                <img src="https://app.paarmy.com/{{currentMap.image}}"
+                    class="h-[40vh] w-auto mx-auto rounded-md brightness-75 shadow-sm ring-4 ring-[#7e7f74] ring-offset-8 ring-offset-[#151c2b]">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="rounded-lg bg-slate-800 lg:row-start-4 lg:row-span-2 lg:col-start-1 lg:col-span-2 col-span-1 p-6">
+
+
+
+        <div class="text-center mt-2">
+            <mat-slide-toggle>Flyover Cam</mat-slide-toggle>
+        </div>
+
+        <div class="text-center mt-8">
+            <button mat-raised-button class="bg-[#7e7f74] text-slate-300 font-serif text-lg">Map Notes</button>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="lg:row-start-1 lg:row-span-2 lg:col-span-2 lg:col-start-3 col-span-1">
+
+        <div class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
+
+            <div *ngFor="let unit of currentMap.ATTACKER; index as i;" class="text-slate-400 leading-9">
+
+                <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
+
+                <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
+                <div *ngIf="unit.reg1Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
+                </div>
+                <p *ngIf="unit.reg2" class="font-semibold text-lg">{{unit.reg2}}</p>
+                <div *ngIf="unit.reg2Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[3]">{{unit.reg2Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
+                </div>
+
+                <p *ngIf="unit.reg3" class="font-semibold text-lg">{{unit.reg3}}</p>
+                <div *ngIf="unit.reg3Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[3]">{{unit.reg3Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
+                </div>
+
+                <p *ngIf="unit.reg4" class="font-semibold text-lg">{{unit.reg4}}</p>
+                <div *ngIf="unit.reg4Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[3]">{{unit.reg4Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[4]">{{unit.reg4Weapons[4]}}</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="lg:row-start-3 lg:row-span-2 lg:col-span-2 lg:col-start-3 col-span-1">
+
+        <div class="bg-slate-800 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
+
+            <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="text-slate-400 leading-9">
+                <h3 class="text-white text-lg pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
+                <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
+                <div *ngIf="unit.reg1Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
+                </div>
+                <p *ngIf="unit.reg2" class="font-semibold text-lg">{{unit.reg2}}</p>
+                <div *ngIf="unit.reg2Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[3]">{{unit.reg2Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
+                </div>
+
+                <p *ngIf="unit.reg3" class="font-semibold text-lg">{{unit.reg3}}</p>
+                <div *ngIf="unit.reg3Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[3]">{{unit.reg3Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
+                </div>
+
+                <p *ngIf="unit.reg4" class="font-semibold text-lg">{{unit.reg4}}</p>
+                <div *ngIf="unit.reg4Weapons">
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[3]">{{unit.reg4Weapons[3]}}</p>
+                    <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[4]">{{unit.reg4Weapons[4]}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div
+        class="rounded-lg bg-[#626260] lg:row-start-5 lg:row-span-1 lg:col-start-3 lg:col-span-2 col-span-1 h-full p-3">
+
+        <p class=" text-slate-400">YT ID: {{currentMap.youtube}}</p>
+        <p class="my-auto text-slate-400">STRATSKETCH: {{currentMap.strat}}</p>
+
+    </div>
+
+
+</div>
