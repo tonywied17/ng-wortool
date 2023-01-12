@@ -1,4 +1,6 @@
-# Paapp2
+# PA Army App 2.0 (Angular Edition)
+
+This repository serves as the front end for the new paapp2 poject in angular/typescipt.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
 
