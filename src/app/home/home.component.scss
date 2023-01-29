@@ -1,0 +1,15 @@
+.text-fld{
+    outline:none;
+    border-bottom: 1px solid #88887b;
+    transition: background .2s ease;
+    width: 100%;
+    background: transparent;
+    padding: 12px;
+    border-radius: 5px;
+    color: #9e9e9271 !important;
+}
+
+.text-fld:focus{
+    border-bottom: 2px solid #88887b;
+    background: rgba(160, 160, 160, 0.040);
+}
