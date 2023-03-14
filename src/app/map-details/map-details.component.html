@@ -98,7 +98,7 @@
         <div class="bg-slate-800 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
 
             <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="text-slate-400 leading-9">
-                <h3 class="text-white text-lg pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
+                <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
                 <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
                 <div *ngIf="unit.reg1Weapons">
                     <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>

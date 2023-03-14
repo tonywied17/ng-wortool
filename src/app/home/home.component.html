@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 row-span-full">
 
-    <div class="row-span-4">
+    <div class="row-span-3">
         <div class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-8 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
             <h3 class="text-[#252525ce] text-base font-serif text-3xl tracking-tight mb-4 px-6">#PA Army App 3.0</h3>
             <p class="text-[#c4c4c4ce] text-lg  px-6">
@@ -16,31 +16,50 @@
             </div>
     </div>
 
-    <div class="lg:col-span-2 lg:row-span-3">
+    <div class="lg:col-span-2 lg:row-span-2">
+        <div class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto" style="padding: 70px 2em;">
+            <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Sign-up Now!</h3>
 
-        <div class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
 
-            <h1 class="text-white text-[1.6rem] pb-3 font-serif tracking-tight">Login</h1>
-            <p class="text-slate-400 text-sm">
-                Login to your existing account.
-            </p>
-
-            <div class="bg-[#] mt-12 py-4 px-14 font-serif text-[1.3rem] text-[#88887b]">
-
-                <input type="text" class="m-3 text-fld !font-[100]" placeholder="Username...">
-                <input type="password" class="m-3 text-fld !font-[100]" placeholder="Password...">
-
+            <div class="sm:col-span-4">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Your e-mail...</mat-label>
+                    <input matInput type="email">
+                </mat-form-field>
             </div>
 
+            <div class="sm:col-span-2">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Choose a username...</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-2">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Choose a password...</mat-label>
+                    <input matInput type="password">
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-1 sm:col-start-4">
+                <button mat-raised-button class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Create!</button>
+            </div>
+
+            </div>
+           
+            
         </div>
     </div>
 
     <div class="lg:col-span-2 lg:row-span-1">
         <div class="bg-slate-800 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
-            <h1 class="text-white text-[1.4rem] pb-3 font-serif tracking-tight">Create an Account</h1>
-            <p class="text-slate-400 text-sm">
-                Create an account to have access to more features.
-            </p>
+            <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Login to existing account...</h3>
+
+            
+            <button mat-raised-button class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Login</button>
+
         </div>
     </div>
 
