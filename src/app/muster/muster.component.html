@@ -1,0 +1,90 @@
+<h3 class="text-[#88887b] text-base font-serif text-3xl mb-4">Muster Roster Debugging</h3>
+<mat-table [dataSource]="users" class="font-serif">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+    <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="nickname">
+    <mat-header-cell *matHeaderCellDef> Nickname </mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="editingUser === user; else displayNickname">
+        <mat-form-field appearance="fill">
+          <mat-label>Nickname</mat-label>
+          <input matInput [(ngModel)]="editingUser.nickname" name="nickname">
+        </mat-form-field>
+      </ng-container>
+      <ng-template #displayNickname>{{user.nickname}}</ng-template>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="regiment">
+    <mat-header-cell *matHeaderCellDef> Regiment </mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="editingUser === user; else displayRegiment">
+        <mat-form-field appearance="fill">
+          <mat-label>Regiment</mat-label>
+          <input matInput [(ngModel)]="editingUser.regiment" name="regiment">
+        </mat-form-field>
+      </ng-container>
+      <ng-template #displayRegiment>{{user.regiment}}</ng-template>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="events">
+    <mat-header-cell *matHeaderCellDef> Events </mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <mat-form-field appearance="fill">
+        <mat-label>Events</mat-label>
+        <input matInput type="number" [(ngModel)]="user.events" name="events" (change)="updateEvents($event, user)">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="drills">
+    <mat-header-cell *matHeaderCellDef> Drills </mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <mat-form-field appearance="fill">
+        <mat-label>Drills</mat-label>
+        <input matInput type="number" [(ngModel)]="user.drills" name="drills" (change)="updateDrills($event, user)">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="lastmuster">
+    <mat-header-cell *matHeaderCellDef> Lastmuster </mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="editingUser === user; else displayLastmuster">
+        <mat-form-field appearance="fill">
+          <mat-label>Lastmuster</mat-label>
+          <input matInput [(ngModel)]="editingUser.lastmuster" name="lastmuster">
+        </mat-form-field>
+      </ng-container>
+      <ng-template #displayLastmuster>{{user.lastmuster}}</ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="joindate">
+    <mat-header-cell *matHeaderCellDef> Joindate </mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="editingUser === user; else displayJoindate">
+        <mat-form-field appearance="fill">
+          <mat-label>Joindate</mat-label>
+          <input matInput [(ngModel)]="editingUser.joindate" name="joindate">
+        </mat-form-field>
+      </ng-container>
+      <ng-template #displayJoindate>{{user.joindate}}</ng-template>
+    </mat-cell>
+  </ng-container>
+  
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <div *ngIf="editingUser === user">
+        <button mat-raised-button color="primary" (click)="saveUser()">Save</button>
+        <button mat-raised-button color="warn" (click)="cancelEdit()">Cancel</button>
+      </div>
+      <div *ngIf="editingUser !== user">
+        <button mat-raised-button color="accent" (click)="editUser(user)">Edit</button>
+      </div>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let user; columns: displayedColumns;"></mat-row>
+</mat-table>

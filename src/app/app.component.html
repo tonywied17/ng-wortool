@@ -55,7 +55,7 @@
               
                 <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] font-serif text-base !hidden sm:!block" mat-raised-button><i class="fa-sharp fa-solid fa-chevrons-down"></i> NCO Tools</button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
-                    <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item>Muster Roster</button>
+                    <button [routerLink]="['/muster']" class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item>Muster Roster</button>
                     <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item>Share Server Info</button>
                   </mat-menu>
         

@@ -10,6 +10,8 @@ import { MapsComponent } from './maps/maps.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WeaponsComponent } from './weapons/weapons.component';
 import { MapDetailsComponent } from './map-details/map-details.component';
+import { MusterComponent } from './muster/muster.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,6 +19,7 @@ const routes: Routes = [
   { path: 'regiments', component: RegimentsComponent },
   { path: 'maps/:id', component: MapDetailsComponent },
   { path: 'weapons', component: WeaponsComponent },
+  { path: 'muster', component: MusterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -27,13 +30,15 @@ const routes: Routes = [
     RegimentsComponent,
     MapsComponent,
     WeaponsComponent,
-    MapDetailsComponent
+    MapDetailsComponent,
+    MusterComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
