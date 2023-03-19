@@ -35,7 +35,7 @@ export class MusterComponent implements OnInit {
     const value = Number(target.value);
     if (!isNaN(value)) {
       user.events = value;
-      // Call your update method here
+
       this.userService.updateUser(user).subscribe();
     }
 
@@ -52,9 +52,6 @@ export class MusterComponent implements OnInit {
     }
 
   }
-
-
-  
   
   saveUser(): void {
     if (this.editingUser) {
