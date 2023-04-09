@@ -12,6 +12,10 @@ import { WeaponsComponent } from './weapons/weapons.component';
 import { MapDetailsComponent } from './map-details/map-details.component';
 import { MusterComponent } from './muster/muster.component';
 import { FormsModule } from '@angular/forms';
+import { BoardUserComponent } from './board-user/board-user.component';
+import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
+
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,6 +24,7 @@ const routes: Routes = [
   { path: 'maps/:id', component: MapDetailsComponent },
   { path: 'weapons', component: WeaponsComponent },
   { path: 'muster', component: MusterComponent },
+  { path: 'user', component: BoardUserComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -31,6 +36,7 @@ const routes: Routes = [
     MapsComponent,
     WeaponsComponent,
     MapDetailsComponent,
+    BoardUserComponent,
     MusterComponent
   ],
   imports: [
