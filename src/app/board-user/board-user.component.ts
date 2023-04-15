@@ -12,8 +12,10 @@ export class BoardUserComponent implements OnInit {
   content?: string;
   currentUser: any;
   isLoggedIn = false;
-  showAdminControls = false;
+  showAdminFeed = false;
   showUserFeed = false;
+  showModFeed = false;
+  
   private roles: string[] = [];
   
 
@@ -21,24 +23,23 @@ export class BoardUserComponent implements OnInit {
 
   constructor(
     private userService: UserService, 
-    private tokenStorage: TokenStorageService, 
+    private  token: TokenStorageService, 
     ) { }
 
   ngOnInit(): void {
-
-
-    if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.currentUser = this.tokenStorage.getUser();
-      this.roles = this.tokenStorage.getUser().roles;
-      console.log(this.currentUser)
-    }
+    this.isLoggedIn = !!this.token.getToken();
+    this.currentUser = this.token.getUser();
 
     if (this.isLoggedIn) {
-
-      this.showUserFeed = true;
-
+      const user = this.token.getUser();
+      this.roles = user.roles;
+      console.log(user)
+      this.showAdminFeed = this.roles.includes('ROLE_ADMIN');
+      this.showModFeed = this.roles.includes('ROLE_MODERATOR');
+      this.showUserFeed = true
     }
+
+    
 
   }
 

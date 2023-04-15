@@ -5,7 +5,7 @@
     <div class="row-span-3">
         <div
             class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-8 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
-            <h3 class="text-[#252525ce] text-base font-serif text-3xl tracking-tight mb-4 px-6">#PA Army App 3.0</h3>
+            <h3 class="text-[#252525ce] font-serif text-3xl tracking-tight mb-4 px-6">#PA Army App 3.0</h3>
             <p class="text-[#c4c4c4ce] text-lg  px-6">
                 An all-in-one utility tool for managing your War of Rights regiment.
             </p>
@@ -26,6 +26,11 @@
         style="padding: 70px 2em;">
         
         <h3 class="text-white text-lg pb-3 font-serif tracking-tight"> Welcome, {{currentUser.username}} </h3>
+
+        <p>You are logged in with the following user roles: <b>{{currentUser.roles}}</b></p>
+
+        <button routerLink="/user" mat-raised-button
+        class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Elevated Page</button>
 
         <div class="alert alert-success" *ngIf="isSuccessful">
             Your registration is successful!

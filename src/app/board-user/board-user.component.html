@@ -1,7 +1,29 @@
-<div class="container" *ngIf="showUserFeed">
+<h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Role Testing</h3>
+<div class="container" *ngIf="showAdminFeed">
 
-     <h1>Users Only!</h1>
-        <p>This is execlusive content for users only!</p>
+     <h3 class="text-xl my-2">Admins Only!</h3>
+        <p>This is exclusive content for admins only!</p>
 
   </div>
-  
+
+  <div class="container" *ngIf="showModFeed">
+
+      <h3 class="text-xl my-2">Moderators Only!</h3>
+         <p>This is exclusive content for moderators only!</p>
+ 
+   </div>
+
+  <div class="container" *ngIf="showUserFeed">
+
+      <h3 class="text-xl my-2">Logged in User's Only!</h3>
+         <p>This is exclusive content for logged in user's only!</p>
+ 
+   </div>
+   
+   <div class="container" *ngIf="!isLoggedIn">
+
+      <h3 class="text-xl my-2">No Elevated Permissions</h3>
+         <p>You can not see content for elevated user's</p>
+         <button class="!my-4" mat-flat-button routerLink="/home">Return home to login</button>
+ 
+   </div>
