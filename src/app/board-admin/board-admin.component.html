@@ -2,17 +2,23 @@
    <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Admin Dashboard</h3>
 
    <div class="p-5">
-      <h3 class="text-xl my-2">Admins Only!</h3>
+      <h3 class="text-xl my-2">Welcome Admin!</h3>
       <p>This is exclusive content for admins only!</p>
    </div>
 
 </div>
 
 
-<div *ngIf="!isLoggedIn">
-
-   <h3 class="text-xl my-2">No Elevated Permissions</h3>
-   <p>You can not see content for elevated user's</p>
-   <button class="!my-4" mat-flat-button routerLink="/home">Return home to login</button>
-
-</div>
+<div *ngIf="!isLoggedIn" class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
+   <div class="grid cols-2 grid-cols-[120px_minmax(900px,_1fr)_100px]">
+     <div>
+       <button
+         class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+         mat-button routerLink="/home"><i class="fa-solid fa-house mr-1.5"></i> Home</button>
+     </div>
+ 
+     <div>
+       <h3 class="text-xl my-2">NCO Access Only</h3>
+       <p>You must be logged in with elevated permissions to access this content.</p>
+     </div>
+   </div>

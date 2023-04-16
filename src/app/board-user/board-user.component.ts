@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../_services/user.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
@@ -22,7 +21,6 @@ export class BoardUserComponent implements OnInit {
   message = '';
 
   constructor(
-    private userService: UserService, 
     private  token: TokenStorageService, 
     ) { }
 
@@ -40,14 +38,6 @@ export class BoardUserComponent implements OnInit {
         this.showUser = true
       }
   
-      this.userService.getAdminBoard().subscribe({
-        next: data => {
-          this.content = data;
-        },
-        error: err => {
-          this.content = JSON.parse(err.error).message;
-        }
-      });
     }
 
 }

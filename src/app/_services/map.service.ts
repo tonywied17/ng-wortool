@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Map } from './_models/map.model';
+import { Map } from '../_models/map.model';
 
 const baseUrl = 'https://api.tonewebdesign.com/pa/maps';
 

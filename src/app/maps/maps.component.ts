@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MapService } from '../map.service';
+import { MapService } from '../_services/map.service';
 import { Map } from '../_models/map.model';
 
 @Component({
@@ -13,7 +13,9 @@ export class MapsComponent implements OnInit {
   currentMap: Map = {};
   currentIndex = -1
   showMapPage = false;
+  loading = true;
 
+  
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {

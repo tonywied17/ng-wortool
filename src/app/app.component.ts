@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './_services/user.service';
 import { TokenStorageService } from './_services/token-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit {
   message = '';
 
   constructor(
-    private userService: UserService, 
     private router: Router, 
     private  token: TokenStorageService, 
     ) { }
