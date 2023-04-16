@@ -5,6 +5,19 @@
 
 > View latest live build:
 [View Live](https://paapp.tbz.wtf/home)
+
+### User Level Permissions
+*user*
+*user123*
+
+### Moderator Level Permissions
+*moderator*
+*moderator*
+
+### Admin Level Permissions
+*admin*
+*admin123*
+
 # Paapp2
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
