@@ -7,16 +7,19 @@
 [View Live](https://paapp.tbz.wtf/home)
 
 ### User Level Permissions
-*user*
+*user*<br>
 *user123*
+> Basic user level permissions main features include favorite items edit profile, and change password.
 
 ### Moderator Level Permissions
+*moderator*<br>
 *moderator*
-*moderator*
+> NCO/Moderator level permissions main features include manage community roster, event information publisher.
 
 ### Admin Level Permissions
-*admin*
+*admin*<br>
 *admin123*
+> NCO/Moderator level permissions main features include editing the api's data for maps, weapons, and regiments.
 
 # Paapp2
 
