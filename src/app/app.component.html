@@ -1,12 +1,10 @@
-
-
 <nav
     class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto py-2 sm:rounded-sm shadow-lg w-full sticky top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10">
     <div class="mx-auto px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 sm:hidden">
                 <!-- Mobile menu button-->
-                
+
                 <button (click)="toggle();scroll()" type="button"
                     class="mt-3 inline-flex items-center justify-center rounded-md p-2 text-[#bbbbb1] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#88887b]"
                     aria-controls="mobile-menu" aria-expanded="false">
@@ -45,52 +43,62 @@
                         <button mat-button color="primary" [routerLink]="['/regiments']"
                             routerLinkActive="bg-[#646258] !text-[#a09e94]"
                             class="navitem font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Regiments</button>
-          
+
                     </div>
 
                 </div>
             </div>
 
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              
-                <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] font-serif text-base !hidden sm:!block" mat-raised-button><i class="fa-sharp fa-solid fa-chevrons-down"></i> NCO Tools</button>
-                <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
-                    <button [routerLink]="['/muster']" class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item>Muster Roster</button>
-                    <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item>Share Server Info</button>
-                  </mat-menu>
-        
-              </div>
+            <div *ngIf="showMod || showAdmin"
+                class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-            
+                <button [matMenuTriggerFor]="beforeMenu"
+                    class="bg-[#646258] !text-[#a09e94] font-serif !hidden sm:!block" mat-raised-button><i
+                        class="fa-sharp fa-solid fa-chevrons-down"></i> NCO Tools</button>
+                <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
+                    <button [routerLink]="['/muster']" class="!text-[#b9b8b0]/80 font-serif font-semibold"
+                        mat-menu-item>Muster Roster</button>
+                    <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item>Share Server Info</button>
+                </mat-menu>  
+
+            </div>
+
+            <div *ngIf="isLoggedIn">
+                <button (click)="logout()" mat-raised-button class="bg-[#646258] !text-[#a09e94] font-serif !hidden sm:!block !ml-2"><i
+                    class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+
+
         </div>
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div *ngIf="menuOpen" class="sm:hidden h-96 grid grid-cols-1 gap-0 content-center animate-top sm:animate-none" id="mobile-menu">
+    <div *ngIf="menuOpen" class="sm:hidden h-96 grid grid-cols-1 gap-0 content-center animate-top sm:animate-none"
+        id="mobile-menu">
 
         <div class="space-y-5 px-2 pt-2 pb-3 bg-[#8b8d83]/80 mx-6 rounded-md drop-shadow-lg">
             <mat-list>
-                <mat-list-item class="mx-auto w-max !my-4"> <button mat-button color="primary" (click)="toggle()" [routerLink]="['/home']"
-                        routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+                <mat-list-item class="mx-auto w-max !my-4"> <button mat-button color="primary" (click)="toggle()"
+                        [routerLink]="['/home']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
                         class="navitem !mx-auto !w-96 font-serif text-2xl duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Home</button>
                 </mat-list-item>
-                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()" [routerLink]="['/maps']"
-                        routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
+                        [routerLink]="['/maps']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
                         class="navitem !mx-auto !w-96 font-serif text-2xl text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Maps</button>
                 </mat-list-item>
-                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()" [routerLink]="['/weapons']"
-                    routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                    class="navitem !mx-auto !w-96 font-serif text-2xl text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Weapons</button>
+                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
+                        [routerLink]="['/weapons']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+                        class="navitem !mx-auto !w-96 font-serif text-2xl text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Weapons</button>
                 </mat-list-item>
-                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()" [routerLink]="['/regiments']"
-                        routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
+                        [routerLink]="['/regiments']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
                         class="navitem !mx-auto !w-96 font-serif text-2xl text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Regiments</button>
                 </mat-list-item>
             </mat-list>
         </div>
     </div>
 
-    
+
 
 </nav>
 
