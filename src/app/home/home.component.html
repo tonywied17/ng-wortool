@@ -1,7 +1,6 @@
-
-
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 row-span-full">
 
+    <!--Left Box-->
     <div class="row-span-3">
         <div
             class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-8 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
@@ -14,52 +13,52 @@
                 style="background-image: url('https://cdn.discordapp.com/attachments/684701534466080807/975267284094427166/20220219130936_1.jpg');background-size: cover;">
             </div>
 
-            <p class="text-[#c4c4c4bb] text-sm px-4 font-[100] italic text-center mb-[-10px] pt-2">"The British are the
-                best" <span class="not-italic">- PA-[116thPVI] Cpt. Stalins</span></p>
+            <p class="text-[#c4c4c4bb] text-sm px-4 font-[100] italic text-center mb-[-10px] pt-2">"" <span class="not-italic">- PA-[116thPVI] Cpt. Stalins</span></p>
 
         </div>
     </div>
 
+
     <div class="lg:col-span-2 lg:row-span-2">
 
-        <div *ngIf="isLoggedIn" class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto"
-        style="padding: 70px 2em;">
-        
-        <h3 class="text-white text-lg pb-3 font-serif tracking-tight"> Welcome, {{currentUser.username}} </h3>
+        <!-- Logged In Menu -->
+        <div *ngIf="isLoggedIn"
+            class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto"
+            style="padding: 70px 2em;">
 
-        <p>You are logged in with the following user roles: <b>{{currentUser.roles}}</b></p>
+            <h3 class="text-white text-lg pb-3 font-serif tracking-tight"> Welcome, {{currentUser.username}} </h3>
 
-        <button routerLink="/user" mat-raised-button
-        class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Elevated Page</button>
+            <div class="p-3 m-5 grid grid-cols-1 gap-4">
+                <div>
+                    <button *ngIf="showUser" routerLink="/user" mat-button class="text-center"><i class="fa-duotone fa-gear mr-1.5"></i>User Dashboard</button>
+                </div>
+                <div>
+                    <button *ngIf="showMod" routerLink="/mod" mat-button class="text-center"><i class="fa-duotone fa-gear mr-1.5"></i>Moderator Dashboard</button>
+                </div>
+                <div>
+                    <button *ngIf="showAdmin" routerLink="/admin" mat-button class="text-center"><i class="fa-duotone fa-gear mr-1.5"></i>Admin Dashboard</button>
+                </div>
+            </div>
 
-        <div class="alert alert-success" *ngIf="isSuccessful">
-            Your registration is successful!
         </div>
+        <!----->
 
-        </div>
-
+        <!--Register Box-->
         <div *ngIf="registerTask && !loginTask && !isLoggedIn"
             class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto"
             style="padding: 70px 2em;">
             <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Sign-up Now!</h3>
-
             <div class="alert alert-success" *ngIf="isSuccessful">
                 Your registration is successful! You may login below.
             </div>
-
             <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onRegister()" #f="ngForm" novalidate>
-
-
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
-
                     <div class="form-group sm:col-span-4">
-
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Your e-mail...</mat-label>
-                            <input matInput type="email" class="form-control" name="email" [(ngModel)]="registerForm.email"
-                                required email #email="ngModel">
+                            <input matInput type="email" class="form-control" name="email"
+                                [(ngModel)]="registerForm.email" required email #email="ngModel">
                         </mat-form-field>
-
                         <div class="alert-danger" *ngIf="email.errors && f.submitted">
                             <div *ngIf="email.errors['required']">Email is required</div>
                             <div *ngIf="email.errors['email']">
@@ -67,15 +66,13 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group sm:col-span-4">
-
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Choose a username...</mat-label>
-                            <input matInput type="text" class="form-control" name="username" [(ngModel)]="registerForm.username"
-                                required minlength="3" maxlength="20" #username="ngModel">
+                            <input matInput type="text" class="form-control" name="username"
+                                [(ngModel)]="registerForm.username" required minlength="3" maxlength="20"
+                                #username="ngModel">
                         </mat-form-field>
-
                         <div class="alert-danger" *ngIf="username.errors && f.submitted">
                             <div *ngIf="username.errors['required']">Username is required</div>
                             <div *ngIf="username.errors['minlength']">
@@ -86,15 +83,12 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group sm:col-span-4">
-
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Choose a password...</mat-label>
                             <input matInput type="password" class="form-control" name="password"
                                 [(ngModel)]="registerForm.password" required minlength="6" #password="ngModel">
                         </mat-form-field>
-
                         <div class="alert-danger" *ngIf="password.errors && f.submitted">
                             <div *ngIf="password.errors['required']">Password is required</div>
                             <div *ngIf="password.errors['minlength']">
@@ -103,100 +97,53 @@
                         </div>
                     </div>
                     <div class="form-group sm:col-span-1 sm:col-start-4">
-
                         <button mat-raised-button
                             class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Create!</button>
-
                     </div>
-
                     <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
                         Signup failed!<br />{{ errorMessage }}
                     </div>
-
-
-                    
-
                 </div>
             </form>
-
         </div>
+        <!---->
 
-
-
-
-
-
+        <!-- Login Box -->
         <div *ngIf="!registerTask && loginTask && !isLoggedIn"
             class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto"
             style="padding: 70px 2em;">
             <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Login Now!</h3>
-
-
             <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onLogin()" #f="ngForm" novalidate>
-
-
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
-
-
-
                     <div class="form-group sm:col-span-4">
-
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Username</mat-label>
-                            <input matInput name="username"
-                            [(ngModel)]="loginForm.username"
-                            required
-                            #username="ngModel"
-                            matInput placeholder="Enter username">
+                            <input matInput name="username" [(ngModel)]="loginForm.username" required
+                                #username="ngModel" matInput placeholder="Enter username">
                         </mat-form-field>
-
-                        <div
-                        class="alert alert-danger"
-                        role="alert"
-                        *ngIf="username.errors && f.submitted"
-                        >Username is required!</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">Username is
+                            required!</div>
                     </div>
-
                     <div class="form-group sm:col-span-4">
-
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Password</mat-label>
-                            <input matInput name="password"
-                            [(ngModel)]="loginForm.password"
-                            required
-                            minlength="6"
-                            #password="ngModel"
-                      type="password" matInput placeholder="Enter password">
+                            <input matInput name="password" [(ngModel)]="loginForm.password" required minlength="6"
+                                #password="ngModel" type="password" matInput placeholder="Enter password">
                         </mat-form-field>
-
-                        <div
-                        class="alert alert-danger"
-                        role="alert"
-                        *ngIf="password.errors && f.submitted"
-                        >
-                      <div *ngIf="password.errors['required']">Password is required</div>
-                      <div *ngIf="password.errors['minlength']">Password must be at least 6 characters</div>
-                      </div>
+                        <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
+                            <div *ngIf="password.errors['required']">Password is required</div>
+                            <div *ngIf="password.errors['minlength']">Password must be at least 6 characters</div>
+                        </div>
                     </div>
                     <div class="form-group sm:col-span-1 sm:col-start-4">
-
                         <button mat-raised-button
                             class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Login!</button>
-
                     </div>
-
-                    <div
-    class="alert alert-danger"
-    role="alert"
-    *ngIf="f.submitted && isLoginFailed"
-    >Login failed: {{ errorMessage }}</div>
-
-
+                    <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">Login failed: {{errorMessage}}</div>
                 </div>
             </form>
-
         </div>
-
+        <!---->
 
 
     </div>
@@ -206,7 +153,8 @@
 
 
             <button mat-raised-button
-                class="my-auto w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]" (click)="logout()">Logout</button>
+                class="my-auto w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+                (click)="logout()">Logout</button>
 
         </div>
     </div>
@@ -217,7 +165,8 @@
 
 
             <button mat-raised-button
-                class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]" (click)="loginBtn()">Login</button>
+                class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+                (click)="loginBtn()">Login</button>
 
         </div>
     </div>
@@ -228,7 +177,8 @@
 
 
             <button mat-raised-button
-                class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]" (click)="registerBtn()">Sign Up!</button>
+                class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+                (click)="registerBtn()">Sign Up!</button>
 
         </div>
     </div>

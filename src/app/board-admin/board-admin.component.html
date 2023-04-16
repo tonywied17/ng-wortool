@@ -1,8 +1,18 @@
-<div class="container" *ngIf="showAdminPage">
-    <header class="jumbotron">
-      <h1>Admins Only!</h1>
-        <p>This is execlusive content for admins only!</p>
-    </header>
-  </div>
-  
-  
+<div *ngIf="showAdmin">
+   <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Admin Dashboard</h3>
+
+   <div class="p-5">
+      <h3 class="text-xl my-2">Admins Only!</h3>
+      <p>This is exclusive content for admins only!</p>
+   </div>
+
+</div>
+
+
+<div *ngIf="!isLoggedIn">
+
+   <h3 class="text-xl my-2">No Elevated Permissions</h3>
+   <p>You can not see content for elevated user's</p>
+   <button class="!my-4" mat-flat-button routerLink="/home">Return home to login</button>
+
+</div>

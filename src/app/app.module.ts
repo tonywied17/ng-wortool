@@ -25,6 +25,8 @@ const routes: Routes = [
   { path: 'weapons', component: WeaponsComponent },
   { path: 'muster', component: MusterComponent },
   { path: 'user', component: BoardUserComponent },
+  { path: 'mod', component: BoardModeratorComponent },
+  { path: 'admin', component: BoardAdminComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -37,6 +39,8 @@ const routes: Routes = [
     WeaponsComponent,
     MapDetailsComponent,
     BoardUserComponent,
+    BoardModeratorComponent,
+    BoardAdminComponent,
     MusterComponent
   ],
   imports: [

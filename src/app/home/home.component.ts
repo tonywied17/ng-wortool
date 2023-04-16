@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  
+
   registerForm: any = {
     username: null,
     email: null,
@@ -27,8 +27,11 @@ export class HomeComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  registerTask = true;
-  loginTask = false;
+  registerTask = false;
+  loginTask = true;
+  showAdmin = false;
+  showUser = false;
+  showMod = false;
   roles: string[] = [];
   currentUser: any;
 
@@ -36,74 +39,86 @@ export class HomeComponent implements OnInit {
 
   counter(i: number) {
     return new Array(i);
-}
-
-
-ngOnInit(): void {
-  if (this.tokenStorage.getToken()) {
-    this.isLoggedIn = true;
-    this.currentUser = this.tokenStorage.getUser();
-    this.roles = this.tokenStorage.getUser().roles;
   }
-}
 
-onRegister(): void {
-  const { username, email, password } = this.registerForm;
 
-  this.authService.register(username, email, password).subscribe({
-    next: data => {
-      console.log(data);
-      this.isSuccessful = true;
-      this.isSignUpFailed = false;
-    },
-    error: err => {
-      this.errorMessage = err.error.message;
-      this.isSignUpFailed = true;
-    }
-  });
-}
-
-onLogin(): void {
-  const { username, password } = this.loginForm;
-
-  this.authService.login(username, password).subscribe({
-    next: data => {
-      this.tokenStorage.saveToken(data.accessToken);
-      this.tokenStorage.saveUser(data);
-
-      this.isLoginFailed = false;
+  ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
+      this.currentUser = this.tokenStorage.getUser();
       this.roles = this.tokenStorage.getUser().roles;
-      this.reloadPage();
-    },
-    error: err => {
-      this.errorMessage = err.error.message;
-      this.isLoginFailed = true;
     }
-  });
-}
 
-reloadPage(): void {
-  window.location.reload();
-}
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    this.currentUser = this.tokenStorage.getUser();
 
-loginBtn(): void{
-  this.loginTask = true;
-  this.registerTask = false;
-}
+    if (this.isLoggedIn) {
+      const user = this.tokenStorage.getUser();
+      this.roles = user.roles;
+      console.log(user)
+      this.showAdmin = this.roles.includes('ROLE_ADMIN');
+      this.showMod = this.roles.includes('ROLE_MODERATOR');
+      this.showUser = true
+    }
+  }
 
-registerBtn(): void{
-  this.loginTask = false;
-  this.registerTask = true;
-}
+  onRegister(): void {
+    const { username, email, password } = this.registerForm;
 
-logout(): void {
-  this.tokenStorage.signOut();
-  this.router.navigate(['/home']);
-  setTimeout(() => {
+    this.authService.register(username, email, password).subscribe({
+      next: data => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      }
+    });
+  }
+
+  onLogin(): void {
+    const { username, password } = this.loginForm;
+
+    this.authService.login(username, password).subscribe({
+      next: data => {
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveUser(data);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getUser().roles;
+        this.reloadPage();
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
+  }
+
+  reloadPage(): void {
     window.location.reload();
-  }, 10);
-  
-}
+  }
+
+  loginBtn(): void {
+    this.loginTask = true;
+    this.registerTask = false;
+  }
+
+  registerBtn(): void {
+    this.loginTask = false;
+    this.registerTask = true;
+  }
+
+  logout(): void {
+    this.tokenStorage.signOut();
+    this.router.navigate(['/home']);
+    setTimeout(() => {
+      window.location.reload();
+    }, 10);
+
+  }
 
 }
