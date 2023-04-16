@@ -53,12 +53,11 @@
                 class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                 <button [matMenuTriggerFor]="beforeMenu"
-                    class="bg-[#646258] !text-[#a09e94] font-serif !hidden sm:!block" mat-raised-button><i
-                        class="fa-sharp fa-solid fa-chevrons-down"></i> NCO Tools</button>
+                    class="bg-[#646258] !text-[#a09e94] !hidden sm:!block" mat-raised-button><i class="fa-light fa-screwdriver-wrench mr-1.5"></i> {{currentUser.username}}'s' Tools</button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
                     <button [routerLink]="['/muster']" class="!text-[#b9b8b0]/80 font-serif font-semibold"
                         mat-menu-item>Muster Roster</button>
-                    <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item>Share Server Info</button>
+                    <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item disabled>Share Event Information</button>
                 </mat-menu>  
 
             </div>

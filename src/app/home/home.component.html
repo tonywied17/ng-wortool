@@ -28,17 +28,27 @@
 
             <h3 class="text-white text-lg pb-3 font-serif tracking-tight"> Welcome, {{currentUser.username}} </h3>
 
-            <div class="p-3 m-5 grid grid-cols-1 gap-4">
-                <div>
+
+            <mat-list>
+                <mat-list-item> 
                     <button *ngIf="showUser" routerLink="/user" mat-button class="text-center"><i class="fa-duotone fa-gear mr-1.5"></i>User Settings</button>
-                </div>
-                <div>
-                    <button *ngIf="showMod" routerLink="/mod" mat-button class="text-center"><i class="fa-duotone fa-gear mr-1.5"></i>NCO Dashboard</button>
-                </div>
-                <div>
-                    <button *ngIf="showAdmin" routerLink="/admin" mat-button class="text-center"><i class="fa-duotone fa-gear mr-1.5"></i>Admin Dashboard</button>
-                </div>
-            </div>
+                </mat-list-item>
+
+                <mat-divider *ngIf="showMod"></mat-divider>
+
+                <mat-list-item *ngIf="showMod"> 
+                    <button routerLink="/mod" mat-button class="text-center"><i class="fa-sharp fa-solid fa-chevrons-down mr-1.5"></i>NCO Dashboard</button>
+                </mat-list-item>
+
+                <mat-divider *ngIf="showAdmin"></mat-divider>
+                
+                <mat-list-item *ngIf="showAdmin"> 
+                    <button routerLink="/admin" mat-button class="text-center"><i class="fa-duotone fa-shield-halved mr-1.5"></i>Admin Dashboard</button>
+                </mat-list-item>
+            </mat-list>
+
+
+
 
         </div>
         <!----->

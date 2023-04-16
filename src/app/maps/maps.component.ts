@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MapService } from '../_services/map.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 import { Map } from '../_models/map.model';
 
 @Component({
@@ -14,11 +15,14 @@ export class MapsComponent implements OnInit {
   currentIndex = -1
   showMapPage = false;
   loading = true;
-
+  currentUser: any;
+  isLoggedIn = false;
   
-  constructor(private mapService: MapService) { }
+  constructor(private mapService: MapService, private token: TokenStorageService, ) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!this.token.getToken();
+    this.currentUser = this.token.getUser();
     this.getMaps();
   }
 

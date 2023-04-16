@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private  token: TokenStorageService, 
+    private token: TokenStorageService, 
     ) { }
   ngOnInit(): void {
     this.isLoggedIn = !!this.token.getToken();
