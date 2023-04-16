@@ -6,23 +6,21 @@
     <div class="m-5">
       <mat-list>
         <mat-list-item> 
-          <button *ngIf="showUser" routerLink="/edit-maps" mat-button class="text-center" disabled><i class="fa-solid fa-pen-to-square mr-1.5"></i> Edit Maps</button>
+          <button *ngIf="showUser" routerLink="/edit-maps" mat-menu-item class="text-center" disabled><i class="fa-solid fa-pen-to-square mr-1.5"></i> Edit Maps</button>
         </mat-list-item>
     
         <mat-divider></mat-divider>
     
         <mat-list-item> 
-          <button *ngIf="showUser" routerLink="/edit-weapons" mat-button class="text-center" disabled><i class="fa-solid fa-pen-to-square mr-1.5"></i> Edit Weapons</button>
+          <button *ngIf="showUser" routerLink="/edit-weapons" mat-menu-item class="text-center" disabled><i class="fa-solid fa-pen-to-square mr-1.5"></i> Edit Weapons</button>
         </mat-list-item>
 
         <mat-divider></mat-divider>
     
         <mat-list-item> 
-          <button *ngIf="showUser" routerLink="/edit-regiments" mat-button class="text-center" disabled><i class="fa-solid fa-pen-to-square mr-1.5"></i> Edit Regiments</button>
+          <button *ngIf="showUser" routerLink="/edit-regiments" mat-menu-item class="text-center" disabled><i class="fa-solid fa-pen-to-square mr-1.5"></i> Edit Regiments</button>
         </mat-list-item>
     </mat-list>
-      <!-- <button *ngIf="showUser" routerLink="/muster" mat-button class="text-center"><i
-          class="fa-solid fa-clipboard-user mr-1.5"></i> Muster Roster Tool</button> -->
     </div>
   </div>
 

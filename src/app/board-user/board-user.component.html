@@ -4,19 +4,19 @@
     <p class="font-serif mb-5">Below you will find the dashboard to manage your personal settings.</p>
     <mat-list>
       <mat-list-item>
-        <button *ngIf="showUser" routerLink="/change-password" mat-button class="text-center" disabled><i class="fa-solid fa-key mr-1.5"></i> Change Password</button>
+        <button *ngIf="showUser" routerLink="/change-password" mat-menu-item class="text-center" disabled><i class="fa-solid fa-key mr-1.5"></i> Change Password</button>
       </mat-list-item>
 
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <button *ngIf="showUser" routerLink="/edit-profile" mat-button class="text-center" disabled><i class="fa-solid fa-user-pen mr-1.5"></i> Profile Information</button>
+        <button *ngIf="showUser" routerLink="/edit-profile" mat-menu-item class="text-center" disabled><i class="fa-solid fa-user-pen mr-1.5"></i> Profile Information</button>
       </mat-list-item>
 
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <button *ngIf="showUser" routerLink="/manage-favorites" mat-button class="text-center" disabled><i class="fa-solid fa-stars mr-1.5"></i> Manage Favorites</button>
+        <button *ngIf="showUser" routerLink="/manage-favorites" mat-menu-item class="text-center" disabled><i class="fa-solid fa-stars mr-1.5"></i> Manage Favorites</button>
       </mat-list-item>
       
     </mat-list>

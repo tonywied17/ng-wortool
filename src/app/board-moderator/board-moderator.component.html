@@ -5,14 +5,14 @@
     <p class="font-serif mb-5">Below you will find the dashboard with access to all the available NCO Tools.</p>
     <mat-list>
       <mat-list-item> 
-        <button *ngIf="showUser" routerLink="/muster" mat-button class="text-center"><i
+        <button *ngIf="showUser" routerLink="/muster" mat-menu-item class="text-center"><i
           class="fa-solid fa-clipboard-user mr-1.5"></i> Muster Roster Tool</button>
       </mat-list-item>
   
       <mat-divider></mat-divider>
   
       <mat-list-item> 
-        <button *ngIf="showUser" routerLink="/event-share" mat-button class="text-center" disabled><i
+        <button *ngIf="showUser" routerLink="/event-share" mat-menu-item class="text-center" disabled><i
         class="fa-solid fa-megaphone mr-1.5"></i> Share Event Information</button>
       </mat-list-item>
   </mat-list>
