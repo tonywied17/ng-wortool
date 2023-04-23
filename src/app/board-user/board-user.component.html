@@ -7,19 +7,19 @@
         
         <mat-list>
           <mat-list-item>
-            <button routerLinkActive="bg-[#646258]/10 opacity-70" *ngIf="showUser" routerLink="/user" mat-menu-item class="text-center"><i class="fa-solid fa-key mr-1.5"></i> Change Password</button>
+            <button routerLinkActive="bg-[#646258]/10 opacity-70" routerLink="/user" mat-menu-item class="text-center"><i class="fa-solid fa-key mr-1.5"></i> Change Password</button>
           </mat-list-item>
     
           <mat-divider></mat-divider>
     
           <mat-list-item>
-            <button *ngIf="showUser" routerLink="/edit-profile" mat-menu-item class="text-center"><i class="fa-solid fa-user-pen mr-1.5"></i> Profile Information</button>
+            <button routerLink="/edit-profile" mat-menu-item class="text-center"><i class="fa-solid fa-user-pen mr-1.5"></i> Profile Information</button>
           </mat-list-item>
     
           <mat-divider></mat-divider>
     
           <mat-list-item>
-            <button *ngIf="showUser" routerLink="/manage-favorites" mat-menu-item class="text-center"><i class="fa-solid fa-stars mr-1.5"></i> Manage Favorites</button>
+            <button routerLink="/manage-favorites" mat-menu-item class="text-center"><i class="fa-solid fa-stars mr-1.5"></i> Manage Favorites</button>
           </mat-list-item>
           
         </mat-list>
