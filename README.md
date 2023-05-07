@@ -8,7 +8,7 @@
 <br> 
 
 > View latest live build:
-[View Live](https://paapp.tbz.wtf/home)
+[View Live](https://app.paarmy.com/beta)
 
 #### User Level Permissions
 *user*<br>
