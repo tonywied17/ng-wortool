@@ -30,21 +30,21 @@
 
 
             <mat-list>
-                <mat-list-item *ngIf="showUser"> 
-                    <button routerLink="/user" mat-menu-item class="text-center"><i class="fa-duotone fa-gear mr-1.5"></i>User Settings</button>
-                </mat-list-item>
+                <mat-action-list> 
+                    <button *ngIf="showUser" routerLink="/user/1" mat-list-item class=""><i class="fa-duotone fa-gear mx-1.5"></i>User Settings</button>
+ 
 
                 <mat-divider></mat-divider>
 
-                <mat-list-item *ngIf="showMod"> 
-                    <button routerLink="/mod" mat-menu-item class="text-center"><i class="fa-sharp fa-solid fa-chevrons-down mr-1.5"></i>NCO Dashboard</button>
-                </mat-list-item>
+         
+                    <button *ngIf="showMod" routerLink="/mod/" mat-list-item class=""><i class="fa-sharp fa-solid fa-chevrons-down mx-1.5"></i>NCO Dashboard</button>
+
 
                 <mat-divider *ngIf="showAdmin"></mat-divider>
                 
-                <mat-list-item *ngIf="showAdmin"> 
-                    <button routerLink="/admin" mat-menu-item class="text-center"><i class="fa-duotone fa-shield-halved mr-1.5"></i>Admin Dashboard</button>
-                </mat-list-item>
+        
+                    <button *ngIf="showAdmin" routerLink="/admin/1" mat-list-item class=""><i class="fa-duotone fa-shield-halved mx-1.5"></i>Admin Dashboard</button>
+                </mat-action-list>
             </mat-list>
 
 

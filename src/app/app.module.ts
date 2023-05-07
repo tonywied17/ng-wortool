@@ -25,8 +25,10 @@ const routes: Routes = [
   { path: 'weapons', component: WeaponsComponent },
   { path: 'muster', component: MusterComponent },
   { path: 'user', component: BoardUserComponent },
+  { path: 'user/:page', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
+  { path: 'admin/:page', component: BoardAdminComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 

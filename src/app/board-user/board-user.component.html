@@ -1,34 +1,45 @@
-<div *ngIf="showUser">
+<div *ngIf="isLoggedIn">
   <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">User Settings</h3>
   <p class="font-serif mb-5">Below you will find the dashboard to manage your personal settings.</p>
   <div class="grid lg:grid-cols-4 lg:gap-4 grid-cols-1">
     <div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit">
-      <div class="py-3 my-2">
+      <div class="p-3 my-2">
         
         <mat-list>
-          <mat-list-item>
-            <button routerLinkActive="bg-[#646258]/10 opacity-70" routerLink="/user" mat-menu-item class="text-center"><i class="fa-solid fa-key mr-1.5"></i> Change Password</button>
-          </mat-list-item>
+          <mat-action-list>
+            <button routerLinkActive="active_btn" routerLink="/user/1" mat-list-item class="py-2"><i class="fa-solid fa-key mx-1.5"></i>Change Password</button>
+    
     
           <mat-divider></mat-divider>
     
-          <mat-list-item>
-            <button routerLink="/edit-profile" mat-menu-item class="text-center"><i class="fa-solid fa-user-pen mr-1.5"></i> Profile Information</button>
-          </mat-list-item>
+
+            <button routerLinkActive="active_btn" routerLink="/user/2" mat-list-item class="py-2"><i class="fa-solid fa-user-pen mx-1.5"></i>Profile Information</button>
+
     
           <mat-divider></mat-divider>
     
-          <mat-list-item>
-            <button routerLink="/manage-favorites" mat-menu-item class="text-center"><i class="fa-solid fa-stars mr-1.5"></i> Manage Favorites</button>
-          </mat-list-item>
+
+            <button routerLinkActive="active_btn" routerLink="/user/3" mat-list-item class="py-2"><i class="fa-solid fa-stars mx-1.5"></i>Manage Favorites</button>
+          </mat-action-list>
+
           
         </mat-list>
       </div>
     </div>
 
     <div class="lg:col-span-3 col-span-1 ml-5">
-      <h2 class="text-2xl font-serif text-slate-400 py-4">Change Your Password</h2>
       
+      
+      <div *ngIf="showPage1">
+        <h2 class="text-2xl font-serif text-slate-400 py-4">Change Your Password</h2>
+      </div>
+      <div *ngIf="showPage2">
+        <h2 class="text-2xl font-serif text-slate-400 py-4">Edit Profile Information</h2>
+      </div>
+      <div *ngIf="showPage3">
+        <h2 class="text-2xl font-serif text-slate-400 py-4">Manage Favorites</h2>
+      </div>
+
     </div>
 
   </div>
