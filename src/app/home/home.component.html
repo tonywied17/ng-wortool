@@ -19,11 +19,11 @@
     </div>
 
 
-    <div class="lg:col-span-2 lg:row-span-2 top-in">
+    <div class="lg:col-span-2 lg:row-span-2">
 
         <!-- Logged In Menu -->
         <div *ngIf="isLoggedIn"
-            class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto"
+            class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
             style="padding: 70px 2em;">
 
             <h3 class="text-white text-lg pb-3 font-serif tracking-tight"> Welcome, {{currentUser.username}} </h3>
@@ -55,7 +55,7 @@
 
         <!--Register Box-->
         <div *ngIf="registerTask && !loginTask && !isLoggedIn"
-            class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto"
+            class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
             style="padding: 70px 2em;">
             <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Sign-up Now!</h3>
             <div class="alert alert-success" *ngIf="isSuccessful">
@@ -120,7 +120,7 @@
 
         <!-- Login Box -->
         <div *ngIf="!registerTask && loginTask && !isLoggedIn"
-            class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto"
+            class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
             style="padding: 70px 2em;">
             <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Login Now!</h3>
             <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onLogin()" #f="ngForm" novalidate>
