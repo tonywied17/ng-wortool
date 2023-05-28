@@ -32,27 +32,28 @@
         </mat-menu>
 </h3>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap 0 bg-slate-800 rounded-lg p-[2em] grid-flow-row auto-rows-max">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap 0 rounded-lg p-[3em]" style="background: linear-gradient(180deg, #1e293b, #1e293b00);">
 
 
-    <div class="w-full lg:col-start-1 lg:col-span-2 m-[1em]">
-        <mat-slide-toggle (change)="toggle($event)">{{CamMap}}</mat-slide-toggle>
+    <div class="w-full lg:col-start-1 lg:col-span-2 mb-[1em]">
+        <div class="ml-[-1em] pb-[1em]">Flyover Camera</div>
+        <mat-slide-toggle (change)="toggle($event)" class="font-[200]">{{CamMap}}</mat-slide-toggle>
     </div>
 
 
-    <div class="lg:col-start-1 lg:col-span-2 box" *ngIf="!CamMapBool">
+    <div class="lg:col-start-1 lg:col-span-2 box lg:mx-auto" *ngIf="!CamMapBool">
         <img src="https://app.paarmy.com/{{currentMap.image}}" class="rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30 brightness-75">
     </div>
 
 
-    <div id="videoContainer" class="lg:col-start-1 lg:col-span-2 box rounded-md" *ngIf="CamMapBool"></div>
+    <div id="videoContainer" class="lg:col-start-1 lg:col-span-2 box rounded-md lg:mx-auto" *ngIf="CamMapBool"></div>
    
 
     <!--  -->
 
     <div class="lg:col-start-3 lg:col-span-1 text-slate-400">
 
-        <div *ngFor="let unit of currentMap.ATTACKER; index as i;">
+        <div *ngFor="let unit of currentMap.ATTACKER; index as i;" class="lg:p-[3em] rounded-t-3xl" style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
             <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
             <div *ngIf="unit.reg1Weapons">
@@ -87,10 +88,10 @@
 
         </div>
 
-  
+            <div class="block pr-[20px] text-center text-3xl">VS.</div>
 
 
-        <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="lg:mt-[2em]">
+        <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="lg:p-[3em] rounded-b-3xl" style="background: linear-gradient(-25deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
             <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
             <div *ngIf="unit.reg1Weapons">

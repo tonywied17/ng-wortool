@@ -18,7 +18,7 @@ export class MapDetailsComponent implements OnInit {
 
   data: any;
   CamMapBool: boolean = false;
-  CamMap: string = "Map Image"
+  CamMap: string = "Disabled"
   ytSrc: string = "https://www.youtube.com/embed/";
   
   @Input() viewMode = false;
@@ -49,7 +49,7 @@ export class MapDetailsComponent implements OnInit {
 
   toggle(event: MatSlideToggleChange) {
     if (event.checked) {
-      this.CamMap = "Flyover Cam";
+      this.CamMap = "Enabled";
       this.CamMapBool = true;
   
       this.cdr.detectChanges(); // Trigger change detection
@@ -61,7 +61,7 @@ export class MapDetailsComponent implements OnInit {
         videoContainer.innerHTML = iframeHtml;
       }
     } else {
-      this.CamMap = "Map Image";
+      this.CamMap = "Disabled";
       this.CamMapBool = false;
     }
   }
