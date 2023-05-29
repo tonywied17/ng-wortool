@@ -57,7 +57,7 @@ export class MapDetailsComponent implements OnInit {
       const videoContainer = document.getElementById("videoContainer");
       if (videoContainer) {
         const youtubeUrl = `https://www.youtube-nocookie.com/embed/${this.currentMap.youtube}`;
-        const iframeHtml = `<iframe width="100%" height="100%" src="${youtubeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 0.375rem;"></iframe>`;
+        const iframeHtml = `<iframe class="h-[100%]" width="100%" src="${youtubeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 0.375rem;"></iframe>`;
         videoContainer.innerHTML = iframeHtml;
       }
     } else {

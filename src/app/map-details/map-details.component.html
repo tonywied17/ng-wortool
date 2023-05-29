@@ -8,7 +8,7 @@
             <i class="fa-solid fa-ellipsis-vertical pr-2"></i> More
         </button>
     
-        <mat-menu #optMenu="matMenu" xPosition="before" class="bg-[#646258]/50 backdrop-blur-sm mt-[3px] !w-[200px]">
+        <mat-menu #optMenu="matMenu" xPosition="before" class="bg-[#646258]/70 lg:bg-[#646258]/40 backdrop-blur-sm mt-[3px] !w-[200px]">
             <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item><i
                     class="pr-2 fa-sharp fa-solid fa-bookmark"></i> Bookmark</button>
             <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item><i
@@ -32,28 +32,28 @@
         </mat-menu>
 </h3>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap 0 rounded-lg p-[3em]" style="background: linear-gradient(180deg, #1e293b, #1e293b00);">
+<div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-4 rounded-lg lg:p-[2em] p-[1em] lg:!h-[70vh]" style="background: linear-gradient(180deg, #1e293b, #1e293b00);">
 
 
-    <div class="w-full lg:col-start-1 lg:col-span-2 mb-[1em]">
-        <div class="ml-[-1em] pb-[1em]">Flyover Camera</div>
+    <div class="w-full lg:col-start-1 lg:col-span-1 text-center lg:text-left lg:row-start-1 lg:row-span-3">
+        <div class="lg:ml-[-1em] pb-[1em]">Flyover Camera</div>
         <mat-slide-toggle (change)="toggle($event)" class="font-[200]">{{CamMap}}</mat-slide-toggle>
+
+        <img *ngIf="!CamMapBool" src="https://app.paarmy.com/{{currentMap.image}}" class="lg:mr-auto mt-[1em] lg:w-[90%] lg:h-auto block rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30 brightness-75">
+        
+        <div *ngIf="CamMapBool" id="videoContainer" class="mb-[100px] lg:mr-auto mt-[1em] lg:w-[95%] lg:h-[62%] h-[75%] block rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"></div>
+    
     </div>
 
 
-    <div class="lg:col-start-1 lg:col-span-2 box lg:mx-auto" *ngIf="!CamMapBool">
-        <img src="https://app.paarmy.com/{{currentMap.image}}" class="rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30 brightness-75">
-    </div>
-
-
-    <div id="videoContainer" class="lg:col-start-1 lg:col-span-2 box rounded-md lg:mx-auto" *ngIf="CamMapBool"></div>
+    
    
 
     <!--  -->
 
-    <div class="lg:col-start-3 lg:col-span-1 text-slate-400">
+    <div class="lg:col-start-2 lg:col-span-1 lg:row-start-1 lg:row-span-3 text-slate-400 mt-[1em] lg:mt-[0]">
 
-        <div *ngFor="let unit of currentMap.ATTACKER; index as i;" class="lg:p-[3em] rounded-t-3xl" style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
+        <div *ngFor="let unit of currentMap.ATTACKER; index as i;" class="lg:p-[3em] p-[1em] rounded-t-3xl" style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
             <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
             <div *ngIf="unit.reg1Weapons">
@@ -91,7 +91,7 @@
             <div class="block pr-[20px] text-center text-3xl">VS.</div>
 
 
-        <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="lg:p-[3em] rounded-b-3xl" style="background: linear-gradient(-25deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
+        <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="lg:p-[3em] p-[1em] rounded-b-3xl lg:text-left text-right" style="background: linear-gradient(-25deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
             <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
             <div *ngIf="unit.reg1Weapons">
