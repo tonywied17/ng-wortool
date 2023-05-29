@@ -1,12 +1,21 @@
+
+
 <h3 class="text-[#88887b] font-serif text-3xl mb-4">
     {{currentMap.map}}
-
+    
+    
     <span class="text-slate-200/80 text-lg px-4 font-serif"><br>{{currentMap.campaign}}
-        Map</span>
+        Map</span>  
 
-        <button mat-stroked-button class="float-right" [matMenuTriggerFor]="optMenu">
-            <i class="fa-solid fa-ellipsis-vertical pr-2"></i> More
-        </button>
+        <div class="float-right">
+            <button mat-button class="block !text-[#9ea18a] !mr-2" [routerLink]="['/maps']">
+                <i class="fa-sharp fa-solid fa-arrow-left pr-2"></i> Back
+              </button>
+            <button mat-stroked-button [matMenuTriggerFor]="optMenu">
+                <i class="fa-solid fa-ellipsis-vertical pr-2"></i> More
+            </button>
+        </div>
+        
     
         <mat-menu #optMenu="matMenu" xPosition="before" class="bg-[#646258]/70 lg:bg-[#646258]/40 backdrop-blur-sm mt-[3px] !w-[200px]">
             <button class="!text-[#b9b8b0]/80 font-serif font-semibold" mat-menu-item><i
@@ -39,9 +48,9 @@
         <div class="lg:ml-[-1em] pb-[1em]">Flyover Camera</div>
         <mat-slide-toggle (change)="toggle($event)" class="font-[200]">{{CamMap}}</mat-slide-toggle>
 
-        <img *ngIf="!CamMapBool" src="https://app.paarmy.com/{{currentMap.image}}" class="lg:mr-auto mt-[1em] lg:w-[90%] lg:h-auto block rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30 brightness-75">
+        <img *ngIf="!CamMapBool" src="https://app.paarmy.com/{{currentMap.image}}" class="top-swing lg:mr-auto mt-[1em] lg:w-[90%] lg:h-auto block rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30 brightness-75">
         
-        <div *ngIf="CamMapBool" id="videoContainer" class="mb-[100px] lg:mr-auto mt-[1em] lg:w-[95%] lg:h-[62%] h-[75%] block rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"></div>
+        <div *ngIf="CamMapBool" id="videoContainer" class="top-swing mb-[100px] lg:mr-auto mt-[1em] lg:w-[95%] lg:h-[62%] h-[75%] block rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"></div>
     
     </div>
 
@@ -53,16 +62,16 @@
 
     <div class="lg:col-start-2 lg:col-span-1 lg:row-start-1 lg:row-span-3 text-slate-400 mt-[1em] lg:mt-[0]">
 
-        <div *ngFor="let unit of currentMap.ATTACKER; index as i;" class="lg:p-[3em] p-[1em] rounded-t-3xl" style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
+        <div *ngFor="let unit of currentMap.ATTACKER; index as i;" class="lg:p-[3em] p-[1em] rounded-t-3xl left-in" style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
-            <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
+            <p *ngIf="unit.reg1" class="font-semibold text-lg text-slate-300">{{unit.reg1}}</p>
             <div *ngIf="unit.reg1Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
             </div>
-            <p *ngIf="unit.reg2" class="font-semibold text-lg">{{unit.reg2}}</p>
+            <p *ngIf="unit.reg2" class="font-semibold text-lg text-slate-300">{{unit.reg2}}</p>
             <div *ngIf="unit.reg2Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
@@ -70,7 +79,7 @@
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
             </div>
 
-            <p *ngIf="unit.reg3" class="font-semibold text-lg">{{unit.reg3}}</p>
+            <p *ngIf="unit.reg3" class="font-semibold text-lg text-slate-300">{{unit.reg3}}</p>
             <div *ngIf="unit.reg3Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
@@ -78,7 +87,7 @@
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
             </div>
 
-            <p *ngIf="unit.reg4" class="font-semibold text-lg">{{unit.reg4}}</p>
+            <p *ngIf="unit.reg4" class="font-semibold text-lg text-slate-300">{{unit.reg4}}</p>
             <div *ngIf="unit.reg4Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
@@ -91,16 +100,16 @@
             <div class="block pr-[20px] text-center text-3xl">VS.</div>
 
 
-        <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="lg:p-[3em] p-[1em] rounded-b-3xl lg:text-left text-right" style="background: linear-gradient(-25deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
+        <div *ngFor="let unit of currentMap.DEFENDER; index as i;" class="lg:p-[3em] p-[1em] rounded-b-3xl text-right right-in" style="background: linear-gradient(-25deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
-            <p *ngIf="unit.reg1" class="font-semibold text-lg">{{unit.reg1}}</p>
+            <p *ngIf="unit.reg1" class="font-semibold text-lg text-slate-300">{{unit.reg1}}</p>
             <div *ngIf="unit.reg1Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
             </div>
-            <p *ngIf="unit.reg2" class="font-semibold text-lg">{{unit.reg2}}</p>
+            <p *ngIf="unit.reg2" class="font-semibold text-lg text-slate-300">{{unit.reg2}}</p>
             <div *ngIf="unit.reg2Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
@@ -108,7 +117,7 @@
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
             </div>
 
-            <p *ngIf="unit.reg3" class="font-semibold text-lg">{{unit.reg3}}</p>
+            <p *ngIf="unit.reg3" class="font-semibold text-lg text-slate-300">{{unit.reg3}}</p>
             <div *ngIf="unit.reg3Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
@@ -116,7 +125,7 @@
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
             </div>
 
-            <p *ngIf="unit.reg4" class="font-semibold text-lg">{{unit.reg4}}</p>
+            <p *ngIf="unit.reg4" class="font-semibold text-lg text-slate-300">{{unit.reg4}}</p>
             <div *ngIf="unit.reg4Weapons">
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
                 <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
