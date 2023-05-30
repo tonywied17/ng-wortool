@@ -41,7 +41,7 @@ export class MapDetailsComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.currentMap = data;
-          console.log(data);
+          // console.log(data);
         },
         error: (e) => console.error(e)
       });

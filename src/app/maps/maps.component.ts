@@ -39,7 +39,7 @@ export class MapsComponent implements OnInit {
         next: (data) => {
           this.map = data;
 
-          console.log(data);
+          // console.log(data);
         },
         error: (e) => console.error(e)
       });
