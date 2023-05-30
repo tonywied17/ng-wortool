@@ -69,7 +69,7 @@
             style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
                 <div class="lg:col-start-1 lg:col-span-2">
                     <p *ngIf="unit.reg1" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg1}}</p>
                     <div *ngIf="unit.reg1Weapons">
@@ -105,7 +105,7 @@
     
                 <!--  -->
     
-                <div class="lg:col-start-3 col-span-1">
+                <div class="lg:col-start-3 col-span-2">
                     <div *ngIf="unit.arty1" class="skewed-textR !text-right">Artillery</div>
                     <div *ngIf="unit.arty1" class="pt-[1em] pr-[1em] !text-right" style="border-right: solid 3px #7c7d738f;">
                         <p *ngIf="unit.arty1" class="font-[400] text-sm text-slate-300">{{unit.arty1}}</p>
@@ -159,9 +159,9 @@
             style="background: linear-gradient(-25deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
             <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-10">
+            <div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-10">
 
-                <div class="col-start-1 col-span-1">
+                <div class="col-start-1 col-span-2">
                     <div *ngIf="unit.arty1" class="skewed-text !text-left">Artillery</div>
                     <div *ngIf="unit.arty1" class="pt-[1em] pl-[1em] !text-left" style="border-left: solid 3px #7c7d738f;">
                         <p *ngIf="unit.arty1" class="font-[400] text-sm text-slate-300">{{unit.arty1}}</p>
@@ -199,7 +199,7 @@
                 </div>
 
 <!--  -->
-                <div class="lg:col-start-2 lg:col-span-2">
+                <div class="lg:col-start-3 lg:col-span-2">
                     
                     <p *ngIf="unit.reg1" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg1}}</p>
                     <div *ngIf="unit.reg1Weapons">
