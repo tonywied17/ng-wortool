@@ -17,7 +17,13 @@ export class MapsComponent implements OnInit {
   loading = true;
   currentUser: any;
   isLoggedIn = false;
-  
+  originalMap?: Map[];
+  searchText: string = '';
+  selectedCampaign: string = '';
+  selectedCampaigns: string[] = [];
+  uniqueCampaigns: string[] = [];
+  filterByCampaign = false;
+
   constructor(private mapService: MapService, private token: TokenStorageService, ) { }
 
   ngOnInit(): void {
@@ -34,17 +40,65 @@ export class MapsComponent implements OnInit {
   }
 
   getMaps(): void {
-    this.mapService.getAll()
-      .subscribe({
-        next: (data) => {
-          this.map = data;
+    this.mapService.getAll().subscribe({
+      next: (data) => {
+        this.map = data;
+        this.originalMap = data;
+        this.uniqueCampaigns = this.getUniqueCampaigns(data);
+      },
+      error: (e) => console.error(e)
+    });
+  }
 
-          // console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
+  private getUniqueCampaigns(data: Map[]): string[] {
+    const campaigns = data.map((map) => map.campaign);
+    return [...new Set(campaigns)];
   }
   
+  filterMaps(): void {
+    let filteredMap: Map[] = this.originalMap || [];
+
+    if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
+      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+    }
+
+    if (this.searchText) {
+      filteredMap = filteredMap.filter((map) =>
+        map.map?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+
+    this.map = filteredMap;
+  }
+  
+  toggleCampaignSelection(campaign: string): void {
+    const index = this.selectedCampaigns.indexOf(campaign);
+
+    if (index > -1) {
+      this.selectedCampaigns.splice(index, 1);
+    } else {
+      this.selectedCampaigns.push(campaign);
+    }
+
+    this.filterMaps();
+  }
+
+  setSelectedCampaign(campaign: string): void {
+    const index = this.selectedCampaigns.indexOf(campaign);
+
+    if (index > -1) {
+      this.selectedCampaigns.splice(index, 1);
+    } else {
+      this.selectedCampaigns.push(campaign);
+    }
+
+    this.filterMaps();
+  }
+  
+
+  isCampaignSelected(campaign: string): boolean {
+    return this.selectedCampaigns.includes(campaign);
+  }
   scroll() {
     window.scroll({
       top: 0,

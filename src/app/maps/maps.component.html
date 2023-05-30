@@ -3,32 +3,63 @@
     <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Maps</h3>
     <h3 *ngIf="isLoggedIn" class="font-serif text-xl m-2 mb-4 text-[#656359]">{{currentUser.username}}'s Favorited Maps</h3>
     <h3 class="font-serif text-xl m-2 mb-4 text-[#656359]">Search Filters</h3>
-    
+  
+    <div>
+      <div class="filter-options">
+        <label>
+          <input type="checkbox" [(ngModel)]="filterByCampaign" (change)="filterMaps()" />
+          Filter by Campaign
+        </label>
+      </div>
+  
+      <div class="filter-options" *ngIf="filterByCampaign">
+        <label *ngFor="let campaign of uniqueCampaigns">
+          <input type="checkbox" [checked]="selectedCampaign === campaign" (change)="toggleCampaignSelection(campaign)" />
+          {{ campaign }}
+        </label>
+      </div>
+  
+      <div class="filter-options">
+        <input type="text" [(ngModel)]="searchText" (input)="filterMaps()" placeholder="Search maps..." />
+      </div>
+    </div>
+  
     <div *ngIf="!showMapPage" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7">
-    
-    <div class="bg-slate-800/80 rounded-lg py-4 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load" *ngFor="let map of map; index as i;">
+      <div
+        class="bg-slate-800/80 rounded-lg py-4 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load"
+        *ngFor="let map of map; index as i;"
+      >
         <h4>
-            <span class="text-white/90 text-xl font-serif tracking-tight px-4 pb-1 text-left">{{map.map}}</span>
-            <span class="text-slate-400/80 text-sm px-4 font-serif tracking-tight text-right float-right">{{map.campaign}}</span>
-        </h4> 
-            <div class="rounded-sm my-2 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]" 
-            style="background-image: url('https://app.paarmy.com/{{map.image}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;"></div>
-        
-            <div class="px-2 mb-[-8px] text-right">
-                <button mat-button color="accent" class="text-[15px] font-[500]" [class.active]="i == currentIndex"
-                [routerLink]="map.id">Enhance <i class="fa-solid fa-magnifying-glass" style="margin-left:5px;margin-top:-2px;"></i></button>
-            </div>
-           
-        
+          <span class="text-white/90 text-xl font-serif tracking-tight px-4 pb-1 text-left">{{ map.map }}</span>
+          <span
+            class="text-slate-400/80 text-sm px-4 font-serif tracking-tight text-right float-right"
+          >{{ map.campaign }}</span>
+        </h4>
+        <div
+          class="rounded-sm my-2 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
+          style="background-image: url('https://app.paarmy.com/{{map.image}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;"
+        ></div>
+  
+        <div class="px-2 mb-[-8px] text-right">
+          <button
+            mat-button
+            color="accent"
+            class="text-[15px] font-[500]"
+            [class.active]="i == currentIndex"
+            [routerLink]="map.id"
+          >
+            Enhance <i class="fa-solid fa-magnifying-glass" style="margin-left:5px;margin-top:-2px;"></i>
+          </button>
+        </div>
+      </div>
     </div>
-    
-    </div>
+  
     <app-map-details *ngIf="showMapPage" [viewMode]="true" [currentMap]="currentMap"></app-map-details>
-    
+  
     <div class="fixed bottom-4 right-4">
-        <button (click)="scroll()" mat-mini-fab class="!text-[#a09e94] text-xl !bg-slate-700">
-            <i class="fa-light fa-arrow-up-to-line"></i>
-        </button>
-    </div>    
-
-</div>
+      <button (click)="scroll()" mat-mini-fab class="!text-[#a09e94] text-xl !bg-slate-700">
+        <i class="fa-light fa-arrow-up-to-line"></i>
+      </button>
+    </div>
+  </div>
+  
