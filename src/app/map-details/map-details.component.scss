@@ -97,7 +97,21 @@
 		transform-origin: bottom;
 	}
 }
+.skewed-textR {
+	display: block;
+	text-align: right;
+    background: linear-gradient(-90deg, #7c7d72a2, #7c7d7200);
+	padding-right: 1em;
+	font-size: 0.875rem;
+  }
 
+  .skewed-text {
+	display: block;
+	text-align: left;
+    background: linear-gradient(90deg, #7c7d72a2, #7c7d7200);
+	padding-left: 1em;
+	font-size: 0.875rem;
+  }
 
 img{
 	max-width: 100%;
