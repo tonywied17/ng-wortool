@@ -11,3 +11,54 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .search-box {
+    position: relative;
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #88887b;
+  }
+  
+  .search-input {
+    padding: 12px 12px 12px 36px;
+    width: 100%;
+    border: 2px solid #7c7d72;
+    border-radius: 4px;
+    background: linear-gradient(9deg, #121a29, #121a29, #7c7d727a);
+    color: #fff;
+    outline: none;
+  }
+  
+  .search-input::placeholder {
+    color: #ccc;
+  }
+
+  .filter-options {
+    margin-bottom: 1em;
+  }
+  
+  .checkbox-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.5em;
+  }
+  
+  .filter-label {
+    display: flex;
+    align-items: center;
+    color: #7c7d72;
+  }
+  
+  .filter-label input[type="checkbox"] {
+    margin-right: 0.5em;
+  }
+  
+  .filter-label .filter-text {
+    color: #7c7d72;
+  }
+  

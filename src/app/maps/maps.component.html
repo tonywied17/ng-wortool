@@ -2,26 +2,34 @@
 
     <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Maps</h3>
     <h3 *ngIf="isLoggedIn" class="font-serif text-xl m-2 mb-4 text-[#656359]">{{currentUser.username}}'s Favorited Maps</h3>
-    <h3 class="font-serif text-xl m-2 mb-4 text-[#656359]">Search Filters</h3>
   
-    <div>
+    <div class="my-[1em]">
+
       <div class="filter-options">
-        <label>
+        <label class="filter-label">
           <input type="checkbox" [(ngModel)]="filterByCampaign" (change)="filterMaps()" />
-          Filter by Campaign
+          <span class="filter-text">Filter by Campaign</span>
         </label>
       </div>
-  
+      
       <div class="filter-options" *ngIf="filterByCampaign">
-        <label *ngFor="let campaign of uniqueCampaigns">
-          <input type="checkbox" [checked]="selectedCampaign === campaign" (change)="toggleCampaignSelection(campaign)" />
-          {{ campaign }}
-        </label>
-      </div>
+        <div class="checkbox-columns">
+          <label *ngFor="let campaign of uniqueCampaigns" class="filter-label">
+            <input type="checkbox" [checked]="selectedCampaign === campaign" (change)="toggleCampaignSelection(campaign)" />
+            <span class="filter-text">{{ campaign }}</span>
+          </label>
+        </div>
+      </div>  
+      
   
       <div class="filter-options">
-        <input type="text" [(ngModel)]="searchText" (input)="filterMaps()" placeholder="Search maps..." />
+        <div class="search-box">
+          <input class="search-input" type="text" [(ngModel)]="searchText" (input)="filterMaps()" placeholder="Search maps..." />
+          <i class="fa-solid fa-search search-icon"></i>
+        </div>
       </div>
+      
+      
     </div>
   
     <div *ngIf="!showMapPage" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7">

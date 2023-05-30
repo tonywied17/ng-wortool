@@ -32,7 +32,6 @@ export class MapsComponent implements OnInit {
     this.getMaps();
   }
 
-
   setActiveMap(map: Map, index: number): void {
     this.currentMap = map;
     this.currentIndex = index;
@@ -54,23 +53,30 @@ export class MapsComponent implements OnInit {
     const campaigns = data.map((map) => map.campaign);
     return [...new Set(campaigns)];
   }
+
   
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
-
+  
     if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
       filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
     }
-
+  
     if (this.searchText) {
       filteredMap = filteredMap.filter((map) =>
         map.map?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
-
+  
+    if (!this.searchText && !this.filterByCampaign) {
+      this.selectedCampaigns = [];
+      this.selectedCampaign = '';
+    }
+  
     this.map = filteredMap;
   }
   
+
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
 
