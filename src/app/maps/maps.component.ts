@@ -37,6 +37,7 @@ export class MapsComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.updateFilterByCampaign();
     });
+    
   }
 
   updateFilterByCampaign(): void {

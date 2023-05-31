@@ -1,4 +1,4 @@
-<div class="lg:w-[90vw] w-[100vw - 2em] m-auto mt-[4em]">
+<div class="lg:w-[90vw] w-[100vw - 2em] m-auto mt-[4em] scroll-container">
 
   <div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-10">
 
@@ -96,11 +96,13 @@
 
 
     <div class="fixed bottom-4 right-4">
-      <button (click)="scrollToTop()" mat-stroked-button class="!text-[#a09e94] text-xl !p-[8px]">
-        <span class="text-xs mb-[-5px] block text-center !font-[300]">Top</span>
+      <button (click)="scrollToTop()" mat-mini-fab class="!text-[#a09e94] text-xl !bg-slate-700">
         <i class="fa-light fa-arrow-up-to-line"></i>
       </button>
     </div>
+    
+    
+    
 
 
   </div>
