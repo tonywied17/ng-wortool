@@ -125,7 +125,7 @@ export class MapsComponent implements OnInit {
     return this.selectedCampaigns.includes(campaign);
   }
   scrollToTop(): void {
-    window.scroll({
+    document.body.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth',
