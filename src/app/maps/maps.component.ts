@@ -121,7 +121,11 @@ export class MapsComponent implements OnInit {
     this.filterMaps();
   }
 
-
+  toggleFilterByCampaign(): void {
+    this.filterByCampaign = !this.filterByCampaign;
+  }
+  
+  
   isCampaignSelected(campaign: string): boolean {
     return this.selectedCampaigns.includes(campaign);
   }

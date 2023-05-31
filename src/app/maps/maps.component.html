@@ -4,15 +4,15 @@
 
     <div class="my-[1em] col-start-1 col-span-1">
 
-      <div style="position: sticky; top: 159px;">
+      <div style="position: sticky; top: 160px;" class="filter-container">
 
         <div class="filter-options">
           <div class="search-box">
-            <input class="search-input" type="text" [(ngModel)]="searchText" (input)="filterMaps()"
-              placeholder="Search maps..." />
+            <input class="search-input" type="text" [(ngModel)]="searchText" (input)="filterMaps()" placeholder="Search maps..." />
             <i class="fa-solid fa-search search-icon"></i>
           </div>
         </div>
+        
 
 
         <!--  -->
@@ -48,23 +48,25 @@
       <!-- Visible for mobile view -->
       <div class="lg:hidden inline-block">
         <div class="filter-options mt-[1em]">
-          <label class="filter-label">
-            <input type="checkbox" [(ngModel)]="filterByCampaign" (change)="filterMaps()" />
-            <span class="filter-text font-[900]">Filter by Campaign</span>
-          </label>
+          <span class="toggle-icon cursor-pointer !text-[#7c7d72] select-none" (click)="toggleFilterByCampaign()">
+            <span class="filter-toggle" [class.active]="filterByCampaign">
+              <i class="fa-light fa-square" *ngIf="!filterByCampaign"></i>
+              <i class="fa-solid fa-square-check" *ngIf="filterByCampaign"></i>
+            </span>
+            <span class="filter-text font-[900] pl-2">Filter by Campaign</span>
+          </span>
         </div>
-
         <div class="filter-options" *ngIf="filterByCampaign">
-          <div class="checkbox-columns">
+          <div class="checkbox-columns ml-[2em]">
             <label *ngFor="let campaign of uniqueCampaigns" class="filter-label">
-              <input type="checkbox" [checked]="isCampaignSelected(campaign)"
-                (change)="toggleCampaignSelection(campaign)" />
+              <input type="checkbox" [checked]="isCampaignSelected(campaign)" (change)="toggleCampaignSelection(campaign)" />
               <span class="filter-text">{{ campaign }}</span>
             </label>
           </div>
         </div>
       </div>
-
+      
+      
 
       <!--  -->
 
@@ -100,9 +102,6 @@
         <i class="fa-light fa-arrow-up-to-line"></i>
       </button>
     </div>
-    
-    
-    
 
 
   </div>

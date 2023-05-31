@@ -1,28 +1,28 @@
 .left-in{
-    animation: left-in .5s ease 0s 1 normal forwards;
+    animation: left-in .3s ease 0s 1 normal forwards;
 }
 
 .top-in{
-    animation: top-in .5s ease 0s 1 normal forwards;
+    animation: top-in .3s ease 0s 1 normal forwards;
 }
 
 .bottom-in{
-    animation: bottom-in .5s ease 0s 1 normal forwards;
+    animation: bottom-in .3s ease 0s 1 normal forwards;
 }
 
 .right-in{
-    animation: right-in .5s ease 0s 1 normal forwards;
+    animation: right-in .3s ease 0s 1 normal forwards;
 }
 
 .top-swing{
-    animation: top-swing .6s ease 0s 1 normal forwards;
+    animation: top-swing .3s ease 0s 1 normal forwards;
 }
 
 .bottom-swing{
-    animation: bottom-swing .6s ease 0s 1 normal forwards;
+    animation: bottom-swing .3s ease 0s 1 normal forwards;
 }
 .fade-center{
-	animation: fade-center 1s ease 0s 1 normal forwards;
+	animation: fade-center .5s ease 0s 1 normal forwards;
 }
 
 @keyframes left-in {
