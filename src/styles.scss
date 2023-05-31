@@ -223,6 +223,8 @@ $theme: (
 
 :root {
   color-scheme: dark;
+  --scrollbar-color: #888;
+  --scrollbar-thumb-color: #555;
 }
 
 // Handle buttons appropriately, with respect to line-height
@@ -252,7 +254,7 @@ $theme: (
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
+html, body { height: 100%; overflow-y:overlay; overflow-x: hidden;}
 body { margin: 0; font-family: 'Poppins', sans-serif; }
 
 
@@ -263,4 +265,13 @@ body { margin: 0; font-family: 'Poppins', sans-serif; }
 .active_btn{
   border-right: 3px solid #97978d !important;
   color: #97978d !important;
+}
+
+body::-webkit-scrollbar {
+  width: 8px; 
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color); /* Use the defined thumb color */
+  border-radius: 4px; /* Round the corners of the thumb */
 }

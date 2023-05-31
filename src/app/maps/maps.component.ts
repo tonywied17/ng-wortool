@@ -24,12 +24,31 @@ export class MapsComponent implements OnInit {
   uniqueCampaigns: string[] = [];
   filterByCampaign = false;
 
-  constructor(private mapService: MapService, private token: TokenStorageService, ) { }
+  constructor(private mapService: MapService, private token: TokenStorageService,) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
     this.getMaps();
+
+    this.updateFilterByCampaign(); // Update filterByCampaign on component initialization
+
+    // Listen for window resize event
+    window.addEventListener('resize', () => {
+      this.updateFilterByCampaign();
+    });
+  }
+
+  updateFilterByCampaign(): void {
+    if (this.isMobileView()) {
+      this.filterByCampaign = false; // Disable "Filter by Campaign" checkbox in mobile view
+    } else {
+      this.filterByCampaign = true; // Enable "Filter by Campaign" checkbox in desktop view
+    }
+  }
+
+  isMobileView(): boolean {
+    return window.innerWidth <= 1024; // Adjust the breakpoint according to your needs
   }
 
   setActiveMap(map: Map, index: number): void {
@@ -54,28 +73,28 @@ export class MapsComponent implements OnInit {
     return [...new Set(campaigns)];
   }
 
-  
+
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
-  
+
     if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
       filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
     }
-  
+
     if (this.searchText) {
       filteredMap = filteredMap.filter((map) =>
         map.map?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
-  
+
     if (!this.searchText && !this.filterByCampaign) {
       this.selectedCampaigns = [];
       this.selectedCampaign = '';
     }
-  
+
     this.map = filteredMap;
   }
-  
+
 
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
@@ -100,16 +119,16 @@ export class MapsComponent implements OnInit {
 
     this.filterMaps();
   }
-  
+
 
   isCampaignSelected(campaign: string): boolean {
     return this.selectedCampaigns.includes(campaign);
   }
-  scroll() {
+  scrollToTop(): void {
     window.scroll({
       top: 0,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 }
