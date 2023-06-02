@@ -280,3 +280,23 @@ body::-webkit-scrollbar-thumb {
   background-color: #7c7d72;
   color: #131b2a;
 }
+
+.mat-checkbox-label{
+  margin: 0; font-family: 'Poppins', sans-serif;
+  color: #7c7d72;
+  font-weight: 300;
+  transition: all .3s ease; 
+}
+mat-checkbox {
+  color: #7c7d72 !important;
+  transition: all .3s ease !important; 
+}
+mat-checkbox:hover{
+  color: #9d9e96 !important;
+  transform: translateX(0.25em);
+}
+
+.mat-checkbox-background {
+  border-color: #888278; /* Replace #f00 with your desired border color */
+  border-width: 2px; /* Adjust the border width as needed */
+}

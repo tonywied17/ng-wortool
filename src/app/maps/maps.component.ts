@@ -22,7 +22,10 @@ export class MapsComponent implements OnInit {
   selectedCampaign: string = '';
   selectedCampaigns: string[] = [];
   uniqueCampaigns: string[] = [];
-  filterByCampaign = false;
+  filterByCampaign = true;
+  filterByCampaignDiv: any;
+
+  showArtyDiv = false;
 
   constructor(private mapService: MapService, private token: TokenStorageService,) { }
 
@@ -37,41 +40,39 @@ export class MapsComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.updateFilterByCampaign();
     });
-    
+
   }
+  filterByArtillery = false;
+  filterByUsaArtillery = false;
+  filterByCsaArtillery = false;
 
-filterByArtillery = false;
-
-filterMapsByArtillery(): void {
-  let filteredMap: Map[] = this.originalMap || [];
-
-  if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
-    filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+  filterMapsByArtillery(): void {
+    let filteredMap: Map[] = this.originalMap || [];
+  
+    if (this.filterByUsaArtillery) {
+      filteredMap = filteredMap.filter((map) => map.usaArty);
+    }
+  
+    if (this.filterByCsaArtillery) {
+      filteredMap = filteredMap.filter((map) => map.csaArty);
+    }
+  
+    if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
+      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+    }
+  
+    if (this.searchText) {
+      filteredMap = filteredMap.filter((map) =>
+        map.map?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+  
+    this.map = filteredMap;
   }
-
-  if (this.searchText) {
-    filteredMap = filteredMap.filter((map) =>
-      map.map?.toLowerCase().includes(this.searchText.toLowerCase())
-    );
-  }
-
-  if (this.filterByArtillery) {
-    filteredMap = filteredMap.filter((map) =>
-      map.usaArty || map.csaArty
-    );
-  }
-
-  if (!this.searchText && !this.filterByCampaign && !this.filterByArtillery) {
-    this.selectedCampaigns = [];
-    this.selectedCampaign = '';
-  }
-
-  this.map = filteredMap;
-}
 
   updateFilterByCampaign(): void {
     if (this.isMobileView()) {
-      this.filterByCampaign = false; // Disable "Filter by Campaign" checkbox in mobile view
+      this.filterByCampaign = true; // Disable "Filter by Campaign" checkbox in mobile view
     } else {
       this.filterByCampaign = true; // Enable "Filter by Campaign" checkbox in desktop view
     }
@@ -106,22 +107,25 @@ filterMapsByArtillery(): void {
 
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
-
+  
     if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
       filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
     }
-
+  
     if (this.searchText) {
       filteredMap = filteredMap.filter((map) =>
         map.map?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
-
-    if (!this.searchText && !this.filterByCampaign) {
-      this.selectedCampaigns = [];
-      this.selectedCampaign = '';
+  
+    if (this.filterByUsaArtillery) {
+      filteredMap = filteredMap.filter((map) => map.usaArty);
     }
-
+  
+    if (this.filterByCsaArtillery) {
+      filteredMap = filteredMap.filter((map) => map.csaArty);
+    }
+  
     this.map = filteredMap;
   }
 
@@ -151,14 +155,18 @@ filterMapsByArtillery(): void {
   }
 
   toggleFilterByCampaign(): void {
-    this.filterByCampaign = !this.filterByCampaign;
+    this.filterByCampaignDiv = !this.filterByCampaignDiv;
   }
+
 
   toggleFilterByArtillery(): void {
     this.filterByArtillery = !this.filterByArtillery;
   }
-  
-  
+
+  toggleArtyDiv(): void {
+    this.showArtyDiv = !this.showArtyDiv;
+  }
+
   isCampaignSelected(campaign: string): boolean {
     return this.selectedCampaigns.includes(campaign);
   }
