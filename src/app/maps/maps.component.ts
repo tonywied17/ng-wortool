@@ -1,25 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MapService } from '../_services/map.service';
-import { TokenStorageService } from '../_services/token-storage.service';
-import { Map } from '../_models/map.model';
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { MapService } from "../_services/map.service";
+import { TokenStorageService } from "../_services/token-storage.service";
+import { Map } from "../_models/map.model";
 
 @Component({
-  selector: 'app-maps',
-  templateUrl: './maps.component.html',
-  styleUrls: ['./maps.component.scss']
+  selector: "app-maps",
+  templateUrl: "./maps.component.html",
+  styleUrls: ["./maps.component.scss"],
 })
 export class MapsComponent implements OnInit {
-
   map?: Map[];
   currentMap: Map = {};
-  currentIndex = -1
+  currentIndex = -1;
   showMapPage = false;
   loading = true;
   currentUser: any;
   isLoggedIn = false;
   originalMap?: Map[];
-  searchText: string = '';
-  selectedCampaign: string = '';
+  searchText: string = "";
+  selectedCampaign: string = "";
   selectedCampaigns: string[] = [];
   uniqueCampaigns: string[] = [];
   filterByCampaign = true;
@@ -30,7 +29,6 @@ export class MapsComponent implements OnInit {
   filterByUsaAttacker = false;
   selectedAttacker: string | undefined;
 
-
   filterByArtillery = false;
   filterByUsaArtillery = false;
   filterByCsaArtillery = false;
@@ -38,20 +36,54 @@ export class MapsComponent implements OnInit {
   showArtyDiv = false;
   showAttackerDiv: boolean = false;
 
-  constructor(private mapService: MapService, private token: TokenStorageService,) { }
+  constructor(
+    private mapService: MapService,
+    private token: TokenStorageService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
+
+    this.retrieveFilterState(); // Retrieve filter state from local storage
+
     this.getMaps();
 
+    setTimeout(() => {
+      this.filterMaps();
+    }, 75);
   }
 
+  retrieveFilterState(): void {
+    const savedFilterState = localStorage.getItem("filterState");
+    if (savedFilterState) {
+      const filterState = JSON.parse(savedFilterState);
+      this.selectedCampaigns = filterState.selectedCampaigns;
+      this.selectedAttacker = filterState.selectedAttacker;
+      this.filterByUsaArtillery = filterState.filterByUsaArtillery;
+      this.filterByCsaArtillery = filterState.filterByCsaArtillery;
+      this.searchText = filterState.searchText;
+      this.filterByCampaign = filterState.filterByCampaign;
+    }
+  }
+
+  saveFilterState(): void {
+    const filterState = {
+      selectedCampaigns: this.selectedCampaigns,
+      selectedAttacker: this.selectedAttacker,
+      filterByUsaArtillery: this.filterByUsaArtillery,
+      filterByCsaArtillery: this.filterByCsaArtillery,
+      searchText: this.searchText,
+      filterByCampaign: this.filterByCampaign,
+    };
+    localStorage.setItem("filterState", JSON.stringify(filterState));
+  }
 
   setActiveMap(map: Map, index: number): void {
     this.currentMap = map;
     this.currentIndex = index;
-    this.showMapPage = true
+    this.showMapPage = true;
   }
 
   getMaps(): void {
@@ -61,7 +93,7 @@ export class MapsComponent implements OnInit {
         this.originalMap = data;
         this.uniqueCampaigns = this.getUniqueCampaigns(data);
       },
-      error: (e) => console.error(e)
+      error: (e) => console.error(e),
     });
   }
 
@@ -70,16 +102,15 @@ export class MapsComponent implements OnInit {
     return [...new Set(campaigns)];
   }
 
-
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
 
-    if (this.selectedAttacker === 'USA') {
-      filteredMap = filteredMap.filter((map) => map.attacker === 'USA');
+    if (this.selectedAttacker === "USA") {
+      filteredMap = filteredMap.filter((map) => map.attacker === "USA");
     }
-  
-    if (this.selectedAttacker === 'CSA') {
-      filteredMap = filteredMap.filter((map) => map.attacker === 'CSA');
+
+    if (this.selectedAttacker === "CSA") {
+      filteredMap = filteredMap.filter((map) => map.attacker === "CSA");
     }
 
     if (this.filterByUsaArtillery) {
@@ -91,7 +122,9 @@ export class MapsComponent implements OnInit {
     }
 
     if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
-      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+      filteredMap = filteredMap.filter((map) =>
+        this.selectedCampaigns.includes(map.campaign)
+      );
     }
 
     if (this.searchText) {
@@ -101,8 +134,9 @@ export class MapsComponent implements OnInit {
     }
 
     this.map = filteredMap;
+
+    this.saveFilterState();
   }
-  
 
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
@@ -150,28 +184,27 @@ export class MapsComponent implements OnInit {
 
   clearFilters(): void {
     // Clear search text
-    this.searchText = '';
-  
+    this.searchText = "";
+
     // Clear campaign checkboxes
     this.selectedCampaigns = [];
-  
+
     // Clear USA/CSA artillery checkboxes
     this.filterByUsaArtillery = false;
     this.filterByCsaArtillery = false;
-  
+
     // Clear attacker radio buttons
-    this.selectedAttacker = '';
-  
+    this.selectedAttacker = "";
+
     // Filter the maps based on the cleared filters
     this.filterMaps();
   }
-  
 
   scrollToTop(): void {
     document.body.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }
 }

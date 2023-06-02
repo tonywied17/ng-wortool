@@ -1,217 +1,259 @@
 <div class="lg:w-[90vw] w-[100vw - 2em] m-auto lg:mt-[4em] scroll-container">
 
-  <div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-14">
+	<div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-14">
 
-    <div class="my-[1em] col-start-1 col-span-1">
+		<div class="my-[1em] col-start-1 col-span-1">
 
-      <div class="filter-container lg:top-[160px] lg:sticky">
+			<div class="filter-container lg:top-[160px] lg:sticky">
 
-        <div class="filter-options">
-          <div class="search-box">
-            <input class="search-input" type="text" [(ngModel)]="searchText" (input)="filterMaps()"
-              placeholder="Search maps..." />
-            <i class="fa-solid fa-search search-icon"></i>
-          </div>
-        </div>
-
-
-        <!-- Hidden for mobile view -->
-        <div class="hidden lg:inline-block lg:w-[75%]">
-          <div class="filter-options mt-[1em]">
-            <label class="filter-label">
-              <input disabled="true" class="hidden" type="checkbox" [(ngModel)]="filterByCampaign"
-                (change)="filterMaps()" />
-              <span class="filter-text test">Filter by Campaign</span>
-
-            </label>
-          </div>
-
-          <div class="filter-options" *ngIf="filterByCampaign">
-            <div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
-              <mat-checkbox *ngFor="let campaign of uniqueCampaigns" [checked]="isCampaignSelected(campaign)"
-                (change)="toggleCampaignSelection(campaign)">
-                {{ campaign }}
-              </mat-checkbox>
-            </div>
-          </div>
+				<div class="filter-options">
+					<div class="search-box">
+						<input [(ngModel)]="searchText"
+							(input)="filterMaps()"
+							class="search-input"
+							type="text"
+							placeholder="Search maps...">
+						<i class="fa-solid fa-search search-icon"></i>
+					</div>
+				</div>
 
 
+				<!-- Hidden for mobile view -->
+				<div class="hidden lg:inline-block lg:w-[75%]">
+					<div class="filter-options mt-[1em]">
+						<label class="filter-label">
+							<input [(ngModel)]="filterByCampaign"
+								(change)="filterMaps()"
+								disabled="true"
+								class="hidden"
+								type="checkbox">
+							<span class="filter-text test">Filter by Campaign</span>
+						</label>
+					</div>
+					<div *ngIf="filterByCampaign"
+						class="filter-options">
+						<div class="checkbox-columns p-[1em] mt-[-16px]"
+							style="border-left: dotted 1px #7c7d738f;">
+							<mat-checkbox *ngFor="let campaign of uniqueCampaigns"
+								[checked]="isCampaignSelected(campaign)"
+								(change)="toggleCampaignSelection(campaign)">
+								{{ campaign }}
+							</mat-checkbox>
+						</div>
+					</div>
 
-          <div class="filter-options mt-[1em]">
-            <label class="filter-label">
-              <span class="filter-text test">Filter by Artillery</span>
-            </label>
-          </div>
+					<div class="filter-options mt-[1em]">
+						<label class="filter-label">
+							<span class="filter-text test">Filter by Artillery</span>
+						</label>
+					</div>
+					<div class="filter-options">
+						<div class="checkbox-columns p-[1em] mt-[-16px]"
+							style="border-left: dotted 1px #7c7d738f;">
+							<mat-checkbox [(ngModel)]="filterByUsaArtillery"
+								(change)="filterMaps()">
+								USA Artillery
+							</mat-checkbox>
+							<mat-checkbox [(ngModel)]="filterByCsaArtillery"
+								(change)="filterMaps()">
+								CSA Artillery
+							</mat-checkbox>
+						</div>
+					</div>
 
-          <div class="filter-options">
-            <div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
-              <mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMaps()">
-                USA Artillery
-              </mat-checkbox>
-              <mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMaps()">
-                CSA Artillery
-              </mat-checkbox>
-            </div>
-          </div>
+					<div class="filter-options mt-[1em]">
+						<label class="filter-label">
+							<span class="filter-text test">Filter by Attacker</span>
+						</label>
+					</div>
+					<div class="filter-options">
+						<div class="checkbox-columns p-[1em] mt-[-16px]"
+							style="border-left: dotted 1px #7c7d738f;">
+							<mat-radio-group [(ngModel)]="selectedAttacker"
+								(change)="filterMaps()">
+								<mat-radio-button value="USA">USA Attacker</mat-radio-button>
+								<mat-radio-button value="CSA"
+									class="mt-[0.5em]">
+									CSA Attacker
+								</mat-radio-button>
+								<mat-radio-button value="none"
+									class="mt-[0.5em]">
+									Either/Or
+								</mat-radio-button>
+							</mat-radio-group>
+						</div>
+					</div>
 
-          <div class="filter-options mt-[1em]">
-            <label class="filter-label">
-              <span class="filter-text test">Filter by Attacker</span>
-            </label>
-          </div>
-          
-          <div class="filter-options">
-            <div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
-              <mat-radio-group [(ngModel)]="selectedAttacker" (change)="filterMaps()">
-                <mat-radio-button value="USA">USA Attacker</mat-radio-button>
-                <mat-radio-button value="CSA" class="mt-[0.5em]">CSA Attacker</mat-radio-button>
-                <mat-radio-button value="none" class="mt-[0.5em]">Either/Or</mat-radio-button>
-              </mat-radio-group>
-            </div> 
-          </div>
-          
-          
-          
+					<div class="text-right">
+						<button (click)="clearFilters()"
+							mat-button
+							color="primary"
+							class="!mr-2">
+							Clear Filters
+						</button>
+						<button (click)="scrollToTop()"
+							mat-stroked-button
+							color="primary">
+							Scroll to Top
+						</button>
+					</div>
 
-          <div class="text-right">
-            <button (click)="clearFilters()" mat-button color="primary" class="!mr-2">Clear Filters</button>
-            <button (click)="scrollToTop()" mat-stroked-button color="primary">Scroll to Top</button>
-          </div>
-
-
-        </div>
-
-
-
-      </div>
-
-
-      <!-- Visible for mobile view -->
-      <div class="lg:hidden inline-block left-in w-full">
-        <div class="filter-options mt-[1em]">
-          <span class="toggle-icon cursor-pointer !text-[#7c7d72] select-none" (click)="toggleFilterByCampaign()">
-            <span class="filter-text test">
-              <span class="filter-toggle" [class.active]="filterByCampaignDiv">
-                <i class="fa-sharp fa-solid fa-plus" *ngIf="!filterByCampaignDiv"></i>
-                <i class="fa-sharp fa-solid fa-minus" *ngIf="filterByCampaignDiv"></i>
-              </span>
-              Filter by Campaign
-            </span>
-          </span>
-        </div>
-        <div class="filter-options" *ngIf="filterByCampaignDiv">
-          <div class="checkbox-columns ml-[1em]">
-            <mat-checkbox *ngFor="let campaign of uniqueCampaigns" [checked]="isCampaignSelected(campaign)"
-              (change)="toggleCampaignSelection(campaign)">
-              {{ campaign }}
-            </mat-checkbox>
-          </div>
-        </div>
-
-        <div class="filter-options mt-[1em]">
-          <label class="filter-label">
-            <span class="toggle-icon cursor-pointer !text-[#7c7d72] select-none" (click)="toggleArtyDiv()">
-              <span class="filter-text test">
-                <span class="filter-toggle" [class.active]="showArtyDiv">
-                  <i class="fa-sharp fa-solid fa-plus" *ngIf="!showArtyDiv"></i>
-                  <i class="fa-sharp fa-solid fa-minus" *ngIf="showArtyDiv"></i>
-                </span>
-                Filter by Artillery
-              </span>
-            </span>
-          </label>
-        </div>
-
-        <div *ngIf="showArtyDiv">
-          <div class="filter-options">
-            <div class="checkbox-columns ml-[1em]">
-              <mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMaps()">
-                USA Artillery
-              </mat-checkbox>
-
-              <mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMaps()">
-                CSA Artillery
-              </mat-checkbox>
-            </div>
-          </div>
-        </div>
+				</div>
+			</div>
 
 
-        <div class="filter-options">
-          <label class="filter-label">
-            <span class="toggle-icon cursor-pointer !text-[#7c7d72] select-none" (click)="toggleAttackerDiv()">
-              <span class="filter-text test">
-                <span class="filter-toggle" [class.active]="showAttackerDiv">
-                  <i class="fa-sharp fa-solid fa-plus" *ngIf="!showAttackerDiv"></i>
-                  <i class="fa-sharp fa-solid fa-minus" *ngIf="showAttackerDiv"></i>
-                </span>
-                Filter by Attacker
-              </span>
-            </span>
-          </label>
-        </div>
-        
-        <div *ngIf="showAttackerDiv">
-          <div class="filter-options">
-            <div class="checkbox-columns ml-[1em]">
-              <mat-radio-group [(ngModel)]="selectedAttacker" (change)="filterMaps()">
-                <mat-radio-button value="USA">USA Attacker</mat-radio-button>
-                <mat-radio-button value="CSA" class="mt-[0.5em]">CSA Attacker</mat-radio-button>
-                <mat-radio-button value="none" class="mt-[0.5em]">No Preference</mat-radio-button>
-              </mat-radio-group>
-            </div>
-          </div>
-        </div>
-        
+			<!-- Visible for mobile view -->
+			<div class="lg:hidden inline-block left-in w-full">
+				<div class="filter-options mt-[1em]">
+					<span (click)="toggleFilterByCampaign()"
+						class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+						<span class="filter-text test">
+							<span [class.active]="filterByCampaignDiv"
+								class="filter-toggle">
+								<i *ngIf="!filterByCampaignDiv"
+									class="fa-sharp fa-solid fa-plus"></i>
+								<i *ngIf="filterByCampaignDiv"
+									class="fa-sharp fa-solid fa-minus"></i>
+							</span>
+							Filter by Campaign
+						</span>
+					</span>
+				</div>
+				<div *ngIf="filterByCampaignDiv"
+					class="filter-options">
+					<div class="checkbox-columns ml-[1em]">
+						<mat-checkbox *ngFor="let campaign of uniqueCampaigns"
+							[checked]="isCampaignSelected(campaign)"
+							(change)="toggleCampaignSelection(campaign)">
+							{{ campaign }}
+						</mat-checkbox>
+					</div>
+				</div>
 
-        <button (click)="clearFilters()" mat-button color="primary" class="float-right">Clear Filters</button>
-      </div>
+				<div class="filter-options mt-[1em]">
+					<label class="filter-label">
+						<span (click)="toggleArtyDiv()"
+							class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+							<span class="filter-text test">
+								<span [class.active]="showArtyDiv"
+									class="filter-toggle">
+									<i *ngIf="!showArtyDiv"
+										class="fa-sharp fa-solid fa-plus"></i>
+									<i *ngIf="showArtyDiv"
+										class="fa-sharp fa-solid fa-minus"></i>
+								</span>
+								Filter by Artillery
+							</span>
+						</span>
+					</label>
+				</div>
+				<div *ngIf="showArtyDiv">
+					<div class="filter-options">
+						<div class="checkbox-columns ml-[1em]">
+							<mat-checkbox [(ngModel)]="filterByUsaArtillery"
+								(change)="filterMaps()">
+								USA Artillery
+							</mat-checkbox>
+							<mat-checkbox [(ngModel)]="filterByCsaArtillery"
+								(change)="filterMaps()">
+								CSA Artillery
+							</mat-checkbox>
+						</div>
+					</div>
+				</div>
+
+				<div class="filter-options">
+					<label class="filter-label">
+						<span (click)="toggleAttackerDiv()"
+							class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+							<span class="filter-text test">
+								<span [class.active]="showAttackerDiv"
+									class="filter-toggle">
+									<i *ngIf="!showAttackerDiv"
+										class="fa-sharp fa-solid fa-plus"></i>
+									<i *ngIf="showAttackerDiv"
+										class="fa-sharp fa-solid fa-minus"></i>
+								</span>
+								Filter by Attacker
+							</span>
+						</span>
+					</label>
+				</div>
+				<div *ngIf="showAttackerDiv">
+					<div class="filter-options">
+						<div class="checkbox-columns ml-[1em]">
+							<mat-radio-group [(ngModel)]="selectedAttacker"
+								(change)="filterMaps()">
+								<mat-radio-button value="USA">USA Attacker</mat-radio-button>
+								<mat-radio-button value="CSA"
+									class="mt-[0.5em]">
+									CSA Attacker
+								</mat-radio-button>
+								<mat-radio-button value="none"
+									class="mt-[0.5em]">
+									No Preference
+								</mat-radio-button>
+							</mat-radio-group>
+						</div>
+					</div>
+				</div>
+
+				<button (click)="clearFilters()"
+					mat-button
+					color="primary"
+					class="float-right">
+					Clear Filters
+				</button>
+			</div>
+
+		</div>
 
 
-      <!--  -->
-
-    </div>
-
-    <!--  -->
-    <div class="lg:col-start-2 lg:col-span-3">
-      <div *ngIf="!showMapPage" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7">
-        <div class="bg-slate-800/80 rounded-lg py-4 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load"
-          *ngFor="let map of map; index as i;">
-          <h4>
-            <span class="text-white/90 text-xl font-serif tracking-tight px-4 pb-1 text-left">{{ map.map }}</span>
-            <span class="text-slate-400/80 text-sm px-4 font-serif tracking-tight text-right float-right">{{
-              map.campaign }}</span>
-          </h4>
-          <div class="rounded-sm my-2 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
-            style="background-image: url('https://app.paarmy.com/{{map.image}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;">
-          </div>
-
-          <div class="px-2 mb-[-8px] text-right">
-            <button mat-button color="accent" class="text-[15px] font-[500]" [class.active]="i == currentIndex"
-              [routerLink]="map.id">
-              Enhance <i class="fa-solid fa-magnifying-glass" style="margin-left:5px;margin-top:-2px;"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+		<!--  -->
+		<div class="lg:col-start-2 lg:col-span-3">
+			<div *ngIf="!showMapPage"
+				class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7">
+				<div *ngFor="let map of map; index as i;"
+					class="bg-slate-800/80 rounded-lg py-4 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load">
+					<h4>
+						<span class="text-white/90 text-xl font-serif tracking-tight px-4 pb-1 text-left">{{ map.map }}</span>
+						<span class="text-slate-400/80 text-sm px-4 font-serif tracking-tight text-right float-right">
+							{{
+              map.campaign }}
+						</span>
+					</h4>
+					<div class="rounded-sm my-2 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
+						style="background-image: url('https://app.paarmy.com/{{map.image}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;">
+					</div>
 
 
-    <div class="fixed bottom-4 right-4">
-      <button (click)="scrollToTop()" mat-mini-fab class="!text-[#a09e94] text-xl !bg-slate-700">
-        <i class="fa-light fa-arrow-up-to-line"></i>
-      </button>
-    </div>
+					<div class="px-2 mb-[-8px] text-right">
+						<button [class.active]="i == currentIndex"
+							[routerLink]="map.id"
+							mat-button
+							color="accent"
+							class="text-[15px] font-[500]">
+							Enhance
+							<i class="fa-solid fa-magnifying-glass"
+								style="margin-left:5px;margin-top:-2px;"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
+		<div class="fixed bottom-4 right-4">
+			<button (click)="scrollToTop()"
+				mat-mini-fab
+				class="!text-[#a09e94] text-xl !bg-slate-700">
+				<i class="fa-light fa-arrow-up-to-line"></i>
+			</button>
+		</div>
 
-  </div>
+	</div>
 
-
-
-
-
-
-  <app-map-details *ngIf="showMapPage" [viewMode]="true" [currentMap]="currentMap"></app-map-details>
-
+	<app-map-details *ngIf="showMapPage"
+		[viewMode]="true"
+		[currentMap]="currentMap"></app-map-details>
 
 </div>
