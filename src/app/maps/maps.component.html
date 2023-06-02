@@ -82,6 +82,16 @@
             </label>
           </div>
         </div>
+
+        <div class="filter-options">
+          <div class="p-[1em] mt-[-16px]">
+            <label class="filter-label !inline-block">
+              <input type="checkbox" [(ngModel)]="filterByArtillery" (change)="filterMapsByArtillery()">
+              <span class="filter-text">Has Artillery</span>
+            </label>
+          </div>
+        </div>
+
       </div>
 
 

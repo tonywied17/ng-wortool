@@ -153,11 +153,17 @@ filterMapsByArtillery(): void {
   toggleFilterByCampaign(): void {
     this.filterByCampaign = !this.filterByCampaign;
   }
+
+  toggleFilterByArtillery(): void {
+    this.filterByArtillery = !this.filterByArtillery;
+  }
   
   
   isCampaignSelected(campaign: string): boolean {
     return this.selectedCampaigns.includes(campaign);
   }
+
+
   scrollToTop(): void {
     document.body.scrollTo({
       top: 0,

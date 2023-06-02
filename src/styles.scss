@@ -275,3 +275,8 @@ body::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color); /* Use the defined thumb color */
   border-radius: 4px; /* Round the corners of the thumb */
 }
+
+::selection {
+  background-color: #7c7d72;
+  color: #131b2a;
+}
