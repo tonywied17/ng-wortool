@@ -48,25 +48,25 @@ export class MapsComponent implements OnInit {
 
   filterMapsByArtillery(): void {
     let filteredMap: Map[] = this.originalMap || [];
-  
+
     if (this.filterByUsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.usaArty);
     }
-  
+
     if (this.filterByCsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.csaArty);
     }
-  
+
     if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
       filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
     }
-  
+
     if (this.searchText) {
       filteredMap = filteredMap.filter((map) =>
         map.map?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
-  
+
     this.map = filteredMap;
   }
 
@@ -107,25 +107,25 @@ export class MapsComponent implements OnInit {
 
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
-  
+
     if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
       filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
     }
-  
+
     if (this.searchText) {
       filteredMap = filteredMap.filter((map) =>
         map.map?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
-  
+
     if (this.filterByUsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.usaArty);
     }
-  
+
     if (this.filterByCsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.csaArty);
     }
-  
+
     this.map = filteredMap;
   }
 
@@ -171,6 +171,20 @@ export class MapsComponent implements OnInit {
     return this.selectedCampaigns.includes(campaign);
   }
 
+  clearFilters(): void {
+    // Clear search text
+    this.searchText = '';
+
+    // Clear campaign checkboxes
+    this.selectedCampaigns = [];
+
+    // Clear USA/CSA artillery checkboxes
+    this.filterByUsaArtillery = false;
+    this.filterByCsaArtillery = false;
+
+    // Filter the maps based on the cleared filters
+    this.filterMaps();
+  }
 
   scrollToTop(): void {
     document.body.scrollTo({
