@@ -22,7 +22,7 @@
               <input disabled="true" class="hidden" type="checkbox" [(ngModel)]="filterByCampaign"
                 (change)="filterMaps()" />
               <span class="filter-text test">Filter by Campaign</span>
-              
+
             </label>
           </div>
 
@@ -35,7 +35,7 @@
             </div>
           </div>
 
-          
+
 
           <div class="filter-options mt-[1em]">
             <label class="filter-label">
@@ -57,10 +57,10 @@
 
           <div class="text-right">
             <button (click)="clearFilters()" mat-button color="primary" class="!mr-2">Clear Filters</button>
-          <button (click)="scrollToTop()" mat-stroked-button color="primary">Scroll to Top</button>
+            <button (click)="scrollToTop()" mat-stroked-button color="primary">Scroll to Top</button>
           </div>
-          
-          
+
+
         </div>
 
 
@@ -117,6 +117,8 @@
             </div>
           </div>
         </div>
+
+        <button (click)="clearFilters()" mat-button color="primary" class="float-right">Clear Filters</button>
       </div>
 
 

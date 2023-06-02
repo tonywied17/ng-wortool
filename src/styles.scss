@@ -272,8 +272,8 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-color); /* Use the defined thumb color */
-  border-radius: 4px; /* Round the corners of the thumb */
+  background-color: var(--scrollbar-thumb-color); 
+  border-radius: 4px;
 }
 
 ::selection {
@@ -297,6 +297,6 @@ mat-checkbox:hover{
 }
 
 .mat-checkbox-background {
-  border-color: #888278; /* Replace #f00 with your desired border color */
-  border-width: 2px; /* Adjust the border width as needed */
+  border-color: #888278; 
+  border-width: 2px; 
 }
