@@ -40,6 +40,35 @@ export class MapsComponent implements OnInit {
     
   }
 
+filterByArtillery = false;
+
+filterMapsByArtillery(): void {
+  let filteredMap: Map[] = this.originalMap || [];
+
+  if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
+    filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+  }
+
+  if (this.searchText) {
+    filteredMap = filteredMap.filter((map) =>
+      map.map?.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
+
+  if (this.filterByArtillery) {
+    filteredMap = filteredMap.filter((map) =>
+      map.usaArty || map.csaArty
+    );
+  }
+
+  if (!this.searchText && !this.filterByCampaign && !this.filterByArtillery) {
+    this.selectedCampaigns = [];
+    this.selectedCampaign = '';
+  }
+
+  this.map = filteredMap;
+}
+
   updateFilterByCampaign(): void {
     if (this.isMobileView()) {
       this.filterByCampaign = false; // Disable "Filter by Campaign" checkbox in mobile view

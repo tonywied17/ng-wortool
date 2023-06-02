@@ -8,11 +8,12 @@
 
         <div class="filter-options">
           <div class="search-box">
-            <input class="search-input" type="text" [(ngModel)]="searchText" (input)="filterMaps()" placeholder="Search maps..." />
+            <input class="search-input" type="text" [(ngModel)]="searchText" (input)="filterMaps()"
+              placeholder="Search maps..." />
             <i class="fa-solid fa-search search-icon"></i>
           </div>
         </div>
-        
+
 
 
         <!--  -->
@@ -37,11 +38,27 @@
           </div>
 
 
+          <div class="filter-options mt-[1em]">
+            <label class="filter-label">
+              <span class="filter-text test">Filter by Artillery</span>
+            </label>
+          </div>
+
+          <div class="filter-options">
+            <div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
+              <label class="filter-label !inline-block">
+                <input type="checkbox" [(ngModel)]="filterByArtillery" (change)="filterMapsByArtillery()">
+                <span class="filter-text">Has Artillery</span>
+              </label>
+            </div>
+          </div>
+
+
           <button (click)="scrollToTop()" mat-stroked-button color="primary">Scroll to Top</button>
 
         </div>
 
-        
+
       </div>
 
 
@@ -59,14 +76,15 @@
         <div class="filter-options" *ngIf="filterByCampaign">
           <div class="checkbox-columns ml-[2em]">
             <label *ngFor="let campaign of uniqueCampaigns" class="filter-label">
-              <input type="checkbox" [checked]="isCampaignSelected(campaign)" (change)="toggleCampaignSelection(campaign)" />
+              <input type="checkbox" [checked]="isCampaignSelected(campaign)"
+                (change)="toggleCampaignSelection(campaign)" />
               <span class="filter-text">{{ campaign }}</span>
             </label>
           </div>
         </div>
       </div>
-      
-      
+
+
 
       <!--  -->
 
