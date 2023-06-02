@@ -45,15 +45,33 @@
 
           <div class="filter-options">
             <div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
-              <mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMapsByArtillery()">
+              <mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMaps()">
                 USA Artillery
               </mat-checkbox>
-
-              <mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMapsByArtillery()">
+              <mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMaps()">
                 CSA Artillery
               </mat-checkbox>
             </div>
           </div>
+
+          <div class="filter-options mt-[1em]">
+            <label class="filter-label">
+              <span class="filter-text test">Filter by Attacker</span>
+            </label>
+          </div>
+          
+          <div class="filter-options">
+            <div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
+              <mat-radio-group [(ngModel)]="selectedAttacker" (change)="filterMaps()">
+                <mat-radio-button value="USA">USA Attacker</mat-radio-button>
+                <mat-radio-button value="CSA" class="mt-[0.5em]">CSA Attacker</mat-radio-button>
+                <mat-radio-button value="none" class="mt-[0.5em]">Either/Or</mat-radio-button>
+              </mat-radio-group>
+            </div> 
+          </div>
+          
+          
+          
 
           <div class="text-right">
             <button (click)="clearFilters()" mat-button color="primary" class="!mr-2">Clear Filters</button>
@@ -107,16 +125,44 @@
         <div *ngIf="showArtyDiv">
           <div class="filter-options">
             <div class="checkbox-columns ml-[1em]">
-              <mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMapsByArtillery()">
+              <mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMaps()">
                 USA Artillery
               </mat-checkbox>
 
-              <mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMapsByArtillery()">
+              <mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMaps()">
                 CSA Artillery
               </mat-checkbox>
             </div>
           </div>
         </div>
+
+
+        <div class="filter-options">
+          <label class="filter-label">
+            <span class="toggle-icon cursor-pointer !text-[#7c7d72] select-none" (click)="toggleAttackerDiv()">
+              <span class="filter-text test">
+                <span class="filter-toggle" [class.active]="showAttackerDiv">
+                  <i class="fa-sharp fa-solid fa-plus" *ngIf="!showAttackerDiv"></i>
+                  <i class="fa-sharp fa-solid fa-minus" *ngIf="showAttackerDiv"></i>
+                </span>
+                Filter by Attacker
+              </span>
+            </span>
+          </label>
+        </div>
+        
+        <div *ngIf="showAttackerDiv">
+          <div class="filter-options">
+            <div class="checkbox-columns ml-[1em]">
+              <mat-radio-group [(ngModel)]="selectedAttacker" (change)="filterMaps()">
+                <mat-radio-button value="USA">USA Attacker</mat-radio-button>
+                <mat-radio-button value="CSA" class="mt-[0.5em]">CSA Attacker</mat-radio-button>
+                <mat-radio-button value="none" class="mt-[0.5em]">No Preference</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+        
 
         <button (click)="clearFilters()" mat-button color="primary" class="float-right">Clear Filters</button>
       </div>

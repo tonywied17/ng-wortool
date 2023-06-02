@@ -6,6 +6,7 @@ export class Map {
     csaArty?: any;
     campaign?: any;
     youtube?: any;
+    attacker?: any;
     strat?: any;
     notes?: any;
 }

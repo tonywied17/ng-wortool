@@ -25,7 +25,18 @@ export class MapsComponent implements OnInit {
   filterByCampaign = true;
   filterByCampaignDiv: any;
 
+  filterByAttacker = false;
+  filterByCsaAttacker = false;
+  filterByUsaAttacker = false;
+  selectedAttacker: string | undefined;
+
+
+  filterByArtillery = false;
+  filterByUsaArtillery = false;
+  filterByCsaArtillery = false;
+
   showArtyDiv = false;
+  showAttackerDiv: boolean = false;
 
   constructor(private mapService: MapService, private token: TokenStorageService,) { }
 
@@ -34,53 +45,8 @@ export class MapsComponent implements OnInit {
     this.currentUser = this.token.getUser();
     this.getMaps();
 
-    this.updateFilterByCampaign(); // Update filterByCampaign on component initialization
-
-    // Listen for window resize event
-    window.addEventListener('resize', () => {
-      this.updateFilterByCampaign();
-    });
-
-  }
-  filterByArtillery = false;
-  filterByUsaArtillery = false;
-  filterByCsaArtillery = false;
-
-  filterMapsByArtillery(): void {
-    let filteredMap: Map[] = this.originalMap || [];
-
-    if (this.filterByUsaArtillery) {
-      filteredMap = filteredMap.filter((map) => map.usaArty);
-    }
-
-    if (this.filterByCsaArtillery) {
-      filteredMap = filteredMap.filter((map) => map.csaArty);
-    }
-
-    if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
-      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
-    }
-
-    if (this.searchText) {
-      filteredMap = filteredMap.filter((map) =>
-        map.map?.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    }
-
-    this.map = filteredMap;
   }
 
-  updateFilterByCampaign(): void {
-    if (this.isMobileView()) {
-      this.filterByCampaign = true; // Disable "Filter by Campaign" checkbox in mobile view
-    } else {
-      this.filterByCampaign = true; // Enable "Filter by Campaign" checkbox in desktop view
-    }
-  }
-
-  isMobileView(): boolean {
-    return window.innerWidth <= 1024; // Adjust the breakpoint according to your needs
-  }
 
   setActiveMap(map: Map, index: number): void {
     this.currentMap = map;
@@ -108,14 +74,12 @@ export class MapsComponent implements OnInit {
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
 
-    if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
-      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+    if (this.selectedAttacker === 'USA') {
+      filteredMap = filteredMap.filter((map) => map.attacker === 'USA');
     }
-
-    if (this.searchText) {
-      filteredMap = filteredMap.filter((map) =>
-        map.map?.toLowerCase().includes(this.searchText.toLowerCase())
-      );
+  
+    if (this.selectedAttacker === 'CSA') {
+      filteredMap = filteredMap.filter((map) => map.attacker === 'CSA');
     }
 
     if (this.filterByUsaArtillery) {
@@ -126,9 +90,19 @@ export class MapsComponent implements OnInit {
       filteredMap = filteredMap.filter((map) => map.csaArty);
     }
 
+    if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
+      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+    }
+
+    if (this.searchText) {
+      filteredMap = filteredMap.filter((map) =>
+        map.map?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+
     this.map = filteredMap;
   }
-
+  
 
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
@@ -158,6 +132,9 @@ export class MapsComponent implements OnInit {
     this.filterByCampaignDiv = !this.filterByCampaignDiv;
   }
 
+  toggleAttackerDiv() {
+    this.showAttackerDiv = !this.showAttackerDiv;
+  }
 
   toggleFilterByArtillery(): void {
     this.filterByArtillery = !this.filterByArtillery;
@@ -174,17 +151,21 @@ export class MapsComponent implements OnInit {
   clearFilters(): void {
     // Clear search text
     this.searchText = '';
-
+  
     // Clear campaign checkboxes
     this.selectedCampaigns = [];
-
+  
     // Clear USA/CSA artillery checkboxes
     this.filterByUsaArtillery = false;
     this.filterByCsaArtillery = false;
-
+  
+    // Clear attacker radio buttons
+    this.selectedAttacker = '';
+  
     // Filter the maps based on the cleared filters
     this.filterMaps();
   }
+  
 
   scrollToTop(): void {
     document.body.scrollTo({
