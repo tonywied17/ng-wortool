@@ -1,4 +1,4 @@
-<div class="lg:w-[70vw] w-[100vw - 2em] m-auto mt-[4em]">
+<div class="lg:w-[76vw] w-[100vw - 2em] m-auto mt-[4em]">
 
 
     <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Weapons</h3>
@@ -7,7 +7,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-4">
 
-        <div class="col-start-1 lg:col-span-2 bg-slate-800/80 rounded-lg py-[1.5em] px-[1em]">
+        <div class="left-in col-start-1 lg:col-span-2 bg-slate-800/80 rounded-lg py-[1.5em] px-[1em]">
 
             <mat-table [dataSource]="dataSource" matSort class="wpn-table">
 
@@ -56,8 +56,9 @@
 
 
         </div>
+
         <div
-            class="lg:col-start-3 rounded-lg py-[1.5em] px-[1em] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 border-r-4 border-r-[#626057] mt-[1em] lg:mt-[unset]">
+            class="right-in lg:col-start-3 rounded-lg py-[1.5em] px-[1em] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 border-r-4 border-r-[#626057] mt-[1em] lg:mt-[unset]">
 
             <div *ngIf="!showAdmin">
                 <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Add Weapon</h3>
