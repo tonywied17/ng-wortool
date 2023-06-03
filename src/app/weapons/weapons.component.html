@@ -69,7 +69,7 @@
 
             <div *ngIf="showAdmin">
                 <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Add Weapon</h3>
-
+                <div *ngIf="submitted">Weapon added to db!</div>
                 <form name="form" (ngSubmit)="onCreate()" #f="ngForm" novalidate>
 
                     <div>

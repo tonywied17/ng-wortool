@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Weapon } from '../_models/weapon';
 
 const API = 'https://api.tonewebdesign.com/pa/weapons';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +20,8 @@ export class WeaponService {
     return this.http.get(API + '/' + id, { responseType: 'text' });
   }
 
-  create(weapon: string, range: string, length: string, ammo: string, notes: string): Observable<any> {
-    return this.http.post(API + '/', {
-      weapon,
-      range,
-      length, 
-      ammo, 
-      notes 
-    }, httpOptions);
+  create(data: any): Observable<any> {
+    return this.http.post(API + '/', data);
   }
 }
 
