@@ -300,7 +300,9 @@ mat-checkbox:hover{
   border-color: #888278; 
   border-width: 2px; 
 }
-
+button.mat-menu-item {
+  font-family: 'Poppins', sans-serif !important;
+}
 .mat-radio-label{
   margin: 0; font-family: 'Poppins', sans-serif;
   color: #7c7d72;
