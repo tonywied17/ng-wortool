@@ -2,7 +2,7 @@ export class Weapon {
   id?: any;
   weapon?: any;
   range?: any;
-  length?: any;
+  lengthy?: any;
   ammo?: any;
   notes?: any;
 }

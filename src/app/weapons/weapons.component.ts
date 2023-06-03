@@ -66,12 +66,12 @@ export class WeaponsComponent implements OnInit {
   }
 
   onCreate(): void {
-    const { weapon, range, length, ammo, notes } = this.weaponForm;
+    const { weapon, range, lengthy, ammo, notes } = this.weaponForm;
 
     const data = {
       weapon: this.weaponForm.weapon,
       range: this.weaponForm.range,
-      length: this.weaponForm.length,
+      length: this.weaponForm.lengthy,
       ammo: this.weaponForm.ammo,
       notes: this.weaponForm.notes,
     };

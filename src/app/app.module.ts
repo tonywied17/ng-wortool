@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
-
+import { authInterceptorProviders } from './_helpers/auth.interceptor';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -53,7 +53,7 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
