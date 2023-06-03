@@ -71,26 +71,10 @@
                                 Event Information</button>
                         </mat-list-item>
 
-                        <p class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Dashboards</p>
 
                         <mat-list-item>
                             <button *ngIf="showUser" routerLink="/user/1" mat-menu-item class="!text-[#b9b8b0]/80"><i
                                     class="fa-duotone fa-gear mr-1.5"></i>User Settings</button>
-                        </mat-list-item>
-
-
-                        <mat-divider *ngIf="showMod"></mat-divider>
-
-                        <mat-list-item *ngIf="showMod">
-                            <button routerLink="/mod" mat-menu-item class="!text-[#b9b8b0]/80"><i
-                                    class="fa-sharp fa-solid fa-chevrons-down mr-1.5"></i>NCO Dashboard</button>
-                        </mat-list-item>
-
-                        <mat-divider *ngIf="showAdmin"></mat-divider>
-
-                        <mat-list-item *ngIf="showAdmin">
-                            <button routerLink="/admin/1" mat-menu-item class="!text-[#b9b8b0]/80"><i
-                                    class="fa-duotone fa-shield-halved mr-1.5"></i>Admin Dashboard</button>
                         </mat-list-item>
                     </mat-list>
                 </mat-menu>

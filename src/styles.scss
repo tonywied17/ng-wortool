@@ -326,6 +326,13 @@ mat-radio-button:hover{
   border-width: 2px; 
 }
 
+.mat-snack-bar-container {
+  background: #253651 !important;
+  color: #afaf9b !important;
+}
+.mat-simple-snackbar-action button {
+  color: #ccccb6;
+}
 ::ng-deep .mat-radio-outer-circle {
   border-color: #888278 !important;
 }

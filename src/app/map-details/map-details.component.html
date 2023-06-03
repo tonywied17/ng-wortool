@@ -19,25 +19,30 @@
         </div>
 
         <mat-menu #optMenu="matMenu" xPosition="before" class="bg-[#646258]/70 backdrop-blur-sm mt-[3px] !w-[200px]">
-            <button class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i
-                    class="pr-2 fa-sharp fa-solid fa-bookmark"></i> Bookmark</button>
-            <button class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i
-                    class="pr-2 fa-sharp fa-solid fa-share-nodes"></i> Share</button>
 
-            <p class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Administration</p>
-            <mat-divider></mat-divider>
+            
 
-            <button class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i class="pr-2 fa-solid fa-note"></i>
-                Map Notes</button>
+            <p *ngIf="showAdmin" class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Administration</p>
+            <mat-divider *ngIf="showAdmin"></mat-divider>
 
-            <button class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i
+            <button *ngIf="showAdmin" class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i
                     class="pr-2 fa-solid fa-pen-to-square"></i> Edit Map</button>
 
-            <p class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Event Planner</p>
-            <mat-divider></mat-divider>
 
-            <button class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i class="pr-2 fa-solid fa-plus"></i>
+            <p *ngIf="showUser" class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Event Planner</p>
+            <mat-divider *ngIf="showUser"></mat-divider>
+
+            <button *ngIf="showUser" class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i class="pr-2 fa-solid fa-note"></i>
+                Map Notes</button>
+
+            <button *ngIf="showUser" class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i class="pr-2 fa-solid fa-plus"></i>
                 Add to Event</button>
+            <mat-divider *ngIf="showUser"></mat-divider>
+
+            <button class="!text-[#b9b8b0] opacity-40 font-[400]" mat-menu-item disabled><i class="pr-2 fa-regular fa-heart"></i> Favorite</button>
+
+            <button (click)="openSnackBar(currentMap.map + ' share link copied to clipboard.', 6000);copyToClipboard('https://app.paarmy.com/beta/maps/' + currentMap.id)" class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i
+                    class="pr-2 fa-sharp fa-solid fa-share-nodes"></i> Share</button>
 
         </mat-menu>
     </div>

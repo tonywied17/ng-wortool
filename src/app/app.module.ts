@@ -16,6 +16,7 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -51,6 +52,7 @@ const routes: Routes = [
     MaterialModule,
     HttpClientModule,
     FormsModule,
+    ClipboardModule,
     RouterModule.forRoot(routes)
   ],
   providers: [authInterceptorProviders],

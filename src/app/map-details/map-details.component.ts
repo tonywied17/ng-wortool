@@ -11,6 +11,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { SafePipe } from "../_helpers/safe.pipe";
 import { NgModel } from "@angular/forms";
+import { TokenStorageService } from '../_services/token-storage.service';
+import {MatSnackBar, MatSnackBarConfig, MatSnackBarModule} from '@angular/material/snack-bar';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: "app-map-details",
@@ -23,7 +26,10 @@ export class MapDetailsComponent implements OnInit {
   CamMapBool: boolean = false;
   CamMap: string = "Disabled";
   ytSrc: string = "https://www.youtube.com/embed/";
-
+  isLoggedIn = false;
+  showUser = false;
+  showAdmin = false;
+  private roles: string[] = [];
   @Input() viewMode = false;
   @Input() currentMap: any;
 
@@ -31,11 +37,37 @@ export class MapDetailsComponent implements OnInit {
     private mapService: MapService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private token: TokenStorageService,
+    private cdr: ChangeDetectorRef,
+    private _snackBar: MatSnackBar,
+    private clipboard: Clipboard
   ) {}
+
+  openSnackBar(message: string, duration: number) {
+    const config = new MatSnackBarConfig();
+    config.duration = duration;
+    config.horizontalPosition = 'center';
+    config.verticalPosition = 'top';
+  
+    this._snackBar.open(message, 'Okay', config);
+  }
+  
+
+  copyToClipboard(text: string) {
+    this.clipboard.copy(text);
+  }
 
   ngOnInit(): void {
     this.getMap(this.route.snapshot.params["id"]);
+
+    this.isLoggedIn = !!this.token.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.token.getUser();
+      this.roles = user.roles;
+      this.showAdmin = this.roles.includes('ROLE_ADMIN');
+      this.showUser = true
+    }
   }
 
   getMap(id: string): void {
