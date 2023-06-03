@@ -1,135 +1,317 @@
 <div class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 
 
-    <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Weapons</h3>
-
-    <div class="text-xs font-[200] mb-[1.5em] ml-[0.5em]"><i class="fa-sharp fa-light fa-circle-info pr-1"></i> The data provided below as well as this component's layout is solely for backend testing/development purposes, as this section is currently under development.</div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-4">
-
-        <div class="left-in col-start-1 lg:col-span-2 bg-slate-800/80 rounded-lg py-[1.5em] px-[1em]">
-
-            <mat-table [dataSource]="dataSource" matSort class="wpn-table">
-
-                <!-- ID Column -->
-                <ng-container matColumnDef="id">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-                    <mat-cell *matCellDef="let weapon">{{ weapon.id }}</mat-cell>
-                </ng-container>
-
-                <!-- Weapon Column -->
-                <ng-container matColumnDef="weapon">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Weapon</mat-header-cell>
-                    <mat-cell *matCellDef="let weapon">{{ weapon.weapon }}</mat-cell>
-                </ng-container>
-
-                <!-- Range Column -->
-                <ng-container matColumnDef="range">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Range</mat-header-cell>
-                    <mat-cell *matCellDef="let weapon">{{ weapon.range }}</mat-cell>
-                </ng-container>
-
-                <!-- Length Column -->
-                <ng-container matColumnDef="length">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Length</mat-header-cell>
-                    <mat-cell *matCellDef="let weapon">{{ weapon.lengthy }}</mat-cell>
-                </ng-container>
-
-                <!-- Ammo Column -->
-                <ng-container matColumnDef="ammo">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Ammo</mat-header-cell>
-                    <mat-cell *matCellDef="let weapon">{{ weapon.ammo }}</mat-cell>
-                </ng-container>
-
-                <!-- Notes Column -->
-                <ng-container matColumnDef="notes">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Notes</mat-header-cell>
-                    <mat-cell *matCellDef="let weapon">{{ weapon.notes }}</mat-cell>
-                </ng-container>
-
-                <!-- Table Rows -->
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-            </mat-table>
 
 
 
-        </div>
+	<h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">Weapons</h3>
 
-        <div
-            class="right-in lg:col-start-3 rounded-lg py-[1.5em] px-[1em] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 border-r-4 border-r-[#626057] mt-[1em] lg:mt-[unset]">
 
-            <div *ngIf="!showAdmin">
-                <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Add Weapon</h3>
 
-                <p class="p-[1em] text-base font-[200]">You must be logged in as an administrator to add weapons to the database.</p>
 
-                <button mat-stroked-button class="!mt-[1em] float-right" routerLink="/home">Login</button>
-            </div>
+	<div class="text-xs font-[200] mb-[1.5em] ml-[0.5em]">
+		<i class="fa-sharp fa-light fa-circle-info pr-1"></i>
+		The data provided below as well as this component's layout is solely for backend testing/development purposes,
+        as this section is currently under development.
+	</div>
 
-            <div *ngIf="showAdmin">
-                <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Add Weapon</h3>
-                <div *ngIf="submitted">Weapon added to db!</div>
-                <form name="form" (ngSubmit)="onCreate()" #f="ngForm" novalidate>
 
-                    <div>
 
+
+	<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-4">
+
+
+
+
+		<div class="left-in col-start-1 lg:col-span-2 rounded-lg shadow-md">
+
+
+
+
+			<mat-table [dataSource]="dataSource"
+				matSort
+				class="wpn-table">
+
+
+
+
+				<!-- ID Column -->
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef
+						class="id-column-header"
+						mat-sort-header>
+						ID
+					</mat-header-cell>
+					<mat-cell *matCellDef="let weapon"
+						class="id-column">
+						{{ weapon.id }}
+					</mat-cell>
+				</ng-container>
+
+
+
+
+				<!-- Weapon Column -->
+				<ng-container matColumnDef="weapon">
+					<mat-header-cell *matHeaderCellDef
+						mat-sort-header>
+						Weapon
+					</mat-header-cell>
+					<mat-cell *matCellDef="let weapon"
+						class="font-[500]">
+						{{ weapon.weapon }}
+					</mat-cell>
+				</ng-container>
+
+
+
+
+				<!-- Range Column -->
+				<ng-container matColumnDef="range">
+					<mat-header-cell *matHeaderCellDef
+						mat-sort-header
+						class="column-header">
+						Range
+					</mat-header-cell>
+					<mat-cell *matCellDef="let weapon"
+						class="column-mat">
+						{{ weapon.range }} yds
+					</mat-cell>
+				</ng-container>
+
+
+
+
+				<!-- Length Column -->
+				<ng-container matColumnDef="length">
+					<mat-header-cell *matHeaderCellDef
+						mat-sort-header
+						class="column-header">
+						<span class="hidden lg:inline-block">Rifle Length</span>
+                        <span class="inline-block lg:hidden">Length</span>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let weapon"
+						class="column-mat">
+						{{ weapon.lengthy }}"
+					</mat-cell>
+				</ng-container>
+
+
+
+
+				<!-- Ammo Column -->
+				<ng-container matColumnDef="ammo">
+					<mat-header-cell *matHeaderCellDef
+						mat-sort-header>
+						Ammo
+					</mat-header-cell>
+					<mat-cell *matCellDef="let weapon">{{ weapon.ammo }}</mat-cell>
+				</ng-container>
+
+
+
+				<!-- Notes Column -->
+				<ng-container matColumnDef="notes">
+					<mat-header-cell *matHeaderCellDef
+						mat-sort-header
+						class="notes-column">
+						Notes
+					</mat-header-cell>
+					<mat-cell *matCellDef="let weapon"
+						class="notes-column">
+						{{ weapon.notes }}
+					</mat-cell>
+				</ng-container>
+
+
+
+
+				<!-- Table Rows -->
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+
+
+
+			</mat-table>
+			<mat-paginator [pageSize]="6"
+				[pageSizeOptions]="[6, 8, 12, 16]"></mat-paginator>
+
+
+
+
+
+		</div>
+
+
+
+
+		<div class="right-in shadow-md lg:col-start-3 rounded-lg py-[1.5em] px-[1em] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 border-r-4 border-r-[#626057] mt-[1em] lg:mt-[unset]">
+
+
+			<div *ngIf="!showAdmin">
+				<h3 class="text-white text-lg pb-3 font-serif tracking-tight">Add a Weapon</h3>
+
+				<p class="p-[1em] text-base font-[200]">
+					You must be logged in as an administrator to add weapons to the database.
+				</p>
+
+				<button mat-stroked-button
+					class="!mt-[1em] float-right"
+					routerLink="/home">
+					Login
+				</button>
+			</div>
+
+
+
+
+			<div *ngIf="showAdmin">
+
+                <div *ngIf="submitted">
+                    <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Weapon has been added!</h3>
+
+				<p class="p-[1em] text-base font-[200]">
+					You have successfully added a weapon to the database.
+				</p>
+
+                <button mat-stroked-button
+					class="!mt-[1em] float-right"
+                    (click)="resetForm()"
+					routerLink="/weapons">
+					Add Another
+				</button>
+                </div>
+
+
+                <div *ngIf="!submitted">
+                    <h3 class="text-white text-lg pb-3 font-serif tracking-tight">Add a Weapon</h3>
+                    <form #f="ngForm"
+                        (ngSubmit)="onCreate()"
+                        name="form"
+                        novalidate>
+    
                         <div>
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Weapon</mat-label>
-                                <input matInput name="weapon" [(ngModel)]="weaponForm.weapon" required #weapon="ngModel"
-                                    matInput placeholder="Enter weapon name">
-                            </mat-form-field>
+    
+                            <div>
+                                <mat-form-field appearance="fill"
+                                    class="w-full">
+                                    <mat-label>Weapon</mat-label>
+                                    <input #weapon="ngModel"
+                                        [(ngModel)]="weaponForm.weapon"
+                                        matInput
+                                        name="weapon"
+                                        required
+                                        matInput
+                                        placeholder="Enter weapon name">
+                                </mat-form-field>
+                            </div>
+    
+    
+    
+    
+                            <div>
+                                <mat-form-field appearance="fill"
+                                    class="w-full">
+                                    <mat-label>Weapon Range</mat-label>
+                                    <input #range="ngModel"
+                                        [(ngModel)]="weaponForm.range"
+                                        matInput
+                                        name="range"
+                                        required
+                                        matInput
+                                        placeholder="Enter weapon range">
+                                </mat-form-field>
+                            </div>
+    
+    
+    
+    
+                            <div>
+                                <mat-form-field appearance="fill"
+                                    class="w-full">
+                                    <mat-label>Weapon Length</mat-label>
+                                    <input #length="ngModel"
+                                        [(ngModel)]="weaponForm.lengthy"
+                                        matInput
+                                        name="length"
+                                        required
+                                        matInput
+                                        placeholder="Enter weapon length">
+                                </mat-form-field>
+                            </div>
+    
+    
+    
+    
+                            <div>
+                                <mat-form-field appearance="fill"
+                                    class="w-full">
+                                    <mat-label>Weapon Ammo</mat-label>
+                                    <input #ammo="ngModel"
+                                        [(ngModel)]="weaponForm.ammo"
+                                        matInput
+                                        name="ammo"
+                                        required
+                                        matInput
+                                        placeholder="Enter weapon ammo">
+                                </mat-form-field>
+                            </div>
+    
+    
+    
+    
+                            <div>
+                                <mat-form-field appearance="fill"
+                                    class="w-full">
+                                    <mat-label>Weapon Notes</mat-label>
+                                    <input #notes="ngModel"
+                                        [(ngModel)]="weaponForm.notes"
+                                        matInput
+                                        name="notes"
+                                        matInput
+                                        placeholder="Enter weapon notes">
+                                </mat-form-field>
+                            </div>
+    
+    
+    
+    
+    
+                            <div class="form-group sm:col-span-1 sm:col-start-4">
+                                <button mat-raised-button
+                                    class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+                                    Add
+                                    Weapon
+                                </button>
+                            </div>
+    
+    
+    
+    
                         </div>
+                    </form>
+                </div>
 
-                        <div>
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Weapon Range</mat-label>
-                                <input matInput name="range" [(ngModel)]="weaponForm.range" required #range="ngModel"
-                                    matInput placeholder="Enter weapon range">
-                            </mat-form-field>
-                        </div>
-
-                        <div>
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Weapon Length</mat-label>
-                                <input matInput name="length" [(ngModel)]="weaponForm.lengthy" required #length="ngModel"
-                                    matInput placeholder="Enter weapon length">
-                            </mat-form-field>
-                        </div>
-
-                        <div>
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Weapon Ammo</mat-label>
-                                <input matInput name="ammo" [(ngModel)]="weaponForm.ammo" required #ammo="ngModel"
-                                    matInput placeholder="Enter weapon ammo">
-                            </mat-form-field>
-                        </div>
-
-                        <div>
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Weapon Notes</mat-label>
-                                <input matInput name="notes" [(ngModel)]="weaponForm.notes" required #notes="ngModel"
-                                    matInput placeholder="Enter weapon notes">
-                            </mat-form-field>
-                        </div>
+				
 
 
-                        <div class="form-group sm:col-span-1 sm:col-start-4">
-                            <button mat-raised-button
-                                class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Add
-                                Weapon</button>
-                        </div>
 
-                    </div>
-                </form>
 
-            </div>
+			</div>
 
-        </div>
 
-    </div>
+
+
+		</div>
+
+
+
+
+	</div>
+
+
+
 
 
 </div>

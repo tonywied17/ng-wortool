@@ -3,6 +3,7 @@ import { WeaponService } from "../_services/weapon.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
+import { MatPaginator } from "@angular/material/paginator";
 
 @Component({
   selector: "app-weapons",
@@ -20,6 +21,7 @@ export class WeaponsComponent implements OnInit {
   ];
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   weaponForm: any = {
     weapon: null,
@@ -30,7 +32,6 @@ export class WeaponsComponent implements OnInit {
   };
   errorMessage = "";
   weaponsObj: any;
-
   currentUser: any;
   isLoggedIn = false;
   showAdmin = false;
@@ -40,7 +41,7 @@ export class WeaponsComponent implements OnInit {
   constructor(
     private weaponService: WeaponService,
     private token: TokenStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.token.getToken();
@@ -62,12 +63,13 @@ export class WeaponsComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource(this.weaponsObj);
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator.pageSize = 6;
+      this.dataSource.paginator.pageIndex = 0;
     });
   }
 
   onCreate(): void {
-    const { weapon, range, lengthy, ammo, notes } = this.weaponForm;
-
     const data = {
       weapon: this.weaponForm.weapon,
       range: this.weaponForm.range,
@@ -76,15 +78,39 @@ export class WeaponsComponent implements OnInit {
       notes: this.weaponForm.notes,
     };
 
-    this.weaponService.create(data)
-    .subscribe({
+    this.weaponService.create(data).subscribe({
       next: (data) => {
         console.log(data);
         this.submitted = true;
+        this.refreshTable();
       },
       error: (err) => {
         this.errorMessage = err.error.message;
       },
     });
+  }
+
+
+  refreshTable(): void {
+    this.weaponService.getAll().subscribe((data) => {
+      this.weaponsObj = JSON.parse(data);
+
+      this.dataSource = new MatTableDataSource(this.weaponsObj);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator.pageSize = 6;
+      this.dataSource.paginator.pageIndex = 0;
+    });
+  }
+
+
+  resetForm() {
+    this.submitted = false;
+    this.submitted = false;
+    this.weaponForm.weapon = null;
+    this.weaponForm.range = null;
+    this.weaponForm.lengthy = null;
+    this.weaponForm.ammo = null;
+    this.weaponForm.notes = null;
   }
 }
