@@ -24,7 +24,7 @@ export class WeaponsComponent implements OnInit {
   weaponForm: any = {
     weapon: null,
     range: null,
-    length: null,
+    lengthy: null,
     ammo: null,
     notes: null,
   };
@@ -71,7 +71,7 @@ export class WeaponsComponent implements OnInit {
     const data = {
       weapon: this.weaponForm.weapon,
       range: this.weaponForm.range,
-      length: this.weaponForm.lengthy,
+      lengthy: this.weaponForm.lengthy,
       ammo: this.weaponForm.ammo,
       notes: this.weaponForm.notes,
     };
