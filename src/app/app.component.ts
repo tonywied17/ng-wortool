@@ -65,13 +65,13 @@ export class AppComponent implements OnInit {
     this.showMod = this.authService.isModerator;
     this.showAdmin = this.authService.isAdministrator;
 
-    console.log(this.isLoggedIn);
+    // console.log(this.isLoggedIn);
     this.currentUser = this.tokenStorage.getUser();
 
     if (this.isLoggedIn) {
       const user = this.tokenStorage.getUser();
       this.roles = user.roles;
-      console.log(user);
+      // console.log(user);
       this.showAdmin = this.roles.includes("ROLE_ADMIN");
       this.showMod = this.roles.includes("ROLE_MODERATOR");
       this.showUser = true;

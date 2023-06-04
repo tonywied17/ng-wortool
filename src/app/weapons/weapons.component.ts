@@ -50,7 +50,7 @@ export class WeaponsComponent implements OnInit {
     if (this.isLoggedIn) {
       const user = this.token.getUser();
       this.roles = user.roles;
-      console.log(user);
+      // console.log(user);
       this.showAdmin = this.roles.includes("ROLE_ADMIN");
     }
 
@@ -58,7 +58,7 @@ export class WeaponsComponent implements OnInit {
       this.weaponsObj = JSON.parse(data);
 
       this.weaponsObj.forEach((gun: any) => {
-        console.log(gun.weapon);
+        // console.log(gun.weapon);
       });
 
       this.dataSource = new MatTableDataSource(this.weaponsObj);
@@ -80,7 +80,7 @@ export class WeaponsComponent implements OnInit {
 
     this.weaponService.create(data).subscribe({
       next: (data) => {
-        console.log(data);
+        // console.log(data);
         this.submitted = true;
         this.refreshTable();
       },

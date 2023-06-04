@@ -32,11 +32,11 @@ export class MusterComponent implements OnInit {
     if (this.isLoggedIn) {
       const user = this.token.getUser();
       this.roles = user.roles;
-      console.log(user)
+      // console.log(user)
       this.showAdmin = this.roles.includes('ROLE_ADMIN');
-      console.log(this.showAdmin)
+      // console.log(this.showAdmin)
       this.showMod = this.roles.includes('ROLE_MODERATOR');
-      console.log(this.showMod)
+      // console.log(this.showMod)
       this.showUser = true
     }
 

@@ -50,7 +50,7 @@ export class BoardUserComponent implements OnInit {
     if (this.isLoggedIn) {
       const user = this.token.getUser();
       this.roles = user.roles;
-      console.log(user);
+      // console.log(user);
       this.showAdmin = this.roles.includes('ROLE_ADMIN');
       this.showMod = this.roles.includes('ROLE_MODERATOR');
       this.showUser = true;
@@ -115,6 +115,8 @@ export class BoardUserComponent implements OnInit {
   
     // Trigger the logout event
     this.sharedService.triggerLogoutEvent();
+
+    this.sharedService.setIsLoggedIn(false);
   
     this.router.navigate(['/home']);
   }
