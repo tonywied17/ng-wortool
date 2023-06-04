@@ -74,6 +74,14 @@ export class HomeComponent implements OnInit {
       // Run the initializer when the logout event occurs
       this.initializeComponent();
     });
+
+    this.sharedService.isLoggedIn$.subscribe(isLoggedIn => {
+      // Update the isLoggedIn property in the AppComponent
+      this.isLoggedIn = isLoggedIn;
+  
+      // Run the initializer or perform any necessary actions
+      this.initializeComponent();
+    });
   }
 
 
@@ -181,6 +189,8 @@ export class HomeComponent implements OnInit {
   
     // Trigger the logout event
     this.sharedService.triggerLogoutEvent();
+
+    this.sharedService.setIsLoggedIn(false);
   
     this.router.navigate(['/home']);
   }

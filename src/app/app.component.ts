@@ -36,6 +36,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeComponent();
+
+    // Subscribe to the isLoggedIn$ observable to get updates
+    this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
+      // Update the isLoggedIn property in the AppComponent
+      this.isLoggedIn = isLoggedIn;
+
+      // Run the initializer or perform any necessary actions
+      this.initializeComponent();
+    });
   }
 
   initializeComponent(): void {
