@@ -391,7 +391,7 @@ mat-radio-button:hover{
 }
 
 .field-input:focus + .field-icon {
-  margin-left: -6px; /* Adjusted left value */
+  margin-left: -3px; /* Adjusted left value */
 }
 
 
@@ -401,12 +401,12 @@ mat-radio-button:hover{
 
 .field-input:focus{
   opacity: 1;
-  transform: scale(1.02);
+  transform: scale(1.008);
 }
 
 
 .field-input::placeholder {
-  color: #ccc;
+  color: #ccccccda;
 }
 
 .setting-button{

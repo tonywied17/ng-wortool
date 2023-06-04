@@ -66,11 +66,12 @@
                 <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onRegister()" #f="ngForm" novalidate>
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
                         <div class="form-group sm:col-span-4">
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Your e-mail...</mat-label>
-                                <input matInput type="email" class="form-control" name="email"
-                                    [(ngModel)]="registerForm.email" required email #email="ngModel">
-                            </mat-form-field>
+
+                            <div class="field-box">
+                                <input [(ngModel)]="registerForm.email" name="email" class="field-input my-[0.5em] !py-[1em]" type="email" placeholder="Your e-mail..." #email="ngModel" required>
+                                <i class="fa-sharp fa-regular fa-envelope field-icon"></i>
+                              </div>                          
+
                             <div class="alert-danger" *ngIf="email.errors && f.submitted">
                                 <div *ngIf="email.errors['required']">Email is required</div>
                                 <div *ngIf="email.errors['email']">
@@ -79,12 +80,12 @@
                             </div>
                         </div>
                         <div class="form-group sm:col-span-4">
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Choose a username...</mat-label>
-                                <input matInput type="text" class="form-control" name="username"
-                                    [(ngModel)]="registerForm.username" required minlength="3" maxlength="20"
-                                    #username="ngModel">
-                            </mat-form-field>
+
+                            <div class="field-box">
+                                <input [(ngModel)]="loginForm.username" name="username" class="field-input my-[0.5em] !py-[1em]" type="text" placeholder="Enter username..." #username="ngModel" required>
+                                <i class="fa-sharp fa-regular fa-user field-icon"></i>
+                              </div>
+                            
                             <div class="alert-danger" *ngIf="username.errors && f.submitted">
                                 <div *ngIf="username.errors['required']">Username is required</div>
                                 <div *ngIf="username.errors['minlength']">
@@ -96,11 +97,12 @@
                             </div>
                         </div>
                         <div class="form-group sm:col-span-4">
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Choose a password...</mat-label>
-                                <input matInput type="password" class="form-control" name="password"
-                                    [(ngModel)]="registerForm.password" required minlength="6" #password="ngModel">
-                            </mat-form-field>
+
+                            <div class="field-box">
+                                <input [(ngModel)]="registerForm.password" name="password" class="field-input my-[0.5em] !py-[1em]" type="password" placeholder="Enter password..." #password="ngModel" required>
+                                <i class="fa-sharp fa-regular fa-lock field-icon"></i>
+                              </div>
+
                             <div class="alert-danger" *ngIf="password.errors && f.submitted">
                                 <div *ngIf="password.errors['required']">Password is required</div>
                                 <div *ngIf="password.errors['minlength']">
@@ -128,24 +130,35 @@
                 <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onLogin()" #f="ngForm" novalidate>
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
                         <div class="form-group sm:col-span-4">
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Username</mat-label>
-                                <input matInput name="username" [(ngModel)]="loginForm.username" required
-                                    #username="ngModel" matInput placeholder="Enter username">
-                            </mat-form-field>
+
+                            <div class="field-box">
+                                <input [(ngModel)]="loginForm.username" name="username" class="field-input my-[0.5em] !py-[1em]" type="text" placeholder="Enter username..." #username="ngModel" required>
+                                <i class="fa-sharp fa-regular fa-user field-icon"></i>
+                              </div>
+
+
                             <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">Username is
                                 required!</div>
+
+
                         </div>
+
+                        <!--  -->
+
                         <div class="form-group sm:col-span-4">
-                            <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Password</mat-label>
-                                <input matInput name="password" [(ngModel)]="loginForm.password" required minlength="6"
-                                    #password="ngModel" type="password" matInput placeholder="Enter password">
-                            </mat-form-field>
+
+                            <div class="field-box">
+                                <input [(ngModel)]="loginForm.password" name="password" class="field-input my-[0.5em] !py-[1em]" type="password" placeholder="Enter password..." #password="ngModel" required>
+                                <i class="fa-sharp fa-regular fa-lock field-icon"></i>
+                              </div>
+
+
                             <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
                                 <div *ngIf="password.errors['required']">Password is required</div>
                                 <div *ngIf="password.errors['minlength']">Password must be at least 6 characters</div>
                             </div>
+
+
                         </div>
                         <div class="form-group sm:col-span-1 sm:col-start-4">
                             <button mat-raised-button
