@@ -49,29 +49,27 @@
                 </div>
             </div>
 
-            <div *ngIf="showMod || showAdmin"
+            <div *ngIf="showMod || showAdmin || showUser"
                 class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                 <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] !hidden sm:!block"
-                    mat-raised-button><i class="fa-light fa-screwdriver-wrench mr-1.5"></i> {{currentUser.username}}'s'
-                    Tools</button>
+                    mat-raised-button><i class="fa-light fa-user mr-1.5"></i> {{currentUser.username}} <i class="fa-solid fa-caret-down"></i></button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
 
 
 
                     <mat-list>
-                        <p class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Favorite Tools</p>
-                        <mat-list-item>
+                        <p *ngIf="showMod || showAdmin" class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Favorite Tools</p>
+                        <mat-list-item *ngIf="showMod || showAdmin">
                             <button [routerLink]="['/muster']" class="!text-[#b9b8b0]/80"
                                 mat-menu-item><i class="fa-solid fa-clipboard-user mr-1.5"></i> Muster Roster</button>
                         </mat-list-item>
 
-                        <mat-list-item>
+                        <mat-list-item *ngIf="showMod || showAdmin">
                             <button class="!text-[#b9b8b0]/80" mat-menu-item disabled><i class="fa-solid fa-megaphone mr-1.5"></i>Share
                                 Event Information</button>
                         </mat-list-item>
-
-
+                        <mat-divider *ngIf="showMod || showAdmin"></mat-divider>
                         <mat-list-item>
                             <button *ngIf="showUser" routerLink="/user/1" mat-menu-item class="!text-[#b9b8b0]/80"><i
                                     class="fa-duotone fa-gear mr-1.5"></i>User Settings</button>

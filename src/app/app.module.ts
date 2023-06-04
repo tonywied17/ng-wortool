@@ -17,6 +17,7 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -53,6 +54,7 @@ const routes: Routes = [
     HttpClientModule,
     FormsModule,
     ClipboardModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [authInterceptorProviders],

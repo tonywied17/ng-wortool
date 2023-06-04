@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { AuthService } from '../_services/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-board-user',
@@ -25,12 +29,23 @@ export class BoardUserComponent implements OnInit {
   message = '';
   id1: any;
 
-
+  passwordForm: FormGroup;
 
   constructor(
     private token: TokenStorageService,
     private route: ActivatedRoute,
-  ) { }
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
+    this.passwordForm = this.formBuilder.group({
+      passwordCurrent: ['', Validators.required],
+      passwordNew: ['', [Validators.required, Validators.minLength(6)]],
+      passwordNewConfirm: ['', Validators.required]
+    });
+    
+  }
 
 
   ngOnInit(): void {
@@ -69,5 +84,63 @@ export class BoardUserComponent implements OnInit {
       this.showPage3 = true;
     }
   }
+
+
+  updatePassword() {
+    if (this.passwordForm.invalid) {
+      return;
+    }
+  
+    const passwordCurrent = this.passwordForm.get('passwordCurrent')!.value;
+    const passwordNew = this.passwordForm.get('passwordNew')!.value;
+  
+    if (passwordNew !== this.passwordForm.get('passwordNewConfirm')!.value) {
+      this.snackBar.open('New passwords do not match!', 'Close', {
+        duration: 3000
+      });
+      return;
+    }
+  
+    const userId = this.currentUser.id;
+  
+    this.authService.password(userId, passwordCurrent, passwordNew)
+      .pipe(
+        tap({
+          next: () => {
+            this.passwordForm.reset(); // Reset the form
+            this.passwordForm.markAsPristine(); // Mark the form as pristine
+            this.passwordForm.markAsUntouched(); // Mark the form as untouched
+  
+            // Clear the validation errors
+            Object.keys(this.passwordForm.controls).forEach(key => {
+              this.passwordForm.get(key)!.setErrors(null);
+            });
+  
+            this.snackBar.open('Password updated successfully!', 'Close', {
+              duration: 3000
+            });
+
+            this.logout();
+          },
+          error: error => {
+            this.snackBar.open(error.message, 'Close', {
+              duration: 3000
+            });
+          }
+        })
+      )
+      .subscribe();
+  }
+
+
+  logout(): void {
+    this.token.signOut();
+    this.router.navigate(['/home']);
+    setTimeout(() => {
+      window.location.reload();
+    }, 10);
+
+  }
+  
 
 }
