@@ -348,3 +348,69 @@ mat-radio-button:hover{
 .mat-radio-button.mat-accent.mat-checked .mat-radio-inner-circle {
   background-color: #888278 !important;
 }
+
+.field-box {
+  position: relative;
+}
+
+.field-input {
+  padding: 12px 36px 12px 48px; /* Adjusted padding values */
+  width: 100%;
+  border: 2px solid #7c7d72;
+  border-radius: 4px;
+  background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
+  color: #fff;
+  outline: none;
+  transition: all .3s ease;
+}
+
+.field-input:focus {
+  transform: scale(1.01);
+}
+
+::placeholder {
+  color: #fff;
+  opacity: 0.7;
+  transition: all .3s ease;
+}
+
+.field-input:focus::placeholder {
+  opacity: 1;
+  text-indent: 0; /* Adjusted text-indent value */
+}
+
+
+
+.field-icon {
+  position: absolute;
+  top: 50%;
+  left: 1em; /* Adjusted left value */
+  transform: translate(0, -50%);
+  transition: all .3s ease;
+  color: #7c7d72;
+}
+
+.field-input:focus + .field-icon {
+  margin-left: -6px; /* Adjusted left value */
+}
+
+
+.field-input:hover{
+  opacity: 0.7;
+}
+
+.field-input:focus{
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+
+.field-input::placeholder {
+  color: #ccc;
+}
+
+.setting-button{
+  // font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1rem;
+}

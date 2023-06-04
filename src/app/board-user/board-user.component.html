@@ -1,11 +1,11 @@
-<div class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[4em]">
+<div class="lg:w-[60vw] w-[100vw - 2em] m-auto mt-[4em]">
 
   <div *ngIf="isLoggedIn">
 
-    <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-4">User Settings</h3>
-    <p class="font-serif mb-5">Below you will find the dashboard to manage your personal settings.</p>
-    <div class="grid lg:grid-cols-4 lg:gap-4 grid-cols-1">
-      <div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit">
+    <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-[1.5em]">User Settings</h3>
+    <!-- <p class="font-serif mb-5">Below you will find the dashboard to manage your personal settings.</p> -->
+    <div class="grid lg:grid-cols-4 lg:gap-2 grid-cols-1">
+      <div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit w-full">
         <div class="p-3 my-2">
           <mat-list>
             <mat-action-list>
@@ -22,31 +22,57 @@
         </div>
       </div>
   
-      <div class="lg:col-span-3 col-span-1 ml-5 w-full">
-        <div *ngIf="showPage1" class="w-[50%] rounded-lg py-[1.5em] px-[1em]" style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
-          <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+      <div class="lg:col-span-3 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
+        <div *ngIf="showPage1" class="w-full lg:w-[80%] rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80">
+          <form (ngSubmit)="updatePassword()">
+
             <div class="form-group">
-              <mat-form-field appearance="fill" class="w-full">
+
+              <div class="field-box">
+                <input [(ngModel)]="passwordCurrent" name="passwordCurrent" class="field-input my-[0.5em]" type="password" placeholder="Current Password...">
+                <i class="fa-sharp fa-regular fa-key field-icon"></i>
+              </div>
+
+              <!-- <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Password (Current)</mat-label>
                 <input matInput type="password" formControlName="passwordCurrent" required>
-              </mat-form-field>
+              </mat-form-field> -->
+
             </div>
             
             <div class="form-group">
-              <mat-form-field appearance="fill" class="w-full">
+
+              <div class="field-box">
+                <input [(ngModel)]="passwordNew" name="passwordNew" class="field-input my-[0.5em]" type="password" placeholder="New Password...">
+                <i class="fa-sharp fa-regular fa-sparkles field-icon"></i>
+              </div>
+
+
+              <!-- <mat-form-field appearance="fill" class="w-full">
                 <mat-label>New Password</mat-label>
                 <input matInput type="password" formControlName="passwordNew" required>
-              </mat-form-field>
+              </mat-form-field> -->
             </div>
             
             <div class="form-group">
-              <mat-form-field appearance="fill" class="w-full">
+
+              <div class="field-box">
+                <input [(ngModel)]="passwordNewConfirm" name="passwordNewConfirm" class="field-input my-[0.5em]" type="password" placeholder="Confirm Password...">
+                <i class="fa-sharp fa-regular fa-check field-icon"></i>
+              </div>
+
+
+              <!-- <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Confirm New Password</mat-label>
                 <input matInput type="password" formControlName="passwordNewConfirm" required>
-              </mat-form-field>
+              </mat-form-field> -->
             </div>
-          
-            <button mat-stroked-button color="primary" type="submit">Update Password</button>
+
+            <button mat-raised-button
+            type="submit"
+            class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+            Update Password
+          </button>
           </form>
           
         </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { SharedService } from '../_services/shared.service';
+
 
 @Component({
   selector: 'app-home',
@@ -34,7 +36,31 @@ export class HomeComponent implements OnInit {
   roles: string[] = [];
   currentUser: any;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService,
+    private sharedService: SharedService,
+    private router: Router
+  ) {
+    // Subscribe to router events
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.initializeComponent();
+      }
+    });
+  }
+
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
+  }
+
+  get isAdministrator(): boolean {
+    return this.authService.isAdministrator;
+  }
+
+  get isModerator(): boolean {
+    return this.authService.isModerator;
+  }
 
   counter(i: number) {
     return new Array(i);
@@ -42,24 +68,43 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.initializeComponent();
+
+    this.sharedService.logoutEvent$.subscribe(() => {
+      // Run the initializer when the logout event occurs
+      this.initializeComponent();
+    });
+  }
+
+
+  initializeComponent(): void {
     if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
       this.currentUser = this.tokenStorage.getUser();
       this.roles = this.tokenStorage.getUser().roles;
     }
 
-    this.isLoggedIn = !!this.tokenStorage.getToken();
+    this.authService.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    this.authService.isAdministrator = localStorage.getItem('isAdmin') === 'true';
+    this.authService.isModerator = localStorage.getItem('isModerator') === 'true';
+
+    this.isLoggedIn = this.authService.isAuthenticated;
+    this.showMod = this.authService.isModerator;
+    this.showAdmin = this.authService.isAdministrator;
+  
+
+    console.log(this.isLoggedIn);
     this.currentUser = this.tokenStorage.getUser();
 
     if (this.isLoggedIn) {
       const user = this.tokenStorage.getUser();
       this.roles = user.roles;
-      console.log(user)
+      console.log(user);
       this.showAdmin = this.roles.includes('ROLE_ADMIN');
       this.showMod = this.roles.includes('ROLE_MODERATOR');
-      this.showUser = true
+      this.showUser = true;
     }
   }
+
 
   onRegister(): void {
     const { username, email, password } = this.registerForm;
@@ -84,11 +129,26 @@ export class HomeComponent implements OnInit {
       next: data => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
+        this.roles = this.tokenStorage.getUser().roles;
+
 
         this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.tokenStorage.getUser().roles;
-        this.reloadPage();
+        this.authService.isAuthenticated = true;
+        localStorage.setItem('isAuthenticated', 'true'); // Store the authentication status
+
+        this.authService.isAdministrator = this.roles.includes('ROLE_ADMIN');
+        localStorage.setItem('isAdmin', this.roles.includes('ROLE_ADMIN') ? 'true' : 'false'); // Store the admin status
+
+        this.authService.isModerator = this.roles.includes('ROLE_MODERATOR');
+        localStorage.setItem('isModerator', this.roles.includes('ROLE_MODERATOR') ? 'true' : 'false'); // Store the moderator status  
+
+        this.isLoggedIn = this.authService.isAuthenticated;
+        this.showUser = this.authService.isAuthenticated;
+        this.showAdmin = this.authService.isAdministrator
+        this.showMod = this.authService.isModerator;
+
+        this.authService.authenticationEvent.next();
+
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -97,9 +157,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
-  }
 
   loginBtn(): void {
     this.loginTask = true;
@@ -113,11 +170,19 @@ export class HomeComponent implements OnInit {
 
   logout(): void {
     this.tokenStorage.signOut();
+    this.authService.isAuthenticated = false;
+    localStorage.setItem('isAuthenticated', 'false');
+    localStorage.setItem('isAdmin', 'false');
+    localStorage.setItem('isModerator', 'false');
+    this.isLoggedIn = this.authService.isAuthenticated;
+    this.showMod = this.authService.isModerator;
+    this.showAdmin = this.authService.isAdministrator;
+    this.showUser = this.authService.isAuthenticated;
+  
+    // Trigger the logout event
+    this.sharedService.triggerLogoutEvent();
+  
     this.router.navigate(['/home']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
-
   }
 
 }

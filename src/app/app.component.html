@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div *ngIf="showMod || showAdmin || showUser"
+            <div *ngIf="isLoggedIn"
                 class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                 <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] !hidden sm:!block"
@@ -71,7 +71,7 @@
                         </mat-list-item>
                         <mat-divider *ngIf="showMod || showAdmin"></mat-divider>
                         <mat-list-item>
-                            <button *ngIf="showUser" routerLink="/user/1" mat-menu-item class="!text-[#b9b8b0]/80"><i
+                            <button *ngIf="isLoggedIn" routerLink="/user/1" mat-menu-item class="!text-[#b9b8b0]/80"><i
                                     class="fa-duotone fa-gear mr-1.5"></i>User Settings</button>
                         </mat-list-item>
                     </mat-list>

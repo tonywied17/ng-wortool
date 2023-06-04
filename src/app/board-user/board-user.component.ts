@@ -2,9 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { AuthService } from '../_services/auth.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap } from 'rxjs/operators';
+import { SharedService } from '../_services/shared.service';
+
 
 @Component({
   selector: 'app-board-user',
@@ -25,31 +24,21 @@ export class BoardUserComponent implements OnInit {
 
   private roles: string[] = [];
 
-
-  message = '';
-  id1: any;
-
-  passwordForm: FormGroup;
+  passwordCurrent: string = '';
+  passwordNew: string = '';
+  passwordNewConfirm: string = '';
 
   constructor(
     private token: TokenStorageService,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
+    private sharedService: SharedService,
     private router: Router
   ) {
-    this.passwordForm = this.formBuilder.group({
-      passwordCurrent: ['', Validators.required],
-      passwordNew: ['', [Validators.required, Validators.minLength(6)]],
-      passwordNewConfirm: ['', Validators.required]
-    });
-    
+
   }
 
-
   ngOnInit(): void {
-
     this.route.params.subscribe((params: Params) => {
       const page = params['page'];
       this.loadContent(page);
@@ -61,12 +50,11 @@ export class BoardUserComponent implements OnInit {
     if (this.isLoggedIn) {
       const user = this.token.getUser();
       this.roles = user.roles;
-      console.log(user)
+      console.log(user);
       this.showAdmin = this.roles.includes('ROLE_ADMIN');
       this.showMod = this.roles.includes('ROLE_MODERATOR');
-      this.showUser = true
+      this.showUser = true;
     }
-
   }
 
   private loadContent(page: string): void {
@@ -85,62 +73,49 @@ export class BoardUserComponent implements OnInit {
     }
   }
 
-
-  updatePassword() {
-    if (this.passwordForm.invalid) {
+  async updatePassword() {
+    if (
+      !this.passwordCurrent ||
+      !this.passwordNew ||
+      !this.passwordNewConfirm
+    ) {
+      alert('Please fill in all the fields.');
       return;
     }
   
-    const passwordCurrent = this.passwordForm.get('passwordCurrent')!.value;
-    const passwordNew = this.passwordForm.get('passwordNew')!.value;
-  
-    if (passwordNew !== this.passwordForm.get('passwordNewConfirm')!.value) {
-      this.snackBar.open('New passwords do not match!', 'Close', {
-        duration: 3000
-      });
+    if (this.passwordNew !== this.passwordNewConfirm) {
+      alert('New passwords do not match!');
       return;
     }
   
     const userId = this.currentUser.id;
   
-    this.authService.password(userId, passwordCurrent, passwordNew)
-      .pipe(
-        tap({
-          next: () => {
-            this.passwordForm.reset(); // Reset the form
-            this.passwordForm.markAsPristine(); // Mark the form as pristine
-            this.passwordForm.markAsUntouched(); // Mark the form as untouched
-  
-            // Clear the validation errors
-            Object.keys(this.passwordForm.controls).forEach(key => {
-              this.passwordForm.get(key)!.setErrors(null);
-            });
-  
-            this.snackBar.open('Password updated successfully!', 'Close', {
-              duration: 3000
-            });
-
-            this.logout();
-          },
-          error: error => {
-            this.snackBar.open(error.message, 'Close', {
-              duration: 3000
-            });
-          }
-        })
-      )
-      .subscribe();
+    try {
+      await this.authService.password(userId, this.passwordCurrent, this.passwordNew).toPromise();
+      alert('Password updated successfully!');
+      this.passwordCurrent = '';
+      this.passwordNew = '';
+      this.passwordNewConfirm = '';
+      this.logout();
+    } catch (error: any) {
+      alert(error.message);
+    }
   }
-
 
   logout(): void {
     this.token.signOut();
-    this.router.navigate(['/home']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
-
-  }
+    this.authService.isAuthenticated = false;
+    localStorage.setItem('isAuthenticated', 'false');
+    localStorage.setItem('isAdmin', 'false');
+    localStorage.setItem('isModerator', 'false');
+    this.isLoggedIn = this.authService.isAuthenticated;
+    this.showMod = this.authService.isModerator;
+    this.showAdmin = this.authService.isAdministrator;
+    this.showUser = this.authService.isAuthenticated;
   
-
+    // Trigger the logout event
+    this.sharedService.triggerLogoutEvent();
+  
+    this.router.navigate(['/home']);
+  }
 }

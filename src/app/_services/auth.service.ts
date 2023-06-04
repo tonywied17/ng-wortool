@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 const AUTH_API = 'https://api.tonewebdesign.com/pa/auth/';
 
@@ -12,7 +12,36 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  authenticationEvent: Subject<void> = new Subject<void>();
+  private isAuthed: boolean = false;
+  private isMod: boolean = false;
+  private isAdmin: boolean = false;
+
   constructor(private http: HttpClient) { }
+
+  get isAdministrator(): boolean {
+    return this.isAdmin;
+  }
+
+  set isAdministrator(value: boolean) {
+    this.isAdmin = value;
+  }
+
+  get isModerator(): boolean {
+    return this.isMod;
+  }
+
+  set isModerator(value: boolean) {
+    this.isMod = value;
+  }
+
+  get isAuthenticated(): boolean {
+    return this.isAuthed;
+  }
+
+  set isAuthenticated(value: boolean) {
+    this.isAuthed = value;
+  }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(AUTH_API + 'signin', {
