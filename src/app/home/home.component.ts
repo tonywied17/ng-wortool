@@ -1,33 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
-import { TokenStorageService } from '../_services/token-storage.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { SharedService } from '../_services/shared.service';
-
+import { Component, OnInit } from "@angular/core";
+import { AuthService } from "../_services/auth.service";
+import { TokenStorageService } from "../_services/token-storage.service";
+import { NavigationEnd, Router } from "@angular/router";
+import { SharedService } from "../_services/shared.service";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-
   registerForm: any = {
     username: null,
     email: null,
-    password: null
+    password: null,
   };
 
   loginForm: any = {
     username: null,
-    password: null
+    password: null,
   };
 
   isSuccessful = false;
   isSignUpFailed = false;
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = '';
+  errorMessage = "";
   registerTask = false;
   loginTask = true;
   showAdmin = false;
@@ -35,6 +33,9 @@ export class HomeComponent implements OnInit {
   showMod = false;
   roles: string[] = [];
   currentUser: any;
+
+  currentYear!: number;
+  nextYear!: number;
 
   constructor(
     private authService: AuthService,
@@ -47,6 +48,10 @@ export class HomeComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.initializeComponent();
       }
+
+      const date = new Date();
+      this.currentYear = date.getFullYear();
+      this.nextYear = this.currentYear + 1;
     });
   }
 
@@ -66,7 +71,6 @@ export class HomeComponent implements OnInit {
     return new Array(i);
   }
 
-
   ngOnInit(): void {
     this.initializeComponent();
 
@@ -75,15 +79,14 @@ export class HomeComponent implements OnInit {
       this.initializeComponent();
     });
 
-    this.sharedService.isLoggedIn$.subscribe(isLoggedIn => {
+    this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
       // Update the isLoggedIn property in the AppComponent
       this.isLoggedIn = isLoggedIn;
-  
+
       // Run the initializer or perform any necessary actions
       this.initializeComponent();
     });
   }
-
 
   initializeComponent(): void {
     if (this.tokenStorage.getToken()) {
@@ -91,14 +94,17 @@ export class HomeComponent implements OnInit {
       this.roles = this.tokenStorage.getUser().roles;
     }
 
-    this.authService.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    this.authService.isAdministrator = localStorage.getItem('isAdmin') === 'true';
-    this.authService.isModerator = localStorage.getItem('isModerator') === 'true';
+    this.authService.isAuthenticated =
+      localStorage.getItem("isAuthenticated") === "true";
+    this.authService.isAdministrator =
+      localStorage.getItem("isAdmin") === "true";
+    this.authService.isModerator =
+      localStorage.getItem("isModerator") === "true";
 
-    this.isLoggedIn = this.authService.isAuthenticated;
+    this.isLoggedIn = localStorage.getItem("isAuthenticated") === "true";
+    // alert(this.isLoggedIn);
     this.showMod = this.authService.isModerator;
     this.showAdmin = this.authService.isAdministrator;
-  
 
     // console.log(this.isLoggedIn);
     this.currentUser = this.tokenStorage.getUser();
@@ -107,26 +113,25 @@ export class HomeComponent implements OnInit {
       const user = this.tokenStorage.getUser();
       this.roles = user.roles;
       // console.log(user);
-      this.showAdmin = this.roles.includes('ROLE_ADMIN');
-      this.showMod = this.roles.includes('ROLE_MODERATOR');
+      this.showAdmin = this.roles.includes("ROLE_ADMIN");
+      this.showMod = this.roles.includes("ROLE_MODERATOR");
       this.showUser = true;
     }
   }
-
 
   onRegister(): void {
     const { username, email, password } = this.registerForm;
 
     this.authService.register(username, email, password).subscribe({
-      next: data => {
+      next: (data) => {
         // console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
       },
-      error: err => {
+      error: (err) => {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
-      }
+      },
     });
   }
 
@@ -134,37 +139,40 @@ export class HomeComponent implements OnInit {
     const { username, password } = this.loginForm;
 
     this.authService.login(username, password).subscribe({
-      next: data => {
+      next: (data) => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
         this.roles = this.tokenStorage.getUser().roles;
 
-
         this.isLoginFailed = false;
         this.authService.isAuthenticated = true;
-        localStorage.setItem('isAuthenticated', 'true'); // Store the authentication status
+        localStorage.setItem("isAuthenticated", "true"); // Store the authentication status
 
-        this.authService.isAdministrator = this.roles.includes('ROLE_ADMIN');
-        localStorage.setItem('isAdmin', this.roles.includes('ROLE_ADMIN') ? 'true' : 'false'); // Store the admin status
+        this.authService.isAdministrator = this.roles.includes("ROLE_ADMIN");
+        localStorage.setItem(
+          "isAdmin",
+          this.roles.includes("ROLE_ADMIN") ? "true" : "false"
+        ); // Store the admin status
 
-        this.authService.isModerator = this.roles.includes('ROLE_MODERATOR');
-        localStorage.setItem('isModerator', this.roles.includes('ROLE_MODERATOR') ? 'true' : 'false'); // Store the moderator status  
+        this.authService.isModerator = this.roles.includes("ROLE_MODERATOR");
+        localStorage.setItem(
+          "isModerator",
+          this.roles.includes("ROLE_MODERATOR") ? "true" : "false"
+        ); // Store the moderator status
 
         this.isLoggedIn = this.authService.isAuthenticated;
         this.showUser = this.authService.isAuthenticated;
-        this.showAdmin = this.authService.isAdministrator
+        this.showAdmin = this.authService.isAdministrator;
         this.showMod = this.authService.isModerator;
 
         this.authService.authenticationEvent.next();
-
       },
-      error: err => {
+      error: (err) => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
-      }
+      },
     });
   }
-
 
   loginBtn(): void {
     this.loginTask = true;
@@ -179,20 +187,23 @@ export class HomeComponent implements OnInit {
   logout(): void {
     this.tokenStorage.signOut();
     this.authService.isAuthenticated = false;
-    localStorage.setItem('isAuthenticated', 'false');
-    localStorage.setItem('isAdmin', 'false');
-    localStorage.setItem('isModerator', 'false');
+    localStorage.setItem("isAuthenticated", "false");
+    localStorage.setItem("isAdmin", "false");
+    localStorage.setItem("isModerator", "false");
     this.isLoggedIn = this.authService.isAuthenticated;
     this.showMod = this.authService.isModerator;
     this.showAdmin = this.authService.isAdministrator;
     this.showUser = this.authService.isAuthenticated;
-  
+
     // Trigger the logout event
     this.sharedService.triggerLogoutEvent();
 
     this.sharedService.setIsLoggedIn(false);
-  
-    this.router.navigate(['/home']);
+
+    this.router.navigate(["/home"]);
   }
 
+  openPortfolio() {
+    window.open('https://tonewebdesign.com/portfolio', '_blank');
+  }
 }

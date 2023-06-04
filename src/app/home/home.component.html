@@ -28,7 +28,7 @@
                 class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
                 style="padding: 70px 2em;">
     
-                <h3 class="text-white text-lg pb-3 font-serif tracking-tight"> Welcome, {{currentUser.username}} </h3>
+                <h3 class="text-white text-lg pb-3 font-serif tracking-tight"> Access Your Dashboards </h3>
     
     
                 <mat-list>
@@ -173,15 +173,24 @@
     
         </div>
     
-        <div *ngIf="isLoggedIn" class="lg:col-span-2 lg:row-span-1 place-items-center right-in">
-            <div class="bg-slate-800 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
-    
-    
-                <button mat-raised-button
-                    class="my-auto w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
-                    (click)="logout()">Logout</button>
-    
+        <div *ngIf="isLoggedIn" class="lg:col-span-2 lg:row-span-1 right-in !place-content-center">
+
+            <div class="bg-slate-800 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl h-full text-right relative">
+                <!-- <button mat-stroked-button
+                    color="primary"
+                    class="h-full"
+                    (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket !block pt-[8px] !text-xl"></i><span class="!text-sm">Logout</span>
+                </button> -->
+                
+                <div class="absolute bottom-0 right-0 pb-3 pr-2 font-[200] text-xs opacity-75 text-gray-400">
+                    <span class="pr-2">&copy; {{currentYear}} - {{nextYear}}</span>
+                    <span class="pr-2">The Pennsylvania Army</span>
+                    <span class="pr-2 cursor-pointer hover:opacity-75 !text-gray-300 block mt-1" (click)="openPortfolio()">by molex</span>
+                </div>
+
             </div>
+
         </div>
     
         <div *ngIf="!loginTask && registerTask && !isLoggedIn" class="lg:col-span-2 lg:row-span-1 right-in">

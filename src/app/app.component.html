@@ -53,7 +53,7 @@
                 class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                 <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] !hidden sm:!block"
-                    mat-raised-button><i class="fa-light fa-user mr-1.5"></i> {{currentUser.username}} <i class="fa-solid fa-caret-down"></i></button>
+                    mat-raised-button><i class="fa-sharp fa-solid fa-user mr-1.5"></i> {{currentUser.username}} <i class="fa-solid fa-caret-down"></i></button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
 
 
@@ -81,8 +81,7 @@
 
             <div *ngIf="isLoggedIn">
                 <button (click)="logout()" mat-raised-button
-                    class="bg-[#7a3535] !text-[#a09e94] font-serif !hidden sm:!block !ml-2"><i
-                        class="fa-solid fa-right-from-bracket"></i></button>
+                    class="bg-[#7a3535] !text-[#a09e94] !hidden sm:!block !ml-2"><i class="fa-sharp fa-solid fa-door-closed pr-2"></i> Logout</button>
             </div>
 
 
