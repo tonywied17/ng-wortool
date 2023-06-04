@@ -18,6 +18,7 @@ import { BoardModeratorComponent } from './board-moderator/board-moderator.compo
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PasswordMatchValidatorDirective } from './password-match-validator.directive';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -45,7 +46,8 @@ const routes: Routes = [
     BoardUserComponent,
     BoardModeratorComponent,
     BoardAdminComponent,
-    MusterComponent
+    MusterComponent,
+    PasswordMatchValidatorDirective
   ],
   imports: [
     BrowserModule,

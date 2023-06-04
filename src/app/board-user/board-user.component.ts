@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { AuthService } from '../_services/auth.service';
 import { SharedService } from '../_services/shared.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class BoardUserComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private sharedService: SharedService,
+    private snackBar: MatSnackBar,
     private router: Router
   ) {
 
@@ -79,12 +81,17 @@ export class BoardUserComponent implements OnInit {
       !this.passwordNew ||
       !this.passwordNewConfirm
     ) {
-      alert('Please fill in all the fields.');
+      this.showSnackBar('Please fill in all the fields.');
+      return;
+    }
+
+    if (this.passwordNew.length < 6) {
+      this.showSnackBar('New password must be at least 6 characters long.');
       return;
     }
   
     if (this.passwordNew !== this.passwordNewConfirm) {
-      alert('New passwords do not match!');
+      this.showSnackBar('New passwords do not match!');
       return;
     }
   
@@ -92,13 +99,13 @@ export class BoardUserComponent implements OnInit {
   
     try {
       await this.authService.password(userId, this.passwordCurrent, this.passwordNew).toPromise();
-      alert('Password updated successfully!');
+      this.showSnackBar('Password updated successfully!');
       this.passwordCurrent = '';
       this.passwordNew = '';
       this.passwordNewConfirm = '';
       this.logout();
     } catch (error: any) {
-      alert(error.message);
+      this.showSnackBar(error.message);
     }
   }
 
@@ -113,11 +120,18 @@ export class BoardUserComponent implements OnInit {
     this.showAdmin = this.authService.isAdministrator;
     this.showUser = this.authService.isAuthenticated;
   
-    // Trigger the logout event
     this.sharedService.triggerLogoutEvent();
 
     this.sharedService.setIsLoggedIn(false);
   
     this.router.navigate(['/home']);
+  }
+
+
+  private showSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top'
+    });
   }
 }

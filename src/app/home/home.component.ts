@@ -3,11 +3,14 @@ import { AuthService } from "../_services/auth.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { NavigationEnd, Router } from "@angular/router";
 import { SharedService } from "../_services/shared.service";
+import { PasswordMatchValidatorDirective } from '../password-match-validator.directive';
+
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
+  providers: [PasswordMatchValidatorDirective]
 })
 export class HomeComponent implements OnInit {
   registerForm: any = {

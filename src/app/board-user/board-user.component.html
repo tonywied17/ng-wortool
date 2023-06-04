@@ -4,9 +4,9 @@
 
     <h3 class="text-[#88887b] font-serif text-3xl tracking-tight mb-[1.5em]">User Settings</h3>
     <!-- <p class="font-serif mb-5">Below you will find the dashboard to manage your personal settings.</p> -->
-    <div class="grid lg:grid-cols-4 lg:gap-2 grid-cols-1">
+    <div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
       <div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit w-full">
-        <div class="p-3 my-2">
+        <div class="p-3">
           <mat-list>
             <mat-action-list>
               <button routerLinkActive="active_btn" routerLink="/user/1" mat-list-item class="py-2"><i
@@ -22,8 +22,8 @@
         </div>
       </div>
   
-      <div class="lg:col-span-3 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
-        <div *ngIf="showPage1" class="w-full lg:w-[80%] rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80">
+      <div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
+        <div *ngIf="showPage1" class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80">
           <form (ngSubmit)="updatePassword()">
 
             <div class="form-group">
@@ -33,10 +33,6 @@
                 <i class="fa-sharp fa-regular fa-key field-icon"></i>
               </div>
 
-              <!-- <mat-form-field appearance="fill" class="w-full">
-                <mat-label>Password (Current)</mat-label>
-                <input matInput type="password" formControlName="passwordCurrent" required>
-              </mat-form-field> -->
 
             </div>
             
@@ -48,10 +44,6 @@
               </div>
 
 
-              <!-- <mat-form-field appearance="fill" class="w-full">
-                <mat-label>New Password</mat-label>
-                <input matInput type="password" formControlName="passwordNew" required>
-              </mat-form-field> -->
             </div>
             
             <div class="form-group">
@@ -62,10 +54,6 @@
               </div>
 
 
-              <!-- <mat-form-field appearance="fill" class="w-full">
-                <mat-label>Confirm New Password</mat-label>
-                <input matInput type="password" formControlName="passwordNewConfirm" required>
-              </mat-form-field> -->
             </div>
 
             <button mat-raised-button

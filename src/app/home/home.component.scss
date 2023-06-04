@@ -61,3 +61,19 @@
 		transform: translateX(0);
 	}
 }
+
+.alert-danger{
+	font-weight: 200;
+	font-size: .875rem;
+	border-left: 3px #993434ce solid;
+    padding-left: 0.5em;
+    border-radius: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: #ffa1a1;
+	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	width: fit-content;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background: linear-gradient(90deg, #99343491, #99343400);
+}
