@@ -64,7 +64,7 @@ export class WeaponsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.weaponsObj);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator.pageSize = 6;
+      this.dataSource.paginator.pageSize = 8;
       this.dataSource.paginator.pageIndex = 0;
     });
   }

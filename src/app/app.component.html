@@ -32,17 +32,17 @@
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <button mat-button color="primary" [routerLink]="['/home']"
-                            routerLinkActive="bg-[#646258] !text-[#a09e94]"
-                            class="navitem font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Home</button>
+                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Home</button>
                         <button mat-button color="primary" [routerLink]="['/maps']"
-                            routerLinkActive="bg-[#646258] !text-[#a09e94]"
-                            class="navitem font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Maps</button>
+                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Maps</button>
                         <button mat-button color="primary" [routerLink]="['/weapons']"
-                            routerLinkActive="bg-[#646258] !text-[#a09e94]"
-                            class="navitem font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Weapons</button>
+                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Weapons</button>
                         <button mat-button color="primary" [routerLink]="['/regiments']"
-                            routerLinkActive="bg-[#646258] !text-[#a09e94]"
-                            class="navitem font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Regiments</button>
+                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Regiments</button>
 
                     </div>
 
@@ -52,7 +52,7 @@
             <div *ngIf="isLoggedIn"
                 class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] !hidden sm:!block"
+                <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] !hidden sm:!block font-[900]"
                     mat-raised-button><i class="fa-sharp fa-solid fa-user mr-1.5"></i> {{currentUser.username}} <i class="fa-solid fa-caret-down"></i></button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
 
@@ -81,7 +81,7 @@
 
             <div *ngIf="isLoggedIn">
                 <button (click)="logout()" mat-raised-button
-                    class="bg-[#7a3535] !text-[#a09e94] !hidden sm:!block !ml-2"><i class="fa-sharp fa-solid fa-door-closed pr-2"></i> Logout</button>
+                    class="bg-[#7a3535] !text-[#a09e94] !hidden sm:!block !ml-2 font-[900]"><i class="fa-sharp fa-solid fa-door-closed pr-2"></i> Logout</button>
             </div>
 
 
@@ -96,19 +96,19 @@
             <mat-list>
                 <mat-list-item class="mx-auto w-max !my-4"> <button mat-button color="primary" (click)="toggle()"
                         [routerLink]="['/home']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96 font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Home</button>
+                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Home</button>
                 </mat-list-item>
                 <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
                         [routerLink]="['/maps']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96 font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Maps</button>
+                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Maps</button>
                 </mat-list-item>
                 <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
                         [routerLink]="['/weapons']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96 font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Weapons</button>
+                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Weapons</button>
                 </mat-list-item>
                 <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
                         [routerLink]="['/regiments']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96 font-serif text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Regiments</button>
+                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Regiments</button>
                 </mat-list-item>
             </mat-list>
         </div>
@@ -118,6 +118,6 @@
 
 </nav>
 
-<div class="sm:w-full mx-auto my-2 sm:my-0 sm:mt-10 relative px-5 height: calc(100% - 200px);">
+<div class="sm:w-full mx-auto my-2 sm:my-0 sm:mt-10 relative px-5 h-[calc(100% - 200px)] main-container">
     <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>

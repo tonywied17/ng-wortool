@@ -24,7 +24,9 @@
 }
 
 .search-input {
-  padding: 12px 36px 12px 48px; /* Adjusted padding values */
+  font-family: 'Poppins', sans-serif;
+  padding: 12px 36px 12px 48px;
+  /* Adjusted padding values */
   width: 100%;
   border: 2px solid #7c7d72;
   border-radius: 4px;
@@ -46,7 +48,8 @@
 
 .search-input:focus::placeholder {
   opacity: 1;
-  text-indent: 0; /* Adjusted text-indent value */
+  text-indent: 0;
+  /* Adjusted text-indent value */
 }
 
 
@@ -54,22 +57,24 @@
 .search-icon {
   position: absolute;
   top: 50%;
-  left: 1em; /* Adjusted left value */
+  left: 1em;
+  /* Adjusted left value */
   transform: translate(0, -50%);
   transition: all .3s ease;
   color: #7c7d72;
 }
 
-.search-input:focus + .search-icon {
-  margin-left: -4px; /* Adjusted left value */
+.search-input:focus+.search-icon {
+  margin-left: -4px;
+  /* Adjusted left value */
 }
 
 
-.search-input:hover{
+.search-input:hover {
   opacity: 0.7;
 }
 
-.search-input:focus{
+.search-input:focus {
   opacity: 1;
   transform: scale(1.02);
 }
@@ -92,7 +97,7 @@
 .filter-label {
   align-items: center;
   color: #7c7d72;
-  transition: all .3s ease; 
+  transition: all .3s ease;
   cursor: pointer;
 }
 
@@ -119,89 +124,6 @@
   padding: 5px;
 }
 
-.filter-container{
-  animation: fade-left .3s ease 0s 1 normal forwards;
-}
-
-@keyframes fade-left {
-	0% {
-		opacity: 0;
-		transform: translateY(150px);
-	}
-
-  69%{
-    opacity: 0.3;
-  }
-
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-
-
-
-.left-in{
-  animation: left-in .3s ease 0s 1 normal forwards;
-}
-
-.top-in{
-  animation: top-in .3s ease 0s 1 normal forwards;
-}
-
-.bottom-in{
-  animation: bottom-in .3s ease 0s 1 normal forwards;
-}
-
-.right-in{
-  animation: right-in .3s ease 0s 1 normal forwards;
-}
-
-@keyframes left-in {
-0% {
-  opacity: 0;
-  transform: translateX(-150px);
-}
-
-100% {
-  opacity: 1;
-  transform: translateX(0);
-}
-}
-
-@keyframes top-in {
-0% {
-  opacity: 0;
-  transform: translateY(-50px);
-}
-
-100% {
-  opacity: 1;
-  transform: translateY(0);
-}
-}
-
-@keyframes bottom-in {
-0% {
-  opacity: 0;
-  transform: translateY(150px);
-}
-
-100% {
-  opacity: 1;
-  transform: translateY(0);
-}
-}
-
-@keyframes right-in {
-0% {
-  opacity: 0;
-  transform: translateX(150px);
-}
-
-100% {
-  opacity: 1;
-  transform: translateX(0);
-}
+.filter-container {
+  animation: fade-left .5s ease 0s 1 normal forwards;
 }

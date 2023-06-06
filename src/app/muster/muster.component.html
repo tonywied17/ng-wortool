@@ -36,8 +36,8 @@
 
 <div *ngIf="showAdmin || showMod">
 
-  <h3 class="text-[#88887b] font-serif text-3xl mb-4">Muster Roster Testing</h3>
-  <mat-table [dataSource]="users" class="font-serif">
+  <h3 class="text-[#88887b]  text-3xl mb-4">Muster Roster Testing</h3>
+  <mat-table [dataSource]="users" class="">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
       <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>

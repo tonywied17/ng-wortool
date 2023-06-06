@@ -1,11 +1,11 @@
 <div class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[2em] lg:mt-[3.5em]">
 
-    <div class="text-[#88887b] font-serif text-3xl mb-[1em]">
+    <div class="text-[#88887b]  text-3xl mb-[1em]">
 
         <div class="grid grid-cols-1 lg:grid-cols-2">
             <div class="col-start-1 col-span-1">
                 {{currentMap.map}}
-                <span class="text-slate-200/80 text-lg px-4 font-serif"><br>{{currentMap.campaign}} Map</span>
+                <span class="text-slate-200/80 text-lg px-4 "><br>{{currentMap.campaign}} Map</span>
             </div>
 
             <div class="lg:col-start-2 col-start-1 col-span-1 place-self-end">
@@ -20,10 +20,6 @@
 
         <mat-menu #optMenu="matMenu" xPosition="before" class="bg-[#646258]/70 backdrop-blur-sm mt-[3px] !w-[200px]">
 
-            
-
-            <p *ngIf="showAdmin" class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Administration</p>
-            <mat-divider *ngIf="showAdmin"></mat-divider>
 
             <button *ngIf="showAdmin" class="!text-[#b9b8b0]/80 font-[400]" mat-menu-item><i
                     class="pr-2 fa-solid fa-pen-to-square"></i> Edit Map</button>
@@ -52,8 +48,8 @@
 
 
         <div class="w-full lg:col-start-1 lg:col-span-1 text-center lg:text-left lg:row-start-1 lg:row-span-3">
-            <div class="lg:ml-[-1em] pb-[1em]">Flyover Camera</div>
-            <mat-slide-toggle (change)="toggle($event)" class="font-[200]">{{CamMap}}</mat-slide-toggle>
+            
+            <mat-slide-toggle (change)="toggle($event)" class="font-[200]">Flyover Cam</mat-slide-toggle>           
 
             <img (click)="open('https://app.paarmy.com/' + currentMap.image , currentMap.map, 1500, 868)"
                 *ngIf="!CamMapBool" src="https://app.paarmy.com/{{currentMap.image}}"
@@ -72,44 +68,54 @@
         <!--  -->
 
         <div class="lg:col-start-2 lg:col-span-1 lg:row-start-1 lg:row-span-3 text-slate-400 mt-[1em] lg:mt-[0]">
-
+         
+                <button style="z-index: 2;" class="!mr-[1em] float-right" mat-button (click)="open('https://stratsketch.com/' + currentMap.strat , currentMap.map, 1500, 868)">
+                    <i class="fa-sharp fa-regular fa-paintbrush-pencil pr-1"></i>StratSketch<sup><i class="fa-sharp fa-regular fa-arrow-up-right-from-square pl-2"></i></sup>
+                </button>
+       
+            
             <div *ngFor="let unit of currentMap.ATTACKER; index as i;"
                 class="lg:pt-[2em] lg:pl-[2em] lg:pr-[2em] p-[1em] rounded-t-3xl left-in"
                 style="background: linear-gradient(130deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
 
-                <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
+                <!-- <h3 class="text-white text-2xl pb-3  tracking-tight">{{unit.side}} - {{unit.stance}}</h3> -->
+
+                <div class="text-[#88887b] font-serif text-3xl font-[900]" style="filter: drop-shadow(3px 3px 8px #141414c2);">
+                    {{unit.side}}
+                    <span class="block text-lg">{{unit.stance}}</span>
+                </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
                     <div class="lg:col-start-1 lg:col-span-2">
                         <p *ngIf="unit.reg1" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg1}}</p>
                         <div *ngIf="unit.reg1Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
                         </div>
                         <p *ngIf="unit.reg2" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg2}}</p>
                         <div *ngIf="unit.reg2Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[3]">{{unit.reg2Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[3]">{{unit.reg2Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
                         </div>
 
                         <p *ngIf="unit.reg3" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg3}}</p>
                         <div *ngIf="unit.reg3Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[3]">{{unit.reg3Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[3]">{{unit.reg3Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
                         </div>
 
                         <p *ngIf="unit.reg4" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg4}}</p>
                         <div *ngIf="unit.reg4Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[3]">{{unit.reg4Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[4]">{{unit.reg4Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[3]">{{unit.reg4Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[4]">{{unit.reg4Weapons[4]}}</p>
                         </div>
                     </div>
 
@@ -121,37 +127,37 @@
                             style="border-right: dotted 1px #7c7d738f;">
                             <p *ngIf="unit.arty1" class="font-[400] text-sm text-slate-300">{{unit.arty1}}</p>
                             <div *ngIf="unit.arty1Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[1]">{{unit.arty1Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[2]">{{unit.arty1Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[3]">{{unit.arty1Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[4]">{{unit.arty1Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[1]">{{unit.arty1Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[2]">{{unit.arty1Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[3]">{{unit.arty1Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[4]">{{unit.arty1Weapons[4]}}</p>
                             </div>
 
                             <p *ngIf="unit.arty2" class="font-[400] text-sm text-slate-300 mt-[0.5em]">{{unit.arty2}}
                             </p>
                             <div *ngIf="unit.arty2Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[1]">{{unit.arty2Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[2]">{{unit.arty2Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[3]">{{unit.arty2Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[4]">{{unit.arty2Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[1]">{{unit.arty2Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[2]">{{unit.arty2Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[3]">{{unit.arty2Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[4]">{{unit.arty2Weapons[4]}}</p>
                             </div>
 
                             <p *ngIf="unit.arty3" class="font-[400] text-sm text-slate-300 mt-[0.5em]">{{unit.arty3}}
                             </p>
                             <div *ngIf="unit.arty3Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[1]">{{unit.arty3Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[2]">{{unit.arty3Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[3]">{{unit.arty3Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[4]">{{unit.arty3Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[1]">{{unit.arty3Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[2]">{{unit.arty3Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[3]">{{unit.arty3Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[4]">{{unit.arty3Weapons[4]}}</p>
                             </div>
 
                             <p *ngIf="unit.arty4" class="font-[400] text-sm text-slate-300 mt-[0.5em]">{{unit.arty4}}
                             </p>
                             <div *ngIf="unit.arty4Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[1]">{{unit.arty4Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[2]">{{unit.arty4Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[3]">{{unit.arty4Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[4]">{{unit.arty4Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[1]">{{unit.arty4Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[2]">{{unit.arty4Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[3]">{{unit.arty4Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[4]">{{unit.arty4Weapons[4]}}</p>
                             </div>
                         </div>
                     </div>
@@ -173,7 +179,12 @@
             <div *ngFor="let unit of currentMap.DEFENDER; index as i;"
                 class="lg:pb-[2em] lg:pr-[2em] lg:pl-[2em] p-[1em] rounded-b-3xl text-right right-in"
                 style="background: linear-gradient(-25deg, #263855e1, #1e293b00, #1e293b00, #1e293b00);">
-                <h3 class="text-white text-2xl pb-3 font-serif tracking-tight">{{unit.side}} - {{unit.stance}}</h3>
+                <!-- <h3 class="text-white text-2xl pb-3  tracking-tight">{{unit.side}} - {{unit.stance}}</h3> -->
+
+                <div class="text-[#88887b] font-serif text-3xl font-[900]" style="filter: drop-shadow(3px 3px 8px #141414c2);">
+                    {{unit.side}}
+                    <span class="block text-lg">{{unit.stance}}</span>
+                </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-10">
 
@@ -183,37 +194,37 @@
                             style="border-left: dotted 1px #7c7d738f;">
                             <p *ngIf="unit.arty1" class="font-[400] text-sm text-slate-300">{{unit.arty1}}</p>
                             <div *ngIf="unit.arty1Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[1]">{{unit.arty1Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[2]">{{unit.arty1Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[3]">{{unit.arty1Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty1Weapons[4]">{{unit.arty1Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[1]">{{unit.arty1Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[2]">{{unit.arty1Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[3]">{{unit.arty1Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty1Weapons[4]">{{unit.arty1Weapons[4]}}</p>
                             </div>
 
                             <p *ngIf="unit.arty2" class="font-[400] text-sm text-slate-300 mt-[0.5em]">{{unit.arty2}}
                             </p>
                             <div *ngIf="unit.arty2Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[1]">{{unit.arty2Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[2]">{{unit.arty2Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[3]">{{unit.arty2Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty2Weapons[4]">{{unit.arty2Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[1]">{{unit.arty2Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[2]">{{unit.arty2Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[3]">{{unit.arty2Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty2Weapons[4]">{{unit.arty2Weapons[4]}}</p>
                             </div>
 
                             <p *ngIf="unit.arty3" class="font-[400] text-sm text-slate-300 mt-[0.5em]">{{unit.arty3}}
                             </p>
                             <div *ngIf="unit.arty3Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[1]">{{unit.arty3Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[2]">{{unit.arty3Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[3]">{{unit.arty3Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty3Weapons[4]">{{unit.arty3Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[1]">{{unit.arty3Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[2]">{{unit.arty3Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[3]">{{unit.arty3Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty3Weapons[4]">{{unit.arty3Weapons[4]}}</p>
                             </div>
 
                             <p *ngIf="unit.arty4" class="font-[400] text-sm text-slate-300 mt-[0.5em]">{{unit.arty4}}
                             </p>
                             <div *ngIf="unit.arty4Weapons">
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[1]">{{unit.arty4Weapons[1]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[2]">{{unit.arty4Weapons[2]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[3]">{{unit.arty4Weapons[3]}}</p>
-                                <p class="text-sm p-1" *ngIf="unit.arty4Weapons[4]">{{unit.arty4Weapons[4]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[1]">{{unit.arty4Weapons[1]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[2]">{{unit.arty4Weapons[2]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[3]">{{unit.arty4Weapons[3]}}</p>
+                                <p class="text-sm p-1 weapon-class" *ngIf="unit.arty4Weapons[4]">{{unit.arty4Weapons[4]}}</p>
                             </div>
                         </div>
                     </div>
@@ -223,33 +234,33 @@
 
                         <p *ngIf="unit.reg1" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg1}}</p>
                         <div *ngIf="unit.reg1Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[1]">{{unit.reg1Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[2]">{{unit.reg1Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[3]">{{unit.reg1Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg1Weapons[4]">{{unit.reg1Weapons[4]}}</p>
                         </div>
                         <p *ngIf="unit.reg2" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg2}}</p>
                         <div *ngIf="unit.reg2Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[3]">{{unit.reg2Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[1]">{{unit.reg2Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[2]">{{unit.reg2Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[3]">{{unit.reg2Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg2Weapons[4]">{{unit.reg2Weapons[4]}}</p>
                         </div>
 
                         <p *ngIf="unit.reg3" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg3}}</p>
                         <div *ngIf="unit.reg3Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[3]">{{unit.reg3Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[1]">{{unit.reg3Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[2]">{{unit.reg3Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[3]">{{unit.reg3Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg3Weapons[4]">{{unit.reg3Weapons[4]}}</p>
                         </div>
 
                         <p *ngIf="unit.reg4" class="font-[400] mt-[1em] text-base text-slate-300">{{unit.reg4}}</p>
                         <div *ngIf="unit.reg4Weapons">
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[3]">{{unit.reg4Weapons[3]}}</p>
-                            <p class="text-sm p-1 ml-4" *ngIf="unit.reg4Weapons[4]">{{unit.reg4Weapons[4]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[1]">{{unit.reg4Weapons[1]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[2]">{{unit.reg4Weapons[2]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[3]">{{unit.reg4Weapons[3]}}</p>
+                            <p class="text-sm p-1 ml-4 weapon-class" *ngIf="unit.reg4Weapons[4]">{{unit.reg4Weapons[4]}}</p>
                         </div>
                     </div>
 

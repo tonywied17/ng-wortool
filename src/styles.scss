@@ -5,21 +5,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap');
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
      
 $fontConfig: (
-  display-4: mat.define-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
-  display-3: mat.define-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
-  display-2: mat.define-typography-level(45px, 48px, 400, 'Roboto', 0.0000em),
-  display-1: mat.define-typography-level(34px, 40px, 400, 'Roboto', 0.0074em),
-  headline: mat.define-typography-level(24px, 32px, 400, 'Roboto', 0.0000em),
-  title: mat.define-typography-level(20px, 32px, 500, 'Roboto', 0.0075em),
-  subheading-2: mat.define-typography-level(16px, 28px, 400, 'Roboto', 0.0094em),
-  subheading-1: mat.define-typography-level(15px, 24px, 500, 'Roboto', 0.0067em),
-  body-2: mat.define-typography-level(14px, 24px, 500, 'Roboto', 0.0179em),
-  body-1: mat.define-typography-level(14px, 20px, 400, 'Roboto', 0.0179em),
-  button: mat.define-typography-level(14px, 14px, 500, 'Roboto', 0.0893em),
-  caption: mat.define-typography-level(12px, 20px, 400, 'Roboto', 0.0333em),
-  input: mat.define-typography-level(inherit, 1.125, 400, 'Roboto', 1.5px)
+  display-4: mat.define-typography-level(112px, 112px, 300, 'Roboto Slab', -0.0134em),
+  display-3: mat.define-typography-level(56px, 56px, 400, 'Roboto Slab', -0.0089em),
+  display-2: mat.define-typography-level(45px, 48px, 400, 'Roboto Slab', 0.0000em),
+  display-1: mat.define-typography-level(34px, 40px, 400, 'Roboto Slab', 0.0074em),
+  headline: mat.define-typography-level(24px, 32px, 400, 'Roboto Slab', 0.0000em),
+  title: mat.define-typography-level(20px, 32px, 500, 'Roboto Slab', 0.0075em),
+  subheading-2: mat.define-typography-level(16px, 28px, 400, 'Roboto Slab', 0.0094em),
+  subheading-1: mat.define-typography-level(15px, 24px, 500, 'Roboto Slab', 0.0067em),
+  body-2: mat.define-typography-level(14px, 24px, 500, 'Roboto Slab', 0.0179em),
+  body-1: mat.define-typography-level(14px, 20px, 400, 'Roboto Slab', 0.0179em),
+  button: mat.define-typography-level(14px, 14px, 500, 'Roboto Slab', 0.0893em),
+  caption: mat.define-typography-level(12px, 20px, 400, 'Roboto Slab', 0.0333em),
+  input: mat.define-typography-level(inherit, 1.125, 400, 'Roboto Slab', 1.5px)
 );
 
 // Foreground Elements
@@ -244,7 +246,7 @@ $theme: (
   font-size: 24px;
   font-family: 'Material Icons', 'Material Icons';  
   .mat-badge-content {
-    font-family: 'Roboto';
+    font-family: 'Roboto Slab';
   }
 }
 
@@ -255,7 +257,7 @@ $theme: (
 @tailwind utilities;
 
 html, body { height: 100%; overflow-y:overlay; overflow-x: hidden;}
-body { margin: 0; font-family: 'Poppins', sans-serif; }
+body { margin: 0; font-family: 'Roboto Slab', serif; }
 
 
 .mat-list-base .mat-list-item .mat-list-item-content {
@@ -282,6 +284,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .mat-checkbox-label{
+  // font-family: 'Roboto Slab', serif;
   margin: 0; font-family: 'Poppins', sans-serif;
   color: #7c7d72;
   font-weight: 300;
@@ -301,10 +304,13 @@ mat-checkbox:hover{
   border-width: 2px; 
 }
 button.mat-menu-item {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Roboto Slab', serif;
+  // font-family: 'Poppins', sans-serif !important;
 }
 .mat-radio-label{
-  margin: 0; font-family: 'Poppins', sans-serif;
+  margin: 0; 
+  font-family: 'Roboto Slab', serif;
+  // font-family: 'Poppins', sans-serif;
   color: #7c7d72;
   font-weight: 300;
   transition: all .3s ease; 
@@ -354,6 +360,7 @@ mat-radio-button:hover{
 }
 
 .field-input {
+  font-family: 'Poppins', sans-serif !important;
   padding: 12px 36px 12px 48px; /* Adjusted padding values */
   width: 100%;
   border: 2px solid #7c7d72;
@@ -379,7 +386,9 @@ mat-radio-button:hover{
   text-indent: 0; /* Adjusted text-indent value */
 }
 
-
+.mat-paginator-page-size-label, .mat-paginator-range-actions, .mat-select-value {
+  color: rgb(158 159 152) !important;
+}
 
 .field-icon {
   position: absolute;
@@ -417,4 +426,118 @@ mat-radio-button:hover{
 
 .mat-stroked-button:not(.mat-button-disabled) {
   border-color: rgb(124 125 115 / 59%);
+}
+
+.mat-slide-toggle-content {
+  font-family: 'Roboto Slab', serif;
+}
+
+.mat-list-item {
+  font-family: 'Popins', sans-serif !important;
+  font-weight: 300;
+}
+
+
+
+
+
+@keyframes fade-left {
+  0% {
+    transform: translateX(-150px);
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+
+
+.left-in {
+  animation: left-in .3s ease 0s 1 normal forwards;
+}
+
+.top-in {
+  animation: top-in .3s ease 0s 1 normal forwards;
+}
+
+.bottom-in {
+  animation: bottom-in .3s ease 0s 1 normal forwards;
+}
+
+.right-in {
+  animation: right-in .3s ease 0s 1 normal forwards;
+}
+
+.fade-center{
+	animation: fade-center .5s ease 0s 1 normal forwards;
+}
+
+@keyframes left-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-150px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes top-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bottom-in {
+  0% {
+    opacity: 0;
+    transform: translateY(150px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes right-in {
+  0% {
+    opacity: 0;
+    transform: translateX(150px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-center {
+	0% {
+		opacity: 0;
+	}
+
+	40% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }

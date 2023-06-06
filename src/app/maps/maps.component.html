@@ -211,13 +211,13 @@
 
 		<!--  -->
 		<div class="lg:col-start-2 lg:col-span-3">
-			<div *ngIf="!showMapPage"
+			<div *ngIf="!showMapPage && !loading"
 				class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7">
 				<div *ngFor="let map of map; index as i;"
 					class="bg-slate-800/80 rounded-lg py-4 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load">
 					<h4>
-						<span class="text-white/90 text-xl font-serif tracking-tight px-4 pb-1 text-left">{{ map.map }}</span>
-						<span class="text-slate-400/80 text-sm px-4 font-serif tracking-tight text-right float-right">
+						<span class="text-slate-200 text-xl tracking-tight px-4 pb-1 text-left">{{ map.map }}</span>
+						<span class="text-slate-400/80 text-sm px-4  tracking-tight text-right float-right">
 							{{
               map.campaign }}
 						</span>
@@ -226,18 +226,32 @@
 						style="background-image: url('https://app.paarmy.com/{{map.image}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;">
 					</div>
 
+					<div class="grid grid-cols-2 gap-2 mb-[-8.5px]">
 
-					<div class="px-2 mb-[-8px] text-right">
-						<button [class.active]="i == currentIndex"
-							[routerLink]="map.id"
-							mat-button
-							color="accent"
-							class="text-[15px] font-[500]">
-							Enhance
-							<i class="fa-solid fa-magnifying-glass"
-								style="margin-left:5px;margin-top:-2px;"></i>
-						</button>
+						<div class="cols-start-1 col-span-1 my-auto mr-auto pl-4 text-left">
+							<div class="" *ngIf="map.attacker === 'USA'">
+								<span class=" opacity-40">USA Attacker</span>
+							</div>
+	
+							<div class="" *ngIf="map.attacker === 'CSA'">
+								<span class=" opacity-40">CSA Attacker</span>
+							</div>
+						</div>
+						
+	
+						<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+							<button [class.active]="i == currentIndex"
+								[routerLink]="map.id"
+								mat-button
+								color="accent"
+								class="text-[15px] font-[500]">
+								Enhance
+								<i class="fa-solid fa-magnifying-glass"
+									style="margin-left:5px;margin-top:-2px;"></i>
+							</button>
+						</div>
 					</div>
+					
 				</div>
 			</div>
 		</div>

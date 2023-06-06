@@ -43,6 +43,7 @@ export class MapsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
 
@@ -51,8 +52,9 @@ export class MapsComponent implements OnInit {
     this.getMaps();
 
     setTimeout(() => {
+      this.loading = false;
       this.filterMaps();
-    }, 75);
+    }, 300);
   }
 
   retrieveFilterState(): void {
