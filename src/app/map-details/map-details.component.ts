@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  NgModule,
-  ChangeDetectorRef,
-} from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, HostListener, ChangeDetectorRef, Input } from "@angular/core";
 import { Map } from "../_models/map.model";
 import { MapService } from "../_services/map.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -12,7 +6,7 @@ import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { SafePipe } from "../_helpers/safe.pipe";
 import { NgModel } from "@angular/forms";
 import { TokenStorageService } from '../_services/token-storage.service';
-import {MatSnackBar, MatSnackBarConfig, MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
