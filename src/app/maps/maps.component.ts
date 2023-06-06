@@ -115,6 +115,10 @@ export class MapsComponent implements OnInit {
       filteredMap = filteredMap.filter((map) => map.attacker === "CSA");
     }
 
+    if (this.selectedAttacker === "No") {
+      filteredMap = filteredMap.filter((map) => map.attacker === "No");
+    }
+
     if (this.filterByUsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.usaArty);
     }

@@ -76,10 +76,14 @@
 									class="mt-[0.5em]">
 									CSA Attacker
 								</mat-radio-button>
-								<mat-radio-button value="none"
+								<mat-radio-button value="Any"
 									class="mt-[0.5em]">
-									Either/Or
+									Any Attacker
 								</mat-radio-button>
+								<mat-radio-button value="No"
+									class="mt-[0.5em]">
+									No Attacker
+								</mat-radio-button>	
 							</mat-radio-group>
 						</div>
 					</div>
@@ -189,9 +193,13 @@
 									class="mt-[0.5em]">
 									CSA Attacker
 								</mat-radio-button>
-								<mat-radio-button value="none"
+								<mat-radio-button value="Any"
 									class="mt-[0.5em]">
-									No Preference
+									Any Attacker
+								</mat-radio-button>
+								<mat-radio-button value="No"
+									class="mt-[0.5em]">
+									No Attacker
 								</mat-radio-button>
 							</mat-radio-group>
 						</div>
@@ -235,6 +243,10 @@
 	
 							<div class="" *ngIf="map.attacker === 'CSA'">
 								<span class=" opacity-40">CSA Attacker</span>
+							</div>
+
+							<div class="" *ngIf="map.attacker === 'No'">
+								<span class=" opacity-40">No Attacker</span>
 							</div>
 						</div>
 						
