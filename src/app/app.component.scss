@@ -1,9 +1,13 @@
 .navitem{
-    color: rgba(17, 24, 39, 0.70);
+    color: #252525ce;
     transition: all 0.1s ease-in-out;
 }
 
 .navitem:active{
     transition: 0.1s !important;
     transform: scale3d(1.30, 0.95, 1);
+}
+
+.mat-list-base{
+    padding-top: 1px !important;
 }

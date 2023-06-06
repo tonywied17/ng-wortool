@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, ChangeDetectorRef, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, HostListener, ChangeDetectorRef, Input, TemplateRef, AfterViewInit, ViewContainerRef, OnDestroy,} from "@angular/core";
 import { Map } from "../_models/map.model";
 import { MapService } from "../_services/map.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -8,14 +8,22 @@ import { NgModel } from "@angular/forms";
 import { TokenStorageService } from '../_services/token-storage.service';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
+import {Overlay, OverlayRef} from '@angular/cdk/overlay';
+import {TemplatePortal} from '@angular/cdk/portal';
+import {CdkDrag, CdkDragHandle} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: "app-map-details",
   templateUrl: "./map-details.component.html",
   styleUrls: ["./map-details.component.scss"],
-  providers: [SafePipe], // Include the SafePipe in the providers array
+  providers: [SafePipe, CdkDrag, CdkDragHandle], // Include the SafePipe in the providers array
 })
 export class MapDetailsComponent implements OnInit {
+  @ViewChild('dialogTemplate')
+  _dialogTemplate!: TemplateRef<any>;
+
+  private _overlayRef!: OverlayRef;
+  private _portal!: TemplatePortal;
   data: any;
   CamMapBool: boolean = false;
   CamMap: string = "Disabled";
@@ -34,7 +42,9 @@ export class MapDetailsComponent implements OnInit {
     private token: TokenStorageService,
     private cdr: ChangeDetectorRef,
     private _snackBar: MatSnackBar,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private _overlay: Overlay, 
+    private _viewContainerRef: ViewContainerRef
   ) {}
 
   openSnackBar(message: string, duration: number) {
@@ -49,6 +59,29 @@ export class MapDetailsComponent implements OnInit {
 
   copyToClipboard(text: string) {
     this.clipboard.copy(text);
+  }
+
+  ngAfterViewInit() {
+    this._portal = new TemplatePortal(this._dialogTemplate, this._viewContainerRef);
+    this._overlayRef = this._overlay.create({
+      positionStrategy: this._overlay.position().global().centerHorizontally().centerVertically(),
+      hasBackdrop: true,
+    });
+    this._overlayRef.backdropClick().subscribe(() => this._overlayRef.detach());
+  }
+
+  ngOnDestroy() {
+    this._overlayRef.dispose();
+  }
+
+  openDialog() {
+    this._overlayRef.attach(this._portal);
+  }
+  
+  closePopup() {
+    if (this._overlayRef && this._overlayRef.hasAttached()) {
+      this._overlayRef.detach();
+    }
   }
 
   ngOnInit(): void {
