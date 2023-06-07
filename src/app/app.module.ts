@@ -48,6 +48,7 @@ const routes: Routes = [
     BoardAdminComponent,
     MusterComponent,
     PasswordMatchValidatorDirective
+
   ],
   imports: [
     BrowserModule,
