@@ -20,8 +20,8 @@ export class WeaponService {
     return this.http.get(API + '/' + id, { responseType: 'text' });
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post(API + '/', data);
+  create(userID: string, data: any): Observable<any> {
+    return this.http.post(API + '/' + userID, data);
   }
 }
 

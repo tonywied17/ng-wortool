@@ -47,16 +47,27 @@ export class BoardUserComponent implements OnInit {
     });
 
     this.isLoggedIn = !!this.token.getToken();
-    this.currentUser = this.token.getUser();
-
-    if (this.isLoggedIn) {
-      const user = this.token.getUser();
-      this.roles = user.roles;
-      // console.log(user);
-      this.showAdmin = this.roles.includes('ROLE_ADMIN');
-      this.showMod = this.roles.includes('ROLE_MODERATOR');
-      this.showUser = true;
-    }
+      this.currentUser = this.token.getUser();
+      const userID = this.currentUser.id;
+      
+      if (this.isLoggedIn) {
+        this.authService.checkUserRole(userID).subscribe(
+          (response) => {
+            console.log('User Role:', response.access);
+            this.showUser = response.access;
+          },
+          (error) => {
+            if (error.status === 403) {
+              console.log('Unauthorized');
+              this.showUser = false;
+              console.log('User Role:', this.showUser);
+              // Handle unauthorized error, display login message, etc.
+            } else {
+              console.error('Error:', error);
+            }
+          }
+        );
+      }
   }
 
   private loadContent(page: string): void {

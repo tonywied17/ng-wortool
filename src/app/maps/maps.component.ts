@@ -54,7 +54,7 @@ export class MapsComponent implements OnInit {
     setTimeout(() => {
       this.loading = false;
       this.filterMaps();
-    }, 300);
+    }, 120);
   }
 
   retrieveFilterState(): void {

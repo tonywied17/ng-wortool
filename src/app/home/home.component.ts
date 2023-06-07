@@ -111,14 +111,73 @@ export class HomeComponent implements OnInit {
 
     // console.log(this.isLoggedIn);
     this.currentUser = this.tokenStorage.getUser();
+    const userID = this.currentUser.id;
+
+    // if (this.isLoggedIn) {
+    //   const user = this.tokenStorage.getUser();
+    //   this.roles = user.roles;
+    //   // console.log(user);
+    //   this.showAdmin = this.roles.includes("ROLE_ADMIN");
+    //   this.showMod = this.roles.includes("ROLE_MODERATOR");
+    //   this.showUser = true;
+    // }
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorage.getUser();
-      this.roles = user.roles;
-      // console.log(user);
-      this.showAdmin = this.roles.includes("ROLE_ADMIN");
-      this.showMod = this.roles.includes("ROLE_MODERATOR");
-      this.showUser = true;
+
+      //check user role
+      this.authService.checkUserRole(userID).subscribe(
+        (response) => {
+          console.log('User Role:', response.access);
+          this.showUser = response.access;
+        },
+        (error) => {
+          if (error.status === 403) {
+            console.log('Unauthorized');
+            this.showUser = false;
+            console.log('User Role:', this.showUser);
+            // Handle unauthorized error, display login message, etc.
+          } else {
+            console.error('Error:', error);
+          }
+        }
+      );
+
+      //check moderator role
+      this.authService.checkModeratorRole(userID).subscribe(
+        (response) => {
+          console.log('Mod Role:', response.access);
+          this.showMod = response.access;
+        },
+        (error) => {
+          if (error.status === 403) {
+            console.log('Unauthorized');
+            this.showMod = false;
+            console.log('Mod Role:', this.showMod);
+            // Handle unauthorized error, display login message, etc.
+          } else {
+            console.error('Error:', error);
+          }
+        }
+      );
+
+      //check admin role
+      this.authService.checkAdminRole(userID).subscribe(
+        (response) => {
+          console.log('Admin Role:', response.access);
+          this.showAdmin = response.access;
+        },
+        (error) => {
+          if (error.status === 403) {
+            console.log('Unauthorized');
+            this.showAdmin = false;
+            console.log('Admin Role:', this.showAdmin);
+            // Handle unauthorized error, display login message, etc.
+          } else {
+            console.error('Error:', error);
+          }
+        }
+      );
+
     }
   }
 

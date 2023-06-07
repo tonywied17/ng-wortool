@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 
 const AUTH_API = 'https://api.tonewebdesign.com/pa/auth/';
+const VET_API = 'https://api.tonewebdesign.com/pa/vet/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -59,10 +60,25 @@ export class AuthService {
   }
 
   password(id: string, passwordCurrent: string, passwordNew: string): Observable<any> {
-    return this.http.put(AUTH_API + 'update', {
+    return this.http.put(AUTH_API + id + '/update', {
       id,
       passwordCurrent,
       passwordNew
     }, httpOptions);
+  }
+
+  checkUserRole(userId: string): Observable<any> {
+    const url = VET_API + 'user/' + userId;
+    return this.http.get(url, httpOptions);
+  }
+
+  checkModeratorRole(userId: string): Observable<any> {
+    const url = VET_API + 'mod/' + userId;
+    return this.http.get(url, httpOptions);
+  }
+
+  checkAdminRole(userId: string): Observable<any> {
+    const url = VET_API + 'admin/' + userId;
+    return this.http.get(url, httpOptions);
   }
 }

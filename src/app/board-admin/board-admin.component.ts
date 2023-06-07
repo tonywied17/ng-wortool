@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-board-admin',
@@ -21,29 +22,41 @@ export class BoardAdminComponent implements OnInit {
 
   private roles: string[] = [];
 
-  constructor(private token: TokenStorageService,private route: ActivatedRoute,) { }
+  constructor(
+    private token: TokenStorageService,
+    private authService: AuthService,
+    private route: ActivatedRoute, ) { }
 
-  ngOnInit(): void {
-
-    this.route.params.subscribe((params: Params) => {
-      const page = params['page'];
-      this.loadContent(page);
-    });
-
-
-    this.isLoggedIn = !!this.token.getToken();
-    this.currentUser = this.token.getUser();
-
-    if (this.isLoggedIn) {
-      const user = this.token.getUser();
-      this.roles = user.roles;
-      // console.log(user)
-      this.showAdmin = this.roles.includes('ROLE_ADMIN');
-      this.showMod = this.roles.includes('ROLE_MODERATOR');
-      this.showUser = true
+    ngOnInit(): void {
+      this.route.params.subscribe((params: Params) => {
+        const page = params['page'];
+        this.loadContent(page);
+      });
+    
+      this.isLoggedIn = !!this.token.getToken();
+      this.currentUser = this.token.getUser();
+      const userID = this.currentUser.id;
+      
+      if (this.isLoggedIn) {
+        this.authService.checkAdminRole(userID).subscribe(
+          (response) => {
+            console.log('Admin Role:', response.access);
+            this.showAdmin = response.access;
+          },
+          (error) => {
+            if (error.status === 403) {
+              console.log('Unauthorized');
+              this.showAdmin = false;
+              console.log('Admin Role:', this.showAdmin);
+              // Handle unauthorized error, display login message, etc.
+            } else {
+              console.error('Error:', error);
+            }
+          }
+        );
+      }
     }
-
-  }
+    
 
   private loadContent(page: string): void {
     // Reset all flags

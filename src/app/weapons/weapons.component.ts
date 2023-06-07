@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ChangeDetectorRef  } from "@angular/core";
 import { WeaponService } from "../_services/weapon.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from "@angular/material/paginator";
+import { AuthService } from "../_services/auth.service";
 
 @Component({
   selector: "app-weapons",
@@ -40,18 +41,33 @@ export class WeaponsComponent implements OnInit {
 
   constructor(
     private weaponService: WeaponService,
-    private token: TokenStorageService
+    private token: TokenStorageService,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
+    const userID = this.currentUser.id;
 
     if (this.isLoggedIn) {
-      const user = this.token.getUser();
-      this.roles = user.roles;
-      // console.log(user);
-      this.showAdmin = this.roles.includes("ROLE_ADMIN");
+      this.authService.checkAdminRole(userID).subscribe(
+        (response) => {
+          console.log('Admin Role:', response.access);
+          this.showAdmin = response.access;
+        },
+        (error) => {
+          if (error.status === 403) {
+            console.log('Unauthorized');
+            this.showAdmin = false;
+            console.log('Admin Role:', this.showAdmin);
+            // Handle unauthorized error, display login message, etc.
+          } else {
+            console.error('Error:', error);
+          }
+        }
+      );
     }
 
     this.weaponService.getAll().subscribe((data) => {
@@ -70,6 +86,7 @@ export class WeaponsComponent implements OnInit {
   }
 
   onCreate(): void {
+    const userID = this.currentUser.id;
     const data = {
       weapon: this.weaponForm.weapon,
       range: this.weaponForm.range,
@@ -77,18 +94,20 @@ export class WeaponsComponent implements OnInit {
       ammo: this.weaponForm.ammo,
       notes: this.weaponForm.notes,
     };
-
-    this.weaponService.create(data).subscribe({
+  
+    this.weaponService.create(userID, data).subscribe({
       next: (data) => {
         // console.log(data);
         this.submitted = true;
-        this.refreshTable();
+        this.cdr.detectChanges();
+        this.refreshTable(); // Refresh table after creating the weapon
       },
       error: (err) => {
         this.errorMessage = err.error.message;
       },
     });
   }
+  
 
 
   refreshTable(): void {
