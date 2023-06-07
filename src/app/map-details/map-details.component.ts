@@ -11,8 +11,10 @@ import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/mate
 import { Clipboard } from '@angular/cdk/clipboard';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
-import {CdkDrag, CdkDragHandle} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragHandle, CdkDragMove } from '@angular/cdk/drag-drop';
 import { Note } from '../_models/note.model';
+
+
 
 @Component({
   selector: "app-map-details",
@@ -35,6 +37,7 @@ export class MapDetailsComponent implements OnInit {
   showAdmin = false;
   private roles: string[] = [];
   currentNotes: any;
+  selectedOption!: string;
   @Input() viewMode = false;
   @Input() currentMap: any;
 
