@@ -36,6 +36,7 @@ export class WeaponsComponent implements OnInit {
   currentUser: any;
   isLoggedIn = false;
   showAdmin = false;
+  loading = true;
   private roles: string[] = [];
   submitted = false;
 
@@ -54,20 +55,27 @@ export class WeaponsComponent implements OnInit {
     if (this.isLoggedIn) {
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
-          console.log('Admin Role:', response.access);
+          
           this.showAdmin = response.access;
+          this.loading = false;
         },
         (error) => {
           if (error.status === 403) {
-            console.log('Unauthorized');
+            
             this.showAdmin = false;
-            console.log('Admin Role:', this.showAdmin);
+            
             // Handle unauthorized error, display login message, etc.
           } else {
             console.error('Error:', error);
+            if(this.isLoggedIn) {
+              this.loading = false;
+            }
           }
+          this.loading = false;
         }
       );
+    }else{
+      this.loading = false;
     }
 
     this.weaponService.getAll().subscribe((data) => {

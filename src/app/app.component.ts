@@ -61,17 +61,14 @@ export class AppComponent implements OnInit {
       localStorage.getItem("isModerator") === "true";
 
     this.isLoggedIn = localStorage.getItem("isAuthenticated") === "true";
-    // alert(this.isLoggedIn);
     this.showMod = this.authService.isModerator;
     this.showAdmin = this.authService.isAdministrator;
 
-    // console.log(this.isLoggedIn);
     this.currentUser = this.tokenStorage.getUser();
 
     if (this.isLoggedIn) {
       const user = this.tokenStorage.getUser();
       this.roles = user.roles;
-      // console.log(user);
       this.showAdmin = this.roles.includes("ROLE_ADMIN");
       this.showMod = this.roles.includes("ROLE_MODERATOR");
       this.showUser = true;

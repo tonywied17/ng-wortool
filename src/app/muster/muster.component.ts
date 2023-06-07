@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { User } from '../_models/user.model';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { AuthService } from "../_services/auth.service";
 
 // https://api.tonewebdesign.com/pa/muster
 @Component({
@@ -20,27 +21,39 @@ export class MusterComponent implements OnInit {
   showAdmin = false;
   showUser = false;
   showMod = false;
-  private roles: string[] = [];
+  loading = true;
 
-  constructor(private userService: UserService, private token: TokenStorageService) { }
+  constructor(
+    private userService: UserService, 
+    private token: TokenStorageService
+    ,private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
-
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
+    const userID = this.currentUser.id;
 
     if (this.isLoggedIn) {
-      const user = this.token.getUser();
-      this.roles = user.roles;
-      // console.log(user)
-      this.showAdmin = this.roles.includes('ROLE_ADMIN');
-      // console.log(this.showAdmin)
-      this.showMod = this.roles.includes('ROLE_MODERATOR');
-      // console.log(this.showMod)
-      this.showUser = true
+      this.authService.checkModeratorRole(userID).subscribe(
+        (response) => {
+          
+          this.showMod = response.access;
+          this.loading = false;
+          this.getUsers();
+        },
+        (error) => {
+          if (error.status === 403) {
+            this.showMod = false;
+          } else {
+            console.error('Error:', error);
+          }
+          this.loading = false;
+        }
+      );
+    }else{
+      this.loading = false;
     }
-
-    this.getUsers();
   }
 
   getUsers(): void {

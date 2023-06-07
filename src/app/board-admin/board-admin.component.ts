@@ -19,44 +19,45 @@ export class BoardAdminComponent implements OnInit {
   showPage1 = false;
   showPage2 = false;
   showPage3 = false;
+  loading = true;
 
   private roles: string[] = [];
 
   constructor(
     private token: TokenStorageService,
     private authService: AuthService,
-    private route: ActivatedRoute, ) { }
+    private route: ActivatedRoute,
+  ) {}
 
-    ngOnInit(): void {
-      this.route.params.subscribe((params: Params) => {
-        const page = params['page'];
-        this.loadContent(page);
-      });
-    
-      this.isLoggedIn = !!this.token.getToken();
-      this.currentUser = this.token.getUser();
-      const userID = this.currentUser.id;
-      
-      if (this.isLoggedIn) {
-        this.authService.checkAdminRole(userID).subscribe(
-          (response) => {
-            console.log('Admin Role:', response.access);
-            this.showAdmin = response.access;
-          },
-          (error) => {
-            if (error.status === 403) {
-              console.log('Unauthorized');
-              this.showAdmin = false;
-              console.log('Admin Role:', this.showAdmin);
-              // Handle unauthorized error, display login message, etc.
-            } else {
-              console.error('Error:', error);
-            }
+  ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      const page = params['page'];
+      this.loadContent(page);
+    });
+
+    this.isLoggedIn = !!this.token.getToken();
+    this.currentUser = this.token.getUser();
+    const userID = this.currentUser.id;
+
+    if (this.isLoggedIn) {
+      this.authService.checkAdminRole(userID).subscribe(
+        (response) => {
+          this.showAdmin = response.access;
+          this.loading = false;
+        },
+        (error) => {
+          if (error.status === 403) {
+            this.showAdmin = false;
+          } else {
+            console.error('Error:', error);
           }
-        );
-      }
+          this.loading = false; 
+        }
+      );
+    }else{
+      this.loading = false
     }
-    
+  }
 
   private loadContent(page: string): void {
     // Reset all flags

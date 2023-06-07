@@ -1,4 +1,8 @@
-<div class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[4em]">
+<div *ngIf="loading" class="text-center text-xl opacity-75">
+  <i class="fas fa-spinner fa-pulse mr-2"></i> Verifying credentials...
+</div>
+
+<div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[4em]">
 
   <div *ngIf="!showMod && isLoggedIn" class="p-5 bg-[#1c2537] rounded-md"
   style="border-left: 5px solid #a13c3c;">

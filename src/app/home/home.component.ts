@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   showMod = false;
   roles: string[] = [];
   currentUser: any;
+  loading = true;
 
   currentYear!: number;
   nextYear!: number;
@@ -92,92 +93,70 @@ export class HomeComponent implements OnInit {
   }
 
   initializeComponent(): void {
-    if (this.tokenStorage.getToken()) {
-      this.currentUser = this.tokenStorage.getUser();
-      this.roles = this.tokenStorage.getUser().roles;
-    }
-
-    this.authService.isAuthenticated =
-      localStorage.getItem("isAuthenticated") === "true";
-    this.authService.isAdministrator =
-      localStorage.getItem("isAdmin") === "true";
-    this.authService.isModerator =
-      localStorage.getItem("isModerator") === "true";
-
-    this.isLoggedIn = localStorage.getItem("isAuthenticated") === "true";
-    // alert(this.isLoggedIn);
-    this.showMod = this.authService.isModerator;
-    this.showAdmin = this.authService.isAdministrator;
-
-    // console.log(this.isLoggedIn);
+    this.isLoggedIn = !!this.tokenStorage.getToken();
     this.currentUser = this.tokenStorage.getUser();
     const userID = this.currentUser.id;
-
-    // if (this.isLoggedIn) {
-    //   const user = this.tokenStorage.getUser();
-    //   this.roles = user.roles;
-    //   // console.log(user);
-    //   this.showAdmin = this.roles.includes("ROLE_ADMIN");
-    //   this.showMod = this.roles.includes("ROLE_MODERATOR");
-    //   this.showUser = true;
-    // }
 
     if (this.isLoggedIn) {
 
       //check user role
       this.authService.checkUserRole(userID).subscribe(
         (response) => {
-          console.log('User Role:', response.access);
           this.showUser = response.access;
+          this.loading = false;
         },
         (error) => {
           if (error.status === 403) {
-            console.log('Unauthorized');
+            
             this.showUser = false;
-            console.log('User Role:', this.showUser);
+            
             // Handle unauthorized error, display login message, etc.
           } else {
             console.error('Error:', error);
           }
+          this.loading = false;
         }
       );
 
       //check moderator role
       this.authService.checkModeratorRole(userID).subscribe(
         (response) => {
-          console.log('Mod Role:', response.access);
+          
           this.showMod = response.access;
+          this.loading = false;
         },
         (error) => {
           if (error.status === 403) {
-            console.log('Unauthorized');
             this.showMod = false;
-            console.log('Mod Role:', this.showMod);
-            // Handle unauthorized error, display login message, etc.
           } else {
             console.error('Error:', error);
           }
+          this.loading = false;
         }
       );
 
       //check admin role
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
-          console.log('Admin Role:', response.access);
+          
           this.showAdmin = response.access;
+          this.loading = false;
         },
         (error) => {
           if (error.status === 403) {
-            console.log('Unauthorized');
+            
             this.showAdmin = false;
-            console.log('Admin Role:', this.showAdmin);
+            
             // Handle unauthorized error, display login message, etc.
           } else {
             console.error('Error:', error);
           }
+          this.loading = false;
         }
       );
 
+    }else{
+      this.loading = false;
     }
   }
 
@@ -186,7 +165,6 @@ export class HomeComponent implements OnInit {
 
     this.authService.register(username, email, password).subscribe({
       next: (data) => {
-        // console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
       },

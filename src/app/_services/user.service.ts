@@ -25,7 +25,7 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<any> {
-    console.log(`${user.id} - ${user.nickname} | ev: ${user.events}, dr: ${user.drills}`)
+    // console.log(`${user.id} - ${user.nickname} | ev: ${user.events}, dr: ${user.drills}`)
     return this.http.put(`${API_URL}${user.id}`, user);
   }
 

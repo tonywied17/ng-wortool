@@ -1,4 +1,8 @@
-<div class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[2em] lg:mt-[3.5em]" id="map-contained">
+<div *ngIf="loading" class="text-center text-xl opacity-75">
+    <i class="fas fa-spinner fa-pulse mr-2"></i> Verifying credentials...
+  </div>
+  
+  <div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[2em] lg:mt-[3.5em]" id="map-contained">
 
     <div class="text-[#88887b]  text-3xl mb-[1em]">
 

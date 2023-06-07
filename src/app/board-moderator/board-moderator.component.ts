@@ -12,8 +12,7 @@ export class BoardModeratorComponent implements OnInit {
   currentUser: any;
   isLoggedIn = false;
   showMod = false;
-  private roles: string[] = [];
-
+  loading = true;
   constructor(
     private token: TokenStorageService,
     private authService: AuthService
@@ -27,20 +26,21 @@ export class BoardModeratorComponent implements OnInit {
     if (this.isLoggedIn) {
       this.authService.checkModeratorRole(userID).subscribe(
         (response) => {
-          console.log('Mod Role:', response.access);
+          
           this.showMod = response.access;
+          this.loading = false;
         },
         (error) => {
           if (error.status === 403) {
-            console.log('Unauthorized');
             this.showMod = false;
-            console.log('Mod Role:', this.showMod);
-            // Handle unauthorized error, display login message, etc.
           } else {
             console.error('Error:', error);
           }
+          this.loading = false;
         }
       );
+    }else{
+      this.loading = false;
     }
   }
 }
