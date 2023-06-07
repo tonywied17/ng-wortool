@@ -8,5 +8,4 @@ export class Map {
     youtube?: any;
     attacker?: any;
     strat?: any;
-    notes?: any;
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, ChangeDetectorRef, Input, TemplateRef, AfterViewInit, ViewContainerRef, OnDestroy,} from "@angular/core";
 import { Map } from "../_models/map.model";
 import { MapService } from "../_services/map.service";
+import { NoteService } from "../_services/note.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { SafePipe } from "../_helpers/safe.pipe";
@@ -11,6 +12,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {CdkDrag, CdkDragHandle} from '@angular/cdk/drag-drop';
+import { Note } from '../_models/note.model';
 
 @Component({
   selector: "app-map-details",
@@ -32,11 +34,13 @@ export class MapDetailsComponent implements OnInit {
   showUser = false;
   showAdmin = false;
   private roles: string[] = [];
+  currentNotes: any;
   @Input() viewMode = false;
   @Input() currentMap: any;
 
   constructor(
     private mapService: MapService,
+    private noteService: NoteService,
     private route: ActivatedRoute,
     private router: Router,
     private token: TokenStorageService,
@@ -85,8 +89,8 @@ export class MapDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMap(this.route.snapshot.params["id"]);
-
+    this.getMap(this.route.snapshot.params["id"]); 
+    this.getCurrentNotes();
     this.isLoggedIn = !!this.token.getToken();
 
     if (this.isLoggedIn) {
@@ -96,6 +100,44 @@ export class MapDetailsComponent implements OnInit {
       this.showUser = true
     }
   }
+
+  getCurrentNotes(): void {
+    const currentUserId = this.token.getUser().id;
+    const currentMapId = this.route.snapshot.params["id"];
+  
+    console.log(currentUserId + " " + currentMapId);
+
+    this.noteService.getById(currentMapId, currentUserId)
+      .subscribe({
+        next: (notes: Note[]) => { // Update the type annotation to Note[]
+          this.currentNotes = notes[0].note;
+          console.log(notes);
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+  }
+  
+  saveNotes(noteText: string, mapId: string): void {
+    const currentUserId = this.token.getUser().id;
+    console.log(mapId + " " + currentUserId + " " + noteText);
+    this.noteService.createOrUpdate(mapId, currentUserId, noteText)
+      .subscribe(
+        () => {
+          this.openSnackBar('Note saved successfully.', 2000);
+          // this.closePopup();
+          this.getCurrentNotes();
+        },
+        (error) => {
+          console.error(error);
+          this.openSnackBar('Failed to save note. Please try again.', 2000);
+        }
+      );
+  }
+  
+  
+
 
   getMap(id: string): void {
     this.mapService.get(id).subscribe({
