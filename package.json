@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "discord.js": "^14.11.0",
+    "querystring": "^0.2.1",
     "rxjs": "~7.5.0"
   },
   "devDependencies": {
@@ -29,6 +30,7 @@
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
     "autoprefixer": "^10.4.13",
+    "http-proxy-middleware": "^2.0.6",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -37,6 +39,7 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "postcss": "^8.4.19",
     "tailwindcss": "^3.2.4",
-    "typescript": "~4.7.2"
+    "typescript": "~4.7.2",
+    "webpack-dev-server": "^4.15.0"
   }
 }

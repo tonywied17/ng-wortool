@@ -4,6 +4,7 @@ import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
 import { SharedService } from "../_services/shared.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: "app-board-user",
@@ -36,8 +37,9 @@ export class BoardUserComponent implements OnInit {
     private authService: AuthService,
     private sharedService: SharedService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {}
+
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
