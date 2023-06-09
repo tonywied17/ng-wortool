@@ -29,7 +29,9 @@ import { Overlay, OverlayRef } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
 import { CdkDrag, CdkDragHandle, CdkDragMove } from "@angular/cdk/drag-drop";
 import { Note } from "../_models/note.model";
+import { Favorite } from "../_models/favorite";
 import { AuthService } from "../_services/auth.service";
+import { FavoriteService } from "../_services/favorite.service";
 
 @Component({
   selector: "app-map-details",
@@ -53,6 +55,8 @@ export class MapDetailsComponent implements OnInit {
   showAdmin = false;
   private roles: string[] = [];
   currentNotes: any;
+  currentFavorites: any;
+  isFavorited = false;
   currentUser: any;
   loading = true;
   selectedOption!: string;
@@ -70,7 +74,8 @@ export class MapDetailsComponent implements OnInit {
     private clipboard: Clipboard,
     private _overlay: Overlay,
     private _viewContainerRef: ViewContainerRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private favoriteService: FavoriteService
   ) {}
 
   openSnackBar(message: string, duration: number) {
@@ -129,6 +134,7 @@ export class MapDetailsComponent implements OnInit {
         (response) => {
           this.showUser = response.access;
           this.loading = false;
+          this.getFavorites(this.route.snapshot.params["id"], userID)
         },
         (error) => {
           if (error.status === 403) {
@@ -175,6 +181,76 @@ export class MapDetailsComponent implements OnInit {
       this.loading = false;
     }
   }
+
+  getFavorites(mapId: string, userId: string): void {
+    this.favoriteService.getByBothIds(mapId, userId).subscribe({
+      next: (favorite: Favorite[]) => {
+        console.log(favorite);
+        console.log(mapId + ' - ' + favorite[0].mapId);
+        console.log(userId + ' - ' + favorite[0].userId);
+
+        if(favorite[0].mapId == mapId && favorite[0].userId == userId){
+          this.isFavorited =  true;
+        } else{
+          this.isFavorited = false;
+        }
+
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  toggleFavorite(mapId: string, userId: string): void {
+    this.favoriteService.getByBothIds(mapId, userId).subscribe({
+      next: (favorite: Favorite[]) => {
+        console.log(favorite); // Check the fetched favorites
+  
+        if (favorite && favorite.length > 0) {
+          console.log('Deleting favorite... ' + favorite[0].id);
+          this.favoriteService.delete(mapId, userId).subscribe(
+            () => {
+              console.log('Favorite deleted successfully');
+              this.openSnackBar("Map removed from favorites.", 2000);
+              this.isFavorited = false;
+            },
+            (error) => {
+              console.error(error);
+              this.openSnackBar(
+                "Failed to remove map from favorites. Please try again.",
+                2000
+              );
+            }
+          );
+        } else {
+          console.log('Creating favorite...' + mapId + ' ' + userId);
+          const currentRoute = this.router.url;
+          console.log('Current route: ', currentRoute);
+          this.favoriteService.createOrUpdate(currentRoute, mapId, userId, "map").subscribe(
+            () => {
+              console.log('Favorite created successfully');
+              this.openSnackBar("Map added to favorites.", 2000);
+              this.isFavorited = true;
+            },
+            (error) => {
+              console.error(error);
+              this.openSnackBar(
+                "Failed to add map to favorites. Please try again.",
+                2000
+              );
+            }
+          );
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+  
+  
+  
 
   getCurrentNotes(): void {
     const currentUserId = this.token.getUser().id;

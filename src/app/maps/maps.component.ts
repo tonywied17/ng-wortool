@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { MapService } from "../_services/map.service";
 import { TokenStorageService } from "../_services/token-storage.service";
+import { FavoriteService } from "../_services/favorite.service";
 import { Map } from "../_models/map.model";
 
 @Component({
@@ -36,9 +37,15 @@ export class MapsComponent implements OnInit {
   showArtyDiv = false;
   showAttackerDiv: boolean = false;
 
+  showFavoritesDiv: boolean = false;
+  filterByFavorites = false;
+  selectedFavorite: string | undefined;
+  currentFavorites: any[] = [];
+
   constructor(
     private mapService: MapService,
     private token: TokenStorageService,
+    private favoriteService: FavoriteService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -46,11 +53,12 @@ export class MapsComponent implements OnInit {
     this.loading = true;
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
-
+  
     this.retrieveFilterState(); // Retrieve filter state from local storage
-
+  
     this.getMaps();
-
+    this.getFavorites();
+  
     setTimeout(() => {
       this.loading = false;
       this.filterMaps();
@@ -67,6 +75,11 @@ export class MapsComponent implements OnInit {
       this.filterByCsaArtillery = filterState.filterByCsaArtillery;
       this.searchText = filterState.searchText;
       this.filterByCampaign = filterState.filterByCampaign;
+      this.filterByFavorites = filterState.filterByFavorites;
+      this.selectedFavorite = filterState.selectedFavorite;
+  
+      // Call filterMaps to apply the restored filters
+      this.filterMaps();
     }
   }
 
@@ -78,6 +91,8 @@ export class MapsComponent implements OnInit {
       filterByCsaArtillery: this.filterByCsaArtillery,
       searchText: this.searchText,
       filterByCampaign: this.filterByCampaign,
+      filterByFavorites: this.filterByFavorites,
+      selectedFavorite: this.selectedFavorite,
     };
     localStorage.setItem("filterState", JSON.stringify(filterState));
   }
@@ -100,76 +115,95 @@ export class MapsComponent implements OnInit {
   }
 
   private getUniqueCampaigns(data: Map[]): string[] {
-    const campaigns = data.map((map) => map.campaign);
+    const excludedCampaigns = ["Picket Patrol", "Drill Camp"];
+    const campaigns = data
+      .map((map) => map.campaign)
+      .filter((campaign) => !excludedCampaigns.includes(campaign));
     return [...new Set(campaigns)];
   }
 
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
-
+  
+    if (this.selectedFavorite === "true") {
+      filteredMap = filteredMap.filter((map) =>
+        this.currentFavorites.some((favorite) => favorite.mapId === map.id)
+      );
+    } else {
+      // Restore the original map list
+      filteredMap = this.originalMap || [];
+    }
+  
     if (this.selectedAttacker === "USA") {
       filteredMap = filteredMap.filter((map) => map.attacker === "USA");
     }
-
+  
     if (this.selectedAttacker === "CSA") {
       filteredMap = filteredMap.filter((map) => map.attacker === "CSA");
     }
-
+  
     if (this.selectedAttacker === "No") {
       filteredMap = filteredMap.filter((map) => map.attacker === "No");
     }
-
+  
     if (this.filterByUsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.usaArty);
     }
-
+  
     if (this.filterByCsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.csaArty);
     }
-
-    if (this.filterByCampaign && this.selectedCampaigns.length > 0) {
-      filteredMap = filteredMap.filter((map) =>
-        this.selectedCampaigns.includes(map.campaign)
-      );
+  
+    if (this.selectedCampaigns.length > 0) {
+      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
     }
-
-    if (this.searchText) {
-      filteredMap = filteredMap.filter((map) =>
-        map.map?.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    }
-
+  
     this.map = filteredMap;
-
+  
     this.saveFilterState();
+  }
+  
+
+  private getFavorites(): void {
+    const userID = this.currentUser.id;
+    this.favoriteService.getByUserId(userID).subscribe(
+      (response) => {
+        this.currentFavorites = response;
+        this.filterMaps(); // Apply filters after fetching favorites
+      },
+      (error) => {
+        console.error("Error:", error);
+      }
+    );
   }
 
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
-
+  
     if (index > -1) {
       this.selectedCampaigns.splice(index, 1);
     } else {
       this.selectedCampaigns.push(campaign);
     }
-
+  
+    this.selectedCampaign = this.selectedCampaigns.length > 0 ? this.selectedCampaigns[0] : "";
     this.filterMaps();
   }
+  
 
   setSelectedCampaign(campaign: string): void {
-    const index = this.selectedCampaigns.indexOf(campaign);
-
-    if (index > -1) {
-      this.selectedCampaigns.splice(index, 1);
-    } else {
-      this.selectedCampaigns.push(campaign);
-    }
-
+    this.selectedCampaigns = [campaign];
+    this.selectedCampaign = campaign;
     this.filterMaps();
   }
+  
 
   toggleFilterByCampaign(): void {
     this.filterByCampaignDiv = !this.filterByCampaignDiv;
+  }
+
+  toggleFavoritesDiv(): void {
+    this.showFavoritesDiv = !this.showFavoritesDiv;
   }
 
   toggleAttackerDiv() {
@@ -189,22 +223,30 @@ export class MapsComponent implements OnInit {
   }
 
   clearFilters(): void {
-    // Clear search text
-    this.searchText = "";
-
-    // Clear campaign checkboxes
+    this.selectedCampaign = "";
     this.selectedCampaigns = [];
-
-    // Clear USA/CSA artillery checkboxes
+    this.filterByCampaign = true;
+  
+    this.filterByAttacker = false;
+    this.filterByCsaAttacker = false;
+    this.filterByUsaAttacker = false;
+    this.selectedAttacker = undefined;
+  
+    this.filterByArtillery = false;
     this.filterByUsaArtillery = false;
     this.filterByCsaArtillery = false;
-
-    // Clear attacker radio buttons
-    this.selectedAttacker = "";
-
-    // Filter the maps based on the cleared filters
+  
+    this.showArtyDiv = false;
+    this.showAttackerDiv = false;
+  
+    this.selectedFavorite = undefined;
+  
     this.filterMaps();
+  
+    // Fetch favorites again after clearing filters
+    this.getFavorites();
   }
+  
 
   scrollToTop(): void {
     document.body.scrollTo({

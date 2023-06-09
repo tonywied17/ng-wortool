@@ -5,6 +5,8 @@ import { AuthService } from "../_services/auth.service";
 import { SharedService } from "../_services/shared.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { HttpHeaders } from "@angular/common/http";
+import { FavoriteService } from "../_services/favorite.service";
+import { MapService } from "../_services/map.service";
 
 @Component({
   selector: "app-board-user",
@@ -36,12 +38,16 @@ export class BoardUserComponent implements OnInit {
   discordId: string = "";
   discordSyncUrl: string = "";
 
+  currentFavorites: any;
+
   constructor(
     private token: TokenStorageService,
     private route: ActivatedRoute,
     private authService: AuthService,
     private sharedService: SharedService,
     private snackBar: MatSnackBar,
+    private favoriteService: FavoriteService,
+    private mapService: MapService,
     private router: Router
   ) {}
 
@@ -68,6 +74,7 @@ export class BoardUserComponent implements OnInit {
       this.authService.checkUserRole(userID).subscribe(
         (response) => {
           this.showUser = response.access;
+          this.getFavorites();
           this.loading = false;
         },
         (error) => {
@@ -83,6 +90,33 @@ export class BoardUserComponent implements OnInit {
       this.loading = false;
     }
   }
+
+  private getFavorites(): void {
+    const userID = this.currentUser.id;
+  
+    this.favoriteService.getByUserId(userID).subscribe(
+      (response) => {
+        this.currentFavorites = response;
+  
+        this.mapService.getAll().subscribe({
+          next: (maps) => {
+            for (const favorite of this.currentFavorites) {
+              const matchingMap = maps.find((map) => map.id === favorite.mapId);
+              if (matchingMap) {
+                favorite.mapData = matchingMap; // Combine map data with favorite
+                console.log(favorite);
+              }
+            }
+          },
+          error: (error) => console.error("Error:", error),
+        });
+      },
+      (error) => {
+        console.error("Error:", error);
+      }
+    );
+  }
+  
 
   private loadContent(page: string): void {
     // Reset all flags

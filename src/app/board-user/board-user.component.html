@@ -111,6 +111,11 @@
         </div>
         <div *ngIf="showPage3">
           <h2 class="text-2xl  text-slate-400 py-4">Manage Favorites</h2>
+
+          <div *ngIf="currentFavorites">
+            <p *ngFor="let fav of currentFavorites">{{fav.mapData.map}} - {{fav.route}}</p>
+          </div>
+
         </div>
       </div>
     </div>

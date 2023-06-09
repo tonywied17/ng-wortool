@@ -43,8 +43,13 @@
                 Add to Event</button>
             <mat-divider *ngIf="showUser"></mat-divider>
 
-            <button *ngIf="showUser" class="!text-[#b9b8b0] opacity-40 font-[400]" mat-menu-item disabled><i
-                    class="pr-2 fa-regular fa-heart"></i> Favorite</button>
+
+            <button *ngIf="showUser" (click)="toggleFavorite(currentMap.id, currentUser.id)" class="!text-[#b9b8b0] font-[400]" mat-menu-item>
+                
+                <span *ngIf="isFavorited"><i class="fa-sharp fa-solid fa-heart pr-2 !text-red-400"></i> Unfavorite</span>
+                <span *ngIf="!isFavorited"><i class="fa-sharp fa-regular fa-heart pr-2 !text-red-400"></i> Favorite</span>
+
+            </button>
 
             <button
                 (click)="openSnackBar(currentMap.map + ' share link copied to clipboard.', 6000);copyToClipboard('https://app.paarmy.com/beta/maps/' + currentMap.id)"
@@ -86,6 +91,8 @@
                 <i class="fa-sharp fa-regular fa-paintbrush-pencil pr-1"></i>StratSketch<sup><i
                         class="fa-sharp fa-regular fa-arrow-up-right-from-square pl-2"></i></sup>
             </button>
+
+              
 
             <!-- <button style="z-index: 2;" class="!mr-[0.5em] float-right" mat-button (click)="openDialog()">
                 <i class="fa-sharp fa-regular fa-paintbrush-pencil pr-1"></i>Map Notes
