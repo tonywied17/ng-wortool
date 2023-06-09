@@ -31,15 +31,19 @@ export class BoardUserComponent implements OnInit {
   passwordNew: string = "";
   passwordNewConfirm: string = "";
 
+  email: string = "";
+  avatar_url: string = "";
+  discordId: string = "";
+  discordSyncUrl: string = "";
+
   constructor(
     private token: TokenStorageService,
     private route: ActivatedRoute,
     private authService: AuthService,
     private sharedService: SharedService,
     private snackBar: MatSnackBar,
-    private router: Router,
+    private router: Router
   ) {}
-
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -49,6 +53,15 @@ export class BoardUserComponent implements OnInit {
 
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
+    this.email = this.currentUser.email;
+    this.avatar_url = this.currentUser.avatar_url;
+
+    this.discordId = this.currentUser.discordId;
+
+    if(this.discordId){
+      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/user/${this.discordId}/get`
+    }
+
     const userID = this.currentUser.id;
 
     if (this.isLoggedIn) {
@@ -108,7 +121,7 @@ export class BoardUserComponent implements OnInit {
     }
 
     const userId = this.currentUser.id;
-
+    console.log(userId);
     try {
       await this.authService
         .password(userId, this.passwordCurrent, this.passwordNew)
@@ -119,9 +132,56 @@ export class BoardUserComponent implements OnInit {
       this.passwordNewConfirm = "";
       this.logout();
     } catch (error: any) {
-      this.showSnackBar(error.message);
+      if (error.status === 401) {
+        this.showSnackBar("Current password doesn't match!");
+      } else {
+        this.showSnackBar("An error occurred while updating the password.");
+      }
     }
   }
+
+  sync(url: string): void {
+    const left = window.screenX + 100;
+    window.open(url, "_blank", `width=610,height=900,left=${left}`);
+  }
+
+  async updateProfile() {
+    const userId = this.currentUser.id;
+    console.log(userId);
+
+    try {
+      await this.authService
+        .profile(userId, this.email, this.avatar_url, this.discordId)
+        .toPromise();
+      this.showSnackBar("Profile updated successfully!");
+
+      // Update the currentUser object with the new data
+      const updatedUser = {
+        ...this.currentUser,
+        email: this.email,
+        avatar_url: this.avatar_url,
+        discordId: this.discordId,
+      };
+      this.token.saveUser(updatedUser);
+
+      // Update the input fields with the new values
+      this.email = updatedUser.email;
+      this.avatar_url = updatedUser.avatar_url;
+      this.discordId = updatedUser.discordId;
+      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/user/${updatedUser.discordId}/get`
+
+    } catch (error: any) {
+      if (error.status === 400) {
+        this.showSnackBar(error.error.message); // Display the error message from the response
+      } else {
+        this.showSnackBar(error.message);
+      }
+    }
+  }
+  updateDiscordSyncUrl() {
+    this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/user/${this.discordId}/get`;
+  }
+  
 
   logout(): void {
     this.token.signOut();

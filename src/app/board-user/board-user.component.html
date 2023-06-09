@@ -68,8 +68,45 @@
           </form>
           
         </div>
-        <div *ngIf="showPage2">
-          <h2 class="text-2xl  text-slate-400 py-4">Edit Profile Information</h2>
+        <div *ngIf="showPage2" class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80">
+
+          <form (ngSubmit)="updateProfile()">
+
+            <div class="form-group">
+
+              <div class="field-box">
+                <input [(ngModel)]="email" name="email" class="field-input my-[0.5em]" type="email" value="{{currentUser.email}}" placeholder="Your email...">
+                <i class="fa-sharp fa-regular fa-envelope field-icon"></i>
+              </div>
+
+              <div class="field-box">
+                <input [(ngModel)]="avatar_url" name="avatar_url" class="field-input my-[0.5em]" type="email" value="{{currentUser.avatar_url}}" placeholder="Avatar url...">
+                <i class="fa-sharp fa-regular fa-camera-retro field-icon"></i>
+              </div>
+
+              <div class="field-box">
+                <input [(ngModel)]="discordId" name="discordId" class="field-input my-[0.5em]" type="email" value="{{currentUser.discordId}}" placeholder="Your discord id..." (input)="updateDiscordSyncUrl()">
+                <i class="fa-brands fa-discord field-icon"></i>
+              </div>
+              
+
+              <div *ngIf="discordId" class="field-box my-[1em]">
+                <b>GUILD ID: 681641606398607401</b> 
+                <p class="font-[200]" [innerHTML]="discordSyncUrl"></p>
+                <button mat-stroked-button color="primary" type="button" (click)="sync(discordSyncUrl)">
+                  Sync Discord ID & Guild ID with Bot Test
+                </button>
+              </div>
+
+            </div>
+            <button mat-raised-button
+            type="submit"
+            class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+            Update Profile
+          </button>
+          </form>
+
+
 
         </div>
         <div *ngIf="showPage3">

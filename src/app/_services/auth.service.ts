@@ -60,10 +60,17 @@ export class AuthService {
   }
 
   password(id: string, passwordCurrent: string, passwordNew: string): Observable<any> {
-    return this.http.put(AUTH_API + id + '/update', {
-      id,
+    return this.http.put(AUTH_API + id + '/updatePassword', {
       passwordCurrent,
       passwordNew
+    }, httpOptions);
+  }
+
+  profile(id: string, email: string, avatar_url: string, discordId: string): Observable<any> {
+    return this.http.put(AUTH_API + id + '/updateProfile', {
+      email,
+      avatar_url,
+      discordId
     }, httpOptions);
   }
 
