@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Weapon } from '../_models/weapon';
 
 const API = 'https://api.tonewebdesign.com/pa/weapons';
 

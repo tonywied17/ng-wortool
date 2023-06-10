@@ -41,23 +41,14 @@ export class TokenStorageService {
   }
 
   public isModerator(): boolean {
-    // Add your logic here to determine if the current user is a moderator
-    // For example, you can check the roles of the user or any other condition
-    // and return true or false accordingly
     return this.roles.includes('ROLE_MODERATOR');
   }
 
   public isAuthenticated(): boolean {
-    // Add your logic here to determine if the user is authenticated
-    // For example, you can check if the token exists or any other condition
-    // and return true or false accordingly
     return !!this.getToken();
   }
 
   public isAdmin(): boolean {
-    // Add your logic here to determine if the current user is an administrator
-    // For example, you can check the roles of the user or any other condition
-    // and return true or false accordingly
     return this.roles.includes('ROLE_ADMIN');
   }
 }
