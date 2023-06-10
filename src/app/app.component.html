@@ -118,9 +118,9 @@
 
 
 					<mat-list>
-						<p *ngIf="showMod || showAdmin"
+						<p *ngIf="showMod || showAdmin || showUser"
 							class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">
-							Favorite Tools
+							Quick Tools
 						</p>
 						<mat-list-item *ngIf="showMod || showAdmin">
 							<button [routerLink]="['/mod/1']"
@@ -134,15 +134,24 @@
 
 
 						<mat-list-item *ngIf="showMod || showAdmin">
-							<button class="!text-[#b9b8b0]/80 opacity-40"
-								mat-menu-item
-								disabled>
+							<button routerLink="/mod/2"
+							 class="!text-[#b9b8b0]/80"
+								mat-menu-item>
 								<i class="fa-solid fa-megaphone mr-1.5"></i>
-								Share
-                                Event Information
+								Share Event
 							</button>
 						</mat-list-item>
-						<mat-divider *ngIf="showMod || showAdmin"></mat-divider>
+
+						<mat-list-item *ngIf="showUser">
+							<button routerLink="/user/3"
+							 class="!text-[#b9b8b0]/80"
+								mat-menu-item>
+								<i class="fa-solid fa-stars mr-1.5"></i>
+								Manage Favorites
+							</button>
+						</mat-list-item>
+
+						<mat-divider *ngIf="showMod || showAdmin || showUser"></mat-divider>
 						<mat-list-item>
 							<button *ngIf="isLoggedIn"
 								routerLink="/user/1"

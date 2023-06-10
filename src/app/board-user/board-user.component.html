@@ -5,16 +5,27 @@
 </div>
 
 
+
 <div *ngIf="!loading"
 	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[4em]">
+
 
 
 	<div *ngIf="isLoggedIn">
 
 
+
 		<h3 class="text-[#88887b] text-3xl tracking-tight mb-[1.5em]">User Settings</h3>
 
-		<button routerLink="/home" mat-button color="primary" class="!mb-[1em]"><i class="fa-sharp fa-solid fa-arrow-left"></i> Back</button>
+
+		<button routerLink="/home"
+			mat-button
+			color="primary"
+			class="!mb-[1em]">
+			<i class="fa-sharp fa-solid fa-arrow-left"></i>
+			Back
+		</button>
+
 
 		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
 			<div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit w-full">
@@ -24,24 +35,24 @@
 							<button routerLinkActive="active_btn"
 								routerLink="/user/1"
 								mat-list-item
-								class="py-2 !text-neutral-300">
-								<i class="fa-solid fa-key w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
+								class="py-2 !text-neutral-300 !h-[55px]">
+								<i class="fa-solid fa-key w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
 								Change Password
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/2"
 								mat-list-item
-								class="py-2 !text-neutral-300">
-								<i class="fa-solid fa-user-pen w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
+								class="py-2 !text-neutral-300 !h-[55px]">
+								<i class="fa-solid fa-user-pen w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
 								Profile Information
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/3"
 								mat-list-item
-								class="py-2 !text-neutral-300">
-								<i class="fa-solid fa-stars w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
+								class="py-2 !text-neutral-300 !h-[55px]">
+								<i class="fa-solid fa-stars w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
 								Manage Favorites
 							</button>
 						</mat-action-list>
@@ -50,15 +61,14 @@
 			</div>
 
 
+
 			<div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
 				<div *ngIf="showPage1"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
-					<h2 class="text-2xl text-slate-400 mb-[1em]">
-
-						Change Password
-					</h2>
+					<h2 class="text-2xl text-slate-400 mb-[1em]">Change Password</h2>
 					<form (ngSubmit)="updatePassword()">
 						<div class="form-group m-4">
+
 
 							<div class="field-box">
 								<input [(ngModel)]="passwordCurrent"
@@ -69,6 +79,7 @@
 								<i class="fa-regular fa-key-skeleton field-icon"></i>
 							</div>
 
+
 							<div class="field-box">
 								<input [(ngModel)]="passwordNew"
 									name="passwordNew"
@@ -77,6 +88,7 @@
 									placeholder="New Password...">
 								<i class="fa-sharp fa-regular fa-sparkles field-icon"></i>
 							</div>
+
 
 							<div class="field-box">
 								<input [(ngModel)]="passwordNewConfirm"
@@ -87,25 +99,30 @@
 								<i class="fa-sharp fa-regular fa-check field-icon"></i>
 							</div>
 
-							<button mat-raised-button
-								type="submit"
-								class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-								Update Password
-							</button>
 
 						</div>
+
+
+						<button mat-raised-button
+							type="submit"
+							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+							Update Password
+						</button>
+
+
 					</form>
+
 
 
 				</div>
 				<div *ngIf="showPage2"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
-					<h2 class="text-2xl text-slate-400 mb-[1em]">
-						Edit Profile
-					</h2>
+					<h2 class="text-2xl text-slate-400 mb-[1em]">Edit Profile</h2>
 					<form (ngSubmit)="updateProfile()">
 
+
 						<div class="form-group m-4">
+
 
 							<div class="field-box">
 								<input [(ngModel)]="email"
@@ -116,6 +133,7 @@
 									placeholder="Your email...">
 								<i class="fa-sharp fa-regular fa-envelope field-icon"></i>
 							</div>
+
 
 
 							<div class="field-box">
@@ -129,6 +147,7 @@
 							</div>
 
 
+
 							<div class="field-box">
 								<input [(ngModel)]="discordId"
 									(input)="updateDiscordSyncUrl()"
@@ -139,6 +158,7 @@
 									placeholder="Your discord id...">
 								<i class="fa-brands fa-discord field-icon"></i>
 							</div>
+
 
 
 
@@ -167,10 +187,13 @@
 								</div>
 
 
+
 								<!-- <p class="font-[200]" [innerHTML]="discordSyncUrl"></p> -->
 
 
+
 							</div>
+
 
 
 
@@ -185,13 +208,13 @@
 
 
 
+
 				</div>
 				<!--  -->
 				<div *ngIf="showPage3"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
-					<h2 class="text-2xl text-slate-400 mb-1em">
-						Manage Favorites
-					</h2>
+					<h2 class="text-2xl text-slate-400 mb-1em">Manage Favorites</h2>
+
 
 
 					<div *ngIf="currentFavorites"
@@ -203,11 +226,18 @@
 								<mat-cell *matCellDef="let fav"
 									class="font-[400] text-neutral-100">
 
-			
-									<button mat-stroked-button color="primary" [routerLink]="fav.route">{{fav.mapData.map}}</button>
+
+
+									<button [routerLink]="fav.route"
+										mat-stroked-button
+										color="primary">
+										{{fav.mapData.map}}
+									</button>
+
 
 								</mat-cell>
 							</ng-container>
+
 
 
 							<ng-container matColumnDef="route">
@@ -216,16 +246,18 @@
 								</mat-header-cell>
 								<mat-cell *matCellDef="let fav"
 									class="actions-cell action-column">
-									
+
+
 
 									<button (click)="confirmDelete(fav.mapId, fav.mapData.map)"
 										mat-button
-										class="text-red-500">
+										class="text-[#9b3f3f] !font-[900]">
 										<i class="fa-sharp fa-regular fa-trash pr-2"></i>
 										<span class="hidden sm:inline-block">Delete</span>
 									</button>
 								</mat-cell>
 							</ng-container>
+
 
 
 							<mat-header-row *matHeaderRowDef="['map', 'route']"></mat-header-row>
@@ -246,6 +278,7 @@
 	</div>
 
 
+
 	<div *ngIf="!isLoggedIn"
 		class="p-5 bg-[#1c2537] rounded-md"
 		style="border-left: 5px solid #a13c3c;">
@@ -260,6 +293,7 @@
 			</div>
 
 
+
 			<div class="row-start-1 sm:row-start-auto">
 				<h3 class="text-xl my-2">
 					Please login to continue
@@ -269,6 +303,7 @@
 				</p>
 			</div>
 		</div>
+
 
 	</div>
 </div>

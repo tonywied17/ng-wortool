@@ -264,7 +264,10 @@ body {
 
 .active_btn {
   border-right: 3px solid #97978d !important;
-  color: #97978d !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  transform:rotateX('angle') !important;
+  transition: all .3s ease;
 }
 
 body::-webkit-scrollbar {
@@ -385,6 +388,12 @@ mat-radio-button:hover {
   color: #fff;
   opacity: 0.7;
   transition: all .3s ease;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-form-field{
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.875rem !important;
 }
 
 .field-input:focus::placeholder {
