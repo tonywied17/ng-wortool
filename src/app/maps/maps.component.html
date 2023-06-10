@@ -51,17 +51,15 @@
 
 					<div class="filter-options mt-[1em]" *ngIf="isLoggedIn">
 						<label class="filter-label">
-							<span class="filter-text test">Filter by Favorites</span>
+						  <span class="filter-text test">Filter by Favorites</span>
 						</label>
-					</div>
-					<div class="filter-options" *ngIf="isLoggedIn">
+					  </div>
+					  <div class="filter-options" *ngIf="isLoggedIn">
 						<div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
-							<mat-radio-group [(ngModel)]="selectedFavorite" (change)="filterMaps()">
-								<mat-radio-button value="true">True</mat-radio-button>
-								<mat-radio-button value="false" class="mt-[0.5em]">False</mat-radio-button>
-							</mat-radio-group>
+						  <mat-checkbox [(ngModel)]="showFavoritesOnly" (change)="filterMaps()">Favorites Only</mat-checkbox>
 						</div>
-					</div>
+					  </div>
+					  
 
 
 					<div class="filter-options mt-[1em]">
@@ -158,14 +156,16 @@
 					  </span>
 					</label>
 				  </div>
-				  <div class="filter-options" *ngIf="isLoggedIn">
-					<div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
-					  <mat-radio-group [(ngModel)]="selectedFavorite" (change)="filterMaps()">
-						<mat-radio-button value="true">True</mat-radio-button>
-						<mat-radio-button value="false" class="mt-[0.5em]">False</mat-radio-button>
-					  </mat-radio-group>
-					</div>
+				  <div *ngIf="showFavoritesDiv && isLoggedIn">
+					<div class="filter-options">
+						<div class="filter-options" *ngIf="isLoggedIn">
+							<div class="checkbox-columns p-[1em] mt-[-16px]" style="border-left: dotted 1px #7c7d738f;">
+							  <mat-checkbox [(ngModel)]="showFavoritesOnly" (change)="filterMaps()">Favorites Only</mat-checkbox>
+							</div>
+						  </div>
+					  </div>
 				  </div>
+				  
 				  
 
 

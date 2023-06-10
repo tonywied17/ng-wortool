@@ -41,6 +41,7 @@ export class MapsComponent implements OnInit {
   filterByFavorites = false;
   selectedFavorite: string | undefined;
   currentFavorites: any[] = [];
+  showFavoritesOnly: boolean = false;
 
   constructor(
     private mapService: MapService,
@@ -77,10 +78,12 @@ export class MapsComponent implements OnInit {
       this.filterByCampaign = filterState.filterByCampaign;
       this.filterByFavorites = filterState.filterByFavorites;
       this.selectedFavorite = filterState.selectedFavorite;
+      this.showFavoritesOnly = filterState.showFavoritesOnly; // Updated line
   
       this.filterMaps();
     }
   }
+  
 
   saveFilterState(): void {
     const filterState = {
@@ -91,10 +94,11 @@ export class MapsComponent implements OnInit {
       searchText: this.searchText,
       filterByCampaign: this.filterByCampaign,
       filterByFavorites: this.filterByFavorites,
-      selectedFavorite: this.selectedFavorite,
+      showFavoritesOnly: this.showFavoritesOnly, // Updated property
     };
     localStorage.setItem("filterState", JSON.stringify(filterState));
   }
+  
 
   setActiveMap(map: Map, index: number): void {
     this.currentMap = map;
@@ -124,14 +128,20 @@ export class MapsComponent implements OnInit {
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
   
-    if (this.selectedFavorite === "true") {
+    // if (this.selectedFavorite === "true") {
+    //   filteredMap = filteredMap.filter((map) =>
+    //     this.currentFavorites.some((favorite) => favorite.mapId === map.id)
+    //   );
+    // } else {
+    //   filteredMap = this.originalMap || [];
+    // }
+
+    if (this.showFavoritesOnly) {
       filteredMap = filteredMap.filter((map) =>
         this.currentFavorites.some((favorite) => favorite.mapId === map.id)
       );
-    } else {
-      filteredMap = this.originalMap || [];
     }
-  
+
     if (this.selectedAttacker === "USA") {
       filteredMap = filteredMap.filter((map) => map.attacker === "USA");
     }
@@ -180,6 +190,7 @@ export class MapsComponent implements OnInit {
       }
     );
   }
+  
 
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
@@ -204,6 +215,11 @@ export class MapsComponent implements OnInit {
 
   toggleFilterByCampaign(): void {
     this.filterByCampaignDiv = !this.filterByCampaignDiv;
+  }
+
+  toggleFavoritesOnly(): void {
+    this.showFavoritesOnly = !this.showFavoritesOnly;
+    this.filterMaps();
   }
 
   toggleFavoritesDiv(): void {
@@ -245,6 +261,7 @@ export class MapsComponent implements OnInit {
     this.showAttackerDiv = false;
   
     this.selectedFavorite = undefined;
+    this.showFavoritesOnly = false;
   
     this.filterMaps();
     this.getFavorites();
