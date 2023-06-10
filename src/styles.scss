@@ -366,7 +366,7 @@ mat-radio-button:hover{
   border: 2px solid #7c7d72;
   border-radius: 4px;
   background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
-  color: #fff;
+  color: #eeeeeed2 !important;
   outline: none;
   transition: all .3s ease;
 }
@@ -480,6 +480,12 @@ mat-radio-button:hover{
 	animation: fade-center .5s ease 0s 1 normal forwards;
 }
 
+.scale-center{
+  animation: scale-center .3s ease 0s 1 normal forwards;
+}
+
+
+
 @keyframes left-in {
   0% {
     opacity: 0;
@@ -539,5 +545,17 @@ mat-radio-button:hover{
 
 	100% {
 		opacity: 1;
+	}
+}
+
+@keyframes scale-center {
+	0% {
+    opacity: 0;
+		transform: scale(0.5);
+	}
+
+	100% {
+    opacity: 1;
+		transform: scale(1);
 	}
 }

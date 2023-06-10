@@ -1,0 +1,49 @@
+.mat-header-row {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 900 !important;
+}
+
+.mat-row {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 200 !important;
+	color: rgba(255, 255, 255, 0.753);
+}
+.mat-header-cell{
+	color: rgb(158 159 152) !important;
+	font-size: 1rem;
+}
+.mat-table {
+	background: unset !important;
+}
+
+.mat-paginator {
+	background: unset !important;
+}
+
+mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+{
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #7c7d7283;
+}
+
+.action-column {
+	flex: 0 0 auto;
+	min-width: 162px;
+	margin-left: 1em;
+	border-left: 1px dotted #7c7d72e0;
+	padding-left: 1.2em !important;
+	min-height: 69px;
+	font-size: 12px !important;
+}
+
+.action-column-header {
+	flex: 0 0 auto;
+	min-width: 62px;
+	margin-left: 1em;
+}
+
+.mat-row {
+	display: flex;
+	align-items: stretch;
+}

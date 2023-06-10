@@ -185,9 +185,9 @@ export class MapDetailsComponent implements OnInit {
   getFavorites(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
       next: (favorite: Favorite[]) => {
-        console.log(favorite);
-        console.log(mapId + ' - ' + favorite[0].mapId);
-        console.log(userId + ' - ' + favorite[0].userId);
+        // console.log(favorite);
+        // console.log(mapId + ' - ' + favorite[0].mapId);
+        // console.log(userId + ' - ' + favorite[0].userId);
 
         if(favorite[0].mapId == mapId && favorite[0].userId == userId){
           this.isFavorited =  true;
@@ -205,14 +205,14 @@ export class MapDetailsComponent implements OnInit {
   toggleFavorite(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
       next: (favorite: Favorite[]) => {
-        console.log(favorite); // Check the fetched favorites
+        // console.log(favorite);
   
         if (favorite && favorite.length > 0) {
-          console.log('Deleting favorite... ' + favorite[0].id);
+          // console.log('Deleting favorite... ' + favorite[0].id);
           this.favoriteService.delete(mapId, userId).subscribe(
             () => {
-              console.log('Favorite deleted successfully');
-              this.openSnackBar("Map removed from favorites.", 2000);
+              // console.log('Favorite deleted successfully');
+              this.openSnackBar(this.currentMap.map + " removed from your favorites.", 2000);
               this.isFavorited = false;
             },
             (error) => {
@@ -224,19 +224,19 @@ export class MapDetailsComponent implements OnInit {
             }
           );
         } else {
-          console.log('Creating favorite...' + mapId + ' ' + userId);
+          // console.log('Creating favorite...' + mapId + ' ' + userId);
           const currentRoute = this.router.url;
-          console.log('Current route: ', currentRoute);
+          // console.log('Current route: ', currentRoute);
           this.favoriteService.createOrUpdate(currentRoute, mapId, userId, "map").subscribe(
             () => {
-              console.log('Favorite created successfully');
-              this.openSnackBar("Map added to favorites.", 2000);
+              // console.log('Favorite created successfully');
+              this.openSnackBar(this.currentMap.map + " added to your favorites.", 2000);
               this.isFavorited = true;
             },
             (error) => {
               console.error(error);
               this.openSnackBar(
-                "Failed to add map to favorites. Please try again.",
+                "Failed to add " + this.currentMap.map + " to favorites. Please try again.",
                 2000
               );
             }

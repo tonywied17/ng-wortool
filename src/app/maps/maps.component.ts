@@ -157,6 +157,12 @@ export class MapsComponent implements OnInit {
     if (this.selectedCampaigns.length > 0) {
       filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
     }
+
+    if (this.searchText) {
+      filteredMap = filteredMap.filter((map) =>
+        map.map?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
   
     this.map = filteredMap;
   
@@ -223,6 +229,7 @@ export class MapsComponent implements OnInit {
   }
 
   clearFilters(): void {
+    this.searchText = "";
     this.selectedCampaign = "";
     this.selectedCampaigns = [];
     this.filterByCampaign = true;

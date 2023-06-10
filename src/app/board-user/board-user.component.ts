@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router, ParamMap, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
@@ -7,6 +7,9 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { HttpHeaders } from "@angular/common/http";
 import { FavoriteService } from "../_services/favorite.service";
 import { MapService } from "../_services/map.service";
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from "@angular/material/table";
+
 
 @Component({
   selector: "app-board-user",
@@ -20,7 +23,7 @@ export class BoardUserComponent implements OnInit {
   showAdmin = false;
   showUser = false;
   showMod = false;
-
+  guild_avatar_url = "";
   showPage1 = false;
   showPage2 = false;
   showPage3 = false;
@@ -39,6 +42,12 @@ export class BoardUserComponent implements OnInit {
   discordSyncUrl: string = "";
 
   currentFavorites: any;
+  hasFavorites = false;
+
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  pageSize: number = 5; 
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private token: TokenStorageService,
@@ -48,14 +57,22 @@ export class BoardUserComponent implements OnInit {
     private snackBar: MatSnackBar,
     private favoriteService: FavoriteService,
     private mapService: MapService,
-    private router: Router
+    private router: Router,
+    
   ) {}
+
+  onPageSizeChange(event: any) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('pageSize', event.pageSize);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       const page = params["page"];
       this.loadContent(page);
     });
+
+    this.fetchGuildPic();
 
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
@@ -74,7 +91,9 @@ export class BoardUserComponent implements OnInit {
       this.authService.checkUserRole(userID).subscribe(
         (response) => {
           this.showUser = response.access;
-          this.getFavorites();
+
+            this.getFavorites(); // Call the getFavorites function after a short delay
+
           this.loading = false;
         },
         (error) => {
@@ -89,6 +108,9 @@ export class BoardUserComponent implements OnInit {
     } else {
       this.loading = false;
     }
+
+    const storedPageSize = localStorage.getItem('pageSize');
+    this.pageSize = storedPageSize ? +storedPageSize : 5;
   }
 
   private getFavorites(): void {
@@ -97,19 +119,26 @@ export class BoardUserComponent implements OnInit {
     this.favoriteService.getByUserId(userID).subscribe(
       (response) => {
         this.currentFavorites = response;
+        if (this.currentFavorites && this.currentFavorites.length > 0) {
+          this.hasFavorites = true;
   
-        this.mapService.getAll().subscribe({
-          next: (maps) => {
-            for (const favorite of this.currentFavorites) {
-              const matchingMap = maps.find((map) => map.id === favorite.mapId);
-              if (matchingMap) {
-                favorite.mapData = matchingMap; // Combine map data with favorite
-                console.log(favorite);
+          this.mapService.getAll().subscribe({
+            next: (maps) => {
+              for (const favorite of this.currentFavorites) {
+                const matchingMap = maps.find((map) => map.id === favorite.mapId);
+                if (matchingMap) {
+                  favorite.mapData = matchingMap;
+                }
               }
-            }
-          },
-          error: (error) => console.error("Error:", error),
-        });
+              this.dataSource.data = this.currentFavorites;
+              this.dataSource.paginator = this.paginator;
+              this.paginator.pageSize = this.pageSize;
+            },
+            error: (error) => console.error("Error:", error),
+          });
+        } else {
+          this.hasFavorites = false;
+        }
       },
       (error) => {
         console.error("Error:", error);
@@ -117,6 +146,7 @@ export class BoardUserComponent implements OnInit {
     );
   }
   
+
 
   private loadContent(page: string): void {
     // Reset all flags
@@ -155,7 +185,7 @@ export class BoardUserComponent implements OnInit {
     }
 
     const userId = this.currentUser.id;
-    console.log(userId);
+    // console.log(userId);
     try {
       await this.authService
         .password(userId, this.passwordCurrent, this.passwordNew)
@@ -181,7 +211,7 @@ export class BoardUserComponent implements OnInit {
 
   async updateProfile() {
     const userId = this.currentUser.id;
-    console.log(userId);
+    // console.log(userId);
 
     try {
       await this.authService
@@ -235,10 +265,39 @@ export class BoardUserComponent implements OnInit {
     this.router.navigate(["/home"]);
   }
 
+  fetchGuildPic(){
+    fetch(`https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/get`)
+    .then(response => response.json())
+    .then(data => {
+      // console.log(data);
+      this.guild_avatar_url = data.guild.iconURL;
+      // console.log(this.guild_avatar_url);
+    }
+    );
+  }
+
   private showSnackBar(message: string) {
     this.snackBar.open(message, "Close", {
       duration: 5000,
       verticalPosition: "top",
     });
+  }
+
+  deleteFavorite(mapId: string) {
+    let userId = this.currentUser.id;
+
+    this.favoriteService.delete(mapId, userId).subscribe(
+      (response) => {
+        this.getFavorites();
+        this.showSnackBar("Favorite Deleted");
+      }
+    );
+  }
+
+  confirmDelete(mapId: string, mapName: string): void {
+    const result = confirm("Are you sure you want to delete '"+mapName+"' as a favorite?");
+    if (result) {
+      this.deleteFavorite(mapId);
+    }
   }
 }
