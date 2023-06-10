@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TokenStorageService } from "./_services/token-storage.service";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AuthService } from "./_services/auth.service";
 import { SharedService } from "./_services/shared.service";
 
@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
     private sharedService: SharedService,
     private tokenStorage: TokenStorageService
   ) {
-    // Subscribe to the authentication event
     this.authService.authenticationEvent.subscribe(() => {
       this.initializeComponent();
     });
@@ -37,12 +36,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.initializeComponent();
 
-    // Subscribe to the isLoggedIn$ observable to get updates
     this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
-      // Update the isLoggedIn property in the AppComponent
       this.isLoggedIn = isLoggedIn;
 
-      // Run the initializer or perform any necessary actions
       this.initializeComponent();
     });
   }
@@ -82,7 +78,6 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(event: any) {
-    // window.scroll(0,0);
 
     window.scroll({
       top: 0,
@@ -90,8 +85,6 @@ export class AppComponent implements OnInit {
       behavior: "smooth",
     });
 
-    //or document.body.scrollTop = 0;
-    //or document.querySelector('body').scrollTo(0,0)
   }
 
   logout(): void {
@@ -105,7 +98,6 @@ export class AppComponent implements OnInit {
     this.showAdmin = this.authService.isAdministrator;
     this.showUser = this.authService.isAuthenticated;
 
-    // Trigger the logout event
     this.sharedService.triggerLogoutEvent();
 
     this.router.navigate(["/home"]);

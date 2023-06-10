@@ -1,123 +1,244 @@
-<nav
-    class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto py-2 sm:rounded-sm shadow-lg w-full sticky top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10">
-    <div class="mx-auto px-2 sm:px-6 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-            <div class="absolute inset-y-0 sm:hidden">
-                <!-- Mobile menu button-->
-
-                <button (click)="toggle();scroll()" type="button"
-                    class="mt-3 inline-flex items-center justify-center rounded-md p-2 text-[#bbbbb1] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#88887b]"
-                    aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-
-                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-
-                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-
-                </button>
-            </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex flex-shrink-0 items-center">
-                    <img class="block h-8 w-auto" src="https://paarmy.com/assets/pa.png" alt="The Pennsylvania Army">
-                </div>
-
-                <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <button mat-button color="primary" [routerLink]="['/home']"
-                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
-                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Home</button>
-                        <button mat-button color="primary" [routerLink]="['/maps']"
-                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
-                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Maps</button>
-                        <button mat-button color="primary" [routerLink]="['/weapons']"
-                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
-                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Weapons</button>
-                        <button mat-button color="primary" [routerLink]="['/regiments']"
-                            routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
-                            class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Regiments</button>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div *ngIf="isLoggedIn"
-                class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
-                <button [matMenuTriggerFor]="beforeMenu" class="bg-[#646258] !text-[#a09e94] !hidden sm:!block font-[900]"
-                    mat-raised-button><i class="fa-sharp fa-solid fa-user mr-1.5"></i> {{currentUser.username}} <i class="fa-solid fa-caret-down"></i></button>
-                <mat-menu #beforeMenu="matMenu" xPosition="before" class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
+<nav class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto py-2 sm:rounded-sm shadow-lg w-full sticky top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10">
+	<div class="mx-auto px-2 sm:px-6 lg:px-8">
+		<div class="relative flex h-16 items-center justify-between">
+			<div class="absolute inset-y-0 sm:hidden">
+				<!-- Mobile menu button -->
 
 
 
-                    <mat-list>
-                        <p *ngIf="showMod || showAdmin" class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">Favorite Tools</p>
-                        <mat-list-item *ngIf="showMod || showAdmin">
-                            <button [routerLink]="['/muster']" class="!text-[#b9b8b0]/80"
-                                mat-menu-item><i class="fa-solid fa-clipboard-user mr-1.5"></i> Muster Roster</button>
-                        </mat-list-item>
-
-                        <mat-list-item *ngIf="showMod || showAdmin">
-                            <button class="!text-[#b9b8b0]/80 opacity-40" mat-menu-item disabled><i class="fa-solid fa-megaphone mr-1.5"></i>Share
-                                Event Information</button>
-                        </mat-list-item>
-                        <mat-divider *ngIf="showMod || showAdmin"></mat-divider>
-                        <mat-list-item>
-                            <button *ngIf="isLoggedIn" routerLink="/user/1" mat-menu-item class="!text-[#b9b8b0]/80"><i
-                                    class="fa-duotone fa-gear mr-1.5"></i>Settings</button>
-                        </mat-list-item>
-                    </mat-list>
-                </mat-menu>
-
-            </div>
-
-            <div *ngIf="isLoggedIn">
-                <button (click)="logout()" mat-raised-button
-                    class="bg-[#7a3535] !text-[#a09e94] !hidden sm:!block !ml-2 font-[900]"><i class="fa-sharp fa-solid fa-door-closed pr-2"></i> Logout</button>
-            </div>
+				<button (click)="toggle();scroll()"
+					type="button"
+					class="mt-3 inline-flex items-center justify-center rounded-md p-2 text-[#bbbbb1] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#88887b]"
+					aria-controls="mobile-menu"
+					aria-expanded="false">
+					<span class="sr-only">Open main menu</span>
 
 
-        </div>
-    </div>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div *ngIf="menuOpen" class="sm:hidden h-96 grid grid-cols-1 gap-0 content-center animate-top sm:animate-none"
-        id="mobile-menu">
+					<svg class="block h-6 w-6"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						aria-hidden="true">
+						<path stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+					</svg>
 
-        <div class="space-y-5 px-2 pt-2 pb-3 bg-[#8b8d83]/80 mx-6 rounded-md drop-shadow-lg">
-            <mat-list>
-                <mat-list-item class="mx-auto w-max !my-4"> <button mat-button color="primary" (click)="toggle()"
-                        [routerLink]="['/home']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Home</button>
-                </mat-list-item>
-                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
-                        [routerLink]="['/maps']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Maps</button>
-                </mat-list-item>
-                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
-                        [routerLink]="['/weapons']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Weapons</button>
-                </mat-list-item>
-                <mat-list-item class="!my-4"> <button mat-button color="primary" (click)="toggle()"
-                        [routerLink]="['/regiments']" routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
-                        class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">Regiments</button>
-                </mat-list-item>
-            </mat-list>
-        </div>
-    </div>
+
+
+					<svg class="hidden h-6 w-6"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						aria-hidden="true">
+						<path stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+
+
+
+				</button>
+			</div>
+			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+				<div class="flex flex-shrink-0 items-center">
+					<img class="block h-8 w-auto"
+						src="https://paarmy.com/assets/pa.png"
+						alt="The Pennsylvania Army">
+				</div>
+
+
+
+				<div class="hidden sm:ml-6 sm:block">
+					<div class="flex space-x-4">
+						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+						<button [routerLink]="['/home']"
+							mat-button
+							color="primary"
+							routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+							class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Home
+						</button>
+						<button [routerLink]="['/maps']"
+							mat-button
+							color="primary"
+							routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+							class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Maps
+						</button>
+						<button [routerLink]="['/weapons']"
+							mat-button
+							color="primary"
+							routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+							class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Weapons
+						</button>
+						<button [routerLink]="['/regiments']"
+							mat-button
+							color="primary"
+							routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+							class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Regiments
+						</button>
+
+
+
+					</div>
+
+
+
+				</div>
+			</div>
+
+
+
+			<div *ngIf="isLoggedIn"
+				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+
+
+				<button [matMenuTriggerFor]="beforeMenu"
+					class="bg-[#646258] !text-[#a09e94] !hidden sm:!block font-[900]"
+					mat-raised-button>
+					<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
+					{{currentUser.username}}
+					<i class="fa-solid fa-caret-down"></i>
+				</button>
+				<mat-menu #beforeMenu="matMenu"
+					xPosition="before"
+					class="bg-[#646258bb] sm:w-[200px] backdrop-blur-sm">
+
+
+
+
+
+					<mat-list>
+						<p *ngIf="showMod || showAdmin"
+							class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">
+							Favorite Tools
+						</p>
+						<mat-list-item *ngIf="showMod || showAdmin">
+							<button [routerLink]="['/muster']"
+								class="!text-[#b9b8b0]/80"
+								mat-menu-item>
+								<i class="fa-solid fa-clipboard-user mr-1.5"></i>
+								Muster Roster
+							</button>
+						</mat-list-item>
+
+
+
+						<mat-list-item *ngIf="showMod || showAdmin">
+							<button class="!text-[#b9b8b0]/80 opacity-40"
+								mat-menu-item
+								disabled>
+								<i class="fa-solid fa-megaphone mr-1.5"></i>
+								Share
+                                Event Information
+							</button>
+						</mat-list-item>
+						<mat-divider *ngIf="showMod || showAdmin"></mat-divider>
+						<mat-list-item>
+							<button *ngIf="isLoggedIn"
+								routerLink="/user/1"
+								mat-menu-item
+								class="!text-[#b9b8b0]/80">
+								<i class="fa-duotone fa-gear mr-1.5"></i>
+								Settings
+							</button>
+						</mat-list-item>
+					</mat-list>
+				</mat-menu>
+
+
+
+			</div>
+
+
+
+			<div *ngIf="isLoggedIn">
+				<button (click)="logout()"
+					mat-raised-button
+					class="bg-[#7a3535] !text-[#a09e94] !hidden sm:!block !ml-2 font-[900]">
+					<i class="fa-sharp fa-solid fa-door-closed pr-2"></i>
+					Logout
+				</button>
+			</div>
+
+
+
+
+		</div>
+	</div>
+
+
+
+	<!-- Mobile menu, show/hide based on menu state. -->
+	<div *ngIf="menuOpen"
+		class="sm:hidden h-96 grid grid-cols-1 gap-0 content-center animate-top sm:animate-none"
+		id="mobile-menu">
+
+
+
+		<div class="space-y-5 px-2 pt-2 pb-3 bg-[#8b8d83]/80 mx-6 rounded-md drop-shadow-lg">
+			<mat-list>
+				<mat-list-item class="mx-auto w-max !my-4">
+					<button [routerLink]="['/home']"
+						(click)="toggle()"
+						mat-button
+						color="primary"
+						routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+						class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+						Home
+					</button>
+				</mat-list-item>
+				<mat-list-item class="!my-4">
+					<button [routerLink]="['/maps']"
+						(click)="toggle()"
+						mat-button
+						color="primary"
+						routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+						class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+						Maps
+					</button>
+				</mat-list-item>
+				<mat-list-item class="!my-4">
+					<button [routerLink]="['/weapons']"
+						(click)="toggle()"
+						mat-button
+						color="primary"
+						routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+						class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+						Weapons
+					</button>
+				</mat-list-item>
+				<mat-list-item class="!my-4">
+					<button [routerLink]="['/regiments']"
+						(click)="toggle()"
+						mat-button
+						color="primary"
+						routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+						class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+						Regiments
+					</button>
+				</mat-list-item>
+			</mat-list>
+		</div>
+	</div>
+
+
 
 
 
 </nav>
 
+
+
 <div class="sm:w-full mx-auto my-2 sm:my-0 sm:mt-10 relative px-5 h-[calc(100% - 200px)] main-container">
-    <router-outlet (activate)="onActivate($event)"></router-outlet>
+	<router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>

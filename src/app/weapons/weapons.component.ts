@@ -37,7 +37,6 @@ export class WeaponsComponent implements OnInit {
   isLoggedIn = false;
   showAdmin = false;
   loading = true;
-  private roles: string[] = [];
   submitted = false;
 
   constructor(
@@ -61,10 +60,7 @@ export class WeaponsComponent implements OnInit {
         },
         (error) => {
           if (error.status === 403) {
-            
-            this.showAdmin = false;
-            
-            // Handle unauthorized error, display login message, etc.
+            this.showAdmin = false;           
           } else {
             console.error('Error:', error);
             if(this.isLoggedIn) {
@@ -80,9 +76,7 @@ export class WeaponsComponent implements OnInit {
 
     this.weaponService.getAll().subscribe((data) => {
       this.weaponsObj = JSON.parse(data);
-
       this.weaponsObj.forEach((gun: any) => {
-        // console.log(gun.weapon);
       });
 
       this.dataSource = new MatTableDataSource(this.weaponsObj);
@@ -105,10 +99,9 @@ export class WeaponsComponent implements OnInit {
   
     this.weaponService.create(userID, data).subscribe({
       next: (data) => {
-        // console.log(data);
         this.submitted = true;
         this.cdr.detectChanges();
-        this.refreshTable(); // Refresh table after creating the weapon
+        this.refreshTable(); 
       },
       error: (err) => {
         this.errorMessage = err.error.message;
@@ -116,8 +109,6 @@ export class WeaponsComponent implements OnInit {
     });
   }
   
-
-
   refreshTable(): void {
     this.weaponService.getAll().subscribe((data) => {
       this.weaponsObj = JSON.parse(data);
@@ -129,7 +120,6 @@ export class WeaponsComponent implements OnInit {
       this.dataSource.paginator.pageIndex = 0;
     });
   }
-
 
   resetForm() {
     this.submitted = false;

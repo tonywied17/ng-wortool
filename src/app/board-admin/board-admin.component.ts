@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { AuthService } from '../_services/auth.service';
 
@@ -20,8 +20,6 @@ export class BoardAdminComponent implements OnInit {
   showPage2 = false;
   showPage3 = false;
   loading = true;
-
-  private roles: string[] = [];
 
   constructor(
     private token: TokenStorageService,
@@ -60,12 +58,10 @@ export class BoardAdminComponent implements OnInit {
   }
 
   private loadContent(page: string): void {
-    // Reset all flags
     this.showPage1 = false;
     this.showPage2 = false;
     this.showPage3 = false;
 
-    // Set the flag based on the 'page' parameter
     if (page === '1') {
       this.showPage1 = true;
     } else if (page === '2') {

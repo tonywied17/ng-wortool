@@ -54,7 +54,7 @@ export class MapsComponent implements OnInit {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
   
-    this.retrieveFilterState(); // Retrieve filter state from local storage
+    this.retrieveFilterState();
   
     this.getMaps();
     this.getFavorites();
@@ -78,7 +78,6 @@ export class MapsComponent implements OnInit {
       this.filterByFavorites = filterState.filterByFavorites;
       this.selectedFavorite = filterState.selectedFavorite;
   
-      // Call filterMaps to apply the restored filters
       this.filterMaps();
     }
   }
@@ -130,7 +129,6 @@ export class MapsComponent implements OnInit {
         this.currentFavorites.some((favorite) => favorite.mapId === map.id)
       );
     } else {
-      // Restore the original map list
       filteredMap = this.originalMap || [];
     }
   
@@ -175,7 +173,7 @@ export class MapsComponent implements OnInit {
     this.favoriteService.getByUserId(userID).subscribe(
       (response) => {
         this.currentFavorites = response;
-        this.filterMaps(); // Apply filters after fetching favorites
+        this.filterMaps();
       },
       (error) => {
         console.error("Error:", error);
@@ -249,8 +247,6 @@ export class MapsComponent implements OnInit {
     this.selectedFavorite = undefined;
   
     this.filterMaps();
-  
-    // Fetch favorites again after clearing filters
     this.getFavorites();
   }
   

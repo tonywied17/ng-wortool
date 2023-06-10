@@ -4,7 +4,6 @@ import { User } from '../_models/user.model';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { AuthService } from "../_services/auth.service";
 
-// https://api.tonewebdesign.com/pa/muster
 @Component({
   selector: 'app-muster',
   templateUrl: './muster.component.html',
@@ -82,7 +81,6 @@ export class MusterComponent implements OnInit {
     const value = Number(target.value);
     if (!isNaN(value)) {
       user.drills = value;
-      // Call your update method here
       this.userService.updateUser(user).subscribe();
     }
 

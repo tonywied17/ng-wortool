@@ -2,32 +2,22 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ElementRef,
-  HostListener,
   ChangeDetectorRef,
   Input,
   TemplateRef,
-  AfterViewInit,
   ViewContainerRef,
-  OnDestroy,
 } from "@angular/core";
-import { Map } from "../_models/map.model";
 import { MapService } from "../_services/map.service";
 import { NoteService } from "../_services/note.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { SafePipe } from "../_helpers/safe.pipe";
-import { NgModel } from "@angular/forms";
 import { TokenStorageService } from "../_services/token-storage.service";
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarModule,
-} from "@angular/material/snack-bar";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { Clipboard } from "@angular/cdk/clipboard";
 import { Overlay, OverlayRef } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
-import { CdkDrag, CdkDragHandle, CdkDragMove } from "@angular/cdk/drag-drop";
+import { CdkDrag, CdkDragHandle } from "@angular/cdk/drag-drop";
 import { Note } from "../_models/note.model";
 import { Favorite } from "../_models/favorite";
 import { AuthService } from "../_services/auth.service";
@@ -37,7 +27,7 @@ import { FavoriteService } from "../_services/favorite.service";
   selector: "app-map-details",
   templateUrl: "./map-details.component.html",
   styleUrls: ["./map-details.component.scss"],
-  providers: [SafePipe, CdkDrag, CdkDragHandle], // Include the SafePipe in the providers array
+  providers: [SafePipe, CdkDrag, CdkDragHandle],
 })
 export class MapDetailsComponent implements OnInit {
   @ViewChild("dialogTemplate")
@@ -53,7 +43,6 @@ export class MapDetailsComponent implements OnInit {
   showMod = false;
   showUser = false;
   showAdmin = false;
-  private roles: string[] = [];
   currentNotes: any;
   currentFavorites: any;
   isFavorited = false;
@@ -134,7 +123,7 @@ export class MapDetailsComponent implements OnInit {
         (response) => {
           this.showUser = response.access;
           this.loading = false;
-          this.getFavorites(this.route.snapshot.params["id"], userID)
+          this.getFavorites(this.route.snapshot.params["id"], userID);
         },
         (error) => {
           if (error.status === 403) {
@@ -146,7 +135,6 @@ export class MapDetailsComponent implements OnInit {
         }
       );
 
-      //check moderator role
       this.authService.checkModeratorRole(userID).subscribe(
         (response) => {
           this.showMod = response.access;
@@ -162,7 +150,6 @@ export class MapDetailsComponent implements OnInit {
         }
       );
 
-      //check admin role
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
           this.showAdmin = response.access;
@@ -185,16 +172,11 @@ export class MapDetailsComponent implements OnInit {
   getFavorites(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
       next: (favorite: Favorite[]) => {
-        // console.log(favorite);
-        // console.log(mapId + ' - ' + favorite[0].mapId);
-        // console.log(userId + ' - ' + favorite[0].userId);
-
-        if(favorite[0].mapId == mapId && favorite[0].userId == userId){
-          this.isFavorited =  true;
-        } else{
+        if (favorite[0].mapId == mapId && favorite[0].userId == userId) {
+          this.isFavorited = true;
+        } else {
           this.isFavorited = false;
         }
-
       },
       error: (error) => {
         console.error(error);
@@ -205,14 +187,13 @@ export class MapDetailsComponent implements OnInit {
   toggleFavorite(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
       next: (favorite: Favorite[]) => {
-        // console.log(favorite);
-  
         if (favorite && favorite.length > 0) {
-          // console.log('Deleting favorite... ' + favorite[0].id);
           this.favoriteService.delete(mapId, userId).subscribe(
             () => {
-              // console.log('Favorite deleted successfully');
-              this.openSnackBar(this.currentMap.map + " removed from your favorites.", 2000);
+              this.openSnackBar(
+                this.currentMap.map + " removed from your favorites.",
+                2000
+              );
               this.isFavorited = false;
             },
             (error) => {
@@ -224,23 +205,27 @@ export class MapDetailsComponent implements OnInit {
             }
           );
         } else {
-          // console.log('Creating favorite...' + mapId + ' ' + userId);
           const currentRoute = this.router.url;
-          // console.log('Current route: ', currentRoute);
-          this.favoriteService.createOrUpdate(currentRoute, mapId, userId, "map").subscribe(
-            () => {
-              // console.log('Favorite created successfully');
-              this.openSnackBar(this.currentMap.map + " added to your favorites.", 2000);
-              this.isFavorited = true;
-            },
-            (error) => {
-              console.error(error);
-              this.openSnackBar(
-                "Failed to add " + this.currentMap.map + " to favorites. Please try again.",
-                2000
-              );
-            }
-          );
+          this.favoriteService
+            .createOrUpdate(currentRoute, mapId, userId, "map")
+            .subscribe(
+              () => {
+                this.openSnackBar(
+                  this.currentMap.map + " added to your favorites.",
+                  2000
+                );
+                this.isFavorited = true;
+              },
+              (error) => {
+                console.error(error);
+                this.openSnackBar(
+                  "Failed to add " +
+                    this.currentMap.map +
+                    " to favorites. Please try again.",
+                  2000
+                );
+              }
+            );
         }
       },
       error: (error) => {
@@ -248,9 +233,6 @@ export class MapDetailsComponent implements OnInit {
       },
     });
   }
-  
-  
-  
 
   getCurrentNotes(): void {
     const currentUserId = this.token.getUser().id;
@@ -258,7 +240,6 @@ export class MapDetailsComponent implements OnInit {
 
     this.noteService.getById(currentMapId, currentUserId).subscribe({
       next: (notes: Note[]) => {
-        // Update the type annotation to Note[]
         this.currentNotes = notes[0].note;
       },
       error: (error) => {
@@ -272,7 +253,6 @@ export class MapDetailsComponent implements OnInit {
     this.noteService.createOrUpdate(mapId, currentUserId, noteText).subscribe(
       () => {
         this.openSnackBar("Note saved successfully.", 2000);
-        // this.closePopup();
         this.getCurrentNotes();
       },
       (error) => {
@@ -296,7 +276,7 @@ export class MapDetailsComponent implements OnInit {
       this.CamMap = "Enabled";
       this.CamMapBool = true;
 
-      this.cdr.detectChanges(); // Trigger change detection
+      this.cdr.detectChanges();
 
       const videoContainer = document.getElementById("videoContainer");
       if (videoContainer) {
@@ -310,14 +290,6 @@ export class MapDetailsComponent implements OnInit {
     }
   }
 
-  /**
-   *
-   * @param url
-   * @param title
-   * @param w
-   * @param h
-   * @returns
-   */
   open(url: any, title: any, w: any, h: any) {
     var left = screen.width / 2 - w / 2;
     var top = screen.height / 2 - h / 2;

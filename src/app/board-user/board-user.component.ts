@@ -1,13 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router, ParamMap, Params } from "@angular/router";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
 import { SharedService } from "../_services/shared.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { HttpHeaders } from "@angular/common/http";
 import { FavoriteService } from "../_services/favorite.service";
 import { MapService } from "../_services/map.service";
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from "@angular/material/table";
 
 
@@ -29,8 +28,6 @@ export class BoardUserComponent implements OnInit {
   showPage3 = false;
 
   loading = true;
-
-  private roles: string[] = [];
 
   passwordCurrent: string = "";
   passwordNew: string = "";
@@ -92,7 +89,7 @@ export class BoardUserComponent implements OnInit {
         (response) => {
           this.showUser = response.access;
 
-            this.getFavorites(); // Call the getFavorites function after a short delay
+            this.getFavorites(); 
 
           this.loading = false;
         },
@@ -149,12 +146,10 @@ export class BoardUserComponent implements OnInit {
 
 
   private loadContent(page: string): void {
-    // Reset all flags
     this.showPage1 = false;
     this.showPage2 = false;
     this.showPage3 = false;
 
-    // Set the flag based on the 'page' parameter
     if (page === "1") {
       this.showPage1 = true;
     } else if (page === "2") {
@@ -185,7 +180,6 @@ export class BoardUserComponent implements OnInit {
     }
 
     const userId = this.currentUser.id;
-    // console.log(userId);
     try {
       await this.authService
         .password(userId, this.passwordCurrent, this.passwordNew)
@@ -211,15 +205,12 @@ export class BoardUserComponent implements OnInit {
 
   async updateProfile() {
     const userId = this.currentUser.id;
-    // console.log(userId);
-
     try {
       await this.authService
         .profile(userId, this.email, this.avatar_url, this.discordId)
         .toPromise();
       this.showSnackBar("Profile updated successfully!");
 
-      // Update the currentUser object with the new data
       const updatedUser = {
         ...this.currentUser,
         email: this.email,
@@ -228,7 +219,6 @@ export class BoardUserComponent implements OnInit {
       };
       this.token.saveUser(updatedUser);
 
-      // Update the input fields with the new values
       this.email = updatedUser.email;
       this.avatar_url = updatedUser.avatar_url;
       this.discordId = updatedUser.discordId;
