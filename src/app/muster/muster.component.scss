@@ -1,19 +1,32 @@
-.mat-header-cell {
-    background: #7c7d72;
+.mat-header-row {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 900 !important;
 }
 
-.mat-table{
-    background: #1c2537;
+.mat-row {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 200 !important;
+	color: rgba(255, 255, 255, 0.753);
+}
+.mat-header-cell{
+	color: rgb(158 159 152) !important;
+	font-size: 1rem;
+}
+.mat-table {
+	background: unset !important;
 }
 
-.mat-row{
-    padding: 10px;
+.mat-paginator {
+	background: unset !important;
 }
 
-::ng-deep .mat-form-field-wrapper{
-    margin-bottom: -1.25em;
- }
- 
-.mat-cell{
-    padding: 0.5em;
+mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+{
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #7c7d7283;
 }
+
+.mat-form-field-appearance-fill .mat-input-element {
+	width: 50px !important; 
+  }

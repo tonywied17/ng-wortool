@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Params } from '@angular/router';
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
 
@@ -12,13 +13,22 @@ export class BoardModeratorComponent implements OnInit {
   currentUser: any;
   isLoggedIn = false;
   showMod = false;
+  showPage1 = false;
+  showPage2 = false;
   loading = true;
   constructor(
     private token: TokenStorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute,
     ) {}
 
   ngOnInit(): void {
+
+    this.route.params.subscribe((params: Params) => {
+      const page = params['page'];
+      this.loadContent(page);
+    });
+
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
     const userID = this.currentUser.id;
@@ -41,6 +51,17 @@ export class BoardModeratorComponent implements OnInit {
       );
     }else{
       this.loading = false;
+    }
+  }
+
+  private loadContent(page: string): void {
+    this.showPage1 = false;
+    this.showPage2 = false;
+
+    if (page === '1') {
+      this.showPage1 = true;
+    } else if (page === '2') {
+      this.showPage2 = true;
     }
   }
 }

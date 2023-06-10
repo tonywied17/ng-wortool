@@ -1,75 +1,4 @@
-<div *ngIf="loading"
-	class="text-center text-xl opacity-75">
-	<i class="fas fa-spinner fa-pulse mr-2"></i>
-	Verifying credentials...
-</div>
-
-
-<div *ngIf="!loading"
-	class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[4em]">
-
-
-	<div *ngIf="!showMod && isLoggedIn"
-		class="p-5 bg-[#1c2537] rounded-md"
-		style="border-left: 5px solid #a13c3c;">
-		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
-			<div class="row-start-2 sm:row-start-auto">
-				<button class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
-					mat-button
-					routerLink="/home">
-					<i class="fa-solid fa-house mr-1.5"></i>
-					Home
-				</button>
-			</div>
-
-
-			<div class="row-start-1 sm:row-start-auto">
-				<h3 class="text-xl my-2">
-					You do not have access to this feature
-				</h3>
-				<p>
-					You do not have the necessary permissions to view this content.
-				</p>
-			</div>
-		</div>
-	</div>
-
-
-
-	<div *ngIf="!isLoggedIn"
-		class="p-5 bg-[#1c2537] rounded-md"
-		style="border-left: 5px solid #a13c3c;">
-		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
-			<div class="row-start-2 sm:row-start-auto">
-				<button class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
-					mat-button
-					routerLink="/home">
-					<i class="fa-solid fa-house mr-1.5"></i>
-					Home
-				</button>
-			</div>
-
-
-			<div class="row-start-1 sm:row-start-auto">
-				<h3 class="text-xl my-2">
-					Please login to continue
-				</h3>
-				<p>
-					You must be logged in to access this content.
-				</p>
-			</div>
-		</div>
-	</div>
-
-
-
-
 	<div *ngIf="showAdmin || showMod">
-
-
-		<h3 class="text-[#88887b]  text-3xl mb-4">
-			Muster Roster Testing
-		</h3>
 		<mat-table [dataSource]="users"
 			class>
 			<ng-container matColumnDef="id">
@@ -186,4 +115,3 @@
 			<mat-row *matRowDef="let user; columns: displayedColumns;"></mat-row>
 		</mat-table>
 	</div>
-</div>

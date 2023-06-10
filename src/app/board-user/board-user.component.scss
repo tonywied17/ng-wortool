@@ -29,7 +29,7 @@ mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat
 
 .action-column {
 	flex: 0 0 auto;
-	min-width: 162px;
+	width: min-content !important;
 	margin-left: 1em;
 	border-left: 1px dotted #7c7d72e0;
 	padding-left: 1.2em !important;

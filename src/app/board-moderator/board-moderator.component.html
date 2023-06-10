@@ -6,7 +6,7 @@
 
 
 <div *ngIf="!loading"
-	class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[4em]">
+	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[4em]">
 
 
 	<div *ngIf="!showMod && isLoggedIn"
@@ -63,47 +63,91 @@
 
 
 	<div *ngIf="showMod">
-		<h3 class="text-[#88887b]  text-3xl tracking-tight mb-4">Moderator Dashboard</h3>
+		<h3 class="text-[#88887b] text-3xl tracking-tight mb-[1.5em]">NCO Dashboard</h3>
 
 
-		<div class="py-3 my-5">
-			<p class=" mb-5">
-				Below you will find the dashboard with access to all the available NCO Tools.
-			</p>
-			<mat-list>
-				<mat-list-item>
-					<button *ngIf="showMod"
-						routerLink="/muster"
-						mat-menu-item
-						class="text-center">
-						<i class="fa-solid fa-clipboard-user mr-1.5"></i>
-						Muster Roster Tool
-					</button>
-				</mat-list-item>
+		<button routerLink="/home"
+			mat-button
+			color="primary"
+			class="!mb-[1em]">
+			<i class="fa-sharp fa-solid fa-arrow-left"></i>
+			Back
+		</button>
 
 
-				<mat-divider></mat-divider>
+		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
+			<div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit">
+				<div class>
 
 
-				<mat-list-item>
-					<button *ngIf="showMod"
-						routerLink="/event-share"
-						mat-menu-item
-						class="text-center"
-						disabled>
-						<i class="fa-solid fa-megaphone mr-1.5"></i>
+					<mat-list class="my-2">
+						<mat-action-list>
+							<button *ngIf="showMod"
+								routerLinkActive="active_btn"
+								routerLink="/mod/1"
+								mat-list-item
+								class="py-2 !text-neutral-300">
+								<i class="fa-solid fa-clipboard-user w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
+								Muster Roster Tool
+							</button>
+
+
+
+							<mat-divider></mat-divider>
+
+
+
+							<button *ngIf="showMod"
+								routerLinkActive="active_btn"
+								routerLink="/mod/2"
+								mat-list-item
+								class="py-2 !text-neutral-300">
+								<i class="fa-solid fa-pen-to-square w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
+								Share Event
+							</button>
+
+
+
+
+						</mat-action-list>
+
+
+
+					</mat-list>
+
+
+
+				</div>
+			</div>
+
+
+
+			<div class="lg:col-span-2 col-span-1 ml-5">
+
+
+
+				<div *ngIf="showPage1"
+					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
+					<h2 class="text-2xl  text-slate-400 py-4">Muster Roster</h2>
+					<app-muster></app-muster>
+				</div>
+				<div *ngIf="showPage2"
+					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
+					<h2 class="text-2xl  text-slate-400 py-4">
 						Share Event Information
-					</button>
-				</mat-list-item>
-			</mat-list>
+					</h2>
+				</div>
+
+
+			</div>
+
+
+
 		</div>
 
 
 
-
-
 	</div>
-
 
 
 </div>

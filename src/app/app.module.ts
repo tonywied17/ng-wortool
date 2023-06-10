@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'user', component: BoardUserComponent },
   { path: 'user/:page', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
+  { path: 'mod/:page', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: 'admin/:page', component: BoardAdminComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}

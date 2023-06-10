@@ -6,39 +6,42 @@
 
 
 <div *ngIf="!loading"
-	class="lg:w-[60vw] w-[100vw - 2em] m-auto mt-[4em]">
+	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[4em]">
 
 
 	<div *ngIf="isLoggedIn">
 
 
-		<h3 class="text-[#88887b]  text-3xl tracking-tight mb-[1.5em]">User Settings</h3>
+		<h3 class="text-[#88887b] text-3xl tracking-tight mb-[1.5em]">User Settings</h3>
+
+		<button routerLink="/home" mat-button color="primary" class="!mb-[1em]"><i class="fa-sharp fa-solid fa-arrow-left"></i> Back</button>
+
 		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
 			<div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit w-full">
-				<div class="p-3">
+				<div class="my-2">
 					<mat-list>
 						<mat-action-list>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/1"
 								mat-list-item
-								class="py-2">
-								<i class="fa-solid fa-key mx-1.5"></i>
+								class="py-2 !text-neutral-300">
+								<i class="fa-solid fa-key w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
 								Change Password
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/2"
 								mat-list-item
-								class="py-2">
-								<i class="fa-solid fa-user-pen mx-1.5"></i>
+								class="py-2 !text-neutral-300">
+								<i class="fa-solid fa-user-pen w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
 								Profile Information
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/3"
 								mat-list-item
-								class="py-2">
-								<i class="fa-solid fa-stars mx-1.5"></i>
+								class="py-2 !text-neutral-300">
+								<i class="fa-solid fa-stars w-[25px] ml-[1em] mr-[0.5em] !text-white"></i>
 								Manage Favorites
 							</button>
 						</mat-action-list>
@@ -51,7 +54,7 @@
 				<div *ngIf="showPage1"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
 					<h2 class="text-2xl text-slate-400 mb-[1em]">
-						<i class="fa-sharp fa-regular fa-lock pr-2"></i>
+
 						Change Password
 					</h2>
 					<form (ngSubmit)="updatePassword()">
@@ -98,9 +101,7 @@
 				<div *ngIf="showPage2"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
 					<h2 class="text-2xl text-slate-400 mb-[1em]">
-						<i class="fa-sharp fa-light fa-address-card pr-2"></i>
-						Edit
-            Profile
+						Edit Profile
 					</h2>
 					<form (ngSubmit)="updateProfile()">
 
@@ -189,7 +190,6 @@
 				<div *ngIf="showPage3"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
 					<h2 class="text-2xl text-slate-400 mb-1em">
-						<i class="fa-light fa-square-heart pr-2"></i>
 						Manage Favorites
 					</h2>
 
@@ -202,7 +202,10 @@
 								<mat-header-cell *matHeaderCellDef>Map Name</mat-header-cell>
 								<mat-cell *matCellDef="let fav"
 									class="font-[400] text-neutral-100">
-									{{ fav.mapData.map }}
+
+			
+									<button mat-stroked-button color="primary" [routerLink]="fav.route">{{fav.mapData.map}}</button>
+
 								</mat-cell>
 							</ng-container>
 
@@ -213,18 +216,13 @@
 								</mat-header-cell>
 								<mat-cell *matCellDef="let fav"
 									class="actions-cell action-column">
+									
+
 									<button (click)="confirmDelete(fav.mapId, fav.mapData.map)"
 										mat-button
 										class="text-red-500">
 										<i class="fa-sharp fa-regular fa-trash pr-2"></i>
-										Delete
-									</button>
-									<button [routerLink]="fav.route"
-										mat-button
-										color="primary"
-										class="!mr-2">
-										<i class="fa-sharp fa-solid fa-arrow-up-right pr-2"></i>
-										View
+										<span class="hidden sm:inline-block">Delete</span>
 									</button>
 								</mat-cell>
 							</ng-container>
