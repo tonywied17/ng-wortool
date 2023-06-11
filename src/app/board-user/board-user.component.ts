@@ -4,10 +4,12 @@ import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
 import { SharedService } from "../_services/shared.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { ConfirmDeleteSnackbarComponent } from "../confirm-delete-snackbar/confirm-delete-snackbar.component";
 import { FavoriteService } from "../_services/favorite.service";
 import { MapService } from "../_services/map.service";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from "@angular/material/table";
+
 
 
 @Component({
@@ -226,7 +228,7 @@ export class BoardUserComponent implements OnInit {
 
     } catch (error: any) {
       if (error.status === 400) {
-        this.showSnackBar(error.error.message); // Display the error message from the response
+        this.showSnackBar(error.error.message);
       } else {
         this.showSnackBar(error.message);
       }
@@ -259,9 +261,7 @@ export class BoardUserComponent implements OnInit {
     fetch(`https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/get`)
     .then(response => response.json())
     .then(data => {
-      // console.log(data);
       this.guild_avatar_url = data.guild.iconURL;
-      // console.log(this.guild_avatar_url);
     }
     );
   }
@@ -285,9 +285,18 @@ export class BoardUserComponent implements OnInit {
   }
 
   confirmDelete(mapId: string, mapName: string): void {
-    const result = confirm("Are you sure you want to delete '"+mapName+"' as a favorite?");
-    if (result) {
+    const snackBarRef = this.snackBar.openFromComponent(ConfirmDeleteSnackbarComponent, {
+      data: { message: `Are you sure you want to delete '${mapName}' as a favorite?`, mapId },
+      duration: 5000,
+      verticalPosition: "top",
+      panelClass: "confirm-delete-snackbar",
+    });
+  
+    snackBarRef.onAction().subscribe(() => {
       this.deleteFavorite(mapId);
-    }
+    });
   }
+
+
+
 }

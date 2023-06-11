@@ -5,11 +5,14 @@
 </div>
 
 
+
 <div *ngIf="!loading"
 	class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 
 
+
 	<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 row-span-full">
+
 
 
 		<!-- Left Box -->
@@ -21,9 +24,11 @@
 				</p>
 
 
+
 				<div class="rounded-sm mb-3 mt-8 shadow-lg brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[350px] h-[250px]"
 					style="background-image: url('https://cdn.discordapp.com/attachments/684701534466080807/975267284094427166/20220219130936_1.jpg');background-size: cover;">
 				</div>
+
 
 
 				<p class="text-[#c4c4c4bb] text-sm px-4 font-[100] italic text-center mb-[-10px] pt-2">
@@ -34,12 +39,15 @@
 				</p>
 
 
+
 			</div>
 		</div>
 
 
 
+
 		<div class="lg:col-span-2 lg:row-span-2">
+
 
 
 			<!-- Logged In Menu -->
@@ -48,30 +56,19 @@
 				style="padding: 70px 2em;">
 
 
+
 				<h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
 					Access Your Dashboards
 				</h3>
+
 
 				<div class="p-[1em]">
 					<mat-list>
 						<mat-action-list>
 
-						
-	
-							<button *ngIf="showMod"
-								routerLink="/mod/1"
-								mat-list-item
-								class>
-								<i class="fa-sharp fa-solid fa-chevrons-down w-[25px] ml-[1em] mr-[0.5em]"></i>
-								NCO Dashboard
-							</button>
-	
-	
-	
-							<mat-divider *ngIf="showAdmin"></mat-divider>
-	
-	
-	
+
+
+
 							<button *ngIf="showAdmin"
 								routerLink="/admin/1"
 								mat-list-item
@@ -79,9 +76,25 @@
 								<i class="fa-duotone fa-shield-halved w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Admin Dashboard
 							</button>
-	
+
+
+							<mat-divider *ngIf="showAdmin"></mat-divider>
+
+
+
+							<button *ngIf="showMod"
+								routerLink="/mod/1"
+								mat-list-item
+								class>
+								<i class="fa-sharp fa-solid fa-chevrons-down w-[25px] ml-[1em] mr-[0.5em]"></i>
+								NCO Dashboard
+							</button>
+
+
+
 
 							<mat-divider></mat-divider>
+
 
 							<button *ngIf="showUser"
 								routerLink="/user/1"
@@ -90,8 +103,10 @@
 								<i class="fa-duotone fa-gear w-[25px] ml-[1em] mr-[0.5em]"></i>
 								User Settings
 							</button>
-	
+
+
 							<mat-divider class="sm:!hidden inline-block"></mat-divider>
+
 
 							<button (click)="logout()"
 								class="sm:!hidden !inline-block !text-[#bf3636]"
@@ -99,15 +114,18 @@
 								<i class="fa-sharp fa-solid fa-arrow-right-from-bracket w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Logout
 							</button>
-	
-	
+
+
+
 						</mat-action-list>
 					</mat-list>
 				</div>
 
 
+
 			</div>
 			<!-- - -->
+
 
 
 			<!-- Register Box -->
@@ -128,6 +146,7 @@
 						<div class="form-group sm:col-span-4">
 
 
+
 							<div class="field-box">
 								<input #email="ngModel"
 									[(ngModel)]="registerForm.email"
@@ -138,6 +157,7 @@
 									required>
 								<i class="fa-sharp fa-regular fa-envelope field-icon"></i>
 							</div>
+
 
 
 							<div *ngIf="email.errors && f.submitted"
@@ -151,6 +171,7 @@
 						<div class="form-group sm:col-span-4">
 
 
+
 							<div class="field-box">
 								<input #username="ngModel"
 									[(ngModel)]="registerForm.username"
@@ -161,6 +182,7 @@
 									required>
 								<i class="fa-sharp fa-regular fa-user field-icon"></i>
 							</div>
+
 
 
 							<div *ngIf="username.errors && f.submitted"
@@ -200,9 +222,11 @@
 										placeholder="Confirm password...">
 
 
+
 									<i class="fa-sharp fa-regular fa-lock field-icon"></i>
 								</div>
 							</div>
+
 
 
 							<div *ngIf="f.submitted && (password.errors || passwordConfirm.errors)"
@@ -222,7 +246,9 @@
 							</div>
 
 
+
 						</div>
+
 
 
 						<div class="form-group sm:col-span-1 sm:col-start-4">
@@ -243,6 +269,7 @@
 			<!--  -->
 
 
+
 			<!-- Login Box -->
 			<div *ngIf="!registerTask && loginTask && !isLoggedIn"
 				class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
@@ -255,6 +282,7 @@
 					novalidate>
 					<div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
 						<div class="form-group sm:col-span-4">
+
 
 
 							<div class="field-box">
@@ -270,6 +298,7 @@
 
 
 
+
 							<div *ngIf="username.errors && f.submitted"
 								class="alert alert-danger"
 								role="alert">
@@ -280,13 +309,17 @@
 
 
 
+
 						</div>
+
 
 
 						<!--  -->
 
 
+
 						<div class="form-group sm:col-span-4">
+
 
 
 							<div class="field-box">
@@ -299,6 +332,7 @@
 									required>
 								<i class="fa-sharp fa-regular fa-lock field-icon"></i>
 							</div>
+
 
 
 
@@ -316,9 +350,11 @@
 
 
 
+
 						</div>
 						<div class="form-group sm:col-span-1 sm:col-start-4">
-							
+
+
 							<button mat-raised-button
 								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 								Login!
@@ -337,11 +373,14 @@
 
 
 
+
 		</div>
+
 
 
 		<div *ngIf="isLoggedIn"
 			class="lg:col-span-2 lg:row-span-1 right-in">
+
 
 
 			<div class="bg-slate-800 rounded-lg ring-1 ring-slate-900/5 shadow-xl h-full text-right">
@@ -353,24 +392,27 @@
                 </button> -->
 
 
-				<div class="font-[200] text-xs opacity-75 text-gray-400 p-[1em]">
-					<span class="pr-2">
+
+				<div class="font-[200] text-xs text-gray-400 p-[1em] !text-right">
+					<span class="pr-2 max-w-fi">
 						&copy; {{currentYear}} - {{nextYear}}
 					</span>
 					<span class="pr-2">
 						The Pennsylvania Army
 					</span>
-					<span (click)="openPortfolio()"
-						class="pr-2 cursor-pointer hover:opacity-75 !text-gray-300 block mt-1">
-						by molex
+					<span class="pr-2 !text-gray-300 block mt-1">
+						<button class="hover:brightness-125 active:transform active:translate-y-1 active:translate-x-1" (click)="openPortfolio()">by molex</button>
 					</span>
 				</div>
+
 
 
 			</div>
 
 
+
 		</div>
+
 
 
 		<div *ngIf="!loginTask && registerTask && !isLoggedIn"
@@ -382,6 +424,7 @@
 
 
 
+
 				<button (click)="loginBtn()"
 					mat-raised-button
 					class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
@@ -389,8 +432,10 @@
 				</button>
 
 
+
 			</div>
 		</div>
+
 
 
 		<div *ngIf="loginTask && !registerTask && !isLoggedIn"
@@ -402,6 +447,7 @@
 
 
 
+
 				<button (click)="registerBtn()"
 					mat-raised-button
 					class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
@@ -409,8 +455,10 @@
 				</button>
 
 
+
 			</div>
 		</div>
+
 
 
 

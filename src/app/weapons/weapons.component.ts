@@ -13,7 +13,6 @@ import { AuthService } from "../_services/auth.service";
 })
 export class WeaponsComponent implements OnInit {
   displayedColumns: string[] = [
-    "id",
     "weapon",
     "range",
     "length",
@@ -38,6 +37,7 @@ export class WeaponsComponent implements OnInit {
   showAdmin = false;
   loading = true;
   submitted = false;
+  spotlight: any;
 
   constructor(
     private weaponService: WeaponService,
@@ -130,4 +130,30 @@ export class WeaponsComponent implements OnInit {
     this.weaponForm.ammo = null;
     this.weaponForm.notes = null;
   }
+
+  loadWeapon(weapon: any) {
+    this.spotlight = null;
+    setTimeout(() => {
+      this.spotlight = weapon;
+    }, 0);
+  }
+
+  open(url: any, title: any, w: any, h: any) {
+    var left = screen.width / 2 - w / 2;
+    var top = screen.height / 2 - h / 2;
+    return window.open(
+      url,
+      title,
+      "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=" +
+        w +
+        ", height=" +
+        h +
+        ", top=" +
+        top +
+        ", left=" +
+        left
+    );
+  }
+
 }
+

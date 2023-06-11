@@ -29,14 +29,12 @@ mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat
 
 .action-column {
 	flex: 0 0 auto;
-	width: min-content !important;
-	margin-left: 1em;
-	border-left: 1px dotted #7c7d72e0;
-	padding-left: 1.2em !important;
-	min-height: 69px;
-	font-size: 12px !important;
-	background: #2430477a;
-    box-shadow: -3px 0px 4px 1px #18181838;
+    width: min-content!important;
+    margin-left: 1em;
+    border-left: 1px dotted rgba(124,125,114,.8784313725);
+    font-size: 12px!important;
+    background: rgba(36,48,71,.4784313725);
+    box-shadow: -3px 0 4px 1px #18181838;
 }
 
 .action-column-header {
@@ -48,4 +46,9 @@ mat-row, mat-header-row, mat-footer-row, th.mat-header-cell, td.mat-cell, td.mat
 .mat-row {
 	display: flex;
 	align-items: stretch;
+}
+
+mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-type {
+    /* padding-right: 24px; */
+	padding-right:0 !important;
 }
