@@ -1,133 +1,130 @@
-<div *ngIf="loading" class="text-center text-xl opacity-75">
-	<i class="fas fa-spinner fa-pulse mr-2"></i>
-	Verifying credentials...
-</div>
 
 
-
-<div *ngIf="!loading" class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] left-in">
+<div class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 	<h3 class="text-[#88887b] text-3xl tracking-tight mb-4">Weapons</h3>
 
-	<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:grid-rows-3 mt-[2em] p-[1em] lg:px-[3em] rounded-md bg-slate-800/80">
+	<p class="font-[200] text-sm text-neutral-200">Select a weapon to view more information.</p>
 
-		<div class="col-start-1 lg:col-span-2 h-fit lg:row-start-1 lg:row-span-3" >
+		<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:grid-rows-3 mt-[2em] p-[1em] lg:px-[3em] rounded-md min-h-[730px]"
+		style="background: linear-gradient(180deg, #1e293b, #1e293b00);">
 
-			<div class="lg:columns-2">
-				<div class="break-after-column">
-					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Rifles</h2>
-					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
-						<div *ngIf="weapon.type == 'Rifle'">
-							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
-						</div>		
+			<div class="col-start-1 lg:col-span-2 h-fit lg:row-start-1 lg:row-span-3">
+	
+				<div class="lg:columns-2">
+					<div class="break-after-column">
+						<h2 class="text-slate-400 text-xl  my-[0.5em] mt-[1em]">Rifles</h2>
+						<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+							<div *ngIf="weapon.type == 'Rifle'">
+								<button color="primary" class="!my-2 text-lg !p-1 !px-4" (click)="loadWeapon(weapon)" mat-button>{{weapon.weapon}}</button>
+							</div>		
+						</div>
 					</div>
+		
+					<div>
+						<h2 class="text-slate-400 text-xl  my-[0.5em] mt-[1em]">Revolvers</h2>
+						<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+							<div *ngIf="weapon.type == 'Revolver'">
+								<button color="primary" class="!my-2 text-lg !p-1 !px-4" (click)="loadWeapon(weapon)" mat-button>{{weapon.weapon}}</button>
+							</div>		
+						</div>
+					</div>
+	
+					<div>
+						<h2 class="text-slate-400 text-xl  my-[0.5em] mt-[1em]">Swords</h2>
+						<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+							<div *ngIf="weapon.type == 'Sword'">
+								<button color="primary" class="!my-2 text-lg !p-1 !px-4" (click)="loadWeapon(weapon)" mat-button>{{weapon.weapon}}</button>
+							</div>		
+						</div>
+					</div>
+	
+					<div>
+						<h2 class="text-slate-400 text-xl  my-[0.5em] mt-[1em]">Field Artillery</h2>
+						<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+							<div *ngIf="weapon.type == 'Artillery'">
+								<button color="primary" class="!my-2 text-lg !p-1 !px-4" (click)="loadWeapon(weapon)" mat-button>{{weapon.weapon}}</button>
+							</div>		
+						</div>
+					</div>
+				</div>
+				
+	
+	
+			</div>
+	
+	
+	
+			<div *ngIf="spotlight"
+				class="right-in lg:row-start-1 lg:row-span-3 lg:col-start-3 rounded-lg py-[1.5em] px-[1em] mt-[1em] lg:mt-[unset] h-fit shadow-md"
+				style="background: linear-gradient(130deg, #7c7d73cc, #7c7d7327, #7c7d734b, #7c7d734b), linear-gradient(-25deg, #7c7d73cc, #7c7d7327, #7c7d734b, #7c7d734b);">
+				<div>
+					<h2 class="text-2xl text-slate-400 mb-1em">
+						{{spotlight.weapon}}
+					</h2>
+	
+					<button *ngIf="showAdmin" mat-button color="primary" routerLink="/admin/2/{{spotlight.id}}" class="float-right !my-2 !text-[#a2a398]"><i class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Edit Weapon</button>
+	
+	
+	
+					<div class="p-[1em] text-base font-thin  text-[#ffffff]/60 text-center">
+						<div class="max-h-fit w-full text-center mx-auto mb-[1.5em] rounded-sm">
+	
+							
+	
+							<div (click)="open(spotlight.image , spotlight.weapon, 1500, 868)">
+								<img class="cursor-zoom-in hover:transform active:scale-[0.98] rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"
+									[src]="spotlight.image">
+							</div>
+	
+	
+						</div>
+	
+	
+	
+						<div *ngIf="spotlight.range" class="m-4 font-[200] text-lg">
+							<span class="font-[500] m-2 block">Range</span> {{spotlight.range}} yds
+						</div>
+	
+	
+	
+						<mat-divider *ngIf="spotlight.range && spotlight.lengthy"></mat-divider>
+	
+	
+	
+						<div *ngIf="spotlight.lengthy" class="m-4 font-[200] text-lg">
+							<span class="font-[500] m-2 block">Length</span> {{spotlight.lengthy}}" in
+						</div>
+	
+	
+	
+						<mat-divider *ngIf="spotlight.lengthy"></mat-divider>
+	
+	
+	
+						<div *ngIf="spotlight.ammo" class="m-4 font-[200] text-lg">
+							<span class="font-[500] m-2 block">Ammo</span> {{spotlight.ammo}}
+						</div>
+	
+	
+	
+	
+						<div *ngIf="spotlight.notes" class="mt-[2em]">
+							<i>{{spotlight.notes}}</i>
+						</div>
+	
+						
+	
+	
+					</div>
+	
 				</div>
 	
-				<div>
-					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Revolvers</h2>
-					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
-						<div *ngIf="weapon.type == 'Revolver'">
-							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
-						</div>		
-					</div>
-				</div>
-
-				<div>
-					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Swords</h2>
-					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
-						<div *ngIf="weapon.type == 'Sword'">
-							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
-						</div>		
-					</div>
-				</div>
-
-				<div>
-					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Field Artillery</h2>
-					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
-						<div *ngIf="weapon.type == 'Artillery'">
-							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
-						</div>		
-					</div>
-				</div>
 			</div>
-			
-
-
+	
+	
 		</div>
 
 
 
-		<div *ngIf="spotlight"
-			class="right-in lg:row-start-1 lg:row-span-3 lg:col-start-3 rounded-lg py-[1.5em] px-[1em] mt-[1em] lg:mt-[unset] h-fit shadow-md"
-			style="background: linear-gradient(130deg, #7c7d73e1, #7c7d733b, #7c7d7365, #7c7d734b), linear-gradient(-25deg, #7c7d73e1, #7c7d733b, #7c7d7365, #7c7d734b);">
-			<div>
-				<h2 class="text-2xl text-slate-400 mb-1em">
-					{{spotlight.weapon}}
-				</h2>
-
-				<button *ngIf="showAdmin" mat-button color="primary" routerLink="/admin/2/{{spotlight.id}}" class="float-right !my-2 !text-[#a2a398]"><i class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Edit Weapon</button>
-
-
-
-				<div class="p-[1em] text-base font-thin  text-[#ffffff]/60 text-center">
-					<div class="max-h-fit w-full text-center mx-auto mb-[1.5em] rounded-sm">
-
-						
-
-						<div (click)="open(spotlight.image , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform active:scale-[0.98] rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"
-								[src]="spotlight.image">
-						</div>
-
-
-					</div>
-
-
-
-					<div *ngIf="spotlight.range" class="m-4 font-[200] text-lg">
-						<span class="font-[500] m-2 block">Range</span> {{spotlight.range}} yds
-					</div>
-
-
-
-					<mat-divider *ngIf="spotlight.range && spotlight.lengthy"></mat-divider>
-
-
-
-					<div *ngIf="spotlight.lengthy" class="m-4 font-[200] text-lg">
-						<span class="font-[500] m-2 block">Length</span> {{spotlight.lengthy}}" in
-					</div>
-
-
-
-					<mat-divider *ngIf="spotlight.lengthy"></mat-divider>
-
-
-
-					<div *ngIf="spotlight.ammo" class="m-4 font-[200] text-lg">
-						<span class="font-[500] m-2 block">Ammo</span> {{spotlight.ammo}}
-					</div>
-
-
-
-
-					<div *ngIf="spotlight.notes" class="mt-[2em]">
-						<i>{{spotlight.notes}}</i>
-					</div>
-
-					
-
-
-				</div>
-
-			</div>
-
-		</div>
-
-
-
-
-
-
-
-	</div>
+	
 </div>
