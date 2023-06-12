@@ -34,6 +34,7 @@ const routes: Routes = [
   { path: 'mod/:page', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: 'admin/:page', component: BoardAdminComponent },
+  { path: 'admin/:page/:weapon', component: BoardAdminComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 

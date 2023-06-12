@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { WeaponService } from "../_services/weapon.service";
 import { firstValueFrom } from "rxjs";
+import { ConfirmDeleteSnackbarComponent } from "../confirm-delete-snackbar/confirm-delete-snackbar.component";
 
 @Component({
   selector: "app-board-admin",
@@ -44,7 +45,8 @@ export class BoardAdminComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private weaponService: WeaponService
+    private weaponService: WeaponService,
+    private changeDetectorRefs: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,18 @@ export class BoardAdminComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       const page = params["page"];
       this.loadContent(page);
+    });
+
+    this.route.params.subscribe((params: Params) => {
+      const weaponId = params['weapon'];
+      if (weaponId) {
+        this.selectedWeaponId = weaponId;
+        setTimeout(() => {
+          this.handleSelectionChange();
+        }, 200);
+        this.isUpdating = true;
+        this.isCreating = false;
+      }
     });
 
     this.isLoggedIn = !!this.token.getToken();
@@ -126,6 +140,19 @@ export class BoardAdminComponent implements OnInit {
     this.isUpdating = false;
   }
 
+  back(){
+    this.weaponName = "";
+    this.weaponType = "";
+    this.weaponRange = "";
+    this.weaponLength = "";
+    this.weaponAmmo = "";
+    this.weaponImage = "";
+    this.weaponNotes = "";
+    this.selectedWeaponId = "";
+    this.isUpdating = false;
+    this.isCreating = false;
+  }
+
   private loadContent(page: string): void {
     this.showPage1 = false;
     this.showPage2 = false;
@@ -180,6 +207,21 @@ export class BoardAdminComponent implements OnInit {
     }
 
     this.loadWeapons();
+
+    this.back();
+  }
+
+  confirmDelete(): void {
+    const snackBarRef = this.snackBar.openFromComponent(ConfirmDeleteSnackbarComponent, {
+      data: { message: `Are you sure you want to delete '${this.weaponName}' from weapons?` },
+      duration: 5000,
+      verticalPosition: "top",
+      panelClass: "confirm-delete-snackbar",
+    });
+  
+    snackBarRef.onAction().subscribe(() => {
+      this.deleteWeapon();
+    });
   }
   
   deleteWeapon() {

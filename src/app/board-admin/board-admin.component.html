@@ -134,22 +134,32 @@
 						<div class="form-group m-4">
 
 							<div class="mb-6 max-w-fit">
-								<div class="lg:columns-2 text-center lg:text-left">
+
+								<button *ngIf="isUpdating || isCreating" mat-button (click)="back()" color="primary">
+									<i class="fa-sharp fa-solid fa-arrow-left"></i> Cancel
+								</button>
+								<div *ngIf="!isUpdating && !isCreating" class="lg:columns-2 text-center lg:text-left">
+
+
 									<div>
 										<span class="text-neutral-200">Modify Existing</span>
 										<select [(ngModel)]="selectedWeaponId" name="selectedWeapon"
 											class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none" id="existing-select"
 											(change)="handleSelectionChange()">
-											<option value="" disabled selected>Select a weapon...</option>
+											<option value="" selected>Select a weapon...</option>
 											<option *ngFor="let weapon of weaponsList" [value]="weapon.id">{{
 												weapon.weapon }}</option>
 										</select>
 									</div>
+
+
+
 									<div>
 										<span class="hidden sm:block">&nbsp;</span>
 										<button (click)="createNew()" type="button" class="!h-[60px] !mt-[8px] text-neutral-200 font-[300] text-xl"
 											mat-stroked-button>Create New...</button>
 									</div>
+
 								</div>
 
 
@@ -159,8 +169,13 @@
 							<div *ngIf="isCreating || isUpdating">
 
 								
+
+								<div *ngIf="isUpdating" class="my-5 text-neutral-300 font-[300]">
+									<i class="fa-regular fa-pencil pr-2"></i> {{weaponName}} <span class="float-right">Weapon ID: {{selectedWeaponId}}</span>
+								</div>
+								
 								<div class="field-box">
-									<select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Category" [(ngModel)]="weaponType" name="weaponType" class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none mb-6" id="existing-select">
+									<select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Category" [(ngModel)]="weaponType" name="weaponType" class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none" id="existing-select">
 									  <option value="" disabled selected>Weapon Category</option>
 									  <option value="Rifle">Rifle</option>
 									  <option value="Revolver">Revolver</option>
@@ -169,6 +184,8 @@
 									</select>
 									<i class="fa-solid fa-bars-sort field-icon pb-2 focus:!transform-none"></i>
 								  </div>
+
+								  <mat-divider class="!my-5"></mat-divider>
 
 								<div class="field-box">
 									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Name" [(ngModel)]="weaponName" name="weaponName" class="field-input my-[0.5em]"
@@ -221,7 +238,7 @@
 							Update Weapon
 						</button>
 
-						<button (click)="deleteWeapon()" *ngIf="isUpdating && !isCreating" mat-stroked-button type="button"
+						<button (click)="confirmDelete()" *ngIf="isUpdating && !isCreating" mat-stroked-button type="button"
 							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl">
 							Delete Weapon
 						</button>

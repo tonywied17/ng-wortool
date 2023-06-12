@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef  } from "@angular/core";
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
 import { WeaponService } from "../_services/weapon.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
@@ -9,7 +9,9 @@ import { AuthService } from "../_services/auth.service";
   styleUrls: ["./weapons.component.scss"],
 })
 export class WeaponsComponent implements OnInit {
-
+  test(arg0: string) {
+    alert(arg0);
+  }
 
   weaponForm: any = {
     weapon: null,
@@ -35,7 +37,7 @@ export class WeaponsComponent implements OnInit {
     private token: TokenStorageService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.token.getToken();
@@ -45,23 +47,22 @@ export class WeaponsComponent implements OnInit {
     if (this.isLoggedIn) {
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
-          
           this.showAdmin = response.access;
           this.loading = false;
         },
         (error) => {
           if (error.status === 403) {
-            this.showAdmin = false;           
+            this.showAdmin = false;
           } else {
-            console.error('Error:', error);
-            if(this.isLoggedIn) {
+            console.error("Error:", error);
+            if (this.isLoggedIn) {
               this.loading = false;
             }
           }
           this.loading = false;
         }
       );
-    }else{
+    } else {
       this.loading = false;
     }
 
@@ -69,8 +70,6 @@ export class WeaponsComponent implements OnInit {
       this.weaponsObj = JSON.parse(data);
     });
   }
-
-
 
   loadWeapon(weapon: any) {
     this.spotlight = null;
@@ -95,6 +94,4 @@ export class WeaponsComponent implements OnInit {
         left
     );
   }
-
 }
-
