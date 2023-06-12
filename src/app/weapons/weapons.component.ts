@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { WeaponService } from "../_services/weapon.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "app-weapons",
@@ -37,8 +38,8 @@ export class WeaponsComponent implements OnInit {
     private weaponService: WeaponService,
     private token: TokenStorageService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -77,7 +78,6 @@ export class WeaponsComponent implements OnInit {
       console.log('route found for: ' + weaponId);
       if (weaponId) {
         this.weaponService.get(weaponId).subscribe((data) => {
-
           this.loadWeapon(JSON.parse(data));
         }
         );
@@ -91,6 +91,7 @@ export class WeaponsComponent implements OnInit {
     setTimeout(() => {
       this.spotlight = weapon;
     }, 0);
+    this.location.replaceState('/weapons/' + weapon.id);
   }
 
   open(url: any, title: any, w: any, h: any) {
