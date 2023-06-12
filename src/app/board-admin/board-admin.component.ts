@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
@@ -10,6 +10,7 @@ import { firstValueFrom } from "rxjs";
   selector: "app-board-admin",
   templateUrl: "./board-admin.component.html",
   styleUrls: ["./board-admin.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class BoardAdminComponent implements OnInit {
   content?: string;
@@ -153,7 +154,8 @@ export class BoardAdminComponent implements OnInit {
     }
   
     let userId = this.currentUser.id;
-  
+    let selectedWeaponId = this.selectedWeaponId || undefined;
+
     try {
       const response: any = await firstValueFrom(
         this.weaponService.createOrUpdate(
@@ -164,7 +166,8 @@ export class BoardAdminComponent implements OnInit {
           this.weaponLength,
           this.weaponAmmo,
           this.weaponImage,
-          this.weaponNotes
+          this.weaponNotes,
+          selectedWeaponId
         )
       );
       if (response && response.message) {

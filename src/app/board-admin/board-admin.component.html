@@ -133,13 +133,14 @@
 					<form (ngSubmit)="createOrUpdateWeapon()">
 						<div class="form-group m-4">
 
-							<div class="mb-4 max-w-fit">
+							<div class="mb-6 max-w-fit">
 								<div class="lg:columns-2 text-center lg:text-left">
 									<div>
 										<span class="text-neutral-200">Modify Existing</span>
 										<select [(ngModel)]="selectedWeaponId" name="selectedWeapon"
-											class="field-input my-[0.5em] text-xl !inline-block" id="existing-select"
+											class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none" id="existing-select"
 											(change)="handleSelectionChange()">
+											<option value="" disabled selected>Select a weapon...</option>
 											<option *ngFor="let weapon of weaponsList" [value]="weapon.id">{{
 												weapon.weapon }}</option>
 										</select>
@@ -157,46 +158,51 @@
 
 							<div *ngIf="isCreating || isUpdating">
 
+								
 								<div class="field-box">
-									<input [(ngModel)]="weaponName" name="weaponName" class="field-input my-[0.5em]"
+									<select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Category" [(ngModel)]="weaponType" name="weaponType" class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none mb-6" id="existing-select">
+									  <option value="" disabled selected>Weapon Category</option>
+									  <option value="Rifle">Rifle</option>
+									  <option value="Revolver">Revolver</option>
+									  <option value="Sword">Sword</option>
+									  <option value="Artillery">Artillery</option>
+									</select>
+									<i class="fa-solid fa-bars-sort field-icon pb-2 focus:!transform-none"></i>
+								  </div>
+
+								<div class="field-box">
+									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Name" [(ngModel)]="weaponName" name="weaponName" class="field-input my-[0.5em]"
 										type="text" placeholder="Weapon name...">
 									<i class="fa-light fa-input-text field-icon"></i>
 								</div>
 
 
 								<div class="field-box">
-									<input [(ngModel)]="weaponType" name="weaponType" class="field-input my-[0.5em]"
-										type="text" placeholder="Type: Rifle, Revolver, Sword, or Artillery">
-									<i class="fa-solid fa-bars-sort field-icon"></i>
-								</div>
-
-
-								<div class="field-box">
-									<input [(ngModel)]="weaponRange" name="weaponRange" class="field-input my-[0.5em]"
-										type="text" placeholder="Weapon range...">
+									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Range" [(ngModel)]="weaponRange" name="weaponRange" class="field-input my-[0.5em]"
+										type="text" placeholder="Effective range...">
 									<i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
 								</div>
 
 								<div class="field-box">
-									<input [(ngModel)]="weaponLength" name="weaponLength" class="field-input my-[0.5em]"
+									<input matTooltipClass="form-tooltip" matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Length (Full length over barrel for melee distance)" [(ngModel)]="weaponLength" name="weaponLength" class="field-input my-[0.5em]"
 										type="text" placeholder="Weapon length...">
 									<i class="fa-sharp fa-light fa-ruler field-icon"></i>
 								</div>
 
 								<div class="field-box">
-									<input [(ngModel)]="weaponAmmo" name="weaponAmmo" class="field-input my-[0.5em]"
-										type="text" placeholder="Weapon ammo...">
+									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Ammo/Caliber" [(ngModel)]="weaponAmmo" name="weaponAmmo" class="field-input my-[0.5em]"
+										type="text" placeholder="Ammo type...">
 									<i class="fa-regular fa-box field-icon"></i>
 								</div>
 
 								<div class="field-box">
-									<input [(ngModel)]="weaponImage" name="weaponImage" class="field-input my-[0.5em]"
-										type="text" placeholder="Weapon image url...">
+									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Image URL" [(ngModel)]="weaponImage" name="weaponImage" class="field-input my-[0.5em]"
+										type="text" placeholder="image url...">
 									<i class="fa-sharp fa-regular fa-image field-icon"></i>
 								</div>
 
 								<div class="field-box">
-									<input [(ngModel)]="weaponNotes" name="weaponNotes" class="field-input my-[0.5em]"
+									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Extra Notes" [(ngModel)]="weaponNotes" name="weaponNotes" class="field-input my-[0.5em]"
 										type="text" placeholder="Weapon notes...">
 									<i class="fa-light fa-note field-icon"></i>
 								</div>
