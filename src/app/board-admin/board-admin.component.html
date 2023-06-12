@@ -1,22 +1,19 @@
-<div *ngIf="loading"
-	class="text-center text-xl opacity-75">
+<div *ngIf="loading" class="text-center text-xl opacity-75">
 	<i class="fas fa-spinner fa-pulse mr-2"></i>
 	Verifying credentials...
 </div>
 
 
-<div *ngIf="!loading"
-	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[4em]">
+
+<div *ngIf="!loading" class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[4em]">
 
 
-	<div *ngIf="!showAdmin && isLoggedIn"
-		class="p-5 bg-[#1c2537] rounded-md"
-		style="border-left: 5px solid #a13c3c;">
+	<div *ngIf="!showAdmin && isLoggedIn" class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
 		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
 			<div class="row-start-2 sm:row-start-auto">
-				<button class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
-					mat-button
-					routerLink="/home">
+				<button
+					class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+					mat-button routerLink="/home">
 					<i class="fa-solid fa-house mr-1.5"></i>
 					Home
 				</button>
@@ -36,14 +33,12 @@
 
 
 
-	<div *ngIf="!isLoggedIn"
-		class="p-5 bg-[#1c2537] rounded-md"
-		style="border-left: 5px solid #a13c3c;">
+	<div *ngIf="!isLoggedIn" class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
 		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
 			<div class="row-start-2 sm:row-start-auto">
-				<button class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
-					mat-button
-					routerLink="/home">
+				<button
+					class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+					mat-button routerLink="/home">
 					<i class="fa-solid fa-house mr-1.5"></i>
 					Home
 				</button>
@@ -68,10 +63,7 @@
 		</h3>
 
 
-		<button routerLink="/home"
-			mat-button
-			color="primary"
-			class="!mb-[1em]">
+		<button routerLink="/home" mat-button color="primary" class="!mb-[1em]">
 			<i class="fa-sharp fa-solid fa-arrow-left"></i>
 			Back
 		</button>
@@ -84,12 +76,10 @@
 
 					<mat-list class="my-2">
 						<mat-action-list>
-							<button routerLinkActive="active_btn"
-								routerLink="/admin/1"
-								mat-list-item
+							<button routerLinkActive="active_btn" routerLink="/admin/1" mat-list-item
 								class="py-2 !text-neutral-300 !h-[55px]">
 								<i class="fa-sharp fa-solid fa-map w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Edit Maps
+								Manage Maps
 							</button>
 
 
@@ -98,12 +88,10 @@
 
 
 
-							<button routerLinkActive="active_btn"
-								routerLink="/admin/2"
-								mat-list-item
+							<button routerLinkActive="active_btn" routerLink="/admin/2" mat-list-item
 								class="py-2 !text-neutral-300 !h-[55px]">
 								<i class="fa-solid fa-gun w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Edit Weapons
+								Manage Weapons
 							</button>
 
 
@@ -112,12 +100,11 @@
 
 
 
-							<button routerLinkActive="active_btn"
-								routerLink="/admin/3"
-								mat-list-item
+							<button routerLinkActive="active_btn" routerLink="/admin/3" mat-list-item
 								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-sharp fa-solid fa-person-military-rifle w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Edit Regiments
+								<i
+									class="fa-sharp fa-solid fa-person-military-rifle w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								Manage Regiments
 							</button>
 						</mat-action-list>
 
@@ -132,7 +119,7 @@
 
 
 
-			<div class="lg:col-span-2 col-span-1 ml-5">
+			<div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
 
 
 
@@ -142,7 +129,99 @@
 				</div>
 				<div *ngIf="showPage2"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
-					<h2 class="text-2xl  text-slate-400 py-4">Edit Weapons</h2>
+					<h2 class="text-2xl  text-slate-400 py-4">Manage Weapons</h2>
+					<form (ngSubmit)="createOrUpdateWeapon()">
+						<div class="form-group m-4">
+
+							<div class="mb-4 max-w-fit">
+								<div class="lg:columns-2 text-center lg:text-left">
+									<div>
+										<span class="text-neutral-200">Modify Existing</span>
+										<select [(ngModel)]="selectedWeaponId" name="selectedWeapon"
+											class="field-input my-[0.5em] text-xl !inline-block" id="existing-select"
+											(change)="handleSelectionChange()">
+											<option *ngFor="let weapon of weaponsList" [value]="weapon.id">{{
+												weapon.weapon }}</option>
+										</select>
+									</div>
+									<div>
+										<span class="hidden sm:block">&nbsp;</span>
+										<button (click)="createNew()" type="button" class="!h-[60px] !mt-[8px] text-neutral-200 font-[300] text-xl"
+											mat-stroked-button>Create New...</button>
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<div *ngIf="isCreating || isUpdating">
+
+								<div class="field-box">
+									<input [(ngModel)]="weaponName" name="weaponName" class="field-input my-[0.5em]"
+										type="text" placeholder="Weapon name...">
+									<i class="fa-light fa-input-text field-icon"></i>
+								</div>
+
+
+								<div class="field-box">
+									<input [(ngModel)]="weaponType" name="weaponType" class="field-input my-[0.5em]"
+										type="text" placeholder="Type: Rifle, Revolver, Sword, or Artillery">
+									<i class="fa-solid fa-bars-sort field-icon"></i>
+								</div>
+
+
+								<div class="field-box">
+									<input [(ngModel)]="weaponRange" name="weaponRange" class="field-input my-[0.5em]"
+										type="text" placeholder="Weapon range...">
+									<i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
+								</div>
+
+								<div class="field-box">
+									<input [(ngModel)]="weaponLength" name="weaponLength" class="field-input my-[0.5em]"
+										type="text" placeholder="Weapon length...">
+									<i class="fa-sharp fa-light fa-ruler field-icon"></i>
+								</div>
+
+								<div class="field-box">
+									<input [(ngModel)]="weaponAmmo" name="weaponAmmo" class="field-input my-[0.5em]"
+										type="text" placeholder="Weapon ammo...">
+									<i class="fa-regular fa-box field-icon"></i>
+								</div>
+
+								<div class="field-box">
+									<input [(ngModel)]="weaponImage" name="weaponImage" class="field-input my-[0.5em]"
+										type="text" placeholder="Weapon image url...">
+									<i class="fa-sharp fa-regular fa-image field-icon"></i>
+								</div>
+
+								<div class="field-box">
+									<input [(ngModel)]="weaponNotes" name="weaponNotes" class="field-input my-[0.5em]"
+										type="text" placeholder="Weapon notes...">
+									<i class="fa-light fa-note field-icon"></i>
+								</div>
+
+							</div>
+						</div>
+
+
+						<button *ngIf="isCreating && !isUpdating" mat-raised-button type="submit"
+							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+							Create Weapon
+						</button>
+
+						<button *ngIf="isUpdating && !isCreating" mat-raised-button type="submit"
+							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+							Update Weapon
+						</button>
+
+						<button (click)="deleteWeapon()" *ngIf="isUpdating && !isCreating" mat-stroked-button type="button"
+							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl">
+							Delete Weapon
+						</button>
+
+
+					</form>
 				</div>
 				<div *ngIf="showPage3"
 					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">

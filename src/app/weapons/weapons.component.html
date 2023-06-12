@@ -1,114 +1,59 @@
-<div *ngIf="loading"
-	class="text-center text-xl opacity-75">
+<div *ngIf="loading" class="text-center text-xl opacity-75">
 	<i class="fas fa-spinner fa-pulse mr-2"></i>
 	Verifying credentials...
 </div>
 
 
 
-<div *ngIf="!loading"
-	class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
+<div *ngIf="!loading" class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 	<h3 class="text-[#88887b] text-3xl tracking-tight mb-4">Weapons</h3>
 
-
-
+	<p>List of current in-game weapons.</p>
 
 	<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:grid-rows-3 mt-[2em]">
 
-
-
 		<div class="left-in col-start-1 lg:col-span-2 h-fit lg:row-start-1 lg:row-span-3">
 
+			<div class="columns-2">
+				<div class="break-after-column">
+					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Rifles</h2>
+					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+						<div *ngIf="weapon.type == 'Rifle'">
+							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+						</div>		
+					</div>
+				</div>
+	
+				<div>
+					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Revolvers</h2>
+					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+						<div *ngIf="weapon.type == 'Revolver'">
+							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+						</div>		
+					</div>
+				</div>
+
+				<div>
+					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Swords</h2>
+					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+						<div *ngIf="weapon.type == 'Sword'">
+							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+						</div>		
+					</div>
+				</div>
+
+				<div>
+					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Field Artillery</h2>
+					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
+						<div *ngIf="weapon.type == 'Artillery'">
+							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+						</div>		
+					</div>
+				</div>
+			</div>
+			
 
 
-			<mat-table [dataSource]="dataSource"
-				matSort
-				class="wpn-table shadow-sm">
-
-
-
-
-				<!-- Weapon Column -->
-				<ng-container matColumnDef="weapon">
-					<mat-header-cell *matHeaderCellDef
-						mat-sort-header>
-						Weapon
-					</mat-header-cell>
-					<mat-cell *matCellDef="let weapon"
-						class="font-[500]">
-						<button (click)="loadWeapon(weapon)"
-							mat-stroked-button
-							class="!text-[#a09e94]">
-							{{ weapon.weapon }}
-						</button>
-					</mat-cell>
-				</ng-container>
-
-
-
-				<!-- Range Column -->
-				<ng-container matColumnDef="range">
-					<mat-header-cell *matHeaderCellDef
-						mat-sort-header
-						class="column-header">
-						Range
-					</mat-header-cell>
-					<mat-cell *matCellDef="let weapon"
-						class="column-mat">
-						{{ weapon.range }} yds
-					</mat-cell>
-				</ng-container>
-
-
-
-				<!-- Length Column -->
-				<ng-container matColumnDef="length">
-					<mat-header-cell *matHeaderCellDef
-						mat-sort-header
-						class="column-header">
-						<span class="hidden lg:inline-block">Rifle Length</span>
-						<span class="inline-block lg:hidden">Length</span>
-					</mat-header-cell>
-					<mat-cell *matCellDef="let weapon"
-						class="column-mat">
-						{{ weapon.lengthy }}"
-					</mat-cell>
-				</ng-container>
-
-
-
-				<!-- Ammo Column -->
-				<ng-container matColumnDef="ammo">
-					<mat-header-cell *matHeaderCellDef
-						mat-sort-header>
-						Ammo
-					</mat-header-cell>
-					<mat-cell *matCellDef="let weapon">{{ weapon.ammo }}</mat-cell>
-				</ng-container>
-				<!-- Notes Column -->
-				<ng-container matColumnDef="notes">
-					<mat-header-cell *matHeaderCellDef
-						mat-sort-header
-						class="notes-column">
-						Notes
-					</mat-header-cell>
-					<mat-cell *matCellDef="let weapon"
-						class="notes-column">
-						{{ weapon.notes }}
-					</mat-cell>
-				</ng-container>
-
-
-
-				<!-- Table Rows -->
-				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-
-
-			</mat-table>
-			<mat-paginator [pageSize]="8"
-				[pageSizeOptions]="[8, 12, 16, 20]"></mat-paginator>
 		</div>
 
 
@@ -125,83 +70,11 @@
 				<div class="p-[1em] text-base font-thin  text-[#ffffff]/60 text-center">
 					<div class="max-h-fit w-full text-center mx-auto mb-[1.5em] rounded-sm">
 
+						
 
-						<div *ngIf="spotlight.id == 5"
-							(click)="open('https://molex.cloud/2023/June/11/_rAW/Sharps_rifle_model_1859.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_rAW/Sharps_rifle_model_1859.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 6"
-							(click)="open('https://molex.cloud/2023/June/11/_oWz/M1842_Springfield.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_oWz/M1842_Springfield.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 11"
-							(click)="open('https://molex.cloud/2023/June/11/_oWz/Pattern_enfield_m1853.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_oWz/Pattern_enfield_m1853.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 12"
-							(click)="open('https://molex.cloud/2023/June/11/_oWz/M1855_Springfield.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_oWz/M1855_Springfield.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 13"
-							(click)="open('https://molex.cloud/2023/June/11/_rAW/Sharps_rifle_model_1859.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_rAW/Sharps_rifle_model_1859.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 14"
-							(click)="open('https://molex.cloud/2023/June/11/_oWz/Lorenz2.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_oWz/Lorenz2.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 15"
-							(click)="open('https://molex.cloud/2023/June/11/_oWz/M1861_Springfield.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_oWz/M1861_Springfield.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 16"
-							(click)="open('https://molex.cloud/2023/June/11/_oWz/Mississippi_Rifle.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_oWz/Mississippi_Rifle.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 17"
-							(click)="open('https://molex.cloud/2023/June/11/_oWz/Whitworth_Rifle_1.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_oWz/Whitworth_Rifle_1.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 18"
-							(click)="open('https://molex.cloud/2023/June/11/_Fsd/M1840NCOSword_1.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_Fsd/M1840NCOSword_1.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 19"
-							(click)="open('https://molex.cloud/2023/June/11/_F60/M1860_Army.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_F60/M1860_Army.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 20"
-							(click)="open('https://molex.cloud/2023/June/11/_F60/Remington_M1858_1.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_F60/Remington_M1858_1.webp">
-						</div>
-
-						<div *ngIf="spotlight.id == 25"
-							(click)="open('https://molex.cloud/2023/June/11/_Fsd/M1850_Foot_officers_sword_1.webp' , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform hover:scale-[0.98] active:translate-y-1 transition-all duration-150 shadow-md"
-								src="https://molex.cloud/2023/June/11/_Fsd/M1850_Foot_officers_sword_1.webp">
+						<div (click)="open(spotlight.image , spotlight.weapon, 1500, 868)">
+							<img class="cursor-zoom-in hover:transform active:scale-[0.98] rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"
+								[src]="spotlight.image">
 						</div>
 
 
@@ -209,196 +82,41 @@
 
 
 
-					<div class="m-4 font-[500] text-lg">
-						Range: {{spotlight.range}} yds
+					<div *ngIf="spotlight.range" class="m-4 font-[200] text-lg">
+						<span class="font-[500] m-2 block">Range</span> {{spotlight.range}} yds
 					</div>
 
 
 
-					<mat-divider></mat-divider>
+					<mat-divider *ngIf="spotlight.range && spotlight.lengthy"></mat-divider>
 
 
 
-					<div class="m-4 font-[500] text-lg">
-						Full Length: {{spotlight.lengthy}}"
+					<div *ngIf="spotlight.lengthy" class="m-4 font-[200] text-lg">
+						<span class="font-[500] m-2 block">Length</span> {{spotlight.lengthy}}" in
 					</div>
 
 
 
-					<mat-divider></mat-divider>
+					<mat-divider *ngIf="spotlight.ammo"></mat-divider>
 
 
 
-					<div class="m-4 font-[500] text-lg">
-						Ammo: {{spotlight.ammo}}
+					<div *ngIf="spotlight.ammo" class="m-4 font-[200] text-lg">
+						<span class="font-[500] m-2 block">Ammo</span> {{spotlight.ammo}}
 					</div>
 
+
+
+
+					<div *ngIf="spotlight.notes" class="mt-[2em]">
+						<i>{{spotlight.notes}}</i>
+					</div>
 
 
 				</div>
-				<!-- <button mat-stroked-button class="!mt-[1em] float-right" routerLink="/home" color="primary">
-					Login
-				</button> -->
+
 			</div>
-
-
-
-			<!-- <div *ngIf="showAdmin">
-
-
-
-				<div *ngIf="submitted">
-					<h3 class="text-white text-lg pb-3  tracking-tight">
-						Weapon has been added!
-					</h3>
-
-
-
-					<p class="p-[1em] text-base font-[200]">
-						You have successfully added a weapon to the database.
-					</p>
-
-
-
-					<button (click)="resetForm()"
-						mat-stroked-button
-						class="!mt-[1em] float-right"
-						routerLink="/weapons">
-						Add Another
-					</button>
-				</div>
-				<div *ngIf="!submitted">
-					<h3 class="text-white text-lg pb-3  tracking-tight">Add a Weapon</h3>
-					<form #f="ngForm"
-						(ngSubmit)="onCreate()"
-						name="form"
-						novalidate>
-
-
-
-						<div>
-
-
-
-							<div>
-								<mat-form-field appearance="fill"
-									class="w-full">
-									<mat-label>Weapon</mat-label>
-									<input #weapon="ngModel"
-										[(ngModel)]="weaponForm.weapon"
-										matInput
-										name="weapon"
-										required
-										matInput
-										placeholder="Enter weapon name">
-								</mat-form-field>
-							</div>
-
-
-
-
-
-
-							<div>
-								<mat-form-field appearance="fill"
-									class="w-full">
-									<mat-label>Weapon Range</mat-label>
-									<input #range="ngModel"
-										[(ngModel)]="weaponForm.range"
-										matInput
-										name="range"
-										required
-										matInput
-										placeholder="Enter weapon range">
-								</mat-form-field>
-							</div>
-
-
-
-
-
-
-							<div>
-								<mat-form-field appearance="fill"
-									class="w-full">
-									<mat-label>Weapon Length</mat-label>
-									<input #length="ngModel"
-										[(ngModel)]="weaponForm.lengthy"
-										matInput
-										name="length"
-										required
-										matInput
-										placeholder="Enter weapon length">
-								</mat-form-field>
-							</div>
-
-
-
-
-
-
-							<div>
-								<mat-form-field appearance="fill"
-									class="w-full">
-									<mat-label>Weapon Ammo</mat-label>
-									<input #ammo="ngModel"
-										[(ngModel)]="weaponForm.ammo"
-										matInput
-										name="ammo"
-										required
-										matInput
-										placeholder="Enter weapon ammo">
-								</mat-form-field>
-							</div>
-
-
-
-
-
-
-							<div>
-								<mat-form-field appearance="fill"
-									class="w-full">
-									<mat-label>Weapon Notes</mat-label>
-									<input #notes="ngModel"
-										[(ngModel)]="weaponForm.notes"
-										matInput
-										name="notes"
-										matInput
-										placeholder="Enter weapon notes">
-								</mat-form-field>
-							</div>
-
-
-
-
-
-
-
-							<div class="form-group sm:col-span-1 sm:col-start-4">
-								<button mat-raised-button
-									class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-									Add
-									Weapon
-								</button>
-							</div>
-
-
-
-
-
-
-						</div>
-					</form>
-				</div>
-
-
-
-
-
-			</div> -->
-
-
 
 		</div>
 
