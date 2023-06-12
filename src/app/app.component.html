@@ -57,13 +57,22 @@
 				<div class="hidden sm:ml-6 sm:block">
 					<div class="flex space-x-4">
 						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-						<button [routerLink]="['/home']"
+						<button *ngIf="!isLoggedIn" [routerLink]="['/home']"
 							mat-button
 							color="primary"
 							routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
 							class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Home
 						</button>
+						<button *ngIf="isLoggedIn" [routerLink]="['/home']"
+							mat-button
+							color="primary"
+							routerLinkActive="bg-[#111827]/80 !text-[#a09e94] font-[900]"
+							class="navitem  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							<span>Dashboard</span><span *ngIf="showMod || showAdmin">s</span>
+						</button>
+
+
 						<button [routerLink]="['/maps']"
 							mat-button
 							color="primary"
@@ -197,13 +206,21 @@
 		<div class="space-y-5 px-2 pt-2 pb-3 bg-[#8b8d83]/80 mx-6 rounded-md drop-shadow-lg">
 			<mat-list>
 				<mat-list-item class="mx-auto w-max !my-4">
-					<button [routerLink]="['/home']"
+					<button *ngIf="!isLoggedIn" [routerLink]="['/home']"
 						(click)="toggle()"
 						mat-button
 						color="primary"
 						routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
 						class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						Home
+					</button>
+					<button *ngIf="isLoggedIn" [routerLink]="['/home']"
+						(click)="toggle()"
+						mat-button
+						color="primary"
+						routerLinkActive="bg-[#646258]/60 !text-[#a09e94]"
+						class="navitem !mx-auto !w-96  text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+						<span>Dashboard</span><span *ngIf="showMod || showAdmin">s</span>
 					</button>
 				</mat-list-item>
 				<mat-list-item class="!my-4">

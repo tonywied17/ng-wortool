@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { ActivatedRoute, Params } from "@angular/router";
 import { WeaponService } from "../_services/weapon.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
@@ -36,7 +37,8 @@ export class WeaponsComponent implements OnInit {
     private weaponService: WeaponService,
     private token: TokenStorageService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +70,19 @@ export class WeaponsComponent implements OnInit {
 
     this.weaponService.getAll().subscribe((data) => {
       this.weaponsObj = JSON.parse(data);
+    });
+
+    this.route.params.subscribe((params: Params) => {
+      const weaponId = params['weapon'];
+      console.log('route found for: ' + weaponId);
+      if (weaponId) {
+        this.weaponService.get(weaponId).subscribe((data) => {
+
+          this.loadWeapon(JSON.parse(data));
+        }
+        );
+      }
+
     });
   }
 

@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: 'regiments', component: RegimentsComponent },
   { path: 'maps/:id', component: MapDetailsComponent },
   { path: 'weapons', component: WeaponsComponent },
+  { path: 'weapons/:weapon', component: WeaponsComponent },
   { path: 'muster', component: MusterComponent },
   { path: 'user', component: BoardUserComponent },
   { path: 'user/:page', component: BoardUserComponent },

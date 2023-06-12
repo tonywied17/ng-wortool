@@ -8,45 +8,43 @@
 <div *ngIf="!loading" class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 	<h3 class="text-[#88887b] text-3xl tracking-tight mb-4">Weapons</h3>
 
-	<p>Still trying to figure out how to lay this out, standby...</p>
+	<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:grid-rows-3 mt-[2em] p-[1em] lg:px-[3em] rounded-md bg-slate-800/80">
 
-	<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:grid-rows-3 mt-[2em]">
-
-		<div class="left-in col-start-1 lg:col-span-2 h-fit lg:row-start-1 lg:row-span-3">
+		<div class="left-in col-start-1 lg:col-span-2 h-fit lg:row-start-1 lg:row-span-3" >
 
 			<div class="lg:columns-2">
 				<div class="break-after-column">
-					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Rifles</h2>
+					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Rifles</h2>
 					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
 						<div *ngIf="weapon.type == 'Rifle'">
-							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
 						</div>		
 					</div>
 				</div>
 	
 				<div>
-					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Revolvers</h2>
+					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Revolvers</h2>
 					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
 						<div *ngIf="weapon.type == 'Revolver'">
-							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
 						</div>		
 					</div>
 				</div>
 
 				<div>
-					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Swords</h2>
+					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Swords</h2>
 					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
 						<div *ngIf="weapon.type == 'Sword'">
-							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
 						</div>		
 					</div>
 				</div>
 
 				<div>
-					<h2 class="text-[#88887b] font-[300] text-2xl  my-[0.5em] mt-[1em]">Field Artillery</h2>
+					<h2 class="text-slate-400 text-2xl  my-[0.5em] mt-[1em]">Field Artillery</h2>
 					<div *ngFor="let weapon of weaponsObj" class="ml-[1em]">
 						<div *ngIf="weapon.type == 'Artillery'">
-							<button class="!my-2 text-xl !text-neutral-200 font-[200] !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
+							<button color="primary" class="!my-2 text-xl !p-1 !px-4" (click)="loadWeapon(weapon)" mat-stroked-button>{{weapon.weapon}}</button>
 						</div>		
 					</div>
 				</div>
@@ -59,11 +57,14 @@
 
 
 		<div *ngIf="spotlight"
-			class="right-in shadow-md lg:row-start-1 lg:row-span-3 lg:col-start-3 rounded-lg py-[1.5em] px-[1em] mt-[1em] lg:mt-[unset] bg-slate-800/80 h-fit">
+			class="right-in lg:row-start-1 lg:row-span-3 lg:col-start-3 rounded-lg py-[1.5em] px-[1em] mt-[1em] lg:mt-[unset] h-fit shadow-md"
+			style="background: linear-gradient(130deg, #7c7d73e1, #7c7d733b, #7c7d7365, #7c7d734b), linear-gradient(-25deg, #7c7d73e1, #7c7d733b, #7c7d7365, #7c7d734b);">
 			<div>
 				<h2 class="text-2xl text-slate-400 mb-1em">
 					{{spotlight.weapon}}
 				</h2>
+
+				<button *ngIf="showAdmin" mat-button color="primary" routerLink="/admin/2/{{spotlight.id}}" class="float-right !my-2 !text-[#a2a398]"><i class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Edit Weapon</button>
 
 
 
@@ -98,7 +99,7 @@
 
 
 
-					<mat-divider *ngIf="spotlight.ammo"></mat-divider>
+					<mat-divider *ngIf="spotlight.lengthy"></mat-divider>
 
 
 
@@ -113,9 +114,7 @@
 						<i>{{spotlight.notes}}</i>
 					</div>
 
-					<div>
-						<button mat-button color="primary" routerLink="/admin/2/{{spotlight.id}}">Edit Weapon {{spotlight.id}}</button>
-					</div>
+					
 
 
 				</div>
