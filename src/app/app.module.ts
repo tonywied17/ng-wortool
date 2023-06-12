@@ -20,6 +20,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordMatchValidatorDirective } from './password-match-validator.directive';
 import { ConfirmDeleteSnackbarComponent } from './confirm-delete-snackbar/confirm-delete-snackbar.component';
+import { ManageWeaponsComponent } from './board-admin/manage-weapons/manage-weapons.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -51,7 +52,8 @@ const routes: Routes = [
     BoardAdminComponent,
     MusterComponent,
     PasswordMatchValidatorDirective,
-    ConfirmDeleteSnackbarComponent
+    ConfirmDeleteSnackbarComponent,
+    ManageWeaponsComponent
   ],
   imports: [
     BrowserModule,

@@ -124,130 +124,16 @@
 
 
 				<div *ngIf="showPage1"
-					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
+					class="w-full rounded-lg py-[1.5em] lg:px-[2em] mx-auto bg-slate-800/80 scale-center">
 					<h2 class="text-2xl  text-slate-400 py-4">Edit Maps</h2>
 				</div>
 				<div *ngIf="showPage2"
-					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
-					<h2 class="text-2xl  text-slate-400 py-4">Manage Weapons</h2>
-					<form (ngSubmit)="createOrUpdateWeapon()">
-						<div class="form-group m-4">
-
-							<div class="mb-6 max-w-fit">
-
-								<button *ngIf="isUpdating || isCreating" mat-button (click)="back()" color="primary">
-									<i class="fa-sharp fa-solid fa-arrow-left"></i> Cancel
-								</button>
-								<div *ngIf="!isUpdating && !isCreating" class="lg:columns-2 text-center lg:text-left">
-
-
-									<div>
-										<span class="text-neutral-200">Modify Existing</span>
-										<select [(ngModel)]="selectedWeaponId" name="selectedWeapon"
-											class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none" id="existing-select"
-											(change)="handleSelectionChange()">
-											<option value="" selected>Select a weapon...</option>
-											<option *ngFor="let weapon of weaponsList" [value]="weapon.id">{{
-												weapon.weapon }}</option>
-										</select>
-									</div>
-
-
-
-									<div>
-										<span class="hidden sm:block">&nbsp;</span>
-										<button (click)="createNew()" type="button" class="!h-[60px] !mt-[8px] text-neutral-200 font-[300] text-xl"
-											mat-stroked-button>Create New...</button>
-									</div>
-
-								</div>
-
-
-							</div>
-
-
-							<div *ngIf="isCreating || isUpdating">
-
-								
-
-								<div *ngIf="isUpdating" class="my-5 text-neutral-300 font-[300]">
-									<i class="fa-regular fa-pencil pr-2"></i> {{weaponName}} <span class="float-right">Weapon ID: {{selectedWeaponId}}</span>
-								</div>
-								
-								<div class="field-box">
-									<select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Category" [(ngModel)]="weaponType" name="weaponType" class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none" id="existing-select">
-									  <option value="" disabled selected>Weapon Category</option>
-									  <option value="Rifle">Rifle</option>
-									  <option value="Revolver">Revolver</option>
-									  <option value="Sword">Sword</option>
-									  <option value="Artillery">Artillery</option>
-									</select>
-									<i class="fa-solid fa-bars-sort field-icon pb-2 focus:!transform-none"></i>
-								  </div>
-
-								  <mat-divider class="!my-5"></mat-divider>
-
-								<div class="field-box">
-									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Name" [(ngModel)]="weaponName" name="weaponName" class="field-input my-[0.5em]"
-										type="text" placeholder="Weapon name...">
-									<i class="fa-light fa-input-text field-icon"></i>
-								</div>
-
-
-								<div class="field-box">
-									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Range" [(ngModel)]="weaponRange" name="weaponRange" class="field-input my-[0.5em]"
-										type="text" placeholder="Effective range...">
-									<i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
-								</div>
-
-								<div class="field-box">
-									<input matTooltipClass="form-tooltip" matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Length (Full length over barrel for melee distance)" [(ngModel)]="weaponLength" name="weaponLength" class="field-input my-[0.5em]"
-										type="text" placeholder="Weapon length...">
-									<i class="fa-sharp fa-light fa-ruler field-icon"></i>
-								</div>
-
-								<div class="field-box">
-									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Ammo/Caliber" [(ngModel)]="weaponAmmo" name="weaponAmmo" class="field-input my-[0.5em]"
-										type="text" placeholder="Ammo type...">
-									<i class="fa-regular fa-box field-icon"></i>
-								</div>
-
-								<div class="field-box">
-									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Image URL" [(ngModel)]="weaponImage" name="weaponImage" class="field-input my-[0.5em]"
-										type="text" placeholder="image url...">
-									<i class="fa-sharp fa-regular fa-image field-icon"></i>
-								</div>
-
-								<div class="field-box">
-									<input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Extra Notes" [(ngModel)]="weaponNotes" name="weaponNotes" class="field-input my-[0.5em]"
-										type="text" placeholder="Weapon notes...">
-									<i class="fa-light fa-note field-icon"></i>
-								</div>
-
-							</div>
-						</div>
-
-
-						<button *ngIf="isCreating && !isUpdating" mat-raised-button type="submit"
-							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-							Create Weapon
-						</button>
-
-						<button *ngIf="isUpdating && !isCreating" mat-raised-button type="submit"
-							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-							Update Weapon
-						</button>
-
-						<button (click)="confirmDelete()" *ngIf="isUpdating && !isCreating" mat-stroked-button type="button"
-							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl">
-							Delete Weapon
-						</button>
-
-
-					</form>
+					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-slate-800/80 scale-center">
+					<h2 class="text-2xl  text-slate-400 py-4 ml-2 lg:ml-0">Manage Weapons</h2>
+					<app-manage-weapons></app-manage-weapons>
 				</div>
 				<div *ngIf="showPage3"
-					class="w-full rounded-lg py-[1.5em] px-[2em] mx-auto bg-slate-800/80 scale-center">
+					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-[1em] mx-auto bg-slate-800/80 scale-center">
 					<h2 class="text-2xl  text-slate-400 py-4">Edit Regiments</h2>
 				</div>
 
