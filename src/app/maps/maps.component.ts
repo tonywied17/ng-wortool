@@ -3,6 +3,7 @@ import { MapService } from "../_services/map.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { FavoriteService } from "../_services/favorite.service";
 import { Map } from "../_models/map.model";
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: "app-maps",
@@ -47,7 +48,8 @@ export class MapsComponent implements OnInit {
     private mapService: MapService,
     private token: TokenStorageService,
     private favoriteService: FavoriteService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private viewportScroller: ViewportScroller
   ) {}
 
   ngOnInit(): void {
@@ -269,10 +271,13 @@ export class MapsComponent implements OnInit {
   
 
   scrollToTop(): void {
-    document.body.scrollTo({
+    window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "smooth",
+      behavior: 'smooth'
     });
   }
+  
+  
+  
 }
