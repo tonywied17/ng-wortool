@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordMatchValidatorDirective } from './password-match-validator.directive';
 import { ConfirmDeleteSnackbarComponent } from './confirm-delete-snackbar/confirm-delete-snackbar.component';
 import { ManageWeaponsComponent } from './board-admin/manage-weapons/manage-weapons.component';
+import { ServerInfoComponent } from './board-moderator/server-info/server-info.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -54,7 +55,8 @@ const routes: Routes = [
     MusterComponent,
     PasswordMatchValidatorDirective,
     ConfirmDeleteSnackbarComponent,
-    ManageWeaponsComponent
+    ManageWeaponsComponent,
+    ServerInfoComponent
   ],
   imports: [
     BrowserModule,

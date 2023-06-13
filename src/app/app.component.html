@@ -1,4 +1,4 @@
-<nav class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto py-2 sm:rounded-sm shadow-lg w-full sticky top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10">
+<nav class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto py-2 sm:rounded-sm shadow-lg w-full top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10" style="position: sticky; top: 0;">
 	<div class="mx-auto px-2 sm:px-6 lg:px-8">
 		<div class="relative flex h-16 items-center justify-between">
 			<div class="absolute inset-y-0 sm:hidden">
@@ -131,19 +131,19 @@
 							class="text-[0.8rem] ml-2 text-[#8b8a82] select-none">
 							Quick Tools
 						</p>
-						<mat-list-item *ngIf="showMod || showAdmin">
+						<!-- <mat-list-item *ngIf="showMod || showAdmin">
 							<button [routerLink]="['/mod/1']"
 								class="!text-[#b9b8b0]/80"
 								mat-menu-item>
 								<i class="fa-solid fa-clipboard-user mr-1.5"></i>
 								Muster Roster
 							</button>
-						</mat-list-item>
+						</mat-list-item> -->
 
 
 
 						<mat-list-item *ngIf="showMod || showAdmin">
-							<button routerLink="/mod/2"
+							<button routerLink="/mod/1"
 							 class="!text-[#b9b8b0]/80"
 								mat-menu-item>
 								<i class="fa-solid fa-megaphone mr-1.5"></i>

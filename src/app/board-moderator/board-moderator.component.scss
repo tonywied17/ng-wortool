@@ -1,0 +1,18 @@
+#existing-select {
+    background-color: #17202e;
+}
+
+.form-tooltip {
+    font-size: 16px;
+    max-width: max-content !important;
+}
+
+
+.bar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.bar::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: 4px;
+}

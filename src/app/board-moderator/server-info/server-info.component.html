@@ -1,0 +1,164 @@
+<div class="grid grid-cols-2 gap-4">
+
+  <div class="field-box col-start-1 col-span-2">
+
+    <mat-checkbox [(ngModel)]="allChecked" name="allChecked" class="checkbox-input">
+      All
+    </mat-checkbox>
+
+
+    <mat-checkbox [(ngModel)]="naChecked" name="naChecked" class="checkbox-input" checked="true">
+      NA
+    </mat-checkbox>
+
+
+    <mat-checkbox [(ngModel)]="euChecked" name="euChecked" class="checkbox-input">
+      EU
+    </mat-checkbox>
+
+</div>
+
+
+  <div>
+    <div class="field-box">
+      <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Server Name" [(ngModel)]="sn"
+        name="sn" class="field-input" type="text" placeholder="Server name...">
+      <i class="fa-light fa-input-text field-icon"></i>
+    </div>
+  </div>
+
+
+  <div>
+    <div class="field-box">
+      <input matTooltipClass="form-tooltip" matTooltipPosition="right" matTooltip="Password" [(ngModel)]="pw" name="pw"
+        class="field-input" type="text" placeholder="Password...">
+      <i class="fa-light fa-input-text field-icon"></i>
+    </div>
+  </div>
+
+  <h2 class="text-xl text-slate-400 font-[300] my-[0]">First Round</h2>
+
+  <div class="col-start-1 col-span-1">
+    <div class="field-box">
+      <select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Skirmish Area 1" [(ngModel)]="skirm"
+        name="skirm" (change)="onCampaignChange()"
+        class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+        id="existing-select">
+        <option value="" disabled selected>Skirmish area...</option>
+        <option value="Antietam">Antietam</option>
+        <option value="Harpers Ferry">Harpers Ferry</option>
+        <option value="South Mountain">South Mountain</option>
+      </select>
+      <i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
+    </div>
+  </div>
+
+  <div>
+    <div class="field-box">
+      <select matTooltipClass="form-tooltip" matTooltipPosition="right" matTooltip="Map 1" [(ngModel)]="map1" name="map1"
+        class="field-input" id="map-select">
+        <option value="" disabled selected>Map...</option>
+        <option *ngFor="let mapName of filteredMapNames1" [value]="mapName">{{ mapName }}</option>
+      </select>
+      <i class="fa-sharp fa-regular fa-map field-icon"></i>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-span-2">
+    <div class="field-box">
+      <select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Round 1 Side" [(ngModel)]="r1side"
+        name="r1side" class="field-input" id="map-select">
+        <option value="USA" selected>USA</option>
+        <option value="CSA">CSA</option>
+      </select>
+      <i class="fa-solid fa-bars-sort field-icon focus:!transform-none"></i>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-span-2">
+    <div class="field-box">
+      <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="First Round Regiment"
+        [(ngModel)]="r1reg" name="r1reg" class="field-input" type="text" placeholder="First round regiment...">
+      <i class="fa-sharp fa-light fa-shield field-icon"></i>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-span-2">
+    <div class="field-box">
+      <textarea matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="First Round Unit"
+        [(ngModel)]="r1unit" name="r1unit" class="field-input" placeholder="First round unit info...">
+      </textarea><i class="fa-sharp fa-light fa-users field-icon"></i>
+    </div>
+  </div>
+
+  <!-- round 2 -->
+
+  <h2 class="text-xl text-slate-400 font-[300] my-[0] mt-2">Second Round</h2>
+
+  <div class="col-start-1 col-span-1">
+    <div class="field-box">
+      <select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Skirmish Area 2" [(ngModel)]="skirm2"
+        name="skirm2" (change)="onCampaignChange2()"
+        class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+        id="existing-select">
+        <option value="" disabled selected>Skirmish area...</option>
+        <option value="Antietam">Antietam</option>
+        <option value="Harpers Ferry">Harpers Ferry</option>
+        <option value="South Mountain">South Mountain</option>
+      </select>
+      <i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
+    </div>
+  </div>
+
+  <div>
+    <div class="field-box">
+      <select matTooltipClass="form-tooltip" matTooltipPosition="right" matTooltip="Round 2 Map" [(ngModel)]="map2"
+        name="map2" class="field-input" id="map-select">
+        <option value="" disabled selected>Map...</option>
+        <option *ngFor="let mapName of filteredMapNames2" [value]="mapName">{{ mapName }}</option>
+      </select>
+      <i class="fa-sharp fa-regular fa-map field-icon"></i>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-span-2">
+    <div class="field-box">
+      <select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Round 2 Side" [(ngModel)]="r2side"
+        name="r2side" class="field-input" id="map-select">
+        <option value="USA" selected>USA</option>
+        <option value="CSA">CSA</option>
+      </select>
+      <i class="fa-solid fa-bars-sort field-icon focus:!transform-none"></i>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-span-2">
+    <div class="field-box">
+      <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Round 2 Regiment" [(ngModel)]="r2reg"
+        name="r2reg" class="field-input" type="text" placeholder="Second round regiment...">
+      <i class="fa-sharp fa-light fa-shield field-icon"></i>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-span-2">
+    <div class="field-box">
+      <textarea matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Round 2 Unit" [(ngModel)]="r2unit"
+        name="r2unit" class="field-input" placeholder="Second round unit info...">
+      </textarea><i class="fa-sharp fa-light fa-users field-icon"></i>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-span-2">
+    <div class="field-box">
+      <textarea matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Extras" [(ngModel)]="extra"
+        name="extra" class="field-input my-[0.5em]" placeholder="Extras..."></textarea>
+      <i class="fa-sharp fa-light fa-info field-icon"></i>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+<button mat-button class="submit-button" (click)="sendMessage()" class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">Send Message</button>
