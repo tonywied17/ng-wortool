@@ -22,11 +22,13 @@ import { PasswordMatchValidatorDirective } from './password-match-validator.dire
 import { ConfirmDeleteSnackbarComponent } from './confirm-delete-snackbar/confirm-delete-snackbar.component';
 import { ManageWeaponsComponent } from './board-admin/manage-weapons/manage-weapons.component';
 import { ServerInfoComponent } from './board-moderator/server-info/server-info.component';
+import { GameInfoComponent } from './game-info/game-info.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'maps', component: MapsComponent },
   { path: 'regiments', component: RegimentsComponent },
+  { path: 'game-info', component: GameInfoComponent },
   { path: 'maps/:id', component: MapDetailsComponent },
   { path: 'weapons', component: WeaponsComponent },
   { path: 'weapons/:weapon', component: WeaponsComponent },
@@ -56,7 +58,8 @@ const routes: Routes = [
     PasswordMatchValidatorDirective,
     ConfirmDeleteSnackbarComponent,
     ManageWeaponsComponent,
-    ServerInfoComponent
+    ServerInfoComponent,
+    GameInfoComponent
   ],
   imports: [
     BrowserModule,

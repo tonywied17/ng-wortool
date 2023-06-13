@@ -47,6 +47,7 @@ export class WeaponsComponent implements OnInit {
     this.currentUser = this.token.getUser();
     const userID = this.currentUser.id;
 
+
     if (this.isLoggedIn) {
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
@@ -71,6 +72,7 @@ export class WeaponsComponent implements OnInit {
 
     this.weaponService.getAll().subscribe((data) => {
       this.weaponsObj = JSON.parse(data);
+      this.loadWeapon(this.weaponsObj[0])
     });
 
     this.route.params.subscribe((params: Params) => {

@@ -1,0 +1,128 @@
+<div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
+
+
+    <h3 class="text-[#88887b]  text-3xl tracking-tight mb-[1em]">War of Rights Hub</h3>
+
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 md:px-[2em] pb-[1em]">
+			
+
+			<div class="col-span-1 rounded-md first-letter:h-full text-center" style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
+				<div class="text-slate-400 text-3xl">
+				  Latest News
+				  <div class="text-slate-400 text-lg mt-2">
+					{{articleLength}} Recent Updates
+					<span class="block text-sm font-[200] mt-1">Last on {{latestDate}} by {{latestAuthor}}</span>
+				  </div>
+				</div>
+			  </div>
+			  
+
+				<div *ngFor="let article of gameNews; index as i;"
+					class="bg-slate-800/80 rounded-lg py-2 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load">
+					<h4>
+						<span class="text-neutral-200 text-lg tracking-tight px-4 pb-2 text-left inline-block">{{ article.title }}</span>
+
+					</h4>
+					<div class="rounded-sm my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
+						style="background-image: url('{{headerImage}}');background-size: 150px;height:150px;background-size: cover;opacity: 80%;background-position: center;">
+					</div>
+
+					<div class="grid grid-cols-2 gap-2 mt-2">
+
+						<div class="cols-start-1 col-span-1 my-auto mr-auto pl-4 text-left">
+							
+								<span class=" opacity-40">{{formatUnixTimestamp(article.date)}}</span>
+					
+						</div>
+
+
+						<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+							<button (click)="open(article.url , article.title, 1500, 868)" mat-button color="accent"
+								class="text-[15px] font-[500] !mr-1">
+								Read More
+								<i class="fa-sharp fa-solid fa-arrow-up-right-from-square" style="margin-left:5px;margin-top:-2px;"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- <h2 class="text-slate-400 text-xl mt-[1em] ml-[1.5em]">
+				<i class="fa-brands fa-steam mr-2"></i>Steam Information
+			</h2> -->
+			<div class="mx-5 mb-5 px-5 pb-5 text-xl text-neutral-200 grid lg:grid-cols-3 md:grid-cols-2">
+			
+				<div class="font-[200] text-base p-3 my-auto">
+					<span class="block">
+						<i class="fa-regular fa-square-dollar mr-2"></i> <span class="font-[500]">{{gameDetails.price_overview.final_formatted}}</span> latest price
+						<a href="steam://openurl/https://store.steampowered.com/app/424030/War_of_Rights/" class="!mb-[1.2em] !ml-[1.2em] max-w-fit" color="primary" mat-button>
+							Store Page <i class="fa-sharp fa-regular fa-arrow-up-right-from-square"></i>
+						</a>
+					</span> 
+					
+					<span class="block mb-[1em]"><i class="fa-sharp fa-regular fa-users mr-2"></i><span class="font-[500]">{{gameDetails.recommendations.total}}</span> recommend this game</span>
+					<b>Genres</b>
+					<div *ngFor="let tag of gameDetails.genres" class="text-base ml-4">
+						<i class="fa-sharp fa-light fa-tag"></i> {{tag.description}}
+					</div>
+				</div>
+	
+				<div class="font-[200] text-base p-3 md:col-start-1 lg:col-start-2 my-auto">
+					<span class="block" [innerHTML]="gameDetails.pc_requirements.minimum"></span>
+				</div>
+	
+				<div class="font-[200] text-base p-3 md:col-start-2 lg:col-start-3 my-auto">
+					<span class="block" [innerHTML]="gameDetails.pc_requirements.recommended"></span>
+				</div>
+			</div>
+
+
+			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 md:px-[2em] pb-28">
+			
+
+				<div class="col-span-1 rounded-md first-letter:h-full text-center" style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
+					<div class="text-slate-400 text-3xl">
+					  Community Screenshots
+					  <div class="text-slate-400 text-lg mt-2">
+						Last 8 Screenshots
+					  </div>
+					</div>
+				  </div>
+				  
+	
+					<div *ngFor="let screenshot of screenshots.slice(0, 8); let i = index;"
+						class="bg-slate-800/80 rounded-lg py-2 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load">
+						<h4>
+							<span class="text-neutral-200 text-lg tracking-tight px-4 pb-2 text-left inline-block">Screenshot #{{ i }}</span>
+	
+						</h4>
+						<div class="rounded-sm my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
+							style="background-image: url('{{screenshot.path_thumbnail}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;background-position: center;">
+						</div>
+	
+						<div class="grid grid-cols-2 gap-2 mt-2">
+	
+							<div class="cols-start-1 col-span-1 my-auto mr-auto pl-4 text-left">
+								
+
+						
+							</div>
+	
+	
+							<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+								<button (click)="open(screenshot.path_full , 'Community Screenshot', 1500, 868)" mat-button color="accent"
+									class="text-[15px] font-[500] !mr-1">
+									Full Resolution
+									<i class="fa-sharp fa-solid fa-arrow-up-right-from-square" style="margin-left:5px;margin-top:-2px;"></i>
+								</button>
+							</div>
+						</div>
+	
+					</div>
+				</div>
+
+
+
+</div>
