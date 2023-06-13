@@ -75,17 +75,23 @@ export class AuthService {
   }
 
   checkUserRole(userId: string): Observable<any> {
-    const url = VET_API + 'user/' + userId;
-    return this.http.get(url, httpOptions);
+    const url = VET_API + 'user';
+    const body = { userId: userId };
+    return this.http.post(url, body);
   }
-
+  
   checkModeratorRole(userId: string): Observable<any> {
-    const url = VET_API + 'mod/' + userId;
-    return this.http.get(url, httpOptions);
+    const url = VET_API + 'mod';
+    const body = { userId: userId };
+    return this.http.post(url, body);
   }
-
+  
   checkAdminRole(userId: string): Observable<any> {
-    const url = VET_API + 'admin/' + userId;
-    return this.http.get(url, httpOptions);
+    const url = VET_API + 'admin';
+    const body = { userId: userId };
+    return this.http.post(url, body);
   }
+  
+  
+  
 }

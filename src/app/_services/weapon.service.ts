@@ -54,19 +54,22 @@ export class WeaponService {
       image: image,
       notes: notes
     };
-    return this.http.post<Weapon>(`${API}/u/${userId}/weapon/${weaponId}`, data);
+    return this.http.post<Weapon>(`${API}/weapon/${weaponId}`, data);
   }
 
-  /**
-   * Delete a Weapon
-   * @param userId 
-   * @param weaponId 
-   * @returns 
-   */
+/**
+ * Delete a Weapon
+ * @param userId 
+ * @param weaponId 
+ * @returns 
+ */
   delete(userId: string, weaponId: string): Observable<any> {
-    return this.http.delete( `${API}/u/${userId}/weapon/${weaponId}`);
+    const options = {
+      body: { userId: userId }
+    };
+    return this.http.delete(`${API}/weapon/${weaponId}`, options);
   }
-
+  
 
 
   
