@@ -5,6 +5,7 @@ import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
 import { Location } from '@angular/common';
 
+
 @Component({
   selector: "app-weapons",
   templateUrl: "./weapons.component.html",
@@ -30,9 +31,10 @@ export class WeaponsComponent implements OnInit {
   currentUser: any;
   isLoggedIn = false;
   showAdmin = false;
-  loading = true;
+  contentLoaded = false;
   submitted = false;
   spotlight: any;
+  activeWeaponId: string | null = null;
 
   constructor(
     private weaponService: WeaponService,
@@ -52,7 +54,6 @@ export class WeaponsComponent implements OnInit {
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
           this.showAdmin = response.access;
-          this.loading = false;
         },
         (error) => {
           if (error.status === 403) {
@@ -60,19 +61,17 @@ export class WeaponsComponent implements OnInit {
           } else {
             console.error("Error:", error);
             if (this.isLoggedIn) {
-              this.loading = false;
             }
           }
-          this.loading = false;
         }
       );
-    } else {
-      this.loading = false;
-    }
+    } 
 
     this.weaponService.getAll().subscribe((data) => {
       this.weaponsObj = JSON.parse(data);
-      this.loadWeapon(this.weaponsObj[0])
+      this.loadWeapon(this.weaponsObj[0]);
+  
+      this.contentLoaded = true;
     });
 
     this.route.params.subscribe((params: Params) => {
@@ -81,10 +80,8 @@ export class WeaponsComponent implements OnInit {
       if (weaponId) {
         this.weaponService.get(weaponId).subscribe((data) => {
           this.loadWeapon(JSON.parse(data));
-        }
-        );
+        });
       }
-
     });
   }
 
@@ -94,6 +91,8 @@ export class WeaponsComponent implements OnInit {
       this.spotlight = weapon;
     }, 0);
     this.location.replaceState('/weapons/' + weapon.id);
+
+    this.activeWeaponId = weapon.id; 
   }
 
   open(url: any, title: any, w: any, h: any) {

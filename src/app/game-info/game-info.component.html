@@ -1,4 +1,4 @@
-<div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
+<div *ngIf="isDataLoaded" class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 
 
     <h3 class="text-[#88887b]  text-3xl tracking-tight mb-[1em]">War of Rights Hub</h3>
@@ -7,7 +7,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 md:px-[2em] pb-[1em]">
 			
 
-			<div class="col-span-1 rounded-md first-letter:h-full text-center" style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
+			<div class="left-in col-span-1 rounded-md first-letter:h-full text-center" style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
 				<div class="text-slate-400 text-3xl">
 				  Latest News
 				  <div class="text-slate-400 text-lg mt-2">
@@ -82,7 +82,7 @@
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 md:px-[2em] pb-28">
 			
 
-				<div class="col-span-1 rounded-md first-letter:h-full text-center" style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
+				<div class="left-in col-span-1 rounded-md first-letter:h-full text-center" style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
 					<div class="text-slate-400 text-3xl">
 					  Community Screenshots
 					  <div class="text-slate-400 text-lg mt-2">

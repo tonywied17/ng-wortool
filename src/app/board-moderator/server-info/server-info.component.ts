@@ -21,7 +21,7 @@ export class ServerInfoComponent implements OnInit {
   r2reg!: string;
   r2unit!: string;
   extra!: string;
-  allChecked!: boolean;
+  allChecked = true;
   naChecked = true;
   euChecked!: boolean;
   map: any;
@@ -199,7 +199,7 @@ __#PA Army App__
   getMapLink(map: string): string {
     const matchedMap = this.map.find((item: any) => item.map === map);
     if (matchedMap) {
-      return `https://app.paarmy.com/${matchedMap.id}`;
+      return `https://app.paarmy.com/maps/${matchedMap.id}`;
     }
     return "";
   }

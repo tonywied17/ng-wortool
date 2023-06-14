@@ -1,17 +1,17 @@
-.wpn-btn{ 
-	font-weight: 500;
-	color: #7d7e73;
-	border-radius: 5px;
-	padding: 5px;
-	margin: 5px;
-	min-width: 64px;
-    line-height: 36px;
-	cursor: pointer;
-	transition: 0.3s;
-	&:hover{
-		background-color: #7d7e7313;
-	}
-	&:active{
-		background-color: #7d7e7326;
-	}
+button.active {
+	background-color: #7c7d724f;
+	font-weight: 600;
+}
+
+.mat-expansion-panel {
+	background: linear-gradient(-27deg, #1c2638, #1c26388c);
+}
+
+button {
+	margin-bottom: 10px;
+	font-size: 16px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: 400;
+	color: #a2a398 !important;
 }

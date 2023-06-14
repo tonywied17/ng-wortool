@@ -16,6 +16,7 @@ export class GameInfoComponent implements OnInit {
   latestAuthor: any;
   latestDate: any;
   screenshots: any;
+  isDataLoaded: boolean = false; 
 
   constructor(
     private steamApiService: SteamApiService
@@ -27,7 +28,6 @@ export class GameInfoComponent implements OnInit {
   }
 
   
-
   getAppDetails(): void {
     this.steamApiService.getAppDetails().subscribe(
       data => {
@@ -35,6 +35,7 @@ export class GameInfoComponent implements OnInit {
         this.headerImage = this.gameDetails.header_image;
         this.gameBackground = this.gameDetails.background;
         this.screenshots = this.gameDetails.screenshots;
+        this.isDataLoaded = true; // Set flag to true when data is loaded
       },
       error => {
         console.log(error);
@@ -48,7 +49,6 @@ export class GameInfoComponent implements OnInit {
         this.gameNews = data;
         this.articleLength = this.gameNews.length;
         this.latestAuthor = this.gameNews[0].author;
-
         this.latestDate = this.formatUnixTimestamp(this.gameNews[0].date);
       },
       error => {

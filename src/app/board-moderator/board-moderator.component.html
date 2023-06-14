@@ -5,7 +5,7 @@
 
 
 
-<div *ngIf="!loading" class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[4em] mb-[5em]">
+<div *ngIf="!loading" class="lg:w-[72vw] w-[100vw - 2em] m-auto mt-[4em] mb-[5em]">
 
 
 
@@ -71,71 +71,52 @@
 		</button>
 
 
+		<div class="grid lg:grid-cols-[155px_minmax(300px,_1fr)] lg:gap-2 grid-cols-1 auto-rows-auto">
+			<div class="col-span-1 h-fit row-start-1">
+				<div>
 
-		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
-			<div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit">
-				<div class>
+						<h1 class="mt-2 skewed-text">Tools</h1>
 
+						<div style="border-left: dotted 1px #7c7d738f;" class="p-[1em] grid sm:grid-cols-1 grid-cols-2 gap-[1em]">
 
-
-					<mat-list class="my-2">
-						<mat-action-list>
-
-
-
-							<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/1" mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-solid fa-pen-to-square w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Share Event
+							<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
+								class="!py-2 !pt-4 !text-neutral-300 !block !min-w-full">
+								<i class="fa-brands fa-discord !text-white !block text-3xl"></i>
+								Event Tool
 							</button>
 
 
-							<mat-divider></mat-divider>
-
-
-
-							<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-solid fa-clipboard-user w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Muster Roster Tool
+							<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-button
+								class="!py-2 !pt-4 !text-neutral-300 !block !min-w-full">
+								<i class="fa-solid fa-clipboard-user !text-white !block text-3xl"></i>
+								Roster Tool
 							</button>
 
-
-
-
-
-
-						</mat-action-list>
-
-
-
-
-					</mat-list>
-
-
-
+						</div>	
 
 				</div>
 			</div>
+			
 
 
 
 
-			<div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
+			<div class="lg:col-span-2 col-span-1 w-full mt-[1em] lg:mt-[unset] row-start-2 sm:row-start-1">
 
 
 
 				<div *ngIf="showPage1"
-					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-slate-800/80 scale-center">
+					class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 scale-center">
 					<!-- <h2 class="text-2xl text-slate-400 py-4 ml-2 lg:ml-0">
 					Share Event Information
 				</h2> -->
+				<h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Event Share Tool</h2>
 					<app-server-info></app-server-info>
 				</div>
 
 				<div *ngIf="showPage2"
-					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-slate-800/80 scale-center">
-					<h2 class="text-2xl text-slate-400 py-4 ml-2 lg:ml-0">Muster Roster</h2>
+					class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 scale-center">
+					<h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Muster Roster</h2>
 					<app-muster></app-muster>
 				</div>
 

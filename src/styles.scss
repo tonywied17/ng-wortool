@@ -261,7 +261,17 @@ body {
 }
 
 .active_btn {
+  background-color: #7c7d724f;
   border-right: 3px solid #97978d !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  transform:rotateX('angle') !important;
+  transition: all .3s ease;
+}
+
+.active_btn_nco {
+  background-color: #7c7d724f;
+  border-bottom: 3px solid #97978d !important;
   color: #fff !important;
   font-weight: 700 !important;
   transform:rotateX('angle') !important;
@@ -372,7 +382,8 @@ mat-radio-button:hover {
   width: 100%;
   border: 2px solid #7c7d72;
   border-radius: 4px;
-  background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
+  // background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
+  background: transparent;
   color: #eeeeeed2 !important;
   outline: none;
   transition: all .3s ease;
@@ -484,6 +495,7 @@ mat-radio-button:hover {
   animation: left-in .3s ease 0s 1 normal forwards;
 }
 
+
 .top-in {
   animation: top-in .3s ease 0s 1 normal forwards;
 }
@@ -517,6 +529,7 @@ mat-radio-button:hover {
     transform: translateX(0);
   }
 }
+
 
 @keyframes top-in {
   0% {
