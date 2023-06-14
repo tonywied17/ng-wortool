@@ -5,13 +5,13 @@
 
 
 
-<div *ngIf="!loading" class="lg:w-[72vw] w-[100vw - 2em] m-auto mt-[4em] mb-[5em]">
+<div *ngIf="!loading" class="lg:w-[72vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
 
 
 
 	<div *ngIf="!showMod && isLoggedIn" class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
-		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
-			<div class="row-start-2 sm:row-start-auto">
+		<div class="grid grid-cols-1 lg:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 lg:grid-rows-none">
+			<div class="row-start-2 lg:row-start-auto">
 				<button
 					class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
 					mat-button routerLink="/home">
@@ -22,7 +22,7 @@
 
 
 
-			<div class="row-start-1 sm:row-start-auto">
+			<div class="row-start-1 lg:row-start-auto">
 				<h3 class="text-xl my-2">
 					You do not have access to this feature
 				</h3>
@@ -37,8 +37,8 @@
 
 
 	<div *ngIf="!isLoggedIn" class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
-		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
-			<div class="row-start-2 sm:row-start-auto">
+		<div class="grid grid-cols-1 lg:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 lg:grid-rows-none">
+			<div class="row-start-2 lg:row-start-auto">
 				<button
 					class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
 					mat-button routerLink="/home">
@@ -49,7 +49,7 @@
 
 
 
-			<div class="row-start-1 sm:row-start-auto">
+			<div class="row-start-1 lg:row-start-auto">
 				<h3 class="text-xl my-2">
 					Please login to continue
 				</h3>
@@ -77,7 +77,7 @@
 
 						<h1 class="mt-2 skewed-text">Tools</h1>
 
-						<div style="border-left: dotted 1px #7c7d738f;" class="p-[1em] grid sm:grid-cols-1 grid-cols-2 gap-[1em]">
+						<div style="border-left: dotted 1px #7c7d738f;" class="p-[1em] grid lg:grid-cols-1 grid-cols-2 gap-[1em]">
 
 							<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
 								class="!py-2 !pt-4 !text-neutral-300 !block !min-w-full">
@@ -101,7 +101,7 @@
 
 
 
-			<div class="lg:col-span-2 col-span-1 w-full mt-[1em] lg:mt-[unset] row-start-2 sm:row-start-1">
+			<div class="lg:col-span-2 col-span-1 w-full mt-[1em] lg:mt-[unset] row-start-2 lg:row-start-1">
 
 
 

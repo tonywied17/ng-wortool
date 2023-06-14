@@ -18,7 +18,7 @@
 						<div *ngIf="weapon.type == 'Rifle'">
 							<button mat-button color="primary" class="w-full !text-left"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }}
+								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
 						</div>
 					</ng-container>
@@ -37,7 +37,7 @@
 						<div *ngIf="weapon.type == 'Revolver'">
 							<button mat-button color="primary" class="w-full !text-left"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }}
+								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
 						</div>
 					</ng-container>
@@ -56,7 +56,7 @@
 						<div *ngIf="weapon.type == 'Sword'">
 							<button mat-button color="primary" class="w-full !text-left"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }}
+								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
 						</div>
 					</ng-container>
@@ -75,7 +75,7 @@
 						<div *ngIf="weapon.type == 'Artillery'">
 							<button mat-button color="primary" class="w-full !text-left"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }}
+								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
 						</div>
 					</ng-container>
@@ -96,7 +96,7 @@
 
 
 
-				<div class="p-[1em] pb-[2em] text-base font-thin text-neutral-800 text-center">
+				<div class="pt-[1em] pb-[2em] text-base font-thin text-neutral-800 text-center">
 					<div class="max-h-fit w-full text-center mx-auto">
 
 
@@ -136,7 +136,7 @@
 
 
 
-						<mat-divider *ngIf="spotlight.lengthy"></mat-divider>
+						<mat-divider *ngIf="spotlight.lengthy && spotlight.ammo"></mat-divider>
 
 
 
