@@ -9,7 +9,7 @@ import { FavoriteService } from "../_services/favorite.service";
 import { MapService } from "../_services/map.service";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from "@angular/material/table";
-
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -58,6 +58,7 @@ export class BoardUserComponent implements OnInit {
     private favoriteService: FavoriteService,
     private mapService: MapService,
     private router: Router,
+    private httpClient: HttpClient
     
   ) {}
 
@@ -82,7 +83,7 @@ export class BoardUserComponent implements OnInit {
     this.discordId = this.currentUser.discordId;
 
     if(this.discordId){
-      this.discordSyncUrl = `https://api.tonewebdesign.com/guild/${this.regimentId}discordJSON/`
+      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/`
     }
 
     const userID = this.currentUser.id;
@@ -202,8 +203,54 @@ export class BoardUserComponent implements OnInit {
   }
 
   sync(url: string): void {
+    const state = encodeURIComponent(this.currentUser.id);
     const left = window.screenX + 100;
-    window.open(url, "_blank", `width=610,height=900,left=${left}`);
+  
+    const popupUrl = `https://api.tonewebdesign.com/pa/discord/?state=${state}`;
+  
+    const popupWindow = window.open(popupUrl, '_blank', `width=610,height=900,left=${left}`);
+  
+    // Check if the popup window is available
+    if (popupWindow !== null) {
+      // Attach the message event listener to the popup window
+      popupWindow.addEventListener('message', (event) => {
+        if (event.data === 'popupClosed') {
+          this.continueAuthentication(event.origin, state);
+        }
+      });
+  
+      // Check if the popup window has been closed
+      const checkClosed = setInterval(() => {
+        if (popupWindow.closed) {
+          clearInterval(checkClosed);
+          // Retrieve the state parameter from the backend and continue authentication flow
+          this.continueAuthentication('https://api.tonewebdesign.com/pa/discord/auth/', state);
+        }
+      }, 1000);
+    } else {
+      console.error('Failed to open the popup window.');
+    }
+  }
+  
+
+  continueAuthentication(origin: string, state: string): void {
+
+    // Pass the state parameter as a query parameter in the request URL
+
+    const message = `UserID: ${state} has been synced with Discord!`;
+      this.snackBar.open(message, 'Close', {
+        verticalPosition: 'top',
+        duration: 3000
+      });
+
+    const backendUrl = `https://api.tonewebdesign.com/pa/discord/user/${state}/get`;
+
+
+    // once stored in db model we will retrieve the object and update the user object with discord info
+    console.log('backendUrl: ', backendUrl)
+
+    
+
   }
 
   async updateProfile() {
@@ -225,7 +272,7 @@ export class BoardUserComponent implements OnInit {
       this.email = updatedUser.email;
       this.avatar_url = updatedUser.avatar_url;
       this.discordId = updatedUser.discordId;
-      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${updatedUser.discordId}/get`
+      // this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${updatedUser.discordId}/get`
 
     } catch (error: any) {
       if (error.status === 400) {
@@ -236,7 +283,7 @@ export class BoardUserComponent implements OnInit {
     }
   }
   updateDiscordSyncUrl() {
-    this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${this.discordId}/get`;
+    // this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${this.discordId}/get`;
   }
   
 
