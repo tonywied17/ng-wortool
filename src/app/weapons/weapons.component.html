@@ -16,7 +16,7 @@
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Rifle'">
-							<button mat-button color="primary" class="w-full !text-left"
+							<button mat-button class="w-full"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
 								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
@@ -35,7 +35,7 @@
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Revolver'">
-							<button mat-button color="primary" class="w-full !text-left"
+							<button mat-button class="w-full"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
 								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
@@ -54,7 +54,7 @@
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Sword'">
-							<button mat-button color="primary" class="w-full !text-left"
+							<button mat-button class="w-full"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
 								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
@@ -73,7 +73,7 @@
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Artillery'">
-							<button mat-button color="primary" class="w-full !text-left"
+							<button mat-button class="w-full"
 								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
 								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
 							</button>
@@ -113,7 +113,7 @@
 					<div class="bg-[#7c7d73]/80 opacity-[0.87] text-neutral-200 p-5 mx-[0.5em] rounded-b-lg shadow-lg">
 
 						<div class="text-right">
-							<button *ngIf="showAdmin" mat-button color="primary" routerLink="/admin/2/{{spotlight.id}}"
+							<button *ngIf="showAdmin" mat-button routerLink="/admin/2/{{spotlight.id}}"
 								class="!text-[#a2a398] !mb-0"><i
 									class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Edit Weapon</button>
 

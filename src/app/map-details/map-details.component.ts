@@ -192,7 +192,7 @@ export class MapDetailsComponent implements OnInit {
             () => {
               this.openSnackBar(
                 this.currentMap.map + " removed from your favorites.",
-                2000
+                200000
               );
               this.isFavorited = false;
             },
@@ -200,7 +200,7 @@ export class MapDetailsComponent implements OnInit {
               console.error(error);
               this.openSnackBar(
                 "Failed to remove map from favorites. Please try again.",
-                2000
+                200000
               );
             }
           );
@@ -212,7 +212,7 @@ export class MapDetailsComponent implements OnInit {
               () => {
                 this.openSnackBar(
                   this.currentMap.map + " added to your favorites.",
-                  2000
+                  200000
                 );
                 this.isFavorited = true;
               },
@@ -222,7 +222,7 @@ export class MapDetailsComponent implements OnInit {
                   "Failed to add " +
                     this.currentMap.map +
                     " to favorites. Please try again.",
-                  2000
+                  200000
                 );
               }
             );

@@ -38,6 +38,7 @@ export class BoardUserComponent implements OnInit {
   email: string = "";
   avatar_url: string = "";
   discordId: string = "";
+  regimentId: string = "681641606398607401";
   discordSyncUrl: string = "";
 
   currentFavorites: any;
@@ -81,7 +82,7 @@ export class BoardUserComponent implements OnInit {
     this.discordId = this.currentUser.discordId;
 
     if(this.discordId){
-      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/user/${this.discordId}/get`
+      this.discordSyncUrl = `https://api.tonewebdesign.com/guild/${this.regimentId}discordJSON/`
     }
 
     const userID = this.currentUser.id;
@@ -224,7 +225,7 @@ export class BoardUserComponent implements OnInit {
       this.email = updatedUser.email;
       this.avatar_url = updatedUser.avatar_url;
       this.discordId = updatedUser.discordId;
-      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/user/${updatedUser.discordId}/get`
+      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${updatedUser.discordId}/get`
 
     } catch (error: any) {
       if (error.status === 400) {
@@ -235,7 +236,7 @@ export class BoardUserComponent implements OnInit {
     }
   }
   updateDiscordSyncUrl() {
-    this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/user/${this.discordId}/get`;
+    this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${this.discordId}/get`;
   }
   
 
@@ -258,7 +259,7 @@ export class BoardUserComponent implements OnInit {
   }
 
   fetchGuildPic(){
-    fetch(`https://api.tonewebdesign.com/pa/discord/guild/681641606398607401/get`)
+    fetch(`https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/get`)
     .then(response => response.json())
     .then(data => {
       this.guild_avatar_url = data.guild.iconURL;

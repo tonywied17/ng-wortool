@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {MaterialModule} from './material-module'
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { ConfirmDeleteSnackbarComponent } from './confirm-delete-snackbar/confir
 import { ManageWeaponsComponent } from './board-admin/manage-weapons/manage-weapons.component';
 import { ServerInfoComponent } from './board-moderator/server-info/server-info.component';
 import { GameInfoComponent } from './game-info/game-info.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -69,7 +70,13 @@ const routes: Routes = [
     FormsModule,
     ClipboardModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

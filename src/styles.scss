@@ -21,6 +21,10 @@ $fontConfig: (display-4: mat.define-typography-level(112px, 112px, 300, 'Roboto 
   caption: mat.define-typography-level(12px, 20px, 400, 'Roboto Slab', 0.0333em),
   input: mat.define-typography-level(inherit, 1.125, 400, 'Roboto Slab', 1.5px));
 
+$fonts: mat.define-typography-config($headline-1: mat.define-typography-level(24px, 32px, 400, 'Roboto Slab', 0.0000em),
+  $button: mat.define-typography-level(14px, 14px, 500, 'Roboto Slab', 0.0893em),
+);
+
 // Foreground Elements
 
 // Light Theme Text
@@ -132,7 +136,7 @@ $mat-dark-theme-background: (background: $dark-background,
 );
 
 // Compute font config
-@include mat.core($fontConfig);
+@include mat.core();
 
 // Theme Config
 
@@ -152,7 +156,9 @@ $mat-primary: (main: #7d7e73,
   contrast : (main: $dark-primary-text,
     lighter: $dark-primary-text,
     darker: $dark-primary-text,
-  ));
+  ),
+  typography: $fonts,
+);
 $theme-primary: mat.define-palette($mat-primary, main, lighter, darker);
 
 
@@ -172,7 +178,9 @@ $mat-accent: (main: #7d7e73,
   contrast : (main: $light-primary-text,
     lighter: $dark-primary-text,
     darker: $light-primary-text,
-  ));
+  ),
+  typography: $fonts,
+);
 $theme-accent: mat.define-palette($mat-accent, main, lighter, darker);
 
 
@@ -216,16 +224,20 @@ $theme: (primary: $theme-primary,
 }
 
 // Handle buttons appropriately, with respect to line-height
-.mat-raised-button,
-.mat-stroked-button,
-.mat-flat-button {
+.mat-mdc-raised-button,
+.mat-mdc-stroked-button,
+.mat-mdc-flat-button {
   padding: 0 1.15em;
-  margin: 0 .65em;
   min-width: 3em;
   line-height: 36.4px
 }
 
-.mat-standard-chip {
+.mat-expansion-panel-header {
+  font-family: 'Roboto Slab' !important;
+  font-weight: 500 !important;
+}
+
+.mat-mdc-standard-chip {
   padding: .5em .85em;
   min-height: 2.5em;
 }
@@ -234,7 +246,7 @@ $theme: (primary: $theme-primary,
   font-size: 24px;
   font-family: 'Material Icons', 'Material Icons';
 
-  .mat-badge-content {
+  .mat-mdc-badge-content {
     font-family: 'Roboto Slab';
   }
 }
@@ -252,12 +264,21 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Slab';
 }
 
+button {
+  font-family: 'Roboto Slab' !important;
+}
 
-.mat-list-base .mat-list-item .mat-list-item-content {
+.mdc-list-item__primary-text {
+  font-family: 'Roboto Slab' !important;
+  color: rgb(229 229 229) !important;
+}
+
+.mat-mdc-list-base .mat-mdc-list-item .mat-mdc-list-item-content {
   padding: 0 !important;
+  font-family: 'Roboto Slab' !important;
 }
 
 .active_btn {
@@ -265,7 +286,7 @@ body {
   border-right: 3px solid #97978d !important;
   color: #fff !important;
   font-weight: 700 !important;
-  transform:rotateX('angle') !important;
+  transform: rotateX('angle') !important;
   transition: all .3s ease;
 }
 
@@ -274,7 +295,7 @@ body {
   border-bottom: 3px solid #97978d !important;
   color: #fff !important;
   font-weight: 700 !important;
-  transform:rotateX('angle') !important;
+  transform: rotateX('angle') !important;
   transition: all .3s ease;
 }
 
@@ -292,7 +313,7 @@ body::-webkit-scrollbar-thumb {
   color: #131b2a;
 }
 
-.mat-checkbox-label {
+.mat-mdc-checkbox-label {
   // font-family: 'Roboto Slab', serif;
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -311,23 +332,29 @@ mat-checkbox:hover {
   transform: translateX(0.25em);
 }
 
-.mat-checkbox-background {
-  border-color: #888278;
+.mat-mdc-checkbox-background {
+  border-color: #888278 !important;
   border-width: 2px;
 }
 
-button.mat-menu-item {
+button.mat-mdc-menu-item {
   font-family: 'Roboto Slab', serif;
   // font-family: 'Poppins', sans-serif !important;
 }
 
-.mat-radio-label {
+.mat-mdc-radio-label {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   // font-family: 'Poppins', sans-serif;
-  color: #7c7d72;
+  color: #7c7d72 !important;
   font-weight: 300;
   transition: all .3s ease;
+}
+
+.mat-mdc-radio-button .mdc-form-field {
+  color: #7c7d72 !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1rem !important;
 }
 
 mat-radio-button {
@@ -336,38 +363,126 @@ mat-radio-button {
   transition: all .3s ease !important;
 }
 
+.mdc-form-field>label {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+
+html {
+  --mdc-checkbox-disabled-selected-icon-color: rgba(255, 255, 255, 0.38);
+  --mdc-checkbox-disabled-unselected-icon-color: rgba(255, 255, 255, 0.38);
+  --mdc-checkbox-selected-checkmark-color: rgba(255, 255, 255, 0.5);
+  --mdc-checkbox-selected-focus-icon-color: #7d7e73;
+  --mdc-checkbox-selected-hover-icon-color: #8b8b82;
+  --mdc-checkbox-selected-icon-color: #7d7e73;
+  --mdc-checkbox-selected-pressed-icon-color: #7d7e73;
+  --mdc-checkbox-unselected-focus-icon-color: #7d7e73;
+  --mdc-checkbox-unselected-hover-icon-color: #7d7e73;
+  --mdc-checkbox-unselected-icon-color: #7d7e73;
+  --mdc-checkbox-unselected-pressed-icon-color: #7d7e73c7;
+  --mdc-checkbox-selected-focus-state-layer-color: #7d7e73;
+  --mdc-checkbox-selected-hover-state-layer-color: #7d7e73cb;
+  --mdc-checkbox-selected-pressed-state-layer-color: #7d7e73;
+  --mdc-checkbox-unselected-focus-state-layer-color: #7d7e73;
+  --mdc-checkbox-unselected-hover-state-layer-color: #7d7e73;
+  --mdc-checkbox-unselected-pressed-state-layer-color: #7d7e73;
+}
+
+.mat-mdc-radio-button.mat-accent {
+  --mdc-radio-disabled-selected-icon-color: #7d7e73;
+  --mdc-radio-disabled-unselected-icon-color: #7d7e73;
+  --mdc-radio-unselected-hover-icon-color: #8b8b82;
+  --mdc-radio-unselected-icon-color: #7d7e73;
+  --mdc-radio-unselected-pressed-icon-color: #7d7e73;
+  --mdc-radio-selected-focus-icon-color: #7d7e73;
+  --mdc-radio-selected-hover-icon-color: #7d7e73;
+  --mdc-radio-selected-icon-color: #7d7e73;
+  --mdc-radio-selected-pressed-icon-color: #7d7e73;
+  --mat-radio-ripple-color: #7d7e73;
+  --mat-radio-checked-ripple-color: #7d7e73;
+  --mat-radio-disabled-label-color: rgba(255, 255, 255, 0.5);
+}
+
 mat-radio-button:hover {
   color: #9d9e96 !important;
   transform: translateX(0.25em);
 }
 
-.mat-radio-background {
-  border-color: #888278;
+button {
+  height: max-content !important;
+  min-height: 40px;
+  letter-spacing: normal !important;
+}
+
+.mat-mdc-radio-background {
+  border-color: #888278 !important;
   border-width: 2px;
 }
 
-.mat-snack-bar-container {
+.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+  color: #afaf9b !important;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  color: #888278 !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  font-family: 'Roboto Slab', serif !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface,
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  font-family: 'Roboto Slab', serif;
   background: #253651 !important;
   color: #afaf9b !important;
 }
 
-.mat-simple-snackbar-action button {
-  color: #ccccb6;
+.mat-mdc-simple-snackbar-action button {
+  color: #ccccb6 !important;
 }
 
-::ng-deep .mat-radio-outer-circle {
+.mat-mdc-menu-content,
+.mat-mdc-menu-content .mat-mdc-menu-item .mdc-list-item__primary-text {
+  font-family: 'Roboto Slab', serif !important;
+  font-size: 14px !important;
+  letter-spacing: normal;
+  // color: #dadada !important;
+}
+
+::ng-deep .mat-mdc-radio-outer-circle {
   border-color: #888278 !important;
 }
 
-::ng-deep .mat-radio-inner-circle {
+.mat-mdc-checkbox .mdc-form-field {
+  color: #7c7d72 !important;
+}
+
+::ng-deep .mat-mdc-radio-inner-circle {
   background-color: #888278 !important;
 }
 
-.mat-radio-button.mat-accent .mat-radio-outer-circle {
+.mat-mdc-checkbox .mdc-form-field {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1rem !important;
+}
+
+.mat-mdc-list-base {
+  --mdc-list-list-item-label-text-color: #afb1a5d0;
+  --mdc-list-list-item-hover-label-text-color: #afb1a5d0;
+  --mdc-list-list-item-disabled-label-text-color: #7c7d72ad;
+  --mdc-list-list-item-disabled-leading-icon-color: #7c7d72ad;
+  --mdc-list-list-item-disabled-trailing-icon-color: #afb1a5d0;
+  --mdc-list-list-item-focus-label-text-color: #afb1a5d0;
+  --mdc-list-list-item-hover-state-layer-color: #afb1a5d0;
+  --mdc-list-list-item-focus-state-layer-color: #afb1a5d0;
+}
+
+.mat-mdc-radio-button.mat-mdc-accent .mat-mdc-radio-outer-circle {
   border-color: #888278 !important;
 }
 
-.mat-radio-button.mat-accent.mat-checked .mat-radio-inner-circle {
+.mat-mdc-radio-button.mat-mdc-accent.mat-mdc-checked .mat-mdc-radio-inner-circle {
   background-color: #888278 !important;
 }
 
@@ -380,7 +495,7 @@ mat-radio-button:hover {
   padding: 12px 36px 12px 48px;
   /* Adjusted padding values */
   width: 100%;
-  border: 2px solid #7c7d72;
+  border: 2px solid #7c7d72 !important;
   border-radius: 4px;
   // background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
   background: transparent;
@@ -400,7 +515,7 @@ mat-radio-button:hover {
   font-family: 'Poppins', sans-serif !important;
 }
 
-.mat-form-field{
+.mat-mdc-form-field {
   font-family: 'Poppins', sans-serif !important;
   font-size: 0.875rem !important;
 }
@@ -411,9 +526,9 @@ mat-radio-button:hover {
   /* Adjusted text-indent value */
 }
 
-.mat-paginator-page-size-label,
-.mat-paginator-range-actions,
-.mat-select-value {
+.mat-mdc-paginator-page-size-label,
+.mat-mdc-paginator-range-actions,
+.mat-mdc-select-value {
   color: rgb(158 159 152) !important;
 }
 
@@ -424,7 +539,7 @@ mat-radio-button:hover {
   /* Adjusted left value */
   transform: translate(0, -50%);
   transition: all .3s ease;
-  color: #7c7d72;
+  color: #7c7d72 !important;
 }
 
 .field-input:focus+.field-icon {
@@ -444,7 +559,7 @@ mat-radio-button:hover {
 
 
 .field-input::placeholder {
-  color: #ccccccda;
+  color: #ccccccda !important;
 }
 
 .setting-button {
@@ -453,21 +568,45 @@ mat-radio-button:hover {
   font-size: 1rem;
 }
 
-.mat-stroked-button:not(.mat-button-disabled) {
+.mat-mdc-stroked-button:not(.mat-mdc-button-disabled) {
   border-color: rgb(124 125 115 / 59%);
 }
 
-.mat-slide-toggle-content {
+.mat-mdc-slide-toggle,
+.mat-mdc-slide-toggle-content {
+  color: #7c7d72 !important;
   font-family: 'Roboto Slab', serif;
 }
 
-.mat-list-item {
+.mat-mdc-slide-toggle .mdc-form-field .mdc-switch {
+  --mdc-switch-selected-focus-state-layer-color: #7c7d72;
+  --mdc-switch-selected-handle-color: #7c7d72;
+  --mdc-switch-selected-hover-state-layer-color: #7c7d72;
+  --mdc-switch-selected-pressed-state-layer-color: #7c7d72;
+  --mdc-switch-selected-focus-handle-color: #7c7d72;
+  --mdc-switch-selected-hover-handle-color: #7c7d72;
+  --mdc-switch-selected-pressed-handle-color: #7c7d72;
+  --mdc-switch-selected-focus-track-color: #b9b9b5;
+  --mdc-switch-selected-hover-track-color: #b9b9b5;
+  --mdc-switch-selected-pressed-track-color: #b9b9b5;
+  --mdc-switch-selected-track-color: #b9b9b5;
+}
+
+
+
+.mat-mdc-slide-toggle.mat-mdc-checked:not(.mat-mdc-disabled) .mat-mdc-slide-toggle-thumb {
+  background-color: #7c7d72 !important;
+  color: #7c7d72 !important;
+  font-family: 'Roboto Slab', serif;
+}
+
+.mat-mdc-list-item {
   font-family: 'Roboto Slab', serif;
   font-weight: 400;
   color: rgb(229 229 229);
 }
 
-.mat-list-base {
+.mat-mdc-list-base {
   padding: 0 !important;
 }
 
@@ -594,8 +733,8 @@ mat-radio-button:hover {
 }
 
 
-.mat-form-field-appearance-fill .mat-form-field-flex {
-  width:min-content !important; 
+.mat-mdc-form-field-appearance-fill .mat-mdc-form-field-flex {
+  width: min-content !important;
   background: none !important;
 }
 

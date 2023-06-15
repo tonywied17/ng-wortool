@@ -18,7 +18,7 @@
 		<!-- Left Box -->
 		<div class="row-span-3 left-in">
 			<div class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-8 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
-				<h3 class="text-[#252525ce]  text-3xl tracking-tight mb-4 px-6">#PA Army App 3.0</h3>
+				<h3 class="text-[#252525ce]  text-3xl tracking-tight mb-4 px-6">#PA Army App 2.0</h3>
 				<p class="text-[#c4c4c4ce] text-lg  px-6">
 					An all-in-one utility tool for managing your War of Rights regiment.
 				</p>
@@ -72,7 +72,7 @@
 							<button *ngIf="showAdmin"
 								routerLink="/admin/1"
 								mat-list-item
-								class>
+								class="!py-[0.7em]">
 								<i class="fa-duotone fa-shield-halved w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Admin Dashboard
 							</button>
@@ -85,7 +85,7 @@
 							<button *ngIf="showMod"
 								routerLink="/mod/1"
 								mat-list-item
-								class>
+								class="!py-[0.7em]">
 								<i class="fa-sharp fa-solid fa-chevrons-down w-[25px] ml-[1em] mr-[0.5em]"></i>
 								NCO Dashboard
 							</button>
@@ -99,7 +99,7 @@
 							<button *ngIf="showUser"
 								routerLink="/user/1"
 								mat-list-item
-								class>
+								class="!py-[0.7em]">
 								<i class="fa-duotone fa-gear w-[25px] ml-[1em] mr-[0.5em]"></i>
 								User Settings
 							</button>
@@ -109,8 +109,9 @@
 
 
 							<button (click)="logout()"
-								class="sm:!hidden !inline-block !text-[#bf3636]"
-								mat-list-item>
+								class="sm:!hidden !inline-block !text-[#bf3636] !w-full !py-[0.7em] !pl-[1em] !rounded-none  !text-[1rem]"
+								style="font-family: 'Roboto' !important;"
+								mat-button>
 								<i class="fa-sharp fa-solid fa-arrow-right-from-bracket w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Logout
 							</button>
@@ -253,7 +254,7 @@
 
 						<div class="form-group sm:col-span-1 sm:col-start-4">
 							<button mat-raised-button
-								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 								Create!
 							</button>
 						</div>
@@ -356,7 +357,7 @@
 
 
 							<button mat-raised-button
-								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 								Login!
 							</button>
 						</div>
@@ -385,7 +386,7 @@
 
 			<div class="bg-slate-800 rounded-lg ring-1 ring-slate-900/5 shadow-xl h-full text-right">
 				<!-- <button mat-stroked-button
-                    color="primary"
+                   
                     class="h-full"
                     (click)="logout()">
                     <i class="fa-solid fa-right-from-bracket !block pt-[8px] !text-xl"></i><span class="!text-sm">Logout</span>
@@ -427,7 +428,7 @@
 
 				<button (click)="loginBtn()"
 					mat-raised-button
-					class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+					class="w-full !py-3 text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 					Login
 				</button>
 
@@ -450,7 +451,7 @@
 
 				<button (click)="registerBtn()"
 					mat-raised-button
-					class="w-full !py-2 text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+					class="w-full !py-3 !text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 					Sign Up!
 				</button>
 

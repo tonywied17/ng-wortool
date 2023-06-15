@@ -82,19 +82,20 @@
   color: #ccc;
 }
 
-.filter-options {
+.filter-options { 
+  color: #7c7d72 !important;
   margin-bottom: 1em;
 }
 
 .checkbox-columns {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-gap: 0.5em;
+  grid-gap: 0;
 }
 
 .filter-label {
   align-items: center;
-  color: #7c7d72;
+  color: #7c7d72 !important;
   transition: all .3s ease;
   cursor: pointer;
 }
@@ -107,15 +108,13 @@
   margin-right: 0.5em;
 }
 
-.filter-label .filter-text {
-  color: #7c7d72;
-}
+
 
 
 .test {
   display: block;
   text-align: left;
-  background: linear-gradient(90deg, #7c7d72a2, #7c7d7200);
+  background: linear-gradient(90deg, #7c7d72a2, #7c7d7200) !important;
   padding-left: 1em !important;
   font-size: 0.875rem;
   color: #d8d8d4e0 !important;

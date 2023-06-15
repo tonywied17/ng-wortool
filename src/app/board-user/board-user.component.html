@@ -102,7 +102,7 @@
 
 						<button mat-raised-button
 							type="submit"
-							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 							Update Password
 						</button>
 
@@ -152,6 +152,7 @@
 									class="field-input my-[0.5em]"
 									type="email"
 									value="{{currentUser.discordId}}"
+									matTooltipClass="form-tooltip" matTooltipPosition="right" matTooltip="Right click your name on Discord and select the last option 'Copy User ID'."
 									placeholder="Your discord id...">
 								<i class="fa-brands fa-discord field-icon"></i>
 							</div>
@@ -168,9 +169,15 @@
 									</div>
 									<div class="col-start-2 col-span-1">
 										<p>
-											Pennsylvania Army
+											Your Regiment:
 											<span class="font-thin block">
-												(681641606398607401)
+												<select [(ngModel)]="regimentId" 
+												(change)="updateDiscordSyncUrl();fetchGuildPic();"
+												name="regimentId">
+													<option value="681641606398607401">681641606398607401</option>
+													<option value="850786736756883496">850786736756883496</option>
+												</select>
+												
 											</span>
 										</p>
 										<button (click)="sync(discordSyncUrl)"
@@ -197,7 +204,7 @@
 						</div>
 						<button mat-raised-button
 							type="submit"
-							class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+							class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 							Update Profile
 						</button>
 					</form>
@@ -225,7 +232,7 @@
 
 
 
-									<button [routerLink]="fav.route"
+									<button [routerLink]="fav.route" class="!my-2"
 										mat-stroked-button
 										color="primary">
 										{{fav.mapData.map}}
@@ -238,8 +245,7 @@
 
 
 							<ng-container matColumnDef="route">
-								<mat-header-cell *matHeaderCellDef
-									class="action-column-header">
+								<mat-header-cell *matHeaderCellDef>
 								</mat-header-cell>
 								<mat-cell *matCellDef="let fav"
 									class="actions-cell action-column">
@@ -248,9 +254,8 @@
 
 									<button (click)="confirmDelete(fav.mapId, fav.mapData.map)"
 										mat-button
-										class="text-[#9b3f3f] !font-[900] !mx-1">
-										<i class="fa-sharp fa-regular fa-trash sm:pr-2"></i>
-										<span class="hidden sm:inline-block">Delete</span>
+										class="!text-[#9b3f3f] !font-[900] !mx-1">
+										<i class="fa-sharp fa-regular fa-trash sm:pr-2"></i> <span class="hidden sm:inline">Delete</span>
 									</button>
 								</mat-cell>
 							</ng-container>

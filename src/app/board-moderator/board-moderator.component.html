@@ -65,7 +65,7 @@
 	<div *ngIf="showMod">
 
 
-		<button routerLink="/home" mat-button color="primary" class="!mb-[1em]">
+		<button routerLink="/home" mat-button class="!mb-[1em]">
 			<i class="fa-sharp fa-solid fa-arrow-left"></i>
 			Back
 		</button>
@@ -80,13 +80,15 @@
 						<div style="border-left: dotted 1px #7c7d738f;" class="p-[1em] grid lg:grid-cols-1 grid-cols-2 gap-[1em]">
 
 							<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
-								class="!py-2 !pt-4 !text-neutral-300 !block !min-w-full">
+								matTooltipClass="form-tooltip" matTooltipPosition="right" matTooltip="Share event information through Discord announcements."
+								class="!py-2 !h-full !pt-4 !text-neutral-300 !block !min-w-full">
 								<i class="fa-brands fa-discord !text-white !block text-3xl"></i>
 								Event Tool
 							</button>
 
 
 							<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-button
+							matTooltipClass="form-tooltip" matTooltipPosition="right" matTooltip="Muster roster data management."
 								class="!py-2 !pt-4 !text-neutral-300 !block !min-w-full">
 								<i class="fa-solid fa-clipboard-user !text-white !block text-3xl"></i>
 								Roster Tool

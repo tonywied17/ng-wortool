@@ -1,13 +1,22 @@
 .navitem{
-    color: #252525ce;
     transition: all 0.1s ease-in-out;
 }
 
 .navitem:active{
     transition: 0.1s !important;
-    transform: scale3d(1.30, 0.95, 1);
+    transform: scale3d(1.10, 0.95, 1);
 }
 
-.mat-list-base{
+.navitem-active {
+    color: #a09e94 !important;
+;
+}
+
+.mat-mdc-list-base{
     padding-top: 1px !important;
+}
+
+button {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 }
