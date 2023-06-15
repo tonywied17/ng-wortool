@@ -8,7 +8,7 @@
 <br> 
 
 > View latest live build:
-[View Live](https://app.paarmy.com/beta)
+[View Live](https://app.paarmy.com/)
 
 #### User Level Permissions
 *user*<br>
