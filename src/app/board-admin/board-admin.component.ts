@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from "@angula
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "app-board-admin",
@@ -27,7 +28,12 @@ export class BoardAdminComponent implements OnInit {
     private token: TokenStorageService,
     private authService: AuthService,
     private route: ActivatedRoute,
+    private location: Location,
   ) {}
+
+  goBack(): void {
+    this.location.back();
+  }
 
   ngOnInit(): void {
 

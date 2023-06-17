@@ -4,6 +4,9 @@ import { TokenStorageService } from "../_services/token-storage.service";
 import { FavoriteService } from "../_services/favorite.service";
 import { Map } from "../_models/map.model";
 import { ViewportScroller } from '@angular/common';
+import { ScrollPositionService } from '../_services/scroll-position.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { AfterViewInit } from '@angular/core';
 
 @Component({
   selector: "app-maps",
@@ -36,23 +39,32 @@ export class MapsComponent implements OnInit {
   filterByCsaArtillery = false;
 
   showArtyDiv = false;
+  showArtyDesktop = true
+
   showAttackerDiv: boolean = false;
+  showAttackerDesktop = true;
 
   showFavoritesDiv: boolean = false;
+  showFavoritesDesktop = true;
+
   filterByFavorites = false;
   selectedFavorite: string | undefined;
   currentFavorites: any[] = [];
   showFavoritesOnly: boolean = false;
+  showFavoritesOnlyDesktop = true;
 
   constructor(
     private mapService: MapService,
     private token: TokenStorageService,
     private favoriteService: FavoriteService,
     private cdr: ChangeDetectorRef,
-    private viewportScroller: ViewportScroller
+    private router: Router,
   ) {}
 
+  
+
   ngOnInit(): void {
+
     this.loading = true;
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
@@ -99,6 +111,11 @@ export class MapsComponent implements OnInit {
       showFavoritesOnly: this.showFavoritesOnly, // Updated property
     };
     localStorage.setItem("filterState", JSON.stringify(filterState));
+  }
+
+  clearSearchText() {
+    this.searchText = '';
+    this.filterMaps(); // Call the filterMaps() function or any other function that handles the filtering
   }
   
 
@@ -182,6 +199,9 @@ export class MapsComponent implements OnInit {
 
   private getFavorites(): void {
     const userID = this.currentUser.id;
+
+    if(userID === undefined) return;
+    
     this.favoriteService.getByUserId(userID).subscribe(
       (response) => {
         this.currentFavorites = response;
@@ -219,8 +239,17 @@ export class MapsComponent implements OnInit {
     this.filterByCampaignDiv = !this.filterByCampaignDiv;
   }
 
+  toggleFilterCampaign(): void {
+    this.filterByCampaign = !this.filterByCampaign;
+  }
+
   toggleFavoritesOnly(): void {
     this.showFavoritesOnly = !this.showFavoritesOnly;
+    this.filterMaps();
+  }
+
+  toggleFavoritesOnlyDesktop(): void {
+    this.showFavoritesOnlyDesktop = !this.showFavoritesOnlyDesktop;
     this.filterMaps();
   }
 
@@ -228,14 +257,25 @@ export class MapsComponent implements OnInit {
     this.showFavoritesDiv = !this.showFavoritesDiv;
   }
 
+  toggleFavorites(): void {
+    this.showFavoritesDesktop = !this.showFavoritesDesktop;
+  }
+
   toggleAttackerDiv() {
     this.showAttackerDiv = !this.showAttackerDiv;
+  }
+
+  toggleAttacker() {
+    this.showAttackerDesktop = !this.showAttackerDesktop;
   }
 
   toggleFilterByArtillery(): void {
     this.filterByArtillery = !this.filterByArtillery;
   }
 
+  toggleArty(): void {
+    this.showArtyDesktop = !this.showArtyDesktop;
+  }
   toggleArtyDiv(): void {
     this.showArtyDiv = !this.showArtyDiv;
   }

@@ -89,7 +89,7 @@
 		<div *ngIf="spotlight"
 			class="right-in lg:row-start-1 lg:row-span-3 lg:col-start-3 rounded-lg pt-2 px-2 mt-[1em] lg:mt-[unset] h-fit">
 			<div>
-				<h2 class="text-2xl text-slate-400 m-[0.5em]">
+				<h2 class="text-2xl text-slate-400 m-[0.5em] !select-text">
 					{{spotlight.weapon}}
 				</h2>
 
@@ -112,7 +112,7 @@
 
 					<div class="bg-[#7c7d73]/80 opacity-[0.87] text-neutral-200 p-5 mx-[0.5em] rounded-b-lg shadow-lg">
 
-						<div class="text-right">
+						<div class="text-right !mt-[-1.25em]">
 							<button *ngIf="showAdmin" mat-button routerLink="/admin/2/{{spotlight.id}}"
 								class="!text-[#a2a398] !mb-0"><i
 									class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Edit Weapon</button>
@@ -121,7 +121,7 @@
 
 						<div *ngIf="spotlight.range" class="m-4 font-[300] text-lg leading-5">
 
-							<span class="font-[500] m-2 block">Range</span> {{spotlight.range}} yds
+							<span class="font-[500] m-2 block">Range</span><span class="!select-text">{{spotlight.range}} yds</span>
 						</div>
 
 
@@ -131,7 +131,7 @@
 
 
 						<div *ngIf="spotlight.lengthy" class="m-4 font-[300] text-lg leading-5">
-							<span class="font-[500] m-2 block">Length</span> {{spotlight.lengthy}}" in
+							<span class="font-[500] m-2 block">Length</span><span class="!select-text">{{spotlight.lengthy}}" in</span>
 						</div>
 
 
@@ -141,13 +141,14 @@
 
 
 						<div *ngIf="spotlight.ammo" class="m-4 font-[300] text-lg leading-5">
-							<span class="font-[500] m-2 block">Ammo</span> {{spotlight.ammo}}
+							<span class="font-[500] m-2 block">Ammo</span><span class="!select-text">{{spotlight.ammo}}</span>
+							
 						</div>
 
 
 
 
-						<div *ngIf="spotlight.notes" class="mt-[2em] font-[300]">
+						<div *ngIf="spotlight.notes" class="mt-[2em] font-[300] !select-text">
 							<i>{{spotlight.notes}}</i>
 						</div>
 

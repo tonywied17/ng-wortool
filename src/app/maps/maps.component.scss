@@ -39,6 +39,14 @@
 .search-input:focus {
   transform: scale(1.01);
 }
+.clear-button {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.8rem;
+}
 
 ::placeholder {
   color: #fff;
@@ -84,7 +92,6 @@
 
 .filter-options { 
   color: #7c7d72 !important;
-  margin-bottom: 1em;
 }
 
 .checkbox-columns {

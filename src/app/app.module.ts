@@ -24,6 +24,9 @@ import { ManageWeaponsComponent } from './board-admin/manage-weapons/manage-weap
 import { ServerInfoComponent } from './board-moderator/server-info/server-info.component';
 import { GameInfoComponent } from './game-info/game-info.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { VersionChecker } from './version-checker';
+import { environment } from 'src/environments/environment.prod';
+
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -72,13 +75,14 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
+      // enabled: !isDevMode(),
+      enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, VersionChecker],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

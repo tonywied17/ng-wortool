@@ -13,6 +13,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 lg:grid-rows-none">
 			<div class="row-start-2 lg:row-start-auto">
 				<button
+				color="primary"
 					class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
 					mat-button routerLink="/home">
 					<i class="fa-solid fa-house mr-1.5"></i>
@@ -65,7 +66,7 @@
 	<div *ngIf="showMod">
 
 
-		<button routerLink="/home" mat-button class="!mb-[1em]">
+		<button (click)="goBack()" mat-button class="!mb-[1em] !block sm:!hidden">
 			<i class="fa-sharp fa-solid fa-arrow-left"></i>
 			Back
 		</button>

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from '@angular/router';
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "app-board-moderator",
@@ -20,6 +21,7 @@ export class BoardModeratorComponent implements OnInit {
     private token: TokenStorageService,
     private authService: AuthService,
     private route: ActivatedRoute,
+    private location: Location,
     ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,10 @@ export class BoardModeratorComponent implements OnInit {
     }else{
       this.loading = false;
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   private loadContent(page: string): void {

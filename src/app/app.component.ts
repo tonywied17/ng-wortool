@@ -3,6 +3,9 @@ import { TokenStorageService } from "./_services/token-storage.service";
 import { Router } from "@angular/router";
 import { AuthService } from "./_services/auth.service";
 import { SharedService } from "./_services/shared.service";
+import { VersionChecker } from './version-checker';
+import { RouteService } from "./_services/route-service.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "app-root",
@@ -17,7 +20,6 @@ export class AppComponent implements OnInit {
   showAdmin = false;
   showUser = false;
   showMod = false;
-
   private roles: string[] = [];
 
   message = "";
@@ -26,11 +28,20 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private sharedService: SharedService,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    private versionChecker: VersionChecker,
+    public routeService: RouteService,
+    private location: Location
   ) {
+
+    this.versionChecker.listenForUpdates();
     this.authService.authenticationEvent.subscribe(() => {
       this.initializeComponent();
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   ngOnInit(): void {

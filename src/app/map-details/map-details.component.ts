@@ -22,6 +22,8 @@ import { Note } from "../_models/note.model";
 import { Favorite } from "../_models/favorite";
 import { AuthService } from "../_services/auth.service";
 import { FavoriteService } from "../_services/favorite.service";
+import { Location } from '@angular/common';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: "app-map-details",
@@ -64,8 +66,14 @@ export class MapDetailsComponent implements OnInit {
     private _overlay: Overlay,
     private _viewContainerRef: ViewContainerRef,
     private authService: AuthService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private location: Location,
+    private viewportScroller: ViewportScroller
   ) {}
+
+  goBack(): void {
+    this.location.back();
+  }
 
   openSnackBar(message: string, duration: number) {
     const config = new MatSnackBarConfig();

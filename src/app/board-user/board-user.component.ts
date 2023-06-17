@@ -10,7 +10,7 @@ import { MapService } from "../_services/map.service";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from "@angular/material/table";
 import { HttpClient } from '@angular/common/http';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: "app-board-user",
@@ -58,7 +58,8 @@ export class BoardUserComponent implements OnInit {
     private favoriteService: FavoriteService,
     private mapService: MapService,
     private router: Router,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+   private location: Location,
     
   ) {}
 
@@ -147,7 +148,9 @@ export class BoardUserComponent implements OnInit {
     );
   }
   
-
+  goBack(): void {
+    this.location.back();
+  }
 
   private loadContent(page: string): void {
     this.showPage1 = false;

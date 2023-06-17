@@ -260,6 +260,7 @@ $theme: (primary: $theme-primary,
 html,
 body {
   height: 100%;
+  user-select: none;
 }
 
 body {
@@ -309,7 +310,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 ::selection {
-  background-color: #7c7d72;
+  background-color: #929287;
   color: #131b2a;
 }
 
@@ -354,7 +355,7 @@ button.mat-mdc-menu-item {
 .mat-mdc-radio-button .mdc-form-field {
   color: #7c7d72 !important;
   font-family: 'Poppins', sans-serif !important;
-  font-size: 1rem !important;
+  font-size: 16px !important;
 }
 
 mat-radio-button {
@@ -464,7 +465,7 @@ button {
 
 .mat-mdc-checkbox .mdc-form-field {
   font-family: 'Poppins', sans-serif !important;
-  font-size: 1rem !important;
+  font-size: 16px !important;
 }
 
 .mat-mdc-list-base {
@@ -493,7 +494,6 @@ button {
 .field-input {
   font-family: 'Poppins', sans-serif !important;
   padding: 12px 36px 12px 48px;
-  /* Adjusted padding values */
   width: 100%;
   border: 2px solid #7c7d72 !important;
   border-radius: 4px;
@@ -505,6 +505,23 @@ button {
 }
 
 .field-input:focus {
+  transform: scale(1.01);
+}
+
+.field-input2 {
+  font-family: 'Poppins', sans-serif !important;
+  padding: 12px 36px 12px 69px;
+  width: 100%;
+  border: 2px solid #7c7d72 !important;
+  border-radius: 4px;
+  // background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
+  background: transparent;
+  color: #eeeeeed2 !important;
+  outline: none;
+  transition: all .3s ease;
+}
+
+.field-input2:focus {
   transform: scale(1.01);
 }
 
@@ -547,6 +564,20 @@ button {
   /* Adjusted left value */
 }
 
+.field-icon2 {
+  position: absolute;
+  top: 50%;
+  left: 0.7em;
+  /* Adjusted left value */
+  transform: translate(0, -50%);
+  transition: all .3s ease;
+  color: #7c7d72 !important;
+}
+
+.field-input2:focus+.field-icon2 {
+  margin-left: -6px;
+  /* Adjusted left value */
+}
 
 .field-input:hover {
   opacity: 0.7;
@@ -742,4 +773,24 @@ button {
 .form-tooltip {
   font-size: 16px;
   max-width: max-content !important;
+}
+
+.mdc-checkbox {
+  padding: calc((20px - 22px) / 2) !important;
+  margin: calc((20px - 20px) / 2) !important;
+
+}
+
+html {
+  --mdc-checkbox-state-layer-size: 38px !important;
+}
+
+.mat-mdc-radio-button .mdc-radio {
+  --mdc-radio-state-layer-size: 38px !important;
+}
+
+.mat-mdc-snack-bar-container {
+  margin: 8px;
+  --mdc-snackbar-container-shape: 0 !important;
+  position: static;
 }
