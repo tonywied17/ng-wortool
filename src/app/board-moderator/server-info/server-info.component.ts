@@ -42,7 +42,7 @@ export class ServerInfoComponent implements OnInit {
     this.getMaps();
     setTimeout(() => {
 
-console.log(this.map)
+// console.log(this.map)
     }, 1000);
   }
 

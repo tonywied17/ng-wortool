@@ -1,12 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MapService } from "../_services/map.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { FavoriteService } from "../_services/favorite.service";
 import { Map } from "../_models/map.model";
-import { ViewportScroller } from '@angular/common';
-import { ScrollPositionService } from '../_services/scroll-position.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { AfterViewInit } from '@angular/core';
 
 @Component({
   selector: "app-maps",
@@ -57,8 +53,6 @@ export class MapsComponent implements OnInit {
     private mapService: MapService,
     private token: TokenStorageService,
     private favoriteService: FavoriteService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
   ) {}
 
   
@@ -92,7 +86,7 @@ export class MapsComponent implements OnInit {
       this.filterByCampaign = filterState.filterByCampaign;
       this.filterByFavorites = filterState.filterByFavorites;
       this.selectedFavorite = filterState.selectedFavorite;
-      this.showFavoritesOnly = filterState.showFavoritesOnly; // Updated line
+      this.showFavoritesOnly = filterState.showFavoritesOnly;
   
       this.filterMaps();
     }
@@ -108,14 +102,14 @@ export class MapsComponent implements OnInit {
       searchText: this.searchText,
       filterByCampaign: this.filterByCampaign,
       filterByFavorites: this.filterByFavorites,
-      showFavoritesOnly: this.showFavoritesOnly, // Updated property
+      showFavoritesOnly: this.showFavoritesOnly,
     };
     localStorage.setItem("filterState", JSON.stringify(filterState));
   }
 
   clearSearchText() {
     this.searchText = '';
-    this.filterMaps(); // Call the filterMaps() function or any other function that handles the filtering
+    this.filterMaps();
   }
   
 

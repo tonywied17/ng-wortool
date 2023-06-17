@@ -77,7 +77,7 @@ export class ManageWeaponsComponent implements OnInit {
       console.log(selectedIndex);
       if (selectedIndex !== -1) {
         const selectedWeapon = this.weaponsList[selectedIndex];
-        console.log(selectedWeapon);
+        // console.log(selectedWeapon);
         this.weaponName = selectedWeapon.weapon;
         this.weaponType = selectedWeapon.type;
         this.weaponRange = selectedWeapon.range;
@@ -184,13 +184,13 @@ export class ManageWeaponsComponent implements OnInit {
         (weapon) => weapon.id === parseInt(this.selectedWeaponId)
       );
 
-      console.log(selectedIndex);
+      // console.log(selectedIndex);
       if (selectedIndex !== -1) {
         const selectedWeapon = this.weaponsList[selectedIndex];
-        console.log(selectedWeapon);
+        // console.log(selectedWeapon);
         this.weaponService.delete(userId, selectedWeapon.id).subscribe(
           (response) => {
-            console.log(response);
+            // console.log(response);
             this.showSnackBar("Weapon deleted successfully!");
             this.loadWeapons();
             this.createNew();

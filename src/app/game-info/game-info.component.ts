@@ -35,7 +35,7 @@ export class GameInfoComponent implements OnInit {
         this.headerImage = this.gameDetails.header_image;
         this.gameBackground = this.gameDetails.background;
         this.screenshots = this.gameDetails.screenshots;
-        this.isDataLoaded = true; // Set flag to true when data is loaded
+        this.isDataLoaded = true; 
       },
       error => {
         console.log(error);
