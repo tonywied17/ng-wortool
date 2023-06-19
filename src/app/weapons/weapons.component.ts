@@ -3,8 +3,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { WeaponService } from "../_services/weapon.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
-import { Location } from '@angular/common';
-
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-weapons",
@@ -49,7 +48,6 @@ export class WeaponsComponent implements OnInit {
     this.currentUser = this.token.getUser();
     const userID = this.currentUser.id;
 
-
     if (this.isLoggedIn) {
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
@@ -65,18 +63,18 @@ export class WeaponsComponent implements OnInit {
           }
         }
       );
-    } 
+    }
 
     this.weaponService.getAll().subscribe((data) => {
       this.weaponsObj = JSON.parse(data);
       this.loadWeapon(this.weaponsObj[0]);
-  
+
       this.contentLoaded = true;
     });
 
     this.route.params.subscribe((params: Params) => {
-      const weaponId = params['weapon'];
-      console.log('route found for: ' + weaponId);
+      const weaponId = params["weapon"];
+      console.log("route found for: " + weaponId);
       if (weaponId) {
         this.weaponService.get(weaponId).subscribe((data) => {
           this.loadWeapon(JSON.parse(data));
@@ -90,9 +88,9 @@ export class WeaponsComponent implements OnInit {
     setTimeout(() => {
       this.spotlight = weapon;
     }, 0);
-    this.location.replaceState('/weapons/' + weapon.id);
+    this.location.replaceState("/weapons/" + weapon.id);
 
-    this.activeWeaponId = weapon.id; 
+    this.activeWeaponId = weapon.id;
   }
 
   open(url: any, title: any, w: any, h: any) {

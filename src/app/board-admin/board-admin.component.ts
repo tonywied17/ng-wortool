@@ -1,14 +1,18 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+} from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
-import { Location } from '@angular/common';
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-board-admin",
   templateUrl: "./board-admin.component.html",
   styleUrls: ["./board-admin.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class BoardAdminComponent implements OnInit {
   content?: string;
@@ -23,12 +27,11 @@ export class BoardAdminComponent implements OnInit {
   showPage3 = false;
   loading = true;
 
-
   constructor(
     private token: TokenStorageService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private location: Location,
+    private location: Location
   ) {}
 
   goBack(): void {
@@ -36,12 +39,10 @@ export class BoardAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.route.params.subscribe((params: Params) => {
       const page = params["page"];
       this.loadContent(page);
     });
-
 
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
@@ -80,6 +81,4 @@ export class BoardAdminComponent implements OnInit {
       this.showPage3 = true;
     }
   }
-
-
 }

@@ -6,12 +6,15 @@
 
 
 
+
 <div *ngIf="!loading"
 	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
 
 
 
+
 	<div *ngIf="isLoggedIn">
+
 
 
 
@@ -22,6 +25,7 @@
 			<i class="fa-sharp fa-solid fa-arrow-left"></i>
 			Back
 		</button>
+
 
 
 		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
@@ -59,12 +63,14 @@
 
 
 
+
 			<div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
 				<div *ngIf="showPage1"
 					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-slate-800/80 scale-center">
 					<h2 class="text-2xl text-slate-400 mb-[1em] ml-2 lg:ml-0">Change Password</h2>
 					<form (ngSubmit)="updatePassword()">
 						<div class="form-group m-4">
+
 
 
 							<div class="field-box">
@@ -77,6 +83,7 @@
 							</div>
 
 
+
 							<div class="field-box">
 								<input [(ngModel)]="passwordNew"
 									name="passwordNew"
@@ -85,6 +92,7 @@
 									placeholder="New Password...">
 								<i class="fa-sharp fa-regular fa-sparkles field-icon"></i>
 							</div>
+
 
 
 							<div class="field-box">
@@ -97,7 +105,9 @@
 							</div>
 
 
+
 						</div>
+
 
 
 						<button mat-raised-button
@@ -107,7 +117,9 @@
 						</button>
 
 
+
 					</form>
+
 
 
 
@@ -118,7 +130,9 @@
 					<form (ngSubmit)="updateProfile()">
 
 
+
 						<div class="form-group m-4">
+
 
 
 							<div class="field-box">
@@ -138,29 +152,52 @@
 									name="avatar_url"
 									class="field-input my-[0.5em]"
 									type="email"
-									value="{{currentUser.avatar_url}}"
 									placeholder="Avatar url...">
 								<i class="fa-sharp fa-regular fa-camera-retro field-icon"></i>
 							</div>
 
 
+							<button *ngIf="discordIsSynced && avatar_url !== discordData.avatar"
+								(click)="updateAvatarUrl()"
+								mat-button
+								type="button"
+								color="primary"
+								class="!ml-auto">
+								Use Discord Avatar
+							</button>
 
-							<div class="field-box">
+
+
+							<div *ngIf="discordIsSynced"
+								class="field-box">
 								<input [(ngModel)]="discordId"
-									(input)="updateDiscordSyncUrl()"
 									name="discordId"
 									class="field-input my-[0.5em]"
 									type="email"
 									value="{{currentUser.discordId}}"
-									matTooltipClass="form-tooltip" matTooltipPosition="right" matTooltip="Right click your name on Discord and select the last option 'Copy User ID'."
-									placeholder="Your discord id...">
+									placeholder="Your discord id..."
+									disabled>
 								<i class="fa-brands fa-discord field-icon"></i>
 							</div>
 
 
 
 
-							<div *ngIf="discordId"
+							<div *ngIf="!discordIsSynced">
+								<button (click)="sync(discordSyncUrl)"
+									class="!mt-2"
+									mat-stroked-button
+									color="primary"
+									type="button">
+									Discord Sync
+								</button>
+							</div>
+
+
+
+
+
+							<div *ngIf="discordId && discordIsSynced"
 								class="field-box my-[1em] ring-2 ring-[#7c7d72] p-3 rounded-sm shadow-md hover:opacity-70 transition-all duration-300">
 								<div class="grid gap-2 grid-cols-[105px_minmax(300px,_1fr)]">
 									<div class="col-start-1 col-span-1">
@@ -171,24 +208,21 @@
 										<p>
 											Your Regiment:
 											<span class="font-thin block">
-												<select [(ngModel)]="regimentId" 
-												(change)="updateDiscordSyncUrl();fetchGuildPic();"
-												name="regimentId">
+												<select [(ngModel)]="regimentId"
+													(change)="fetchGuildPic();"
+													name="regimentId">
 													<option value="681641606398607401">681641606398607401</option>
 													<option value="850786736756883496">850786736756883496</option>
 												</select>
-												
+
+
 											</span>
 										</p>
-										<button (click)="sync(discordSyncUrl)"
-											class="!mt-2"
-											mat-stroked-button
-											color="primary"
-											type="button">
-											Discord Sync
-										</button>
+
+
 									</div>
 								</div>
+
 
 
 
@@ -196,7 +230,9 @@
 
 
 
+
 							</div>
+
 
 
 
@@ -213,11 +249,13 @@
 
 
 
+
 				</div>
 				<!--  -->
 				<div *ngIf="showPage3"
 					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-slate-800/80 scale-center">
 					<h2 class="text-2xl text-slate-400 ml-2 lg:ml-0">Manage Favorites</h2>
+
 
 
 
@@ -232,33 +270,39 @@
 
 
 
-									<button [routerLink]="fav.route" class="!my-2"
+
+									<button [routerLink]="fav.route"
+										class="!my-2"
 										mat-stroked-button
 										color="primary">
 										{{fav.mapData.map}}
 									</button>
 
 
+
 								</mat-cell>
 							</ng-container>
 
 
 
+
 							<ng-container matColumnDef="route">
-								<mat-header-cell *matHeaderCellDef>
-								</mat-header-cell>
+								<mat-header-cell *matHeaderCellDef></mat-header-cell>
 								<mat-cell *matCellDef="let fav"
 									class="actions-cell action-column">
+
 
 
 
 									<button (click)="confirmDelete(fav.mapId, fav.mapData.map)"
 										mat-button
 										class="!text-[#9b3f3f] !font-[900] !mx-1">
-										<i class="fa-sharp fa-regular fa-trash sm:pr-2"></i> <span class="hidden sm:inline">Delete</span>
+										<i class="fa-sharp fa-regular fa-trash sm:pr-2"></i>
+										<span class="hidden sm:inline">Delete</span>
 									</button>
 								</mat-cell>
 							</ng-container>
+
 
 
 
@@ -281,6 +325,7 @@
 
 
 
+
 	<div *ngIf="!isLoggedIn"
 		class="p-5 bg-[#1c2537] rounded-md"
 		style="border-left: 5px solid #a13c3c;">
@@ -296,6 +341,7 @@
 
 
 
+
 			<div class="row-start-1 sm:row-start-auto">
 				<h3 class="text-xl my-2">
 					Please login to continue
@@ -305,6 +351,7 @@
 				</p>
 			</div>
 		</div>
+
 
 
 	</div>

@@ -1,157 +1,223 @@
 <form (ngSubmit)="createOrUpdateWeapon()">
-    <div class="form-group m-4">
+	<div class="form-group m-4">
 
-        <div class="mb-6 max-w-full">
+		<div class="mb-6 max-w-full">
 
-            <!-- Updating Back Actions  -->
+			<!-- Updating Back Actions -->
 
-            <div *ngIf="isUpdating" class="grid grid-cols-2">
+			<div *ngIf="isUpdating"
+				class="grid grid-cols-2">
 
-                <div class="text-left">
-                    <button mat-button (click)="back()" class="!mt-[-1em]" type="button">
-                        <i class="fa-sharp fa-solid fa-arrow-left"></i> Switch Weapon
-                    </button>
-                </div>
+				<div class="text-left">
+					<button (click)="back()"
+						mat-button
+						class="!mt-[-1em]"
+						type="button">
+						<i class="fa-sharp fa-solid fa-arrow-left"></i>
+						Switch Weapon
+					</button>
+				</div>
 
-                <div class="text-right">
-                    <button mat-button (click)="createNew()" class="!mt-[-1em]" type="button">
-                        <i class="fa-sharp fa-solid fa-plus"></i> New Weapon
-                    </button>
-                </div>
-          
-            </div>
-            <mat-divider class="!my-5" *ngIf="isUpdating"></mat-divider>
+				<div class="text-right">
+					<button (click)="createNew()"
+						mat-button
+						class="!mt-[-1em]"
+						type="button">
+						<i class="fa-sharp fa-solid fa-plus"></i>
+						New Weapon
+					</button>
+				</div>
 
-            <!-- Creating Back Actions  -->
+			</div>
+			<mat-divider *ngIf="isUpdating"
+				class="!my-5"></mat-divider>
 
-            <div *ngIf="isCreating" class="grid grid-cols-2">
+			<!-- Creating Back Actions -->
 
-                <div class="text-left">
-                    <button mat-button (click)="back()" class="!mt-[-1em]" type="button">
-                        <i class="fa-sharp fa-solid fa-arrow-left"></i> Edit Existing
-                    </button>
-                </div>
-          
-            </div>
+			<div *ngIf="isCreating"
+				class="grid grid-cols-2">
 
-            <mat-divider class="!my-5" *ngIf="isCreating"></mat-divider>
-            <!--  -->
-            
+				<div class="text-left">
+					<button (click)="back()"
+						mat-button
+						class="!mt-[-1em]"
+						type="button">
+						<i class="fa-sharp fa-solid fa-arrow-left"></i>
+						Edit Existing
+					</button>
+				</div>
 
-            <div *ngIf="!isUpdating && !isCreating" class="grid lg:grid-cols-4 grid-cols-1 text-center lg:text-left">
+			</div>
 
+			<mat-divider *ngIf="isCreating"
+				class="!my-5"></mat-divider>
+			<!--  -->
 
-                <div class="lg:col-start-1 col-span-3">
-                    <span class="text-[#7d7e73]">Modify Existing</span>
-                    <select [(ngModel)]="selectedWeaponId" name="selectedWeapon"
-                        class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-                        id="existing-select" (change)="handleSelectionChange()">
-                        <option value="" selected>Select a weapon...</option>
-                        <option *ngFor="let weapon of weaponsList" [value]="weapon.id">{{
-                            weapon.weapon }}</option>
-                    </select>
-                </div>
+			<div *ngIf="!isUpdating && !isCreating"
+				class="grid lg:grid-cols-4 grid-cols-1 text-center lg:text-left">
 
+				<div class="lg:col-start-1 col-span-3">
+					<span class="text-[#7d7e73]">Modify Existing</span>
+					<select [(ngModel)]="selectedWeaponId"
+						(change)="handleSelectionChange()"
+						name="selectedWeapon"
+						class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+						id="existing-select">
+						<option value
+							selected>
+							Select a weapon...
+						</option>
+						<option *ngFor="let weapon of weaponsList"
+							[value]="weapon.id">
+							{{
+                            weapon.weapon }}
+						</option>
+					</select>
+				</div>
 
+				<div class="lg:col-start-4 text-right">
+					<span class="hidden sm:block">&nbsp;</span>
+					<button (click)="createNew()"
+						type="button"
+						class="!h-[60px] !mt-[8px] text-neutral-200 font-[300] text-xl"
+						mat-button>
+						<i class="fa-sharp fa-solid fa-plus pb-1 pr-2"></i>
+						Create New
+					</button>
+				</div>
 
-                <div class="lg:col-start-4 text-right">
-                    <span class="hidden sm:block">&nbsp;</span>
-                    <button (click)="createNew()" type="button"
-                        class="!h-[60px] !mt-[8px] text-neutral-200 font-[300] text-xl" mat-button><i
-                            class="fa-sharp fa-solid fa-plus pb-1 pr-2"></i> Create New</button>
-                </div>
+			</div>
 
-            </div>
+		</div>
 
+		<div *ngIf="isCreating || isUpdating">
 
-        </div>
+			<div *ngIf="isUpdating"
+				class="my-5 text-neutral-300 font-[300]">
+				<span class="font-[500] pr-1 text-lg">
+					<i class="fa-regular fa-pencil pr-2"></i>
+					Editing
+				</span>
+				{{weaponName}}
+			</div>
 
+			<div class="field-box mb-5">
+				<select [(ngModel)]="weaponType"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Weapon Category"
+					name="weaponType"
+					class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+					id="existing-select">
+					<option value
+						disabled
+						selected>
+						Weapon Category
+					</option>
+					<option value="Rifle">Rifle Category</option>
+					<option value="Revolver">Revolver Category</option>
+					<option value="Sword">Sword Category</option>
+					<option value="Artillery">Artillery Category</option>
+				</select>
+				<i class="fa-solid fa-bars-sort field-icon focus:!transform-none"></i>
+			</div>
 
-        <div *ngIf="isCreating || isUpdating">
+			<div class="field-box">
+				<input [(ngModel)]="weaponName"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Weapon Name"
+					name="weaponName"
+					class="field-input my-[0.5em]"
+					type="text"
+					placeholder="Weapon name...">
+				<i class="fa-light fa-input-text field-icon"></i>
+			</div>
 
+			<div class="field-box">
+				<input [(ngModel)]="weaponRange"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Weapon Range (Yards)"
+					name="weaponRange"
+					class="field-input my-[0.5em]"
+					type="text"
+					placeholder="Effective range...">
+				<i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
+			</div>
 
+			<div class="field-box">
+				<input [(ngModel)]="weaponLength"
+					matTooltipClass="form-tooltip"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Weapon Length (Inches)"
+					name="weaponLength"
+					class="field-input my-[0.5em]"
+					type="text"
+					placeholder="Weapon length...">
+				<i class="fa-sharp fa-light fa-ruler field-icon"></i>
+			</div>
 
-            <div *ngIf="isUpdating" class="my-5 text-neutral-300 font-[300]">
-                <span class="font-[500] pr-1 text-lg"><i class="fa-regular fa-pencil pr-2"></i>Editing</span> {{weaponName}}
-            </div>
+			<div class="field-box">
+				<input [(ngModel)]="weaponAmmo"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Weapon Ammo/Caliber"
+					name="weaponAmmo"
+					class="field-input my-[0.5em]"
+					type="text"
+					placeholder="Ammo type...">
+				<i class="fa-regular fa-box field-icon"></i>
+			</div>
 
-            <div class="field-box mb-5">
-                <select matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Category"
-                    [(ngModel)]="weaponType" name="weaponType"
-                    class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-                    id="existing-select">
-                    <option value="" disabled selected>Weapon Category</option>
-                    <option value="Rifle">Rifle Category</option>
-                    <option value="Revolver">Revolver Category</option>
-                    <option value="Sword">Sword Category</option>
-                    <option value="Artillery">Artillery Category</option>
-                </select>
-                <i class="fa-solid fa-bars-sort field-icon focus:!transform-none"></i>
-            </div>
+			<div class="field-box">
+				<input [(ngModel)]="weaponImage"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Weapon Image URL"
+					name="weaponImage"
+					class="field-input my-[0.5em]"
+					type="text"
+					placeholder="image url...">
+				<i class="fa-sharp fa-regular fa-image field-icon"></i>
+			</div>
 
-            
+			<div class="field-box">
+				<input [(ngModel)]="weaponNotes"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Extra Notes"
+					name="weaponNotes"
+					class="field-input my-[0.5em]"
+					type="text"
+					placeholder="Weapon notes...">
+				<i class="fa-light fa-note field-icon"></i>
+			</div>
 
-            <div class="field-box">
-                <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Name"
-                    [(ngModel)]="weaponName" name="weaponName" class="field-input my-[0.5em]" type="text"
-                    placeholder="Weapon name...">
-                <i class="fa-light fa-input-text field-icon"></i>
-            </div>
+		</div>
+	</div>
 
+	<button *ngIf="isCreating && !isUpdating"
+		mat-raised-button
+		type="submit"
+		class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+		Create Weapon
+	</button>
 
-            <div class="field-box">
-                <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Range (Yards)"
-                    [(ngModel)]="weaponRange" name="weaponRange" class="field-input my-[0.5em]" type="text"
-                    placeholder="Effective range...">
-                <i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
-            </div>
+	<button *ngIf="isUpdating && !isCreating"
+		mat-raised-button
+		type="submit"
+		class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+		Update Weapon
+	</button>
 
-            <div class="field-box">
-                <input matTooltipClass="form-tooltip" matTooltipClass="form-tooltip" matTooltipPosition="left"
-                    matTooltip="Weapon Length (Inches)" [(ngModel)]="weaponLength"
-                    name="weaponLength" class="field-input my-[0.5em]" type="text" placeholder="Weapon length...">
-                <i class="fa-sharp fa-light fa-ruler field-icon"></i>
-            </div>
-
-            <div class="field-box">
-                <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Ammo/Caliber"
-                    [(ngModel)]="weaponAmmo" name="weaponAmmo" class="field-input my-[0.5em]" type="text"
-                    placeholder="Ammo type...">
-                <i class="fa-regular fa-box field-icon"></i>
-            </div>
-
-            <div class="field-box">
-                <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Weapon Image URL"
-                    [(ngModel)]="weaponImage" name="weaponImage" class="field-input my-[0.5em]" type="text"
-                    placeholder="image url...">
-                <i class="fa-sharp fa-regular fa-image field-icon"></i>
-            </div>
-
-            <div class="field-box">
-                <input matTooltipClass="form-tooltip" matTooltipPosition="left" matTooltip="Extra Notes"
-                    [(ngModel)]="weaponNotes" name="weaponNotes" class="field-input my-[0.5em]" type="text"
-                    placeholder="Weapon notes...">
-                <i class="fa-light fa-note field-icon"></i>
-            </div>
-
-        </div>
-    </div>
-
-
-    <button *ngIf="isCreating && !isUpdating" mat-raised-button type="submit"
-        class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-        Create Weapon
-    </button>
-
-    <button *ngIf="isUpdating && !isCreating" mat-raised-button type="submit"
-        class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-        Update Weapon
-    </button>
-
-    <button (click)="confirmDelete()" *ngIf="isUpdating && !isCreating" mat-stroked-button type="button"
-        class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl">
-        Delete Weapon
-    </button>
-
+	<button *ngIf="isUpdating && !isCreating"
+		(click)="confirmDelete()"
+		mat-stroked-button
+		type="button"
+		class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl">
+		Delete Weapon
+	</button>
 
 </form>

@@ -3,9 +3,9 @@ import { TokenStorageService } from "./_services/token-storage.service";
 import { Router } from "@angular/router";
 import { AuthService } from "./_services/auth.service";
 import { SharedService } from "./_services/shared.service";
-import { VersionChecker } from './version-checker';
+import { VersionChecker } from "./version-checker";
 import { RouteService } from "./_services/route-service.service";
-import { Location } from '@angular/common';
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-root",
@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
     public routeService: RouteService,
     private location: Location
   ) {
-
     this.versionChecker.listenForUpdates();
     this.authService.authenticationEvent.subscribe(() => {
       this.initializeComponent();
@@ -89,13 +88,11 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(event: any) {
-
     window.scroll({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
-
   }
 
   logout(): void {

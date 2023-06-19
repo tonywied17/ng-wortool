@@ -1,18 +1,23 @@
-import { Directive, Input } from '@angular/core';
-import { NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Directive, Input } from "@angular/core";
+import {
+  NG_VALIDATORS,
+  Validator,
+  AbstractControl,
+  ValidationErrors,
+} from "@angular/forms";
 
 @Directive({
-  selector: '[appPasswordMatchValidator]',
+  selector: "[appPasswordMatchValidator]",
   providers: [
     {
       provide: NG_VALIDATORS,
       useExisting: PasswordMatchValidatorDirective,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class PasswordMatchValidatorDirective implements Validator {
-  @Input('appPasswordMatchValidator') password!: string;
+  @Input("appPasswordMatchValidator") password!: string;
 
   validate(control: AbstractControl): ValidationErrors | null {
     const confirmPassword = control.value;

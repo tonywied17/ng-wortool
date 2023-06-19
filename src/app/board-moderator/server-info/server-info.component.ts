@@ -32,17 +32,12 @@ export class ServerInfoComponent implements OnInit {
   filteredMapNames1: any[] = [];
   filteredMapNames2: any[] = [];
 
-
-  constructor(
-    private mapService: MapService,
-    private snackBar: MatSnackBar
-    ) {}
+  constructor(private mapService: MapService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.getMaps();
     setTimeout(() => {
-
-// console.log(this.map)
+      // console.log(this.map)
     }, 1000);
   }
 
@@ -58,31 +53,29 @@ export class ServerInfoComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
-  
 
   onCampaignChange(): void {
     if (this.skirm.includes("Antietam")) {
       const organizedData = this.organizeByCampaign(this.mapNames);
       this.filteredMapNames1 = [
         ...(organizedData["Antietam"] || []),
-        ...(organizedData["Antietam Conquest"] || [])
+        ...(organizedData["Antietam Conquest"] || []),
       ];
     } else if (this.skirm.includes("Harpers Ferry")) {
       const organizedData = this.organizeByCampaign(this.mapNames);
       this.filteredMapNames1 = [
         ...(organizedData["Harpers Ferry"] || []),
-        ...(organizedData["Harpers Ferry Conquest"] || [])
+        ...(organizedData["Harpers Ferry Conquest"] || []),
       ];
     } else if (this.skirm.includes("South Mountain")) {
       const organizedData = this.organizeByCampaign(this.mapNames);
       this.filteredMapNames1 = [
         ...(organizedData["South Mountain"] || []),
-        ...(organizedData["South Mountain Conquest"] || [])
+        ...(organizedData["South Mountain Conquest"] || []),
       ];
     } else {
       this.filteredMapNames1 = [];
     }
-
   }
 
   onCampaignChange2(): void {
@@ -90,35 +83,33 @@ export class ServerInfoComponent implements OnInit {
       const organizedData = this.organizeByCampaign(this.mapNames);
       this.filteredMapNames2 = [
         ...(organizedData["Antietam"] || []),
-        ...(organizedData["Antietam Conquest"] || [])
+        ...(organizedData["Antietam Conquest"] || []),
       ];
     } else if (this.skirm2.includes("Harpers Ferry")) {
       const organizedData = this.organizeByCampaign(this.mapNames);
       this.filteredMapNames2 = [
         ...(organizedData["Harpers Ferry"] || []),
-        ...(organizedData["Harpers Ferry Conquest"] || [])
+        ...(organizedData["Harpers Ferry Conquest"] || []),
       ];
     } else if (this.skirm2.includes("South Mountain")) {
       const organizedData = this.organizeByCampaign(this.mapNames);
       this.filteredMapNames2 = [
         ...(organizedData["South Mountain"] || []),
-        ...(organizedData["South Mountain Conquest"] || [])
+        ...(organizedData["South Mountain Conquest"] || []),
       ];
     } else {
       this.filteredMapNames2 = [];
     }
   }
-  
-  
-  
+
   organizeByCampaign(mapNames: any): any {
     const organizedData: any = {};
-  
+
     // Sort map names alphabetically
     const sortedMapNames = Object.keys(mapNames).sort((a, b) =>
-      a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+      a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
     );
-  
+
     for (const map of sortedMapNames) {
       const campaign = mapNames[map];
       if (!organizedData.hasOwnProperty(campaign)) {
@@ -126,12 +117,9 @@ export class ServerInfoComponent implements OnInit {
       }
       organizedData[campaign].push(map);
     }
-  
+
     return organizedData;
   }
-  
-  
-  
 
   sendMessage(): void {
     const discordWebhook =
@@ -168,18 +156,25 @@ __#PA Army App__
     };
 
     if (!this.sn || !this.pw || !this.map1) {
-      this.snackBar.open("Please fill in the required fields: server name, password, or map", "Close", {
-        verticalPosition: 'top',
-        duration: 3000 
-      });
+      this.snackBar.open(
+        "Please fill in the required fields: server name, password, or map",
+        "Close",
+        {
+          verticalPosition: "top",
+          duration: 3000,
+        }
+      );
     } else {
       this.sendWebhook(discordWebhook, params);
-      this.snackBar.open("Server information posted to announcements", "Close", {
-        verticalPosition: 'top',
-        duration: 3000 
-      });
+      this.snackBar.open(
+        "Server information posted to announcements",
+        "Close",
+        {
+          verticalPosition: "top",
+          duration: 3000,
+        }
+      );
     }
-    
   }
 
   getRoles(): string {
@@ -203,8 +198,6 @@ __#PA Army App__
     }
     return "";
   }
-  
-  
 
   sendWebhook(url: string, params: any): void {
     const request = new XMLHttpRequest();
@@ -212,6 +205,4 @@ __#PA Army App__
     request.setRequestHeader("Content-type", "application/json");
     request.send(JSON.stringify(params));
   }
-
-  
 }

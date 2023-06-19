@@ -7,9 +7,9 @@ import { firstValueFrom } from "rxjs";
 import { ConfirmDeleteSnackbarComponent } from "../../confirm-delete-snackbar/confirm-delete-snackbar.component";
 
 @Component({
-  selector: 'app-manage-weapons',
-  templateUrl: './manage-weapons.component.html',
-  styleUrls: ['./manage-weapons.component.scss']
+  selector: "app-manage-weapons",
+  templateUrl: "./manage-weapons.component.html",
+  styleUrls: ["./manage-weapons.component.scss"],
 })
 export class ManageWeaponsComponent implements OnInit {
   content?: string;
@@ -34,8 +34,8 @@ export class ManageWeaponsComponent implements OnInit {
     private token: TokenStorageService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private weaponService: WeaponService,
-  ) { }
+    private weaponService: WeaponService
+  ) {}
 
   ngOnInit(): void {
     this.loadWeapons();
@@ -44,7 +44,7 @@ export class ManageWeaponsComponent implements OnInit {
     this.currentUser = this.token.getUser();
 
     this.route.params.subscribe((params: Params) => {
-      const weaponId = params['weapon'];
+      const weaponId = params["weapon"];
       if (weaponId) {
         this.selectedWeaponId = weaponId;
         setTimeout(() => {
@@ -54,7 +54,6 @@ export class ManageWeaponsComponent implements OnInit {
         this.isCreating = false;
       }
     });
-
   }
 
   loadWeapons(): void {
@@ -91,7 +90,6 @@ export class ManageWeaponsComponent implements OnInit {
     }
   }
 
-
   createNew() {
     this.weaponName = "";
     this.weaponType = "";
@@ -105,7 +103,7 @@ export class ManageWeaponsComponent implements OnInit {
     this.isUpdating = false;
   }
 
-  back(){
+  back() {
     this.weaponName = "";
     this.weaponType = "";
     this.weaponRange = "";
@@ -130,7 +128,7 @@ export class ManageWeaponsComponent implements OnInit {
       this.showSnackBar("Please fill in at least the weapon name & type.");
       return;
     }
-  
+
     let userId = this.currentUser.id;
     let selectedWeaponId = this.selectedWeaponId || undefined;
 
@@ -163,20 +161,24 @@ export class ManageWeaponsComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    const snackBarRef = this.snackBar.openFromComponent(ConfirmDeleteSnackbarComponent, {
-      data: { message: `Are you sure you want to delete '${this.weaponName}' from weapons?` },
-      duration: 5000,
-      verticalPosition: "top",
-      panelClass: "confirm-delete-snackbar",
-    });
-  
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to delete '${this.weaponName}' from weapons?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+
     snackBarRef.onAction().subscribe(() => {
       this.deleteWeapon();
     });
   }
-  
-  deleteWeapon() {
 
+  deleteWeapon() {
     let userId = this.currentUser.id;
 
     if (this.selectedWeaponId) {
@@ -204,5 +206,4 @@ export class ManageWeaponsComponent implements OnInit {
       }
     }
   }
-
 }

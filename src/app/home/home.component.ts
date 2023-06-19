@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
     private sharedService: SharedService,
     private router: Router
   ) {
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.initializeComponent();
@@ -169,13 +168,13 @@ export class HomeComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.authService.isAuthenticated = true;
-        localStorage.setItem("isAuthenticated", "true"); 
+        localStorage.setItem("isAuthenticated", "true");
 
         this.authService.isAdministrator = this.roles.includes("ROLE_ADMIN");
         localStorage.setItem(
           "isAdmin",
           this.roles.includes("ROLE_ADMIN") ? "true" : "false"
-        ); 
+        );
 
         this.authService.isModerator = this.roles.includes("ROLE_MODERATOR");
         localStorage.setItem(

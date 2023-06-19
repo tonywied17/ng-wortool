@@ -35,7 +35,7 @@ export class MapsComponent implements OnInit {
   filterByCsaArtillery = false;
 
   showArtyDiv = false;
-  showArtyDesktop = true
+  showArtyDesktop = true;
 
   showAttackerDiv: boolean = false;
   showAttackerDesktop = true;
@@ -52,22 +52,19 @@ export class MapsComponent implements OnInit {
   constructor(
     private mapService: MapService,
     private token: TokenStorageService,
-    private favoriteService: FavoriteService,
+    private favoriteService: FavoriteService
   ) {}
 
-  
-
   ngOnInit(): void {
-
     this.loading = true;
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
-  
+
     this.retrieveFilterState();
-  
+
     this.getMaps();
     this.getFavorites();
-  
+
     setTimeout(() => {
       this.loading = false;
       this.filterMaps();
@@ -87,11 +84,10 @@ export class MapsComponent implements OnInit {
       this.filterByFavorites = filterState.filterByFavorites;
       this.selectedFavorite = filterState.selectedFavorite;
       this.showFavoritesOnly = filterState.showFavoritesOnly;
-  
+
       this.filterMaps();
     }
   }
-  
 
   saveFilterState(): void {
     const filterState = {
@@ -108,10 +104,9 @@ export class MapsComponent implements OnInit {
   }
 
   clearSearchText() {
-    this.searchText = '';
+    this.searchText = "";
     this.filterMaps();
   }
-  
 
   setActiveMap(map: Map, index: number): void {
     this.currentMap = map;
@@ -140,14 +135,6 @@ export class MapsComponent implements OnInit {
 
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
-  
-    // if (this.selectedFavorite === "true") {
-    //   filteredMap = filteredMap.filter((map) =>
-    //     this.currentFavorites.some((favorite) => favorite.mapId === map.id)
-    //   );
-    // } else {
-    //   filteredMap = this.originalMap || [];
-    // }
 
     if (this.showFavoritesOnly) {
       filteredMap = filteredMap.filter((map) =>
@@ -158,25 +145,27 @@ export class MapsComponent implements OnInit {
     if (this.selectedAttacker === "USA") {
       filteredMap = filteredMap.filter((map) => map.attacker === "USA");
     }
-  
+
     if (this.selectedAttacker === "CSA") {
       filteredMap = filteredMap.filter((map) => map.attacker === "CSA");
     }
-  
+
     if (this.selectedAttacker === "No") {
       filteredMap = filteredMap.filter((map) => map.attacker === "No");
     }
-  
+
     if (this.filterByUsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.usaArty);
     }
-  
+
     if (this.filterByCsaArtillery) {
       filteredMap = filteredMap.filter((map) => map.csaArty);
     }
-  
+
     if (this.selectedCampaigns.length > 0) {
-      filteredMap = filteredMap.filter((map) => this.selectedCampaigns.includes(map.campaign));
+      filteredMap = filteredMap.filter((map) =>
+        this.selectedCampaigns.includes(map.campaign)
+      );
     }
 
     if (this.searchText) {
@@ -184,18 +173,17 @@ export class MapsComponent implements OnInit {
         map.map?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
-  
+
     this.map = filteredMap;
-  
+
     this.saveFilterState();
   }
-  
 
   private getFavorites(): void {
     const userID = this.currentUser.id;
 
-    if(userID === undefined) return;
-    
+    if (userID === undefined) return;
+
     this.favoriteService.getByUserId(userID).subscribe(
       (response) => {
         this.currentFavorites = response;
@@ -206,28 +194,26 @@ export class MapsComponent implements OnInit {
       }
     );
   }
-  
 
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
-  
+
     if (index > -1) {
       this.selectedCampaigns.splice(index, 1);
     } else {
       this.selectedCampaigns.push(campaign);
     }
-  
-    this.selectedCampaign = this.selectedCampaigns.length > 0 ? this.selectedCampaigns[0] : "";
+
+    this.selectedCampaign =
+      this.selectedCampaigns.length > 0 ? this.selectedCampaigns[0] : "";
     this.filterMaps();
   }
-  
 
   setSelectedCampaign(campaign: string): void {
     this.selectedCampaigns = [campaign];
     this.selectedCampaign = campaign;
     this.filterMaps();
   }
-  
 
   toggleFilterByCampaign(): void {
     this.filterByCampaignDiv = !this.filterByCampaignDiv;
@@ -283,35 +269,31 @@ export class MapsComponent implements OnInit {
     this.selectedCampaign = "";
     this.selectedCampaigns = [];
     this.filterByCampaign = true;
-  
+
     this.filterByAttacker = false;
     this.filterByCsaAttacker = false;
     this.filterByUsaAttacker = false;
     this.selectedAttacker = undefined;
-  
+
     this.filterByArtillery = false;
     this.filterByUsaArtillery = false;
     this.filterByCsaArtillery = false;
-  
+
     this.showArtyDiv = false;
     this.showAttackerDiv = false;
-  
+
     this.selectedFavorite = undefined;
     this.showFavoritesOnly = false;
-  
+
     this.filterMaps();
     this.getFavorites();
   }
-  
 
   scrollToTop(): void {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
-  
-  
-  
 }

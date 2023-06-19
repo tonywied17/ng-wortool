@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
-import { Location } from '@angular/common';
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-board-moderator",
@@ -21,13 +21,12 @@ export class BoardModeratorComponent implements OnInit {
     private token: TokenStorageService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private location: Location,
-    ) {}
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
-
     this.route.params.subscribe((params: Params) => {
-      const page = params['page'];
+      const page = params["page"];
       this.loadContent(page);
     });
 
@@ -38,7 +37,6 @@ export class BoardModeratorComponent implements OnInit {
     if (this.isLoggedIn) {
       this.authService.checkModeratorRole(userID).subscribe(
         (response) => {
-          
           this.showMod = response.access;
           this.loading = false;
         },
@@ -46,12 +44,12 @@ export class BoardModeratorComponent implements OnInit {
           if (error.status === 403) {
             this.showMod = false;
           } else {
-            console.error('Error:', error);
+            console.error("Error:", error);
           }
           this.loading = false;
         }
       );
-    }else{
+    } else {
       this.loading = false;
     }
   }
@@ -64,9 +62,9 @@ export class BoardModeratorComponent implements OnInit {
     this.showPage1 = false;
     this.showPage2 = false;
 
-    if (page === '1') {
+    if (page === "1") {
       this.showPage1 = true;
-    } else if (page === '2') {
+    } else if (page === "2") {
       this.showPage2 = true;
     }
   }

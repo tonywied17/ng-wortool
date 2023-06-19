@@ -22,8 +22,8 @@ import { Note } from "../_models/note.model";
 import { Favorite } from "../_models/favorite";
 import { AuthService } from "../_services/auth.service";
 import { FavoriteService } from "../_services/favorite.service";
-import { Location } from '@angular/common';
-import { ViewportScroller } from '@angular/common';
+import { Location } from "@angular/common";
+import { ViewportScroller } from "@angular/common";
 
 @Component({
   selector: "app-map-details",

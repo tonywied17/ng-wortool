@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { SteamApiService } from '../_services/steam-api.service';
+import { Component, OnInit } from "@angular/core";
+import { SteamApiService } from "../_services/steam-api.service";
 
 @Component({
-  selector: 'app-game-info',
-  templateUrl: './game-info.component.html',
-  styleUrls: ['./game-info.component.scss']
+  selector: "app-game-info",
+  templateUrl: "./game-info.component.html",
+  styleUrls: ["./game-info.component.scss"],
 })
 export class GameInfoComponent implements OnInit {
-
   gameNews: any;
   gameDetails: any;
   headerImage: any;
@@ -16,28 +15,25 @@ export class GameInfoComponent implements OnInit {
   latestAuthor: any;
   latestDate: any;
   screenshots: any;
-  isDataLoaded: boolean = false; 
+  isDataLoaded: boolean = false;
 
-  constructor(
-    private steamApiService: SteamApiService
-  ) { }
+  constructor(private steamApiService: SteamApiService) {}
 
   ngOnInit(): void {
     this.getAppDetails();
     this.getAppNews();
   }
 
-  
   getAppDetails(): void {
     this.steamApiService.getAppDetails().subscribe(
-      data => {
+      (data) => {
         this.gameDetails = data;
         this.headerImage = this.gameDetails.header_image;
         this.gameBackground = this.gameDetails.background;
         this.screenshots = this.gameDetails.screenshots;
-        this.isDataLoaded = true; 
+        this.isDataLoaded = true;
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );
@@ -45,13 +41,13 @@ export class GameInfoComponent implements OnInit {
 
   getAppNews(): void {
     this.steamApiService.getAppNews().subscribe(
-      data => {
+      (data) => {
         this.gameNews = data;
         this.articleLength = this.gameNews.length;
         this.latestAuthor = this.gameNews[0].author;
         this.latestDate = this.formatUnixTimestamp(this.gameNews[0].date);
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );
@@ -60,21 +56,20 @@ export class GameInfoComponent implements OnInit {
   formatUnixTimestamp(unixTimestamp: any): string {
     const date = new Date(unixTimestamp * 1000);
     const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+      year: "numeric",
+      month: "long",
+      day: "numeric",
       hour: undefined,
       minute: undefined,
       second: undefined,
-      timeZone: 'UTC'
+      timeZone: "UTC",
     };
-    
+
     return date.toLocaleString(undefined, options);
   }
-  
 
   navigateToExternalPage(url: string): void {
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   }
 
   open(url: any, title: any, w: any, h: any) {

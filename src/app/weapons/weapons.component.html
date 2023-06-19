@@ -1,87 +1,105 @@
-<div class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]" *ngIf="contentLoaded">
+<div *ngIf="contentLoaded"
+	class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
 	<h3 class="text-[#88887b] text-3xl tracking-tight mb-4">Weapons</h3>
 
-	<div
-		class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:grid-rows-3 mt-[2em] p-[1em] lg:px-[3em] rounded-md min-h-[730px]">
+
+	<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 lg:grid-rows-3 mt-[2em] p-[1em] lg:px-[3em] rounded-md min-h-[730px]">
+
 
 
 		<mat-accordion class="left-in2 col-start-1 lg:col-span-2 h-fit lg:row-start-1 lg:row-span-3">
 			<!-- Rifles -->
 			<mat-expansion-panel expanded="true">
 				<mat-expansion-panel-header>
-					<mat-panel-title class="text-slate-400 text-xl font-[300]">
-						Rifles
-					</mat-panel-title>
+					<mat-panel-title class="text-slate-400 text-xl font-[300]">Rifles</mat-panel-title>
 				</mat-expansion-panel-header>
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Rifle'">
-							<button mat-button class="w-full"
-								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
+							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
+								(click)="loadWeapon(weapon)"
+								mat-button
+								class="w-full">
+								{{ weapon.weapon }}
+								<sup>
+									<i class="fa-sharp fa-light fa-circle-info"></i>
+								</sup>
 							</button>
 						</div>
 					</ng-container>
 				</mat-list>
 			</mat-expansion-panel>
+
 
 			<!-- Revolvers -->
 			<mat-expansion-panel>
 				<mat-expansion-panel-header>
-					<mat-panel-title class="text-slate-400 text-xl font-[300]">
-						Revolvers
-					</mat-panel-title>
+					<mat-panel-title class="text-slate-400 text-xl font-[300]">Revolvers</mat-panel-title>
 				</mat-expansion-panel-header>
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Revolver'">
-							<button mat-button class="w-full"
-								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
+							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
+								(click)="loadWeapon(weapon)"
+								mat-button
+								class="w-full">
+								{{ weapon.weapon }}
+								<sup>
+									<i class="fa-sharp fa-light fa-circle-info"></i>
+								</sup>
 							</button>
 						</div>
 					</ng-container>
 				</mat-list>
 			</mat-expansion-panel>
+
 
 			<!-- Swords -->
 			<mat-expansion-panel>
 				<mat-expansion-panel-header>
-					<mat-panel-title class="text-slate-400 text-xl font-[300]">
-						Swords
-					</mat-panel-title>
+					<mat-panel-title class="text-slate-400 text-xl font-[300]">Swords</mat-panel-title>
 				</mat-expansion-panel-header>
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Sword'">
-							<button mat-button class="w-full"
-								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
+							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
+								(click)="loadWeapon(weapon)"
+								mat-button
+								class="w-full">
+								{{ weapon.weapon }}
+								<sup>
+									<i class="fa-sharp fa-light fa-circle-info"></i>
+								</sup>
 							</button>
 						</div>
 					</ng-container>
 				</mat-list>
 			</mat-expansion-panel>
 
+
 			<!-- Field Artillery -->
 			<mat-expansion-panel>
 				<mat-expansion-panel-header>
-					<mat-panel-title class="text-slate-400 text-xl font-[300]">
-						Field Artillery
-					</mat-panel-title>
+					<mat-panel-title class="text-slate-400 text-xl font-[300]">Field Artillery</mat-panel-title>
 				</mat-expansion-panel-header>
 				<mat-list>
 					<ng-container *ngFor="let weapon of weaponsObj">
 						<div *ngIf="weapon.type == 'Artillery'">
-							<button mat-button class="w-full"
-								[ngClass]="{ 'active': activeWeaponId === weapon.id }" (click)="loadWeapon(weapon)">
-								{{ weapon.weapon }} <sup><i class="fa-sharp fa-light fa-circle-info"></i></sup>
+							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
+								(click)="loadWeapon(weapon)"
+								mat-button
+								class="w-full">
+								{{ weapon.weapon }}
+								<sup>
+									<i class="fa-sharp fa-light fa-circle-info"></i>
+								</sup>
 							</button>
 						</div>
 					</ng-container>
 				</mat-list>
 			</mat-expansion-panel>
 		</mat-accordion>
+
 
 
 
@@ -96,33 +114,50 @@
 
 
 
+
 				<div class="pt-[1em] pb-[2em] text-base font-thin text-neutral-800 text-center">
 					<div class="max-h-fit w-full text-center mx-auto">
 
 
 
+
 						<div (click)="open(spotlight.image , spotlight.weapon, 1500, 868)">
-							<img class="cursor-zoom-in hover:transform active:scale-[1.05] rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"
-								[src]="spotlight.image">
+							<img [src]="spotlight.image"
+								class="cursor-zoom-in hover:transform active:scale-[1.05] rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
 						</div>
+
 
 
 					</div>
 
 
+
 					<div class="bg-[#7c7d73]/80 opacity-[0.87] text-neutral-200 p-5 mx-[0.5em] rounded-b-lg shadow-lg">
 
+
 						<div class="text-right !mt-[-1.25em]">
-							<button *ngIf="showAdmin" mat-button routerLink="/admin/2/{{spotlight.id}}"
-								class="!text-[#a2a398] !mb-0"><i
-									class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Edit Weapon</button>
+							<button *ngIf="showAdmin"
+								mat-button
+								routerLink="/admin/2/{{spotlight.id}}"
+								class="!text-[#a2a398] !mb-0">
+								<i class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>
+								Edit Weapon
+							</button>
+
 
 						</div>
 
-						<div *ngIf="spotlight.range" class="m-4 font-[300] text-lg leading-5">
 
-							<span class="font-[500] m-2 block">Range</span><span class="!select-text">{{spotlight.range}} yds</span>
+						<div *ngIf="spotlight.range"
+							class="m-4 font-[300] text-lg leading-5">
+
+
+							<span class="font-[500] m-2 block">Range</span>
+							<span class="!select-text">
+								{{spotlight.range}} yds
+							</span>
 						</div>
+
 
 
 
@@ -130,9 +165,15 @@
 
 
 
-						<div *ngIf="spotlight.lengthy" class="m-4 font-[300] text-lg leading-5">
-							<span class="font-[500] m-2 block">Length</span><span class="!select-text">{{spotlight.lengthy}}" in</span>
+
+						<div *ngIf="spotlight.lengthy"
+							class="m-4 font-[300] text-lg leading-5">
+							<span class="font-[500] m-2 block">Length</span>
+							<span class="!select-text">
+								{{spotlight.lengthy}}" in
+							</span>
 						</div>
+
 
 
 
@@ -140,20 +181,28 @@
 
 
 
-						<div *ngIf="spotlight.ammo" class="m-4 font-[300] text-lg leading-5">
-							<span class="font-[500] m-2 block">Ammo</span><span class="!select-text">{{spotlight.ammo}}</span>
-							
+
+						<div *ngIf="spotlight.ammo"
+							class="m-4 font-[300] text-lg leading-5">
+							<span class="font-[500] m-2 block">Ammo</span>
+							<span class="!select-text">{{spotlight.ammo}}</span>
+
+
 						</div>
 
 
 
 
-						<div *ngIf="spotlight.notes" class="mt-[2em] font-[300] !select-text">
+
+						<div *ngIf="spotlight.notes"
+							class="mt-[2em] font-[300] !select-text">
 							<i>{{spotlight.notes}}</i>
 						</div>
 
 
+
 					</div>
+
 
 
 
@@ -162,12 +211,16 @@
 
 				</div>
 
+
 			</div>
+
 
 		</div>
 
 
+
 	</div>
+
 
 
 
