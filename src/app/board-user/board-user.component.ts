@@ -12,13 +12,17 @@ import { MatTableDataSource } from "@angular/material/table";
 import { HttpClient } from "@angular/common/http";
 import { Location } from "@angular/common";
 import { DiscordService } from "../_services/discord.service";
+import { RegimentService } from "../_services/regiment.service";
 
 @Component({
   selector: "app-board-user",
   templateUrl: "./board-user.component.html",
   styleUrls: ["./board-user.component.scss"],
 })
+
+
 export class BoardUserComponent implements OnInit {
+  
   content?: string;
   currentUser: any;
   isLoggedIn = false;
@@ -39,11 +43,14 @@ export class BoardUserComponent implements OnInit {
   email: string = "";
   avatar_url: string = "";
   discordId: string = "";
-  regimentId: string = "681641606398607401";
+  regimentId: string = "";
   discordSyncUrl: string = "";
   useAvatarUrl = false;
   discordIsSynced = false;
+  regimentSelected = false;
   discordData: any;
+  regimentData: any;
+  allRegimentsList: any;
 
   currentFavorites: any;
   hasFavorites = false;
@@ -64,7 +71,8 @@ export class BoardUserComponent implements OnInit {
     private router: Router,
     private httpClient: HttpClient,
     private location: Location,
-    private discordService: DiscordService
+    private discordService: DiscordService,
+    private regimentService: RegimentService
   ) {}
 
   onPageSizeChange(event: any) {
@@ -78,13 +86,14 @@ export class BoardUserComponent implements OnInit {
       this.loadContent(page);
     });
 
-    this.fetchGuildPic();
-
+    this.getAllRegiments();
+    
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
     this.email = this.currentUser.email;
     this.avatar_url = this.currentUser.avatar_url;
     this.discordId = this.currentUser.discordId;
+    this.regimentId = this.currentUser.regimentId;
 
     if (this.discordId) {
       this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/`;
@@ -98,7 +107,7 @@ export class BoardUserComponent implements OnInit {
           this.showUser = response.access;
           this.getDiscordUser();
           this.getFavorites();
-
+          this.getRegiment();
           this.loading = false;
         },
         (error) => {
@@ -210,7 +219,7 @@ export class BoardUserComponent implements OnInit {
     }
   }
 
-  sync(url: string): void {
+  sync(): void {
     const state = encodeURIComponent(this.currentUser.id);
     const left = window.screenX + 100;
 
@@ -280,7 +289,13 @@ export class BoardUserComponent implements OnInit {
     const userId = this.currentUser.id;
     try {
       await this.authService
-        .profile(userId, this.email, this.avatar_url, this.discordId)
+        .profile(
+          userId,
+          this.email,
+          this.avatar_url,
+          this.discordId,
+          this.regimentId
+        )
         .toPromise();
       this.showSnackBar("Profile updated successfully!");
 
@@ -289,12 +304,26 @@ export class BoardUserComponent implements OnInit {
         email: this.email,
         avatar_url: this.avatar_url,
         discordId: this.discordId,
+        regimentId: this.regimentId,
       };
       this.token.saveUser(updatedUser);
 
       this.email = updatedUser.email;
       this.avatar_url = updatedUser.avatar_url;
       this.discordId = updatedUser.discordId;
+      this.regimentId = updatedUser.regimentId;
+
+      if (this.regimentId != null) {
+        const selectedRegiment = this.allRegimentsList.find((regiment: { id: any }) => regiment.id == this.regimentId);
+        if (selectedRegiment) {
+          this.regimentData = selectedRegiment;
+          this.regimentSelected = true;
+        } else {
+          this.regimentData = null;
+          this.regimentSelected = false;
+        }
+      }
+      
       // this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${updatedUser.discordId}/get`
     } catch (error: any) {
       if (error.status === 400) {
@@ -323,15 +352,6 @@ export class BoardUserComponent implements OnInit {
     this.router.navigate(["/home"]);
   }
 
-  fetchGuildPic() {
-    fetch(
-      `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/get`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        this.guild_avatar_url = data.guild.iconURL;
-      });
-  }
 
   private showSnackBar(message: string) {
     this.snackBar.open(message, "Close", {
@@ -384,4 +404,43 @@ export class BoardUserComponent implements OnInit {
       });
     }
   }
+
+  getRegiment() {
+    let regimentId = this.currentUser.regimentId;
+
+    if (!regimentId) {
+      this.regimentSelected = false;
+    } else {
+      this.regimentService.getRegiment(regimentId).subscribe((response) => {
+        console.log(response);
+        this.regimentData = response;
+        this.regimentSelected = true;
+      });
+    }
+  }
+
+  getAllRegiments() {
+    this.regimentService.getRegiments().subscribe((response) => {
+      console.log(response);
+      this.allRegimentsList = response;
+    });
+  }
+
+  updateGuildAvatar() {
+    const selectedRegiment = this.allRegimentsList.find((regiment: { id: any }) => regiment.id == this.regimentId);
+    if (selectedRegiment) {
+      this.guild_avatar_url = selectedRegiment.guild_avatar;
+      this.regimentData = selectedRegiment;
+      
+    } else {
+      this.guild_avatar_url = '';
+      this.regimentData = null;
+      this.regimentSelected = false;
+    }
+  }
+  
+  
+  
+  
+
 }

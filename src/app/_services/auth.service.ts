@@ -66,11 +66,12 @@ export class AuthService {
     }, httpOptions);
   }
 
-  profile(id: string, email: string, avatar_url: string, discordId: string): Observable<any> {
+  profile(id: string, email: string, avatar_url: string, discordId: string, regimentId: string): Observable<any> {
     return this.http.put(AUTH_API + id + '/updateProfile', {
       email,
       avatar_url,
-      discordId
+      discordId,
+      regimentId
     }, httpOptions);
   }
 
