@@ -42,7 +42,7 @@
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn" routerLink="/user/3" mat-list-item
 								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-solid fa-stars w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								<i class="fa-solid fa-star w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
 								Manage Favorites
 							</button>
 						</mat-action-list>
@@ -65,7 +65,7 @@
 							<div class="field-box">
 								<input [(ngModel)]="passwordCurrent" name="passwordCurrent"
 									class="field-input my-[0.5em]" type="password" placeholder="Current Password...">
-								<i class="fa-regular fa-key-skeleton field-icon"></i>
+								<i class="fa-solid fa-key field-icon"></i>
 							</div>
 
 
@@ -73,7 +73,7 @@
 							<div class="field-box">
 								<input [(ngModel)]="passwordNew" name="passwordNew" class="field-input my-[0.5em]"
 									type="password" placeholder="New Password...">
-								<i class="fa-sharp fa-regular fa-sparkles field-icon"></i>
+								<i class="fa-solid fa-wand-magic-sparkles field-icon"></i>
 							</div>
 
 
@@ -81,7 +81,7 @@
 							<div class="field-box">
 								<input [(ngModel)]="passwordNewConfirm" name="passwordNewConfirm"
 									class="field-input my-[0.5em]" type="password" placeholder="Confirm Password...">
-								<i class="fa-sharp fa-regular fa-check field-icon"></i>
+								<i class="fa-solid fa-check field-icon"></i>
 							</div>
 
 
@@ -117,7 +117,7 @@
 							<div class="field-box">
 								<input [(ngModel)]="email" name="email" class="field-input my-[0.5em]" type="email"
 									value="{{currentUser.email}}" placeholder="Your email...">
-								<i class="fa-sharp fa-regular fa-envelope field-icon"></i>
+								<i class="fa-solid fa-envelope field-icon"></i>
 							</div>
 
 
@@ -125,7 +125,7 @@
 							<div class="field-box">
 								<input [(ngModel)]="avatar_url" name="avatar_url" class="field-input my-[0.5em]"
 									type="email" placeholder="Avatar url...">
-								<i class="fa-sharp fa-regular fa-camera-retro field-icon"></i>
+								<i class="fa-solid fa-camera-retro field-icon"></i>
 							</div>
 
 
@@ -171,7 +171,7 @@
 									</div>
 									<div class="col-start-2 col-span-1">
 										<p>
-											Your Regiment:
+											Available Regiments:
 											<span class="font-thin block">
 												<select [(ngModel)]="regimentId" (change)="updateGuildAvatar()"
 													name="regimentId">
@@ -265,7 +265,7 @@
 
 									<button (click)="confirmDelete(fav.mapId, fav.mapData.map)" mat-button
 										class="!text-[#9b3f3f] !font-[900] !mx-1">
-										<i class="fa-sharp fa-regular fa-trash sm:pr-2"></i>
+										<i class="fa-solid fa-trash sm:pr-2"></i>
 										<span class="hidden sm:inline">Delete</span>
 									</button>
 								</mat-cell>

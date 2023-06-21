@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { AuthService } from "../_services/auth.service";
 import { Location } from "@angular/common";
+import { RegimentService } from "../_services/regiment.service";
 
 @Component({
   selector: "app-board-moderator",
@@ -17,11 +18,15 @@ export class BoardModeratorComponent implements OnInit {
   showPage1 = false;
   showPage2 = false;
   loading = true;
+  regimentData: any;
+  regimentSelected = true;
+
   constructor(
     private token: TokenStorageService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private regimentService: RegimentService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +43,7 @@ export class BoardModeratorComponent implements OnInit {
       this.authService.checkModeratorRole(userID).subscribe(
         (response) => {
           this.showMod = response.access;
+          this.getRegiment();
           this.loading = false;
         },
         (error) => {
@@ -66,6 +72,20 @@ export class BoardModeratorComponent implements OnInit {
       this.showPage1 = true;
     } else if (page === "2") {
       this.showPage2 = true;
+    }
+  }
+
+  getRegiment() {
+    let regimentId = this.currentUser.regimentId;
+
+    if (regimentId) {
+      this.regimentService.getRegiment(regimentId).subscribe((response) => {
+        console.log(response);
+        this.regimentData = response;
+        this.regimentSelected = true;
+      });
+    }else{
+      this.regimentSelected = false;
     }
   }
 }

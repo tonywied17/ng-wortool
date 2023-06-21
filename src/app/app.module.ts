@@ -26,6 +26,7 @@ import { GameInfoComponent } from "./game-info/game-info.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { VersionChecker } from "./version-checker";
 import { environment } from "src/environments/environment.prod";
+import { RegimentSettingsComponent } from './board-moderator/regiment-settings/regiment-settings.component';
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
@@ -63,6 +64,7 @@ const routes: Routes = [
     ManageWeaponsComponent,
     ServerInfoComponent,
     GameInfoComponent,
+    RegimentSettingsComponent,
   ],
   imports: [
     BrowserModule,

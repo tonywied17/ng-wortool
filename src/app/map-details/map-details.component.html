@@ -56,7 +56,7 @@
         mat-menu-item
       >
         <span class="!text-neutral-400 font-[500]">
-          <i class="pr-2 fa-solid fa-note"></i>
+          <i class="pr-2 fa-regular fa-clipboard"></i>
           Map Notes
         </span>
       </button>
@@ -78,11 +78,11 @@
         mat-menu-item
       >
         <span *ngIf="isFavorited" class="!text-neutral-400 font-[500]"
-          ><i class="fa-sharp fa-solid fa-heart pr-2 !text-red-400"></i>
+          ><i class="fa-solid fa-heart fa-heart pr-2 !text-red-400"></i>
           Unfavorite</span
         >
         <span *ngIf="!isFavorited" class="!text-neutral-400 font-[500]"
-          ><i class="fa-sharp fa-regular fa-heart pr-2 !text-red-400"></i>
+          ><i class="fa-regular fa-heart pr-2 !text-red-400"></i>
           Favorite</span
         >
       </button>
@@ -156,14 +156,14 @@
           )
         "
       >
-        <i class="fa-sharp fa-regular fa-paintbrush-pencil pr-1"></i
-        >StratSketch<sup
-          ><i class="fa-sharp fa-regular fa-arrow-up-right-from-square pl-2"></i
+        <i class="fa-solid fa-pen-ruler pr-1"></i
+        >StratSketch<sup>
+          <i class="fa-solid fa-arrow-up-right-from-square pl-2"></i
         ></sup>
       </button>
 
       <!-- <button style="z-index: 2;" class="!mr-[0.5em] float-right" mat-button (click)="openDialog()">
-                <i class="fa-sharp fa-regular fa-paintbrush-pencil pr-1"></i>Map Notes
+                <i class="fa-solid fa-paintbrush-pencil pr-1"></i>Map Notes
             </button> -->
 
       <div
@@ -471,8 +471,8 @@
       </div>
 
       <div class="block pr-[20px] text-center text-3xl font-[300] select-none">
-        <i class="icon fa-light fa-swords text-[2rem]"></i>
-        <span class="block text-sm font-[200]">vs.</span>
+        <img src="https://app.paarmy.com/assets/swords.png" class="icon mx-auto h-[50px] w-auto pointer-events-none">
+        <span class="block text-base font-[200]">vs.</span>
       </div>
 
       <div

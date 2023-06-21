@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { MapService } from "src/app/_services/map.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { TokenStorageService } from "../../_services/token-storage.service";
+import { AuthService } from "../../_services/auth.service";
+import { RegimentService } from "../../_services/regiment.service";
+import { DiscordService } from "src/app/_services/discord.service";
 
 @Component({
   selector: "app-server-info",
@@ -32,13 +36,59 @@ export class ServerInfoComponent implements OnInit {
   filteredMapNames1: any[] = [];
   filteredMapNames2: any[] = [];
 
-  constructor(private mapService: MapService, private snackBar: MatSnackBar) {}
+  currentUser: any;
+  isLoggedIn = false;
 
-  ngOnInit(): void {
+  regimentID: any;
+  regimentData: any;
+  regimentSelected = true;
+
+  description: any;
+  invite_link: any;
+  website: any;
+
+  regimentChannels: any;
+
+  targetChannel: any;
+  discordWebhook: any;
+
+  constructor(
+    private mapService: MapService, 
+    private snackBar: MatSnackBar,
+    private regimentService: RegimentService,
+    private discordService: DiscordService,
+    private token: TokenStorageService,
+    private authService: AuthService
+    ) {}
+
+  async ngOnInit(): Promise<void> {
     this.getMaps();
     setTimeout(() => {
       // console.log(this.map)
     }, 1000);
+
+
+    this.isLoggedIn = !!this.token.getToken();
+    this.currentUser = this.token.getUser();
+    const userID = this.currentUser.id;
+
+    if (this.isLoggedIn) {
+      await this.authService.checkModeratorRole(userID).toPromise()
+        .then((response) => {
+          if (this.currentUser.regimentId) {
+            this.regimentID = this.currentUser.regimentId;
+            this.getRegiment();
+          }
+        })
+        .catch((error) => {
+          if (error.status === 403) {
+            this.regimentSelected = false;
+          } else {
+            console.error("Error:", error);
+          }
+        });
+    } 
+    
   }
 
   getMaps(): void {
@@ -122,12 +172,10 @@ export class ServerInfoComponent implements OnInit {
   }
 
   sendMessage(): void {
-    const discordWebhook =
-      "https://discord.com/api/webhooks/977298085959053312/mXJgUGr0F4EX_ID_CAPi8R2M-LvxwkWFpmyLZ_pifB3-boVyHkLGuZa_xKdXyPxLc-1Y";
     const params = {
-      username: "Event Information",
+      username: "Server Info",
       avatar_url:
-        "https://cdn.discordapp.com/app-icons/977585539773505557/985b16a9cc12f71f54080243e443ff26.png?size=256",
+        "https://app.paarmy.com/assets/icon.png",
       content: `${this.getRoles()}
 __Server__
 **Server Name:** ${this.sn}
@@ -165,7 +213,7 @@ __#PA Army App__
         }
       );
     } else {
-      this.sendWebhook(discordWebhook, params);
+      this.sendWebhook(this.discordWebhook, params);
       this.snackBar.open(
         "Server information posted to announcements",
         "Close",
@@ -188,7 +236,13 @@ __#PA Army App__
     if (this.euChecked) {
       roles += "<@&682502128929079321> ";
     }
+
+    if(this.regimentData.guild_id !== '681641606398607401') {
+      roles = "";
+    }
+    
     return roles.trim();
+    
   }
 
   getMapLink(map: string): string {
@@ -205,4 +259,24 @@ __#PA Army App__
     request.setRequestHeader("Content-type", "application/json");
     request.send(JSON.stringify(params));
   }
+
+
+  async getRegiment(): Promise<void> {
+    if (this.regimentID) {
+      await this.regimentService.getRegiment(this.regimentID).toPromise()
+        .then((response) => {
+          this.regimentData = response;
+          this.regimentSelected = true;
+          this.discordWebhook = this.regimentData.webhook;
+          this.targetChannel = this.regimentData.webhook_channel;
+          console.log(this.discordWebhook)
+        })
+        .catch(() => {
+          this.regimentSelected = false;
+        });
+    } else {
+      this.regimentSelected = false;
+    }
+  }
+
 }

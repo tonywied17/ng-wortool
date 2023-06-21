@@ -4,7 +4,8 @@
 
 		<div>
 
-			<div class="mb-4">
+			<div *ngIf="regimentData.guild_id == '681641606398607401'"
+				class="mb-4">
 				<mat-checkbox [(ngModel)]="allChecked"
 					name="allChecked"
 					class="checkbox-input"
@@ -40,7 +41,7 @@
 						class="field-input"
 						type="text"
 						placeholder="Server name...">
-					<i class="fa-light fa-input-text field-icon"></i>
+					<i class="fa-solid fa-tag field-icon"></i>
 				</div>
 			</div>
 
@@ -54,7 +55,7 @@
 						class="field-input"
 						type="text"
 						placeholder="Password...">
-					<i class="fa-sharp fa-solid fa-lock-keyhole field-icon"></i>
+					<i class="fa-solid fa-key field-icon"></i>
 				</div>
 			</div>
 
@@ -63,7 +64,7 @@
 
 	<div class="my-auto">
 
-		<div class="grid sm:grid-cols-2 gap-3 auto-rows-auto">
+		<div class="grid sm:grid-cols-2 gap-5 auto-rows-auto">
 
 			<h2 class="text-xl text-slate-400 font-[300] my-[0]">First Round</h2>
 
@@ -86,7 +87,7 @@
 						<option value="Harpers Ferry">Harpers Ferry</option>
 						<option value="South Mountain">South Mountain</option>
 					</select>
-					<i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
+					<i class="fa-solid fa-bullseye field-icon"></i>
 				</div>
 			</div>
 
@@ -109,7 +110,7 @@
 							{{ mapName }}
 						</option>
 					</select>
-					<i class="fa-sharp fa-regular fa-map field-icon"></i>
+					<i class="fa-solid fa-map field-icon"></i>
 				</div>
 			</div>
 
@@ -128,7 +129,7 @@
 						</option>
 						<option value="CSA">CSA</option>
 					</select>
-					<i class="fa-solid fa-bars-sort field-icon focus:!transform-none"></i>
+					<i class="fa-solid fa-arrows-up-down field-icon focus:!transform-none"></i>
 				</div>
 			</div>
 
@@ -142,7 +143,7 @@
 						class="field-input"
 						type="text"
 						placeholder="First round regiment...">
-					<i class="fa-sharp fa-light fa-shield field-icon"></i>
+					<i class="fa-solid fa-shield field-icon"></i>
 				</div>
 			</div>
 
@@ -156,7 +157,7 @@
 						class="field-input"
 						placeholder="First round unit info...">
 					</textarea>
-					<i class="fa-sharp fa-light fa-users field-icon"></i>
+					<i class="fa-solid fa-users field-icon"></i>
 				</div>
 			</div>
 		</div>
@@ -165,7 +166,7 @@
 	<!-- Second Round -->
 	<div class="my-auto">
 
-		<div class="grid sm:grid-cols-2 gap-3">
+		<div class="grid sm:grid-cols-2 gap-5">
 			<h2 class="text-xl text-slate-400 font-[300] my-[0]">Second Round</h2>
 
 			<div class="col-start-1 col-span-1">
@@ -187,7 +188,7 @@
 						<option value="Harpers Ferry">Harpers Ferry</option>
 						<option value="South Mountain">South Mountain</option>
 					</select>
-					<i class="fa-sharp fa-regular fa-bullseye field-icon"></i>
+					<i class="fa-solid fa-bullseye field-icon"></i>
 				</div>
 			</div>
 
@@ -210,7 +211,7 @@
 							{{ mapName }}
 						</option>
 					</select>
-					<i class="fa-sharp fa-regular fa-map field-icon"></i>
+					<i class="fa-solid fa-map field-icon"></i>
 				</div>
 			</div>
 
@@ -229,7 +230,7 @@
 						</option>
 						<option value="CSA">CSA</option>
 					</select>
-					<i class="fa-solid fa-bars-sort field-icon focus:!transform-none"></i>
+					<i class="fa-solid fa-arrows-up-down field-icon focus:!transform-none"></i>
 				</div>
 			</div>
 
@@ -243,7 +244,7 @@
 						class="field-input"
 						type="text"
 						placeholder="Second round regiment...">
-					<i class="fa-sharp fa-light fa-shield field-icon"></i>
+					<i class="fa-solid fa-shield field-icon"></i>
 				</div>
 			</div>
 
@@ -257,7 +258,7 @@
 						class="field-input"
 						placeholder="Second round unit info...">
 					</textarea>
-					<i class="fa-sharp fa-light fa-users field-icon"></i>
+					<i class="fa-solid fa-users field-icon"></i>
 				</div>
 			</div>
 
@@ -281,11 +282,18 @@
 
 </div>
 
-<div (click)="sendMessage()"
+<div *ngIf="regimentData.guild_id == '681641606398607401'"
+	(click)="sendMessage()"
 	class="button fire mt-[1em]">
 	Erin Abu!!
 	<img src="assets/cannonbayo-color2.png"
 		class="ml-2 h-auto w-[50px] pointer-events-none">
 </div>
 
-<!-- <button type="button" class="submit-button" class="lg:py-[3px] lg:text-3xl font-[200] text-neutral-300 bg-gradient-to-r from-[#b3b4a8] via-[#7c7d72] to-[#65665c] hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-[#fb8b23] shadow-lg shadow-[#fb8b23]/50 dark:shadow-lg dark:shadow-[#fb8b23]/80 rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 w-full">Erin Abu!!</button> -->
+<button *ngIf="regimentData.guild_id != '681641606398607401'"
+	(click)="sendMessage()"
+	mat-raised-button
+	type="submit"
+	class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+	Share to {{targetChannel}}
+</button>

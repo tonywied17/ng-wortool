@@ -37,10 +37,12 @@
 							<span class="filter-text test">
 								<span [class.active]="filterByCampaign"
 									class="filter-toggle">
-									<i *ngIf="!filterByCampaign"
-										class="fa-sharp fa-solid fa-plus"></i>
-									<i *ngIf="filterByCampaign"
-										class="fa-sharp fa-solid fa-minus"></i>
+									<span *ngIf="!filterByCampaign">
+										<i class="fa-sharp fa-solid fa-plus"></i>
+									</span>
+									<span *ngIf="filterByCampaign">
+										<i class="fa-sharp fa-solid fa-minus"></i>
+									</span>
 								</span>
 								Filter by Campaign
 							</span>
@@ -61,97 +63,87 @@
 
 					<div class="filter-options">
 						<label class="filter-label">
-							<span (click)="toggleArty()"
-								class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+							<span (click)="toggleArty()" class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
 								<span class="filter-text test">
-									<span [class.active]="showArtyDesktop"
-										class="filter-toggle">
-										<i *ngIf="!showArtyDesktop"
-											class="fa-sharp fa-solid fa-plus"></i>
-										<i *ngIf="showArtyDesktop"
-											class="fa-sharp fa-solid fa-minus"></i>
+									<span [class.active]="showArtyDesktop" class="filter-toggle">
+										<span *ngIf="!showArtyDesktop">
+											<i class="fa-sharp fa-solid fa-plus"></i>
+										</span>
+										<span *ngIf="showArtyDesktop">
+											<i class="fa-sharp fa-solid fa-minus"></i>
+										</span>
 									</span>
 									Filter by Artillery
 								</span>
 							</span>
 						</label>
 					</div>
+					
 					<div *ngIf="showArtyDesktop">
 						<div class="filter-options">
-							<div class="checkbox-columns"
-								style="border-left: dotted 1px #7c7d738f;padding: 5px;">
-								<mat-checkbox [(ngModel)]="filterByUsaArtillery"
-									(change)="filterMaps()">
+							<div class="checkbox-columns" style="border-left: dotted 1px #7c7d738f; padding: 5px;">
+								<mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMaps()">
 									USA Artillery
 								</mat-checkbox>
-								<mat-checkbox [(ngModel)]="filterByCsaArtillery"
-									(change)="filterMaps()">
+								<mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMaps()">
 									CSA Artillery
 								</mat-checkbox>
 							</div>
 						</div>
 					</div>
-
-
-					<div *ngIf="isLoggedIn"
-						class="filter-options">
+					
+					<div *ngIf="isLoggedIn" class="filter-options">
 						<label class="filter-label">
-							<span (click)="toggleFavorites()"
-								class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+							<span (click)="toggleFavorites()" class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
 								<span class="filter-text test">
-									<span [class.active]="showFavoritesDesktop"
-										class="filter-toggle">
-										<i *ngIf="!showFavoritesDesktop"
-											class="fa-sharp fa-solid fa-plus"></i>
-										<i *ngIf="showFavoritesDesktop"
-											class="fa-sharp fa-solid fa-minus"></i>
+									<span [class.active]="showFavoritesDesktop" class="filter-toggle">
+										<span *ngIf="!showFavoritesDesktop">
+											<i class="fa-sharp fa-solid fa-plus"></i>
+										</span>
+										<span *ngIf="showFavoritesDesktop">
+											<i class="fa-sharp fa-solid fa-minus"></i>
+										</span>
 									</span>
 									Filter by Favorites
 								</span>
 							</span>
 						</label>
 					</div>
+					
 					<div *ngIf="showFavoritesDesktop && isLoggedIn">
 						<div class="filter-options">
-							<div *ngIf="isLoggedIn"
-								class="filter-options">
-								<div class="checkbox-columns"
-									style="border-left: dotted 1px #7c7d738f;padding: 5px;">
-									<mat-checkbox [(ngModel)]="showFavoritesOnly"
-										(change)="filterMaps()">
+							<div *ngIf="isLoggedIn" class="filter-options">
+								<div class="checkbox-columns" style="border-left: dotted 1px #7c7d738f; padding: 5px;">
+									<mat-checkbox [(ngModel)]="showFavoritesOnly" (change)="filterMaps()">
 										Favorites Only
 									</mat-checkbox>
 								</div>
 							</div>
 						</div>
 					</div>
-
-
-
-
+					
 					<div class="filter-options">
 						<label class="filter-label">
-							<span (click)="toggleAttacker()"
-								class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+							<span (click)="toggleAttacker()" class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
 								<span class="filter-text test">
-									<span [class.active]="showAttackerDesktop"
-										class="filter-toggle">
-										<i *ngIf="!showAttackerDesktop"
-											class="fa-sharp fa-solid fa-plus"></i>
-										<i *ngIf="showAttackerDesktop"
-											class="fa-sharp fa-solid fa-minus"></i>
+									<span [class.active]="showAttackerDesktop" class="filter-toggle">
+										<span *ngIf="!showAttackerDesktop">
+											<i class="fa-sharp fa-solid fa-plus"></i>
+										</span>
+										<span *ngIf="showAttackerDesktop">
+											<i class="fa-sharp fa-solid fa-minus"></i>
+										</span>
 									</span>
 									Filter by Attacker
 								</span>
 							</span>
 						</label>
 					</div>
+					
 					<div *ngIf="showAttackerDesktop">
 						<div class="filter-options">
-							<div class="checkbox-columns"
-								style="border-left: dotted 1px #7c7d738f;padding: 5px;">
-								<mat-radio-group [(ngModel)]="selectedAttacker"
-									(change)="filterMaps()">
+							<div class="checkbox-columns" style="border-left: dotted 1px #7c7d738f; padding: 5px;">
+								<mat-radio-group [(ngModel)]="selectedAttacker" (change)="filterMaps()">
 									<mat-radio-button value="USA">USA Attacker</mat-radio-button>
 									<mat-radio-button value="CSA">CSA Attacker</mat-radio-button>
 									<mat-radio-button value="Any">Any Attacker</mat-radio-button>
@@ -159,6 +151,7 @@
 							</div>
 						</div>
 					</div>
+					
 
 
 
@@ -183,143 +176,109 @@
 
 			<!-- Visible for mobile view -->
 			<div class="lg:hidden inline-block left-in w-full">
+				
+
 				<div class="filter-options mt-[1em]">
-					<span (click)="toggleFilterByCampaign()"
-						class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+					<span (click)="toggleFilterByCampaign()" class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
 						<span class="filter-text test">
-							<span [class.active]="filterByCampaignDiv"
-								class="filter-toggle">
-								<i *ngIf="!filterByCampaignDiv"
-									class="fa-sharp fa-solid fa-plus"></i>
-								<i *ngIf="filterByCampaignDiv"
-									class="fa-sharp fa-solid fa-minus"></i>
+							<span [class.active]="filterByCampaignDiv" class="filter-toggle">
+								<span *ngIf="!filterByCampaignDiv">
+									<i class="fa-sharp fa-solid fa-plus"></i>
+								</span>
+								<span *ngIf="filterByCampaignDiv">
+									<i class="fa-sharp fa-solid fa-minus"></i>
+								</span>
 							</span>
 							Filter by Campaign
 						</span>
 					</span>
 				</div>
-				<div *ngIf="filterByCampaignDiv"
-					class="filter-options">
+				<div *ngIf="filterByCampaignDiv" class="filter-options">
 					<div class="checkbox-columns ml-[0.5em]">
-						<mat-checkbox *ngFor="let campaign of uniqueCampaigns"
-							[checked]="isCampaignSelected(campaign)"
+						<mat-checkbox *ngFor="let campaign of uniqueCampaigns" [checked]="isCampaignSelected(campaign)"
 							(change)="toggleCampaignSelection(campaign)">
 							{{ campaign }}
 						</mat-checkbox>
 					</div>
 				</div>
-
-
+			
 				<div class="filter-options mt-[0.7em]">
 					<label class="filter-label">
-						<span (click)="toggleArtyDiv()"
-							class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+						<span (click)="toggleArtyDiv()" class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
 							<span class="filter-text test">
-								<span [class.active]="showArtyDiv"
-									class="filter-toggle">
-									<i *ngIf="!showArtyDiv"
-										class="fa-sharp fa-solid fa-plus"></i>
-									<i *ngIf="showArtyDiv"
-										class="fa-sharp fa-solid fa-minus"></i>
+								<span [class.active]="showArtyDiv" class="filter-toggle">
+									<span *ngIf="!showArtyDiv">
+										<i class="fa-sharp fa-solid fa-plus"></i>
+									</span>
+									<span *ngIf="showArtyDiv">
+										<i class="fa-sharp fa-solid fa-minus"></i>
+									</span>
 								</span>
 								Filter by Artillery
 							</span>
 						</span>
 					</label>
 				</div>
-				<div *ngIf="showArtyDiv">
-					<div class="filter-options">
-						<div class="checkbox-columns ml-[1em]">
-							<mat-checkbox [(ngModel)]="filterByUsaArtillery"
-								(change)="filterMaps()">
-								USA Artillery
-							</mat-checkbox>
-							<mat-checkbox [(ngModel)]="filterByCsaArtillery"
-								(change)="filterMaps()">
-								CSA Artillery
-							</mat-checkbox>
-						</div>
+				<div *ngIf="showArtyDiv" class="filter-options">
+					<div class="checkbox-columns ml-[1em]">
+						<mat-checkbox [(ngModel)]="filterByUsaArtillery" (change)="filterMaps()">USA Artillery</mat-checkbox>
+						<mat-checkbox [(ngModel)]="filterByCsaArtillery" (change)="filterMaps()">CSA Artillery</mat-checkbox>
 					</div>
 				</div>
-
-
-				<div *ngIf="isLoggedIn"
-					class="filter-options mt-[0.7em]">
+			
+				<div *ngIf="isLoggedIn" class="filter-options mt-[0.7em]">
 					<label class="filter-label">
-						<span (click)="toggleFavoritesDiv()"
-							class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+						<span (click)="toggleFavoritesDiv()" class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
 							<span class="filter-text test">
-								<span [class.active]="showFavoritesDiv"
-									class="filter-toggle">
-									<i *ngIf="!showFavoritesDiv"
-										class="fa-sharp fa-solid fa-plus"></i>
-									<i *ngIf="showFavoritesDiv"
-										class="fa-sharp fa-solid fa-minus"></i>
+								<span [class.active]="showFavoritesDiv" class="filter-toggle">
+									<span *ngIf="!showFavoritesDiv">
+										<i class="fa-sharp fa-solid fa-plus"></i>
+									</span>
+									<span *ngIf="showFavoritesDiv">
+										<i class="fa-sharp fa-solid fa-minus"></i>
+									</span>
 								</span>
 								Filter by Favorites
 							</span>
 						</span>
 					</label>
 				</div>
-				<div *ngIf="showFavoritesDiv && isLoggedIn">
-					<div class="filter-options">
-						<div *ngIf="isLoggedIn"
-							class="filter-options">
-							<div class="checkbox-columns"
-								style="border-left: dotted 1px #7c7d738f;">
-								<mat-checkbox [(ngModel)]="showFavoritesOnly"
-									(change)="filterMaps()">
-									Favorites Only
-								</mat-checkbox>
-							</div>
+				<div *ngIf="showFavoritesDiv && isLoggedIn" class="filter-options">
+					<div *ngIf="isLoggedIn" class="filter-options">
+						<div class="checkbox-columns" style="border-left: dotted 1px #7c7d738f;">
+							<mat-checkbox [(ngModel)]="showFavoritesOnly" (change)="filterMaps()">Favorites Only</mat-checkbox>
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
+			
 				<div class="filter-options mt-[0.7em]">
 					<label class="filter-label">
-						<span (click)="toggleAttackerDiv()"
-							class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
+						<span (click)="toggleAttackerDiv()" class="toggle-icon cursor-pointer !text-[#7c7d72] select-none">
 							<span class="filter-text test">
-								<span [class.active]="showAttackerDiv"
-									class="filter-toggle">
-									<i *ngIf="!showAttackerDiv"
-										class="fa-sharp fa-solid fa-plus"></i>
-									<i *ngIf="showAttackerDiv"
-										class="fa-sharp fa-solid fa-minus"></i>
+								<span [class.active]="showAttackerDiv" class="filter-toggle">
+									<span *ngIf="!showAttackerDiv">
+										<i class="fa-sharp fa-solid fa-plus"></i>
+									</span>
+									<span *ngIf="showAttackerDiv">
+										<i class="fa-sharp fa-solid fa-minus"></i>
+									</span>
 								</span>
 								Filter by Attacker
 							</span>
 						</span>
 					</label>
 				</div>
-				<div *ngIf="showAttackerDiv">
-					<div class="filter-options">
-						<div class="checkbox-columns ml-[1em]">
-							<mat-radio-group [(ngModel)]="selectedAttacker"
-								(change)="filterMaps()">
-								<mat-radio-button value="USA">USA Attacker</mat-radio-button>
-								<mat-radio-button value="CSA"
-									class="mt-[0.5em]">
-									CSA Attacker
-								</mat-radio-button>
-								<mat-radio-button value="Any"
-									class="mt-[0.5em]">
-									Any Attacker
-								</mat-radio-button>
-								<mat-radio-button value="No"
-									class="mt-[0.5em]">
-									No Attacker
-								</mat-radio-button>
-							</mat-radio-group>
-						</div>
+				<div *ngIf="showAttackerDiv" class="filter-options">
+					<div class="checkbox-columns ml-[1em]">
+						<mat-radio-group [(ngModel)]="selectedAttacker" (change)="filterMaps()">
+							<mat-radio-button value="USA">USA Attacker</mat-radio-button>
+							<mat-radio-button value="CSA" class="mt-[0.5em]">CSA Attacker</mat-radio-button>
+							<mat-radio-button value="Any" class="mt-[0.5em]">Any Attacker</mat-radio-button>
+							<mat-radio-button value="No" class="mt-[0.5em]">No Attacker</mat-radio-button>
+						</mat-radio-group>
 					</div>
 				</div>
+				
 
 
 				<button (click)="clearFilters()"
