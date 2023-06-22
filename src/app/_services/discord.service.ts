@@ -34,5 +34,9 @@ export class DiscordService {
   createWebhook(guildId: string, channelId: string): Observable<any> {
     return this.http.get<any>(`${API}/guild/${guildId}/channel/${channelId}/webhook`);
   }
+
+  removeDiscordUser(userId: string): Observable<any> {
+    return this.http.delete<any>(`${API}/user/${userId}/remove`);
+  }
   
 }

@@ -41,6 +41,9 @@ export class RegimentService {
     }, httpOptions);
   }
 
+  removeUsersRegiment(userId: number): Observable<any> {
+    return this.http.delete(API + userId + '/remove');
+  }
   
 
 }

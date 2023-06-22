@@ -152,61 +152,121 @@
 
 
 
-							<div *ngIf="!discordIsSynced">
-								<button (click)="sync()" class="!mt-2" mat-stroked-button color="primary"
-									type="button">
-									<i class="fa-brands fa-discord"></i> Discord Sync
-								</button>
-							</div>
 
 
 
 
 
-							<div *ngIf="(discordId && discordIsSynced) && !regimentSelected"
+
+
+
+
+
+
+							<div
 								class="field-box my-[1em] ring-2 ring-[#7c7d72] p-3 rounded-sm shadow-md hover:opacity-70 transition-all duration-300">
-								<div class="grid gap-2 grid-cols-[105px_minmax(300px,_1fr)]">
-									<div class="col-start-1 col-span-1">
-										<img [src]="guild_avatar_url" class="h-[100px] w-auto">
-									</div>
-									<div class="col-start-2 col-span-1">
-										<p>
-											Available Regiments:
-											<span class="font-thin block">
-												<select [(ngModel)]="regimentId" (change)="updateGuildAvatar()"
-													name="regimentId">
-													<option *ngFor="let regiment of allRegimentsList"
-														[value]="regiment.id">{{ regiment.regiment }}</option>
-												</select>
-											</span>
-										</p>
-									</div>
-								</div>
-							</div>
+								<span class="text-xl text-slate-400">Linked Accounts</span>
 
-							<div *ngIf="(discordId && discordIsSynced) && regimentSelected"
-								class="field-box my-[1em] ring-2 ring-[#7c7d72] p-3 rounded-sm shadow-md hover:opacity-70 transition-all duration-300">
-								<span class="text-xl">{{ regimentData?.regiment }}</span>
-								<div class="grid gap-2 grid-cols-[105px_minmax(300px,_1fr)] mt-[0.7em]">
-									<div class="col-start-1 col-span-1">
-										<img [src]="regimentData?.guild_avatar" class="h-[100px] w-auto">
+								<div class="grid grid-cols-2">
 
+									<div *ngIf="!discordIsSynced || !discordData" class="place-self-center">
+
+										<button (click)="sync()" class="!mt-2" mat-stroked-button color="primary"
+											type="button">
+											<i class="fa-brands fa-discord"></i> Link Discord
+										</button>
 									</div>
-									<div class="col-start-2 col-span-1">
-										<div>
-											<div>
-												<div class="mb-1">Discord ID: <span class="font-[200]">{{regimentData?.guild_id}}</span></div>
-												<div class="mb-1">Invite Link: <a [href]="regimentData?.invite_link" target="_blank" class="font-[200]">{{regimentData?.invite_link}}</a></div>
+
+									<div *ngIf="discordData">
+										<div class="m-[1em] max-h-fit text-justify">
+											<div class="text-xl">
+												Discord Account
 											</div>
 
+											<div class="grid grid-cols-[85px_minmax(auto,_1fr)] gap-2">
 
-											<div class="h-[50px] font-[200]">
-												<img class="h-[25px] w-auto rounded-full inline" [src]="discordData?.avatar"> {{ discordData?.username }}
+												<div>
+													<img [src]="discordData?.avatar" class="h-[80px] mt-2">
+												</div>
+
+												<div>
+													<div class="font-[200] text-sm text-justify">
+
+														<span class="block text-base text-slate-300 my-2">{{
+															discordData?.username }}</span>
+
+														<i class="fa-brands fa-discord text-neutral-300"></i>
+														{{discordData?.discordId}}
+
+														<div class="cursor-pointer hover:opacity-80 mt-2">
+															<span (click)="confirmUnSync()" class="text-red-400">
+																<i class="fa-regular fa-circle-xmark"></i> Unlink
+															</span>
+														</div>
+
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
+
+									<div *ngIf="!regimentData || stillSelecting" class="place-self-center my-[4em]">
+										<div>
+														
+
+													<select [(ngModel)]="regimentId" (change)="updateRegiment()"
+														name="regimentId"
+														class="field-input text-base !inline-block hover:!scale-100 focus:!scale-100 !transition-none !h-[45px] !max-w-fit"
+														id="select" #selectBox>
+														<option value="" disabled selected>Join a Regiment</option>
+														<option *ngFor="let regiment of allRegimentsList"
+															[value]="regiment.id">{{ regiment.regiment }}</option>
+													</select>
+										
+									
+										</div>
+									</div>
+
+
+									<div *ngIf="regimentData && !stillSelecting">
+										<div class="m-[1em] max-h-fit text-justify">
+											<div class="text-xl">
+												Your Regiment
+											</div>
+
+											<div class="grid grid-cols-[85px_minmax(auto,_1fr)] gap-2">
+
+												<div>
+													<img [src]="regimentData?.guild_avatar" class="h-[80px] mt-2">
+												</div>
+
+												<div>
+													<div class="font-[200] text-sm text-justify">
+
+														<span class="block text-base text-slate-300 my-2">{{
+															regimentData?.regiment }}</span>
+
+														<i class="fa-brands fa-discord text-neutral-300"></i>
+														{{regimentData?.guild_id}}
+
+														<div class="cursor-pointer hover:opacity-80 mt-2">
+															<span (click)="confirmUnSyncRegiment()"
+																class="text-red-400">
+																<i class="fa-regular fa-circle-xmark"></i> Unlink
+															</span>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
 								</div>
 							</div>
+
+
 
 
 

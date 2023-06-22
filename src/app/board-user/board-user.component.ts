@@ -22,7 +22,15 @@ import { RegimentService } from "../_services/regiment.service";
 
 
 export class BoardUserComponent implements OnInit {
-  
+
+  @ViewChild('selectBox') selectBox: any;
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.selectBox.nativeElement.selectedIndex = 0;
+    }, 500);
+  }
+
   content?: string;
   currentUser: any;
   isLoggedIn = false;
@@ -51,6 +59,7 @@ export class BoardUserComponent implements OnInit {
   discordData: any;
   regimentData: any;
   allRegimentsList: any;
+  stillSelecting = false;
 
   currentFavorites: any;
   hasFavorites = false;
@@ -285,6 +294,7 @@ export class BoardUserComponent implements OnInit {
     }
   }
 
+
   async updateProfile() {
     const userId = this.currentUser.id;
     try {
@@ -298,6 +308,8 @@ export class BoardUserComponent implements OnInit {
         )
         .toPromise();
       this.showSnackBar("Profile updated successfully!");
+
+      this.stillSelecting = false;
 
       const updatedUser = {
         ...this.currentUser,
@@ -388,6 +400,24 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
+  confirmUnSync(): void {
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to remove your Discord Account?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+
+    snackBarRef.onAction().subscribe(() => {
+      this.remove();
+    });
+  }
+
   getDiscordUser() {
     let userId = this.currentUser.id;
 
@@ -426,12 +456,13 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
-  updateGuildAvatar() {
+  updateRegiment() {
     const selectedRegiment = this.allRegimentsList.find((regiment: { id: any }) => regiment.id == this.regimentId);
     if (selectedRegiment) {
-      this.guild_avatar_url = selectedRegiment.guild_avatar;
+      // this.guild_avatar_url = selectedRegiment.guild_avatar;
       this.regimentData = selectedRegiment;
-      
+      this.stillSelecting = true;
+      this.confirmSyncRegiment()
     } else {
       this.guild_avatar_url = '';
       this.regimentData = null;
@@ -439,8 +470,70 @@ export class BoardUserComponent implements OnInit {
     }
   }
   
+  remove(){
+    this.discordService.removeDiscordUser(this.currentUser.id).subscribe((response) => {
+      console.log(response);
+      this.discordData = null;
+      this.discordIsSynced = false;
+      this.discordId = '';
+      this.updateProfile();
+      this.snackBar.open("Discord account removed", "Close", {
+        verticalPosition: "top",
+        duration: 3000,
+      });
+    }
+    );
+  }
+
+  confirmSyncRegiment() {
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to join ${this.regimentData.regiment}?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+
+    snackBarRef.onAction().subscribe(() => {
+      this.updateProfile();
+    });
+  }
+
+  confirmUnSyncRegiment() {
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to remove your Regiment?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+
+    snackBarRef.onAction().subscribe(() => {
+      this.removeRegiment();
+    });
+  }
   
-  
-  
+  removeRegiment() {
+    this.regimentService.removeUsersRegiment(this.currentUser.id).subscribe((response: any) => {
+      console.log(response);
+      this.regimentData = null;
+      this.regimentSelected = false;
+      this.regimentId = '';
+      this.updateProfile();
+      this.snackBar.open("Regiment removed", "Close", {
+        verticalPosition: "top",
+        duration: 3000,
+      });
+    }
+    );
+  }
 
 }

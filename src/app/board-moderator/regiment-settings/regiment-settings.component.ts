@@ -4,7 +4,8 @@ import { TokenStorageService } from "../../_services/token-storage.service";
 import { AuthService } from "../../_services/auth.service";
 import { RegimentService } from "../../_services/regiment.service";
 import { DiscordService } from "src/app/_services/discord.service";
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { ConfirmDeleteSnackbarComponent } from "../../confirm-delete-snackbar/confirm-delete-snackbar.component";
 
 @Component({
   selector: 'app-regiment-settings',
@@ -42,7 +43,8 @@ export class RegimentSettingsComponent implements OnInit {
     private regimentService: RegimentService,
     private discordService: DiscordService,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -161,5 +163,35 @@ export class RegimentSettingsComponent implements OnInit {
     this.guild_avatar = discord.iconURL;
     this.guild_id = discord.id;
 
+  }
+
+  confirmRemoveUser(userId: any) {
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to remove ${userId} your Regiment?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+
+    snackBarRef.onAction().subscribe(() => {
+      this.removeUserFromRegiment(userId);
+    });
+  }
+
+  removeUserFromRegiment(userId: any){
+    this.regimentService.removeUsersRegiment(userId).toPromise()
+      .then((response) => {
+        console.log(response);
+        this.getRegimentUsers(this.regimentData.id);
+        this.token.saveUser(response);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 }
