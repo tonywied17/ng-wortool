@@ -115,7 +115,9 @@
   margin-right: 0.5em;
 }
 
-
+.mat-checkbox-label ::ng-deep {
+  font-size: 16px !important
+}
 
 
 .test {

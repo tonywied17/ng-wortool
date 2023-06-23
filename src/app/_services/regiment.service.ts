@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 let API = "https://api.tonewebdesign.com/pa/regiments/";
-
+let AUTH_API = "https://api.tonewebdesign.com/pa/auth/";
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -45,5 +45,17 @@ export class RegimentService {
     return this.http.delete(API + userId + '/remove');
   }
   
+
+  setModerator(userId: number): Observable<any> {
+    return this.http.put(AUTH_API + userId + '/setModerator', {
+      userId
+    }, httpOptions);
+  }
+
+  removeModerator(userId: number): Observable<any> {
+    return this.http.put(AUTH_API + userId + '/removeModerator', {
+      userId
+    }, httpOptions);
+  }
 
 }

@@ -6,6 +6,7 @@ import { RegimentService } from "../../_services/regiment.service";
 import { DiscordService } from "src/app/_services/discord.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ConfirmDeleteSnackbarComponent } from "../../confirm-delete-snackbar/confirm-delete-snackbar.component";
+import { UserService } from "src/app/_services/user.service";
 
 @Component({
   selector: 'app-regiment-settings',
@@ -18,6 +19,9 @@ export class RegimentSettingsComponent implements OnInit {
   currentUser: any;
   isLoggedIn = false;
   showMod = false;
+
+  isModerator = false;
+  roles: string[] = [];
 
   regimentID: any;
   regimentData: any;
@@ -44,7 +48,7 @@ export class RegimentSettingsComponent implements OnInit {
     private discordService: DiscordService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-
+    private userService: UserService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -164,6 +168,96 @@ export class RegimentSettingsComponent implements OnInit {
     this.guild_id = discord.id;
 
   }
+
+  toggleModerator(userId: any) {
+    const regimentId = this.regimentData.id;
+  
+    this.regimentService.getRegimentUsers(regimentId).toPromise()
+      .then((users) => {
+        const matchedUser = users.find((user: { id: any; }) => user.id === userId);
+        if (matchedUser) {
+          const hasModeratorRole = matchedUser.roles.includes('ROLE_MODERATOR');
+  
+          if (hasModeratorRole) {
+            this.removeModerator(userId);
+          } else {
+            this.setModerator(userId);
+          }
+        } else {
+          console.log("User not found.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+  
+
+  confirmAddModerator(userId: any) {
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to set this user as a Regiment Manager?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+  
+    snackBarRef.onAction().subscribe(() => {
+      this.setModerator(userId);
+    });
+  }
+  
+  confirmRemoveModerator(userId: any) {
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to remove this user as a Regiment Manager?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+  
+    snackBarRef.onAction().subscribe(() => {
+      this.removeModerator(userId);
+    });
+  }
+
+  setModerator(userId: any) {
+    this.regimentService.setModerator(userId).toPromise()
+      .then((response) => {
+        console.log(response);
+        // Handle success case, if needed
+        this.snackBar.open(`User set as Regiment Manager`, 'Close', { duration: 3000, verticalPosition: "top" });
+        this.getRegimentUsers(this.regimentData.id);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle error case, if needed
+      });
+  }
+  
+  removeModerator(userId: any) {
+    this.regimentService.removeModerator(userId).toPromise()
+      .then((response) => {
+        console.log(response);
+        // Handle success case, if needed
+        this.snackBar.open(`User removed as Regiment Manager`, 'Close', { duration: 3000, verticalPosition: "top" });
+        this.getRegimentUsers(this.regimentData.id);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle error case, if needed
+      });
+  }
+
+  
 
   confirmRemoveUser(userId: any) {
     const snackBarRef = this.snackBar.openFromComponent(

@@ -1,5 +1,4 @@
-<div *ngIf="regimentData"
-	class="max-w-full">
+<div *ngIf="regimentData" class="max-w-full">
 	<h2 class="mt-[1em]">
 		Event Tool Configuration
 	</h2>
@@ -19,24 +18,18 @@
 		</div>
 
 		<div class="sm:col-start-3 sm:col-span-2 sm:place-self-end">
-			<select #channelSelect
-				style=" padding-top: 11px;
+			<select #channelSelect style=" padding-top: 11px;
     padding-bottom: 11px;
     font-size: 15px;
-    border: 1px solid #7c7d72 !important;"
-				class="field-input2 inline-block !w-fit"
-				id="channel-select">
+    border: 1px solid #7c7d72 !important;" class="field-input2 inline-block !w-fit" id="channel-select">
 				<option value="0">Select a Channel</option>
-				<option *ngFor="let channel of this.regimentChannels"
-					[value]="channel.id">
+				<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
 					{{ channel.name }}
 				</option>
 			</select>
 
-			<button (click)="updateTargetChannel(channelSelect.value)"
-				mat-button
-				class="ml-2 !w-[100px] !inline-block !py-[1.02em] !mb-1"
-				color="primary">
+			<button (click)="updateTargetChannel(channelSelect.value)" mat-button
+				class="ml-2 !w-[100px] !inline-block !py-[1.02em] !mb-1" color="primary">
 				Update
 			</button>
 		</div>
@@ -50,11 +43,7 @@
 			</h2>
 		</div>
 		<div class="place-self-end !mt-[0.5em] !mr-2">
-			<button (click)="syncDiscord()"
-				class="!ml-auto"
-				type="button"
-				mat-stroked-button
-				color="primary">
+			<button (click)="syncDiscord()" class="!ml-auto" type="button" mat-stroked-button color="primary">
 				Resync Discord
 			</button>
 		</div>
@@ -65,98 +54,68 @@
 			<form (ngSubmit)="updateRegiment()">
 				<div class="form-group p-2 m-2">
 					<div class="field-box">
-						<input [(ngModel)]="regiment"
-							name="regiment"
-							style="
+						<input [(ngModel)]="regiment" name="regiment" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              "
-							class="field-input !font-[300] my-[0.5em]"
-							type="text"
-							placeholder="Display Name...">
+              " class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Display Name...">
 						<i class="fa-solid fa-tag field-icon"></i>
 					</div>
 
 					<div class="field-box">
-						<input [(ngModel)]="guild_id"
-							name="guild_id"
-							style="
+						<input [(ngModel)]="guild_id" name="guild_id" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              "
-							class="field-input !font-[300] my-[0.5em]"
-							type="text"
-							placeholder="Discord ID...">
+              " class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Discord ID...">
 						<i class="fa-brands fa-discord field-icon"></i>
 					</div>
 
 					<div class="field-box">
-						<input [(ngModel)]="guild_avatar"
-							name="guild_avatar"
-							style="
+						<input [(ngModel)]="guild_avatar" name="guild_avatar" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              "
-							class="field-input !font-[300] my-[0.5em]"
-							type="text"
-							placeholder="Avatar Url...">
+              " class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Avatar Url...">
 						<i class="fa-solid fa-image field-icon"></i>
 					</div>
 
 					<div class="field-box">
-						<input [(ngModel)]="invite_link"
-							name="invite_link"
-							style="
+						<input [(ngModel)]="invite_link" name="invite_link" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              "
-							class="field-input !font-[300] my-[0.5em]"
-							type="text"
-							placeholder="Invite Link...">
+              " class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Invite Link...">
 						<i class="fa-solid fa-link field-icon"></i>
 					</div>
 
 					<div class="field-box">
-						<input [(ngModel)]="website"
-							name="website"
-							style="
+						<input [(ngModel)]="website" name="website" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              "
-							class="field-input !font-[300] my-[0.5em]"
-							type="text"
-							placeholder="Website...">
+              " class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Website...">
 						<i class="fa-solid fa-globe field-icon"></i>
 					</div>
 
 					<div class="field-box">
-						<textarea [(ngModel)]="description"
-							name="description"
-							style="
+						<textarea [(ngModel)]="description" name="description" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              "
-							class="field-input !font-[300] my-[0.5em]"
-							placeholder="Description...">
+              " class="field-input !font-[300] my-[0.5em]" placeholder="Description...">
 						</textarea>
 						<i class="fa-solid fa-book field-icon"></i>
 					</div>
 				</div>
 
-				<button mat-raised-button
-					type="submit"
+				<button mat-raised-button type="submit"
 					class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 					Update Regiment
 				</button>
@@ -170,8 +129,7 @@
 						{{ regimentData.regiment }}
 					</h3>
 
-					<img [src]="regimentData.guild_avatar"
-						class="mx-auto w-[200px] h-[200px] shadow-md mb-[1em]">
+					<img [src]="regimentData.guild_avatar" class="mx-auto w-[200px] h-[200px] shadow-md mb-[1em]">
 
 					<p class="my-1 text-sm font-[200]">
 						<i class="fa-solid fa-link w-[25px] ml-[1em] mr-[0.5em]"></i>
@@ -189,27 +147,41 @@
 					</p>
 				</div>
 				<div class="place-self-end w-full">
-					<h3 class="text-slate-400">Manage Members</h3>
-					<div *ngFor="let user of regimentUsers"
-						class="relative">
-						<img *ngIf="user.avatar_url"
-							[src]="user.avatar_url"
-							class="h-full w-auto mr-1 absolute left-[8px] shadow-md hover:opacity-80 cursor-pointer">
+					<!-- <h3 class="text-slate-400">Manage Members</h3> -->
+					<div *ngFor="let user of regimentUsers" class="relative">
 
-						<i *ngIf="!user.avatar_url"
-							class="fa-solid fa-user mt-[7px] ml-2 mr-1 absolute left-[8px] hover:opacity-80 cursor-pointer"></i>
 
-						<div class="bg-slate-600 shadow-sm rounded-sm p-1 m-2 !text-[0.9rem] font-[300] pl-[2.5em] w-full">
-							{{ user.username }}
-							<span class="float-right" (click)="confirmRemoveUser(user.id)">
-								<i class="fa-solid fa-xmark text-red-500 mr-1.5 hover:opacity-80 cursor-pointer"></i>
-							</span>
+						<div class="p-1 m-2 !text-[0.9rem] font-[300] pl-[2.5em] w-full">
+							<div class="bg-slate-600 shadow-sm rounded-sm py-[5px]">
+
+								<img *ngIf="user.avatar_url" [src]="user.avatar_url"
+									class="h-[25px] w-auto ml-1 mr-1 left-[8px] shadow-md hover:opacity-80 cursor-pointer inline-block">
+
+								<i *ngIf="!user.avatar_url"
+									class="fa-solid fa-user mt-[px] ml-2 mr-1 left-[8px] hover:opacity-80 cursor-pointer"></i>
+
+								{{ user.username }}
+
+								<div class="float-right">
+									<span class="" (click)="confirmRemoveUser(user.id)">
+										<i
+											class="fa-solid fa-xmark text-red-500 mr-2 hover:opacity-80 cursor-pointer"></i>
+									</span>
+								</div>
+
+							</div>
+
+
+							<div class="bg-slate-800">
+								<mat-checkbox class="!text-xs settings" [checked]="user.roles.includes('ROLE_MODERATOR')"
+									(change)="toggleModerator(user.id)"><span class="text-sm ml-[-5px]">Manager</span></mat-checkbox>
+							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<mat-divider></mat-divider>
 </div>

@@ -167,7 +167,7 @@
 								class="field-box my-[1em] ring-2 ring-[#7c7d72] p-3 rounded-sm shadow-md hover:opacity-70 transition-all duration-300">
 								<span class="text-xl text-slate-400">Linked Accounts</span>
 
-								<div class="grid grid-cols-2">
+								<div class="grid sm:grid-cols-2 grid-cols-1">
 
 									<div *ngIf="!discordIsSynced || !discordData" class="place-self-center">
 
@@ -179,14 +179,14 @@
 
 									<div *ngIf="discordData">
 										<div class="m-[1em] max-h-fit text-justify">
-											<div class="text-xl">
+											<div class="text-base">
 												Discord Account
 											</div>
 
 											<div class="grid grid-cols-[85px_minmax(auto,_1fr)] gap-2">
 
 												<div>
-													<img [src]="discordData?.avatar" class="h-[80px] mt-2">
+													<img [src]="discordData?.avatar" class="h-[80px] mt-2 pointer-events-none">
 												</div>
 
 												<div>
@@ -230,14 +230,14 @@
 
 									<div *ngIf="regimentData && !stillSelecting">
 										<div class="m-[1em] max-h-fit text-justify">
-											<div class="text-xl">
+											<div class="text-base">
 												Your Regiment
 											</div>
 
 											<div class="grid grid-cols-[85px_minmax(auto,_1fr)] gap-2">
 
 												<div>
-													<img [src]="regimentData?.guild_avatar" class="h-[80px] mt-2">
+													<img [src]="regimentData?.guild_avatar" class="h-[80px] mt-2 pointer-events-none">
 												</div>
 
 												<div>
