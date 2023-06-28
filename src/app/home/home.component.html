@@ -20,8 +20,8 @@
 
 		<!-- Left Box -->
 		<div class="row-span-3 left-in">
-			<div class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-8 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
-				<h3 class="text-[#252525ce]  text-3xl tracking-tight mb-4 px-6">#PA Army App 2.0</h3>
+			<div class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-8 ring-1 ring-slate-900/5 shadow-xl w-full h-fit">
+				<h3 class="text-[#252525ce]  text-3xl tracking-tight mb-4 px-6">A War of Rights Tool</h3>
 				<p class="text-[#c4c4c4ce] text-lg  px-6">
 					An all-in-one utility tool for managing your War of Rights regiment.
 				</p>
@@ -37,9 +37,8 @@
 
 
 				<p class="text-[#c4c4c4bb] text-sm px-4 font-[100] italic text-center mb-[-10px] pt-2">
-					""
 					<span class="not-italic">
-						- PA-[116thPVI] Cpt. Stalins
+						Brought to you by the Pennsylvania Army Science Division
 					</span>
 				</p>
 
@@ -53,7 +52,7 @@
 
 
 
-		<div class="lg:col-span-2 lg:row-span-2">
+		<div class="lg:col-span-2 lg:row-span-2 place-self-center w-full h-full">
 
 
 
@@ -61,12 +60,12 @@
 			<!-- Logged In Menu -->
 			<div *ngIf="isLoggedIn"
 				class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
-				style="padding: 70px 2em;">
+				style="padding: 2em 2em;">
 
 
 
 
-				<h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
+				<h3 class="text-neutral-400 text-lg pb-3 tracking-tight mt-[42px]">
 					Access Your Dashboards
 				</h3>
 
@@ -151,8 +150,8 @@
 
 			<!-- Register Box -->
 			<div *ngIf="registerTask && !loginTask && !isLoggedIn"
-				class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
-				style="padding: 70px 2em;">
+				class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-fit !my-auto top-in"
+				style="padding: 2em;">
 				<h3 class="text-white text-lg pb-3  tracking-tight">Sign-up Now!</h3>
 				<div *ngIf="isSuccessful"
 					class="alert alert-success">
@@ -426,7 +425,7 @@
 
 
 
-			<div class="bg-slate-800 rounded-lg ring-1 ring-slate-900/5 shadow-xl h-full text-right">
+			<div class="h-full text-right">
 				<!-- <button mat-stroked-button
                    
                     class="h-full"
@@ -444,7 +443,7 @@
 					<span class="pr-2">
 						The Pennsylvania Army
 					</span>
-					<span class="pr-2 !text-gray-300 block mt-1">
+					<span class="pr-2 !text-gray-300 block">
 						<button (click)="openPortfolio()"
 							class="hover:brightness-125 active:transform active:translate-y-1 active:translate-x-1">
 							by molex

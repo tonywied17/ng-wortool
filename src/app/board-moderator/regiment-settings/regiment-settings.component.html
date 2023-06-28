@@ -1,8 +1,8 @@
 <div *ngIf="regimentData" class="max-w-full">
-	<h2 class="mt-[1em]">
+	<!-- <h2 class="mt-[1em]">
 		Event Tool Configuration
 	</h2>
-	<mat-divider></mat-divider>
+	<mat-divider></mat-divider> -->
 	<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
 		<div class="col-start-1 col-span-1">
 			<h3 class="text-slate-400">Event Channel</h3>
@@ -178,7 +178,7 @@
 										[disabled]="user.discordId == regimentData.ownerId"
 										(change)="toggleModerator(user.id)"
 										class="!text-xs settings mr-2 mt-[-8px] float-right">
-										<span class="text-sm ml-[-5px] !text-slate-950">Manager</span>
+										<span class="text-sm ml-[-5px] !text-[#9a9b97]">Manager</span>
 									</mat-checkbox>
 									<span *ngIf="user.discordId == regimentData.ownerId"
 										class="float-right owner font-[500] text-slate-400 mr-2">

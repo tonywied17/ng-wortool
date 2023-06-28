@@ -70,37 +70,40 @@
 
 <div *ngIf="!loading && regimentSelected" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
 
+	<div class="grid grid-cols-2">
+		<div>
+			<button (click)="goBack()"
+			mat-button
+			color="primary"
+			class="">
+			<i class="fa-sharp fa-solid fa-arrow-left"></i>
+			Back
+		</button>
+		</div>
 
-	<div class="w-fit ml-auto text-right mb-[0.75em]" *ngIf="regimentData">
-		<div
-			class="grid grid-cols-[auto_minmax(56px,_1fr)] gap-3 text-lg lg:!text-xl !text-neutral-300 ml-auto w-full">
-
-			<div>
-				{{regimentData.regiment}}
-				<span class="!text-base !font-[200] block">Regiment Tools</span>
+		<div>
+			<div class="w-fit ml-auto text-right mb-[0.75em]" *ngIf="regimentData">
+				<div
+					class="grid grid-cols-[auto_minmax(56px,_1fr)] gap-3 text-lg lg:!text-xl !text-neutral-300 ml-auto w-full">
+		
+					<div>
+						{{regimentData.regiment}}
+						<span class="!text-base !font-[200] block">Regiment Tools</span>
+					</div>
+		
+					<div>
+						<img [src]="regimentData.guild_avatar"
+							class="lg:!h-[46px] !w-auto !inline pointer-events-none mr-3 rounded-sm shadow-sm">
+					</div>
+		
+				</div>
 			</div>
-
-			<div>
-				<img [src]="regimentData.guild_avatar"
-					class="lg:!h-[46px] !w-auto !inline pointer-events-none mr-3 rounded-sm shadow-sm">
-			</div>
-
 		</div>
 	</div>
 
-
-
+	
 
 	<div *ngIf="showMod">
-
-
-
-<!-- 
-		<button (click)="goBack()" mat-button class="!mb-[1em] !block sm:!hidden">
-			<i class="fa-sharp fa-solid fa-arrow-left"></i>
-			Back
-		</button> -->
-
 
 
 
