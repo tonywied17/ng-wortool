@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TokenStorageService } from "./_services/token-storage.service";
-import { Router } from "@angular/router";
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError} from '@angular/router';
 import { AuthService } from "./_services/auth.service";
 import { SharedService } from "./_services/shared.service";
 import { VersionChecker } from "./version-checker";
@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
 
   message = "";
 
+  currentRoute!: string;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -37,6 +39,30 @@ export class AppComponent implements OnInit {
     this.authService.authenticationEvent.subscribe(() => {
       this.initializeComponent();
     });
+
+    this.currentRoute = "";
+    this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+            // Show progress spinner or progress bar
+            console.log('Route change detected');
+            
+        }
+
+        if (event instanceof NavigationEnd) {
+            // Hide progress spinner or progress bar
+            this.currentRoute = event.url;          
+            console.log(this.currentRoute);
+        }
+
+        if (event instanceof NavigationError) {
+             // Hide progress spinner or progress bar
+
+            // Present error to user
+            console.log(event.error);
+        }
+    });
+
+
   }
 
   goBack(): void {

@@ -8,7 +8,11 @@
     background-color: #17202e !important;
     height: 52px;
     font-size: 16px;
-    padding: 12px 36px 12px 12px !important
+    padding: 12px 36px 12px 12px !important;
+    min-width: calc(100% - 110px);
+    max-width: calc(100% - 110px);
+    width: calc(100% - 110px);
+    transition: none !important;
 }
 
 #side-select{

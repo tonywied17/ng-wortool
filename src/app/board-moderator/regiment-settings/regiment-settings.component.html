@@ -5,7 +5,7 @@
 	<mat-divider></mat-divider> -->
 	<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
 		<div class="col-start-1 col-span-1">
-			<h3 class="text-slate-400">Event Channel</h3>
+			<h3 class="text-slate-400 ml-1">Event Channel</h3>
 			<span *ngIf="regimentData.webhook_channel" [innerHTML]="regimentData.webhook_channel"
 				class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
 			</span>
@@ -26,31 +26,31 @@
 			<select #channelSelect style=" padding-top: 11px;
     padding-bottom: 11px;
     font-size: 15px;
-    border: 1px solid #7c7d72 !important;" class="field-input2 inline-block !w-fit" id="channel-select">
+    border: 1px solid #7c7d72 !important;" class="field-input2 inline-block" id="channel-select">
 				<option value="0">Select a Channel</option>
 				<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
 					{{ channel.name }}
 				</option>
 			</select>
 
-			<button (click)="updateTargetChannel(channelSelect.value)" mat-button
-				class="ml-2 !w-[100px] !inline-block !py-[1.02em] !mb-1" color="primary">
-				Update
+			<button (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
+				class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1" color="primary">
+				Set Channel
 			</button>
 		</div>
 	</div>
-	<mat-divider></mat-divider>
+	<!-- <mat-divider></mat-divider> -->
 
 	<div class="grid sm:grid-cols-2 grid-cols-1 !mt-[0.5em] !mx-2">
 		<div>
-			<h2 class="mt-[1em]">
-				Regiment Information
+			<h2 class="mt-[1em] ml-2 mb-[-1em] text-slate-400">
+				Regimental Profile
 			</h2>
 		</div>
 		<div class="place-self-end !mt-[0.5em] !mr-2">
-			<button (click)="syncDiscord()" class="!ml-auto" type="button" mat-stroked-button color="primary">
+			<!-- <button (click)="syncDiscord()" class="!ml-auto" type="button" mat-stroked-button color="primary">
 				Resync Discord
-			</button>
+			</button> -->
 		</div>
 	</div>
 
