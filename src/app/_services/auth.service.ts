@@ -81,9 +81,9 @@ export class AuthService {
     return this.http.post(url, body);
   }
   
-  checkModeratorRole(userId: string): Observable<any> {
+  checkModeratorRole(userId: string, regimentId: any): Observable<any> {
     const url = VET_API + 'mod';
-    const body = { userId: userId };
+    const body = { userId: userId, regimentId: regimentId };
     return this.http.post(url, body);
   }
   

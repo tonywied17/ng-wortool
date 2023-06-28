@@ -29,15 +29,17 @@ export class RegimentService {
     return this.http.get(API + regimentId  + '/users');
   }
 
-  updateRegiment(regimentId: number, regiment: any, guild_id: any, guild_avatar: any, invite_link: any, website: any, description: any): Observable<any> {
+  updateRegiment(userId: any, regimentId: number, regiment: any, guild_id: any, guild_avatar: any, invite_link: any, website: any, description: any, side: any): Observable<any> {
     
     return this.http.put(API + regimentId + '/update', {
+      userId,
       regiment,
       guild_id,
       guild_avatar,
       invite_link,
       website,
-      description
+      description,
+      side,
     }, httpOptions);
   }
 
@@ -46,7 +48,7 @@ export class RegimentService {
   }
   
 
-  setModerator(userId: number): Observable<any> {
+  setModerator(userId: any): Observable<any> {
     return this.http.put(AUTH_API + userId + '/setModerator', {
       userId
     }, httpOptions);

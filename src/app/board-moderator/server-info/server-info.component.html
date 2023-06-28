@@ -1,299 +1,313 @@
-<div class="grid sm:grid-cols-2 gap-5 auto-rows-auto">
-
-	<div class="row-start-1 sm:col-span-2 col-start-1">
-
-		<div>
-
-			<div *ngIf="regimentData.guild_id == '681641606398607401'"
-				class="mb-4">
-				<mat-checkbox [(ngModel)]="allChecked"
-					name="allChecked"
-					class="checkbox-input"
-					checked="true">
-					Pennsylvania Army
-				</mat-checkbox>
-
-				<mat-checkbox [(ngModel)]="naChecked"
-					name="naChecked"
-					class="checkbox-input"
-					checked="true">
-					NA Timezone
-				</mat-checkbox>
-
-				<mat-checkbox [(ngModel)]="euChecked"
-					name="euChecked"
-					class="checkbox-input">
-					EU Timezone
-				</mat-checkbox>
-			</div>
-
-		</div>
-
-		<div class="grid sm:grid-cols-2 gap-5">
-
-			<div>
-				<div class="field-box">
-					<input [(ngModel)]="sn"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="left"
-						matTooltip="Server Name"
-						name="sn"
-						class="field-input"
-						type="text"
-						placeholder="Server name...">
-					<i class="fa-solid fa-tag field-icon"></i>
-				</div>
-			</div>
-
-			<div>
-				<div class="field-box">
-					<input [(ngModel)]="pw"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="right"
-						matTooltip="Password"
-						name="pw"
-						class="field-input"
-						type="text"
-						placeholder="Password...">
-					<i class="fa-solid fa-key field-icon"></i>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div class="my-auto">
-
-		<div class="grid sm:grid-cols-2 gap-5 auto-rows-auto">
-
-			<h2 class="text-xl text-slate-400 font-[300] my-[0]">First Round</h2>
-
-			<div class="col-start-1 col-span-1">
-				<div class="field-box">
-					<select [(ngModel)]="skirm"
-						(change)="onCampaignChange()"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="left"
-						matTooltip="First Round Skirmish Area"
-						name="skirm"
-						class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-						id="existing-select">
-						<option value
-							disabled
-							selected>
-							Skirmish area...
-						</option>
-						<option value="Antietam">Antietam</option>
-						<option value="Harpers Ferry">Harpers Ferry</option>
-						<option value="South Mountain">South Mountain</option>
-					</select>
-					<i class="fa-solid fa-bullseye field-icon"></i>
-				</div>
-			</div>
-
-			<div>
-				<div class="field-box">
-					<select [(ngModel)]="map1"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="right"
-						matTooltip="First Round Map"
-						name="map1"
-						class="field-input"
-						id="map-select">
-						<option value
-							disabled
-							selected>
-							Map...
-						</option>
-						<option *ngFor="let mapName of filteredMapNames1"
-							[value]="mapName">
-							{{ mapName }}
-						</option>
-					</select>
-					<i class="fa-solid fa-map field-icon"></i>
-				</div>
-			</div>
-
-			<div class="col-start-1 sm:col-span-2">
-				<div class="field-box">
-					<select [(ngModel)]="r1side"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="left"
-						matTooltip="First Round Side"
-						name="r1side"
-						class="field-input"
-						id="map-select">
-						<option value="USA"
-							selected>
-							USA
-						</option>
-						<option value="CSA">CSA</option>
-					</select>
-					<i class="fa-solid fa-arrows-up-down field-icon focus:!transform-none"></i>
-				</div>
-			</div>
-
-			<div class="col-start-1 sm:col-span-2">
-				<div class="field-box">
-					<input [(ngModel)]="r1reg"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="left"
-						matTooltip="First Round Regiment"
-						name="r1reg"
-						class="field-input"
-						type="text"
-						placeholder="First round regiment...">
-					<i class="fa-solid fa-shield field-icon"></i>
-				</div>
-			</div>
-
-			<div class="col-start-1 sm:col-span-2">
-				<div class="field-box">
-					<textarea [(ngModel)]="r1unit"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="left"
-						matTooltip="First Round Unit"
-						name="r1unit"
-						class="field-input"
-						placeholder="First round unit info...">
-					</textarea>
-					<i class="fa-solid fa-users field-icon"></i>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Second Round -->
-	<div class="my-auto">
-
-		<div class="grid sm:grid-cols-2 gap-5">
-			<h2 class="text-xl text-slate-400 font-[300] my-[0]">Second Round</h2>
-
-			<div class="col-start-1 col-span-1">
-				<div class="field-box">
-					<select [(ngModel)]="skirm2"
-						(change)="onCampaignChange2()"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="left"
-						matTooltip="Second Round Skirmish Area"
-						name="skirm2"
-						class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-						id="existing-select">
-						<option value
-							disabled
-							selected>
-							Skirmish area...
-						</option>
-						<option value="Antietam">Antietam</option>
-						<option value="Harpers Ferry">Harpers Ferry</option>
-						<option value="South Mountain">South Mountain</option>
-					</select>
-					<i class="fa-solid fa-bullseye field-icon"></i>
-				</div>
-			</div>
-
-			<div>
-				<div class="field-box">
-					<select [(ngModel)]="map2"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="right"
-						matTooltip="Second Round Map"
-						name="map2"
-						class="field-input"
-						id="map-select">
-						<option value
-							disabled
-							selected>
-							Map...
-						</option>
-						<option *ngFor="let mapName of filteredMapNames2"
-							[value]="mapName">
-							{{ mapName }}
-						</option>
-					</select>
-					<i class="fa-solid fa-map field-icon"></i>
-				</div>
-			</div>
-
-			<div class="col-start-1 sm:col-span-2">
-				<div class="field-box">
-					<select [(ngModel)]="r2side"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="right"
-						matTooltip="Second Round Side"
-						name="r2side"
-						class="field-input"
-						id="map-select">
-						<option value="USA"
-							selected>
-							USA
-						</option>
-						<option value="CSA">CSA</option>
-					</select>
-					<i class="fa-solid fa-arrows-up-down field-icon focus:!transform-none"></i>
-				</div>
-			</div>
-
-			<div class="col-start-1 sm:col-span-2">
-				<div class="field-box">
-					<input [(ngModel)]="r2reg"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="right"
-						matTooltip="Second Round Regiment"
-						name="r2reg"
-						class="field-input"
-						type="text"
-						placeholder="Second round regiment...">
-					<i class="fa-solid fa-shield field-icon"></i>
-				</div>
-			</div>
-
-			<div class="col-start-1 sm:col-span-2">
-				<div class="field-box">
-					<textarea [(ngModel)]="r2unit"
-						matTooltipClass="form-tooltip"
-						matTooltipPosition="right"
-						matTooltip="Second Round Unit"
-						name="r2unit"
-						class="field-input"
-						placeholder="Second round unit info...">
-					</textarea>
-					<i class="fa-solid fa-users field-icon"></i>
-				</div>
-			</div>
-
-		</div>
-
-	</div>
-
-	<div class="sm:col-span-2">
-		<div class="field-box">
-			<textarea [(ngModel)]="extra"
-				matTooltipClass="form-tooltip"
-				matTooltipPosition="left"
-				matTooltip="Extra Notes"
-				name="extra"
-				class="field-input2 my-[0.5em]"
-				placeholder="Extras..."></textarea>
-			<img src="assets/cannonbayo-color.png"
-				class="h-auto w-[50px] field-icon2 pointer-events-none">
-		</div>
-	</div>
-
+<div *ngIf="!discordWebhook" class="text-neutral-200">
+	Please choose a Discord channel for sharing event information.
+	<button mat-stroked-button
+		routerLink="/mod/1"
+		color="primary"
+		class="!block mt-[1em]">
+		<i class="fa-solid fa-gear mr-1"></i> Choose Channel
+	</button>
 </div>
 
-<div *ngIf="regimentData.guild_id == '681641606398607401'"
-	(click)="sendMessage()"
-	class="button fire mt-[1em]">
-	Erin Abu!!
-	<img src="assets/cannonbayo-color2.png"
-		class="ml-2 h-auto w-[50px] pointer-events-none">
-</div>
+<div *ngIf="discordWebhook">
 
-<button *ngIf="regimentData.guild_id != '681641606398607401'"
-	(click)="sendMessage()"
-	mat-raised-button
-	type="submit"
-	class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-	Share to {{targetChannel}}
-</button>
+	<div class="grid sm:grid-cols-2 gap-5 auto-rows-auto">
+
+		<div class="row-start-1 sm:col-span-2 col-start-1">
+
+			<div>
+
+				<div *ngIf="regimentData.guild_id == '681641606398607401'"
+					class="mb-4">
+					<mat-checkbox [(ngModel)]="allChecked"
+						name="allChecked"
+						class="checkbox-input"
+						checked="true">
+						Pennsylvania Army
+					</mat-checkbox>
+
+					<mat-checkbox [(ngModel)]="naChecked"
+						name="naChecked"
+						class="checkbox-input"
+						checked="true">
+						NA Timezone
+					</mat-checkbox>
+
+					<mat-checkbox [(ngModel)]="euChecked"
+						name="euChecked"
+						class="checkbox-input">
+						EU Timezone
+					</mat-checkbox>
+				</div>
+
+			</div>
+
+			<div class="grid sm:grid-cols-2 gap-5">
+
+				<div>
+					<div class="field-box">
+						<input [(ngModel)]="sn"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="Server Name"
+							name="sn"
+							class="field-input"
+							type="text"
+							placeholder="Server name...">
+						<i class="fa-solid fa-tag field-icon"></i>
+					</div>
+				</div>
+
+				<div>
+					<div class="field-box">
+						<input [(ngModel)]="pw"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="right"
+							matTooltip="Password"
+							name="pw"
+							class="field-input"
+							type="text"
+							placeholder="Password...">
+						<i class="fa-solid fa-key field-icon"></i>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="my-auto">
+
+			<div class="grid sm:grid-cols-2 gap-5 auto-rows-auto">
+
+				<h2 class="text-xl text-slate-400 font-[300] my-[0]">First Round</h2>
+
+				<div class="col-start-1 col-span-1">
+					<div class="field-box">
+						<select [(ngModel)]="skirm"
+							(change)="onCampaignChange()"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="First Round Skirmish Area"
+							name="skirm"
+							class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+							id="existing-select">
+							<option value
+								disabled
+								selected>
+								Skirmish area...
+							</option>
+							<option value="Antietam">Antietam</option>
+							<option value="Harpers Ferry">Harpers Ferry</option>
+							<option value="South Mountain">South Mountain</option>
+						</select>
+						<i class="fa-solid fa-bullseye field-icon"></i>
+					</div>
+				</div>
+
+				<div>
+					<div class="field-box">
+						<select [(ngModel)]="map1"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="right"
+							matTooltip="First Round Map"
+							name="map1"
+							class="field-input"
+							id="map-select">
+							<option value
+								disabled
+								selected>
+								Map...
+							</option>
+							<option *ngFor="let mapName of filteredMapNames1"
+								[value]="mapName">
+								{{ mapName }}
+							</option>
+						</select>
+						<i class="fa-solid fa-map field-icon"></i>
+					</div>
+				</div>
+
+				<div class="col-start-1 sm:col-span-2">
+					<div class="field-box">
+						<select [(ngModel)]="r1side"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="First Round Side"
+							name="r1side"
+							class="field-input"
+							id="map-select">
+							<option value="USA"
+								selected>
+								USA
+							</option>
+							<option value="CSA">CSA</option>
+						</select>
+						<i class="fa-solid fa-arrows-up-down field-icon focus:!transform-none"></i>
+					</div>
+				</div>
+
+				<div class="col-start-1 sm:col-span-2">
+					<div class="field-box">
+						<input [(ngModel)]="r1reg"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="First Round Regiment"
+							name="r1reg"
+							class="field-input"
+							type="text"
+							placeholder="First round regiment...">
+						<i class="fa-solid fa-shield field-icon"></i>
+					</div>
+				</div>
+
+				<div class="col-start-1 sm:col-span-2">
+					<div class="field-box">
+						<textarea [(ngModel)]="r1unit"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="First Round Unit"
+							name="r1unit"
+							class="field-input"
+							placeholder="First round unit info...">
+						</textarea>
+						<i class="fa-solid fa-users field-icon"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Second Round -->
+		<div class="my-auto">
+
+			<div class="grid sm:grid-cols-2 gap-5">
+				<h2 class="text-xl text-slate-400 font-[300] my-[0]">Second Round</h2>
+
+				<div class="col-start-1 col-span-1">
+					<div class="field-box">
+						<select [(ngModel)]="skirm2"
+							(change)="onCampaignChange2()"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="Second Round Skirmish Area"
+							name="skirm2"
+							class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+							id="existing-select">
+							<option value
+								disabled
+								selected>
+								Skirmish area...
+							</option>
+							<option value="Antietam">Antietam</option>
+							<option value="Harpers Ferry">Harpers Ferry</option>
+							<option value="South Mountain">South Mountain</option>
+						</select>
+						<i class="fa-solid fa-bullseye field-icon"></i>
+					</div>
+				</div>
+
+				<div>
+					<div class="field-box">
+						<select [(ngModel)]="map2"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="right"
+							matTooltip="Second Round Map"
+							name="map2"
+							class="field-input"
+							id="map-select">
+							<option value
+								disabled
+								selected>
+								Map...
+							</option>
+							<option *ngFor="let mapName of filteredMapNames2"
+								[value]="mapName">
+								{{ mapName }}
+							</option>
+						</select>
+						<i class="fa-solid fa-map field-icon"></i>
+					</div>
+				</div>
+
+				<div class="col-start-1 sm:col-span-2">
+					<div class="field-box">
+						<select [(ngModel)]="r2side"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="right"
+							matTooltip="Second Round Side"
+							name="r2side"
+							class="field-input"
+							id="map-select">
+							<option value="USA"
+								selected>
+								USA
+							</option>
+							<option value="CSA">CSA</option>
+						</select>
+						<i class="fa-solid fa-arrows-up-down field-icon focus:!transform-none"></i>
+					</div>
+				</div>
+
+				<div class="col-start-1 sm:col-span-2">
+					<div class="field-box">
+						<input [(ngModel)]="r2reg"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="right"
+							matTooltip="Second Round Regiment"
+							name="r2reg"
+							class="field-input"
+							type="text"
+							placeholder="Second round regiment...">
+						<i class="fa-solid fa-shield field-icon"></i>
+					</div>
+				</div>
+
+				<div class="col-start-1 sm:col-span-2">
+					<div class="field-box">
+						<textarea [(ngModel)]="r2unit"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="right"
+							matTooltip="Second Round Unit"
+							name="r2unit"
+							class="field-input"
+							placeholder="Second round unit info...">
+						</textarea>
+						<i class="fa-solid fa-users field-icon"></i>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="sm:col-span-2">
+			<div class="field-box">
+				<textarea [(ngModel)]="extra"
+					matTooltipClass="form-tooltip"
+					matTooltipPosition="left"
+					matTooltip="Extra Notes"
+					name="extra"
+					class="field-input2 my-[0.5em]"
+					placeholder="Extras..."></textarea>
+				<img src="assets/cannonbayo-color.png"
+					class="h-auto w-[50px] field-icon2 pointer-events-none">
+			</div>
+		</div>
+
+	</div>
+
+	<div *ngIf="regimentData.guild_id == '681641606398607401'"
+		(click)="sendMessage()"
+		class="button fire mt-[1em]">
+		Erin Abu!!
+		<img src="assets/cannonbayo-color2.png"
+			class="ml-2 h-auto w-[50px] pointer-events-none">
+	</div>
+
+	<button *ngIf="regimentData.guild_id != '681641606398607401'"
+		(click)="sendMessage()"
+		mat-raised-button
+		type="submit"
+		class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+		Share to {{targetChannel}}
+	</button>
+
+</div>

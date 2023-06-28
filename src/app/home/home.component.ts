@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
         }
       );
 
-      this.authService.checkModeratorRole(userID).subscribe(
+      this.authService.checkModeratorRole(userID, this.currentUser.regimentId).subscribe(
         (response) => {
           this.showMod = response.access;
           this.loading = false;

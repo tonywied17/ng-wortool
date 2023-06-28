@@ -73,7 +73,7 @@ export class ServerInfoComponent implements OnInit {
     const userID = this.currentUser.id;
 
     if (this.isLoggedIn) {
-      await this.authService.checkModeratorRole(userID).toPromise()
+      await this.authService.checkModeratorRole(userID, this.currentUser.regimentId).toPromise()
         .then((response) => {
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
@@ -171,41 +171,33 @@ export class ServerInfoComponent implements OnInit {
     return organizedData;
   }
 
+
+
+
   sendMessage(): void {
-    const params = {
+    const embed: any = {
       username: "Server Info",
-      avatar_url:
-        "https://app.paarmy.com/assets/icon.png",
-      content: `${this.getRoles()}
-__Server__
-**Server Name:** ${this.sn}
-**Password:** \`${this.pw}\`
-
-__First Round__
-**Skirmish Area:** ${this.skirm}
-**Map:** ${this.map1}
-**Side:** ${this.r1side}
-**Regiment:** \`${this.r1reg}\`
-> ${this.r1unit}
-
-__Second Round__
-**Skirmish Area:** ${this.skirm2}
-**Map:** ${this.map2}
-**Side:** ${this.r2side}
-**Regiment:** \`${this.r2reg}\`
-> ${this.r2unit}
-
- __Extras__
-${this.extra}
-
-__#PA Army App__
-:link: ${this.getMapLink(this.map1)}
-:link: ${this.getMapLink(this.map2)}`,
+      avatar_url: this.regimentData.guild_avatar,
+      embeds: [
+        {
+          title: "Server Information",
+          description: this.getRoles(),
+          thumbnail: {
+            url: "https://molex.cloud/2023/June/27/_HmN/boticon.png",
+          },
+          fields: [],
+          footer: {
+            text: "#PA Army App",
+            icon_url: "https://app.paarmy.com/assets/icon.png",
+          },
+          color: 13092744,
+        },
+      ],
     };
-
-    if (!this.sn || !this.pw || !this.map1) {
+  
+    if (!this.sn || !this.pw) {
       this.snackBar.open(
-        "Please fill in the required fields: server name, password, or map",
+        "Please fill in the required fields: server name and password",
         "Close",
         {
           verticalPosition: "top",
@@ -213,7 +205,25 @@ __#PA Army App__
         }
       );
     } else {
-      this.sendWebhook(this.discordWebhook, params);
+      if (this.sn) {
+        embed.embeds[0].fields.push({ name: "Server Name", value: this.sn });
+      }
+      if (this.pw) {
+        embed.embeds[0].fields.push({ name: "Password", value: `\`${this.pw}\`` });
+      }
+      const firstRoundInfo = this.getFirstRoundInfo();
+      if (firstRoundInfo) {
+        embed.embeds[0].fields.push({ name: "__**First Round**__", value: firstRoundInfo });
+      }
+      const secondRoundInfo = this.getSecondRoundInfo();
+      if (secondRoundInfo) {
+        embed.embeds[0].fields.push({ name: "__**Second Round**__", value: secondRoundInfo });
+      }
+      if (this.extra) {
+        embed.embeds[0].fields.push({ name: "Extras", value: this.extra });
+      }
+  
+      this.sendWebhook(this.discordWebhook, embed);
       this.snackBar.open(
         "Server information posted to announcements",
         "Close",
@@ -224,6 +234,53 @@ __#PA Army App__
       );
     }
   }
+  
+  
+  
+  
+  
+  getFirstRoundInfo(): string {
+    let info = "";
+    if (this.skirm) {
+      info += `**Skirmish Area:** ${this.skirm}\n`;
+    }
+    if (this.map1) {
+      info += `**Map:** [${this.map1}](${this.getMapLink(this.map1)})\n`;
+    }
+    if (this.r1side) {
+      info += `**Side:** ${this.r1side}\n`;
+    }
+    if (this.r1reg) {
+      info += `**Regiment:** \`${this.r1reg}\`\n`;
+    }
+    if (this.r1unit) {
+      info += `**Units:** ${this.r1unit}\n`;
+    }
+    return info;
+  }
+  
+  getSecondRoundInfo(): string {
+    let info = "";
+    if (this.skirm2) {
+      info += `**Skirmish Area:** ${this.skirm2}\n`;
+    }
+    if (this.map2) {
+      info += `**Map:** [${this.map2}](${this.getMapLink(this.map2)})\n`;
+    }
+    if (this.r2side) {
+      info += `**Side:** ${this.r2side}\n`;
+    }
+    if (this.r2reg) {
+      info += `**Regiment:** \`${this.r2reg}\`\n`;
+    }
+    if (this.r2unit) {
+      info += `**Units:** ${this.r2unit}\n`;
+    }
+    return info;
+  }
+  
+
+  
 
   getRoles(): string {
     let roles = "";
@@ -237,9 +294,10 @@ __#PA Army App__
       roles += "<@&682502128929079321> ";
     }
 
-    if(this.regimentData.guild_id !== '681641606398607401') {
+    if (this.regimentData.guild_id !== '681641606398607401') {
       roles = "";
     }
+    
     
     return roles.trim();
     

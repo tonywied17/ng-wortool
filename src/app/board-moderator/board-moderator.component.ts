@@ -40,7 +40,7 @@ export class BoardModeratorComponent implements OnInit {
     const userID = this.currentUser.id;
 
     if (this.isLoggedIn) {
-      this.authService.checkModeratorRole(userID).subscribe(
+      this.authService.checkModeratorRole(userID, this.currentUser.regimentId).subscribe(
         (response) => {
           this.showMod = response.access;
           this.getRegiment();

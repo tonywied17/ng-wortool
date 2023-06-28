@@ -6,8 +6,13 @@
 	<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
 		<div class="col-start-1 col-span-1">
 			<h3 class="text-slate-400">Event Channel</h3>
-			<span [innerHTML]="regimentData.webhook_channel"
-				class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm"></span>
+			<span *ngIf="regimentData.webhook_channel" [innerHTML]="regimentData.webhook_channel"
+				class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
+			</span>
+			<span *ngIf="!regimentData.webhook_channel"
+				class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
+				No event channel selected.
+			</span>
 		</div>
 
 		<div class="sm:col-start-2 col-span-1">
@@ -49,7 +54,7 @@
 		</div>
 	</div>
 
-	<div class="grid sm:grid-cols-[47%_minmax(auto,_1fr)] grid-cols-1 gap-4">
+	<div class="grid sm:grid-cols-[40%_minmax(auto,_1fr)] grid-cols-1 gap-4">
 		<div>
 			<form (ngSubmit)="updateRegiment()">
 				<div class="form-group p-2 m-2">
@@ -64,13 +69,26 @@
 					</div>
 
 					<div class="field-box">
+						<select [(ngModel)]="side" style=" padding-top: 11px;
+    						padding-bottom: 11px;
+    						font-size: 15px;
+    						border: 1px solid #7c7d72 !important;" class="field-input2 inline-block" id="side-select" name="side">
+							<option value="regimentData.side" selected disabled>
+								{{regimentData.side}}
+							</option>
+							<option value="USA">USA</option>
+							<option value="USA">CSA</option>
+						</select>
+						<i class="fa-solid fa-arrows-up-down field-icon"></i>
+					</div>
+
+					<div class="field-box">
 						<input [(ngModel)]="guild_id" name="guild_id" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              " class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Discord ID...">
-						<i class="fa-brands fa-discord field-icon"></i>
+              " class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Discord ID...">
 					</div>
 
 					<div class="field-box">
@@ -122,17 +140,17 @@
 			</form>
 		</div>
 
-		<div class="bg-slate-900 p-[2em] m-4 rounded-md text-neutral-300">
-			<div class="grid sm:grid-cols-2 grid-cols-1 gap-4 h-full">
+		<div class="bg-slate-900 p-[2em] m-2 rounded-md text-neutral-300">
+			<div class="grid sm:grid-cols-[300px_minmax(auto,_1fr)] grid-cols-1 gap-2 h-full">
 				<div class="place-self-start w-full">
-					<h3 class="text-slate-400 mb-1 text-xl text-center">
+					<h3 class="text-slate-400 mb-1 text-lg text-center">
 						{{ regimentData.regiment }}
 					</h3>
 
-					<img [src]="regimentData.guild_avatar" class="mx-auto w-[200px] h-[200px] shadow-md mb-[1em]">
+					<img [src]="regimentData.guild_avatar" class="mx-auto w-[100px] h-[100px] shadow-md mb-[1em]">
 
 					<p class="my-1 text-sm font-[200]">
-						<i class="fa-solid fa-link w-[25px] ml-[1em] mr-[0.5em]"></i>
+						<i class="fa-solid fa-link w-[25px] ml-[1em] mr-2"></i>
 						{{ regimentData.invite_link }}
 					</p>
 
@@ -146,39 +164,78 @@
 						{{ regimentData.description }}
 					</p>
 				</div>
-				<div class="place-self-end w-full">
-					<!-- <h3 class="text-slate-400">Manage Members</h3> -->
-					<div *ngFor="let user of regimentUsers" class="relative">
+				<div class="place-self-auto w-full">
+					<div *ngFor="let user of regimentUsers.slice(0, 8)" class="relative">
 
-
-						<div class="p-1 m-2 !text-[0.9rem] font-[300] pl-[2.5em] w-full">
-							<div class="bg-slate-600 shadow-sm rounded-sm py-[5px]">
-
-								<img *ngIf="user.avatar_url" [src]="user.avatar_url"
-									class="h-[25px] w-auto ml-1 mr-1 left-[8px] shadow-md hover:opacity-80 cursor-pointer inline-block">
-
-								<i *ngIf="!user.avatar_url"
-									class="fa-solid fa-user mt-[px] ml-2 mr-1 left-[8px] hover:opacity-80 cursor-pointer"></i>
-
-								{{ user.username }}
-
-								<div class="float-right">
-									<span class="" (click)="confirmRemoveUser(user.id)">
-										<i
-											class="fa-solid fa-xmark text-red-500 mr-2 hover:opacity-80 cursor-pointer"></i>
+						<div class="p-1 m-1 !text-[0.9rem] font-[300] w-full">
+							<div class="bg-slate-600 shadow-sm rounded-t-sm">
+								<div *ngIf="user.avatar_url" class="py-[5px]">
+									<img [src]="user.avatar_url"
+										class="h-[30px] w-auto ml-1 mr-1 left-[4px] top-[5px] shadow-neutral-800 shadow-md hover:opacity-80 cursor-pointer absolute">
+									<span class="ml-[35px]">{{ user.username }}</span>
+									<mat-checkbox *ngIf="user.discordId != regimentData.ownerId"
+										[checked]="user.roles.includes('ROLE_MODERATOR')"
+										[disabled]="user.discordId == regimentData.ownerId"
+										(change)="toggleModerator(user.id)"
+										class="!text-xs settings mr-2 mt-[-8px] float-right">
+										<span class="text-sm ml-[-5px] !text-slate-950">Manager</span>
+									</mat-checkbox>
+									<span *ngIf="user.discordId == regimentData.ownerId"
+										class="float-right owner font-[500] text-slate-400 mr-2">
+										Owner
+										<span *ngIf="user.discordId == regimentData.ownerId" class="text-xs font-[200]">
+											<i class=" ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
+										</span>
 									</span>
 								</div>
 
-							</div>
+								<span *ngIf="!user.avatar_url">
 
 
-							<div class="bg-slate-800">
-								<mat-checkbox class="!text-xs settings" [checked]="user.roles.includes('ROLE_MODERATOR')"
-									(change)="toggleModerator(user.id)"><span class="text-sm ml-[-5px]">Manager</span></mat-checkbox>
+
+									<div class="grid grid-rows-2">
+
+										<div class="row-start-1 row-span-1">
+											<i
+												class="fa-solid fa-user ml-2 mr-1 mt-[0.75rem] left-[8px] hover:opacity-80 cursor-pointer"></i>
+											{{ user.username }}
+										</div>
+
+										<div class="row-start-2 row-span-1 bg-slate-700 pt-[0.4rem]">
+											<!--  -->
+											<mat-checkbox *ngIf="user.discordId != regimentData.ownerId"
+												[checked]="user.roles.includes('ROLE_MODERATOR')"
+												[disabled]="user.discordId == regimentData.ownerId"
+												(change)="toggleModerator(user.id)"
+												class="!text-xs settings mr-2 mt-[-8px]">
+												<span class="text-sm ml-[-5px] !text-[#9a9b97]">Manager</span>
+											</mat-checkbox>
+
+											<span *ngIf="user.discordId == regimentData.ownerId"
+												class="owner font-[500] text-slate-400 mr-2">
+												Owner
+												<span *ngIf="user.discordId == regimentData.ownerId"
+													class="text-xs font-[200]">
+													<i class=" ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
+												</span>
+											</span>
+											<!--  -->
+										</div>
+
+									</div>
+
+
+								</span>
+
 							</div>
+
 						</div>
 
 					</div>
+					<button mat-button color="primary" class="float-right">
+						All Members
+						<i class="fa-solid fa-angles-right ml-1"></i>
+					</button>
 				</div>
 			</div>
 		</div>
