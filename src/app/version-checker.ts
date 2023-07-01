@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { SwUpdate } from "@angular/service-worker";
 import { interval } from "rxjs";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Injectable()
 export class VersionChecker {
@@ -17,9 +17,14 @@ export class VersionChecker {
 
   public listenForUpdates() {
     this.swUpdate.available.subscribe(() => {
+      const snackBarConfig: MatSnackBarConfig = {
+        verticalPosition: 'top'
+      };
+
       const snackBarRef = this.snackBar.open(
         `A new version is available. Would you like to update?`,
-        "Yes"
+        "Yes",
+        snackBarConfig
       );
 
       snackBarRef.onAction().subscribe(() => {

@@ -1,3 +1,5 @@
+<h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Share Event Information</h2>
+
 <div *ngIf="!discordWebhook" class="text-neutral-200">
 	Please choose a Discord channel for sharing event information.
 	<button mat-stroked-button
@@ -9,6 +11,7 @@
 </div>
 
 <div *ngIf="discordWebhook">
+	
 
 	<div class="grid sm:grid-cols-2 gap-5 auto-rows-auto">
 
@@ -50,6 +53,11 @@
 							matTooltipPosition="left"
 							matTooltip="Server Name"
 							name="sn"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							type="text"
 							placeholder="Server name...">
@@ -64,6 +72,11 @@
 							matTooltipPosition="right"
 							matTooltip="Password"
 							name="pw"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							type="text"
 							placeholder="Password...">
@@ -88,6 +101,11 @@
 							matTooltipPosition="left"
 							matTooltip="First Round Skirmish Area"
 							name="skirm"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
 							id="existing-select">
 							<option value
@@ -110,6 +128,11 @@
 							matTooltipPosition="right"
 							matTooltip="First Round Map"
 							name="map1"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							id="map-select">
 							<option value
@@ -133,6 +156,11 @@
 							matTooltipPosition="left"
 							matTooltip="First Round Side"
 							name="r1side"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							id="map-select">
 							<option value="USA"
@@ -152,6 +180,11 @@
 							matTooltipPosition="left"
 							matTooltip="First Round Regiment"
 							name="r1reg"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							type="text"
 							placeholder="First round regiment...">
@@ -166,6 +199,11 @@
 							matTooltipPosition="left"
 							matTooltip="First Round Unit"
 							name="r1unit"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							placeholder="First round unit info...">
 						</textarea>
@@ -189,6 +227,11 @@
 							matTooltipPosition="left"
 							matTooltip="Second Round Skirmish Area"
 							name="skirm2"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
 							id="existing-select">
 							<option value
@@ -211,6 +254,11 @@
 							matTooltipPosition="right"
 							matTooltip="Second Round Map"
 							name="map2"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							id="map-select">
 							<option value
@@ -234,6 +282,11 @@
 							matTooltipPosition="right"
 							matTooltip="Second Round Side"
 							name="r2side"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							id="map-select">
 							<option value="USA"
@@ -253,6 +306,11 @@
 							matTooltipPosition="right"
 							matTooltip="Second Round Regiment"
 							name="r2reg"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							type="text"
 							placeholder="Second round regiment...">
@@ -267,6 +325,11 @@
 							matTooltipPosition="right"
 							matTooltip="Second Round Unit"
 							name="r2unit"
+							style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 							class="field-input"
 							placeholder="Second round unit info...">
 						</textarea>
@@ -285,6 +348,11 @@
 					matTooltipPosition="left"
 					matTooltip="Extra Notes"
 					name="extra"
+					style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;" 
 					class="field-input2 my-[0.5em]"
 					placeholder="Extras..."></textarea>
 				<img src="assets/cannonbayo-color.png"

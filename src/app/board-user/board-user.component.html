@@ -9,7 +9,7 @@
 
 
 <div *ngIf="!loading"
-	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
+	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[2em] mb-[5em]">
 
 
 
@@ -82,6 +82,11 @@
 							<div class="field-box">
 								<input [(ngModel)]="passwordCurrent"
 									name="passwordCurrent"
+									style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;"
 									class="field-input my-[0.5em]"
 									type="password"
 									placeholder="Current Password...">
@@ -94,6 +99,11 @@
 							<div class="field-box">
 								<input [(ngModel)]="passwordNew"
 									name="passwordNew"
+									style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;"
 									class="field-input my-[0.5em]"
 									type="password"
 									placeholder="New Password...">
@@ -106,6 +116,11 @@
 							<div class="field-box">
 								<input [(ngModel)]="passwordNewConfirm"
 									name="passwordNewConfirm"
+									style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;"
 									class="field-input my-[0.5em]"
 									type="password"
 									placeholder="Confirm Password...">
@@ -152,6 +167,11 @@
 							<div class="field-box">
 								<input [(ngModel)]="email"
 									name="email"
+									style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;"
 									class="field-input my-[0.5em]"
 									type="email"
 									value="{{currentUser.email}}"
@@ -165,6 +185,11 @@
 							<div class="field-box">
 								<input [(ngModel)]="avatar_url"
 									name="avatar_url"
+									style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;"
 									class="field-input my-[0.5em]"
 									type="email"
 									placeholder="Avatar url...">
@@ -190,6 +215,11 @@
 								class="field-box">
 								<input [(ngModel)]="discordId"
 									name="discordId"
+									style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;"
 									class="field-input my-[0.5em]"
 									type="hidden"
 									value="{{currentUser.discordId}}"
@@ -204,6 +234,11 @@
 								class="field-box">
 								<input [(ngModel)]="regimentId"
 									name="regimentId"
+									style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;"
 									class="field-input my-[0.5em]"
 									type="hidden"
 									value="{{currentUser.regimentId}}"
@@ -226,7 +261,10 @@
 
 
 
-							<div class="field-box my-[1em] ring-2 ring-[#7c7d72] p-3 rounded-sm shadow-md hover:opacity-70 transition-all duration-300">
+							<div class="field-box my-[1em] p-3 rounded-sm hover:opacity-70 transition-all duration-300"
+							style="border: 1px solid #5f62607a !important;
+							border-radius: 10px;
+							box-shadow: #17202e 0px 0px 2px 0px, #17202e 0px 0px 2px 0px, #17202e 0px 0px 2px 0px;">
 								<span class="text-xl text-slate-400">Linked Accounts</span>
 
 

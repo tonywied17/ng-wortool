@@ -68,9 +68,19 @@
 </div>
 
 
-<div *ngIf="!loading && regimentSelected" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
+<div *ngIf="!loading && regimentSelected" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[2em] mb-[5em]">
 
-	<div class="grid grid-cols-2">
+	<div>
+		<button (click)="goBack()"
+		mat-button
+		color="primary"
+		class="!mb-[1em]">
+		<i class="fa-sharp fa-solid fa-arrow-left"></i>
+		Back
+	</button>
+	</div>
+
+	<!-- <div class="grid grid-cols-2">
 		<div>
 			<button (click)="goBack()"
 			mat-button
@@ -82,7 +92,7 @@
 		</div>
 
 		<div>
-			<div class="w-fit ml-auto text-right mb-[0.75em]" *ngIf="regimentData">
+			<div class="w-fit ml-auto text-right mb-[0.75em] fade-center" *ngIf="regimentData">
 				<div
 					class="grid grid-cols-[auto_minmax(56px,_1fr)] gap-3 text-lg lg:!text-xl !text-neutral-300 ml-auto w-full">
 		
@@ -99,7 +109,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	
 
@@ -163,15 +173,14 @@
 
 
 
-				<div *ngIf="showPage1" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 right-in">
-					<h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2>
+				<div *ngIf="showPage1" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 fade-center">
 					<app-regiment-settings></app-regiment-settings>
 				</div>
 
 
 
-				<div *ngIf="showPage2" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 right-in">
-					<h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Share Event Information</h2>
+				<div *ngIf="showPage2" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 fade-center">
+					
 					<app-server-info></app-server-info>
 				</div>
 

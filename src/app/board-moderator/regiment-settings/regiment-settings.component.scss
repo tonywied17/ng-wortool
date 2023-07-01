@@ -1,21 +1,21 @@
 .truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  #channel-select{
-    background-color: #17202e !important;
-    height: 52px;
-    font-size: 16px;
-    padding: 12px 36px 12px 12px !important;
-    min-width: calc(100% - 110px);
-    max-width: calc(100% - 110px);
-    width: calc(100% - 110px);
-    transition: none !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-#side-select{
+#channel-select {
+  background-color: #17202e !important;
+  height: 52px;
+  font-size: 16px;
+  padding: 12px 36px 12px 12px !important;
+  min-width: calc(100% - 110px);
+  max-width: calc(100% - 110px);
+  width: calc(100% - 110px);
+  transition: none !important;
+}
+
+#side-select {
   background-color: #1c2638 !important;
   height: 52px;
   font-size: 16px;
@@ -28,6 +28,12 @@
   font-size: 14px !important;
 }
 
-.owner{
+.owner {
   font-family: "Poppins", sans-serif !important;
+}
+
+.reg-info {
+  border: 1px solid #5f62607a !important;
+  border-radius: 10px;
+  box-shadow: #17202e 0px 0px 2px 0px, #17202e 0px 0px 2px 0px, #17202e 0px 0px 2px 0px;
 }
