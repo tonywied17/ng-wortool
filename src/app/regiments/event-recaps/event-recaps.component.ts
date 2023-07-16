@@ -54,8 +54,16 @@ export class EventRecapsComponent implements OnInit {
     return date.toLocaleString(); // Convert to the browser's local time string
   }
   
+  chunkArray(array: any[], size: number): any[][] {
+    const chunks = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunks.push(array.slice(i, i + size));
+    }
+    return chunks;
+  }
+  
 
-  getPlayersByTeamId(teamId: number): any[] {
+  filterPlayersByTeamId(teamId: number): any[] {
     return this.recaps.players.filter((player: { TeamId: number; }) => player.TeamId === teamId);
   }
   

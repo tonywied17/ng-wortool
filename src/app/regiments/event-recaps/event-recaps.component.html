@@ -9,7 +9,7 @@
     class="rounded-lg w-full mb-10 bg-slate-800/80 shadow-lg"
   >
     <div
-      class="grid lg:grid-cols-[200px_1fr] gird-rows-[80px_auto] grid-cols-2 gap-x-4"
+      class="grid lg:grid-cols-[1fr_2fr] gird-rows-[80px_auto] grid-cols-2 gap-x-4"
     >
       <div
         class="row-start-1 row-span-1 col-start-1 col-span-2 p-4 rounded-sm rounded-tl-lg shadow-sm"
@@ -23,21 +23,19 @@
           );
         "
       >
-
-      <div class="grid grid-cols-2">
-        <div>
+        <div class="grid grid-cols-2">
+          <div>
             <p class="text-[#7c7d72] text-2xl font-[400]">
               {{ recap.serverName }}
             </p>
           </div>
-  
+
           <div class="text-right flex items-center justify-end">
             <p class="text-slate-400 text-base font-[300]">
               {{ convertToLocaleTime(recap.endTime) }}
             </p>
           </div>
-      </div>
-       
+        </div>
 
         <div class="w-full">
           <div class="min-w-min flex items-center">
@@ -48,34 +46,108 @@
         </div>
       </div>
 
-      <div class="row-start-2 col-start-1 p-2">
+      <div class="row-start-2 col-start-1 lg:col-span-1 col-span-2 place-self-center w-full h-full bg-cover">
+        <div class="w-full h-full brightness-[55%] sepia-[50%] blur-[0.5px] rounded-r-md shadow-sm" style="background: url('https://wortool.com/{{recap.mapObject.image}}'); background-size: cover; background-position: center; height: 100%;">
         <img
-          [src]="'https://wortool.com/' + recap.mapObject.image"
-          class="rounded-sm shadow-lg w-full brightness-[55%] sepia-[50%] blur-[0.5px]"
-        />
-      </div>
-      <div class="row-start-2 col-start-2">
-        <div class="grid grid-cols-[auto_1fr] gap-5 p-2 w-full h-fit">
-
-            <div>
-                <p class="text-lg font-[400] text-slate-400">USA Players</p>
-                <div *ngFor="let player of recap.players">
-                    <p class="font-[200] text-sm ml-2" *ngIf="player.TeamId == 1">{{player.Nickname}}</p>
-                </div>
-            </div>
-            <div>
-                <p class="text-lg font-[400] text-slate-400">CSA Players</p>
-                <div *ngFor="let player of recap.players">
-                    <p class="font-[200] text-sm ml-2" *ngIf="player.TeamId == 2">{{player.Nickname}}</p>
-                </div>
-            </div>
-            
+            [src]="'https://wortool.com/' + recap.mapObject.image"
+            class="rounded-sm shadow-lg w-full max-w-[50vw] brightness-[55%] sepia-[50%] blur-[0.5px] invisible"
+          />
         </div>
+      </div>
+      
+      <div class="lg:row-start-2 row-start-3 lg:col-start-2 col-start-1 col-span-2 lg:col-span-1 p-2">
+
+         <!-- Winner Div -->
+
+         <div class="grid grid-cols-[auto_auto] gap-5 lg:w-fit w-full lg:min-w-[420px] h-fit mx-auto place-self-center my-4 text-center">
+            <div>
+              <p class="text-slate-400 text-xl font-[00]">Winner</p>
+              <div class="pl-1 pt-1">
+               
+                <p class="font-[200] text-lg ml-2">
+                    <img class="max-h-[18px] w-auto inline sepia brightness-85 opacity-80" *ngIf="recap.winner == 'USA'" src="https://wortool.com/assets/usaReg.png" alt="USA Flag" />
+                    <img class="max-h-[18px] w-auto inline sepia brightness-85 opacity-80" *ngIf="recap.winner == 'CSA'" src="https://wortool.com/assets/csaReg.png" alt="CSA Flag" />
+                    <span class="inline ml-1">{{ recap.winner }}</span>
+                </p>
+              </div>
+            </div>
+            <div>
+                <p class="text-slate-400 text-xl font-[00]">Duration</p>
+                <div class="pl-1 pt-1">
+                  <p class="font-[200] text-lg ml-2">{{ recap.duration }} minutes</p>
+                </div>
+            </div>
+        </div>
+  
+          <!--  -->
+
+        <!-- Player Div -->
+        <div class="grid grid-cols-[auto_auto] gap-5 lg:gap-x-8 w-full h-fit mx-auto place-self-center text-neutral-400">
+          <div>
+            <p class="text-lg font-[400] skewed-text">USA Players</p>
+            <div class="pl-1 pt-1" style="border-left: dotted 1px #7c7d738f">
+                <div class="md:columns-2 columns-1">
+                    <div *ngFor="let player of recap.players">
+                         <p class="font-[200] text-sm ml-2" *ngIf="player.TeamId === 1">
+                            <span *ngIf="player.Admin" class="text-red-500">{{ player.Nickname }}</span>
+                            <span *ngIf="player.Developer" class="text-blue-500">{{ player.Nickname }}</span>
+                            <span *ngIf="!player.Admin && !player.Developer">{{ player.Nickname }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div>
+            <p class="text-lg font-[400] skewed-textR">CSA Players</p>
+            <div class="pl-1 pt-1" style="border-right: dotted 1px #7c7d738f">
+                <div class="md:columns-2 columns-1">
+                    <div *ngFor="let player of recap.players">
+                         <p class="font-[200] text-sm ml-2" *ngIf="player.TeamId === 2">
+                            <span *ngIf="player.Admin" class="text-red-500">{{ player.Nickname }}</span>
+                            <span *ngIf="player.Developer" class="text-blue-500">{{ player.Nickname }}</span>
+                            <span *ngIf="!player.Admin && !player.Developer">{{ player.Nickname }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <mat-divider class="mt-[5em]"></mat-divider>
+        <!--  -->
+
+        
+
+        <!-- Stats Div -->
+
+        <div class="grid grid-cols-[auto_auto] gap-5 lg:w-fit w-full lg:min-w-[420px] h-fit mx-auto place-self-center my-4 text-center">
+            <div>
+              <p class="text-slate-400 text-lg font-[00]">USA Casualties</p>
+              <div class="pl-1 pt-1 text-left">
+                <!-- 
+                    display these:
+                "usaInFormation": 214,
+                "usaSkirmishing": 56,
+                "usaOutOfLine": 11, 
+                -->
+                <p class="text-sm ml-2">In Formation <span class="font-[200] ml-1">{{ recap.usaInFormation }}</span></p>
+                <p class="text-sm ml-2">Skirmishing <span class="font-[200] ml-1">{{ recap.usaSkirmishing }}</span></p>
+                <p class="text-sm ml-2">Out of Line <span class="font-[200] ml-1">{{ recap.usaOutOfLine }}</span></p>
+              </div>
+            </div>
+            <div>
+                <p class="text-slate-400 text-lg font-[00]">CSA Casualties</p>
+                <div class="pr-1 pt-1 text-right">
+                    <p class="text-sm mr-2"><span class="font-[200] mr-1">{{ recap.csaInFormation }}</span> In Formation</p>
+                    <p class="text-sm mr-2"><span class="font-[200] mr-1">{{ recap.csaSkirmishing }}</span> Skirmishing</p>
+                    <p class="text-sm mr-2"><span class="font-[200] mr-1">{{ recap.csaOutOfLine }}</span> Out of Line</p>
+                </div>
+            </div>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
-
 
 <!-- 
     EXAMPLE RECAP OBJECT:
