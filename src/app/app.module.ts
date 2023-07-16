@@ -27,6 +27,7 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 import { VersionChecker } from "./version-checker";
 import { environment } from "src/environments/environment.prod";
 import { RegimentSettingsComponent } from './board-moderator/regiment-settings/regiment-settings.component';
+import { AddBotComponent } from './regiments/add-bot/add-bot.component';
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
@@ -65,6 +66,7 @@ const routes: Routes = [
     ServerInfoComponent,
     GameInfoComponent,
     RegimentSettingsComponent,
+    AddBotComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { TokenStorageService } from "./_services/token-storage.service";
-import { Router, Event, NavigationStart, NavigationEnd, NavigationError} from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Event as NavigationEvent} from '@angular/router';
 import { AuthService } from "./_services/auth.service";
 import { SharedService } from "./_services/shared.service";
 import { VersionChecker } from "./version-checker";
 import { RouteService } from "./_services/route-service.service";
+
 import { Location } from "@angular/common";
 
 @Component({
@@ -143,5 +144,11 @@ export class AppComponent implements OnInit {
       left: 0,
       behavior: "smooth",
     });
+  }
+
+  translateWebsite(event: any): void {
+    const language = event.target.value;
+    const url = `https://translate.google.com/translate?hl=en&sl=auto&tl=${language}&u=${window.location.href}`;
+    window.open(url, '_blank');
   }
 }

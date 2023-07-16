@@ -1,132 +1,220 @@
 <div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
-	<h3 class="text-[#88887b]  text-3xl tracking-tight mb-[1em]">
-		Add Your Regiment
-		<small>
-			<sup>[BETA]</sup>
-		</small>
-	</h3>
+  <mat-tab-group dynamicHeight="true">
+    <mat-tab label="USA Regiments">
+      <ng-template mat-tab-label>
+        <img
+          src="https://wortool.com/assets/usaReg.png"
+          class="h-[22px] mr-2 sepia brightness-75 opacity-70"
+        />
+        USA Regiments
+      </ng-template>
 
-	<div class="grid lg:grid-cols-[auto_minmax(58%,_1fr)] grid-cols-1 lg:gap-10 mx-[2em]">
+      <div
+        class="m-6 text-center lg:w-[420px] ml-auto"
+      >
+        <div class="field-box">
+          <input
+            type="text"
+            style="
+              padding-top: 11px;
+              padding-bottom: 11px;
+              font-size: 15px;
+              border: 1px solid #7c7d72 !important;
+            "
+            class="field-input"
+            placeholder="Filter Regiment Name.."
+            [(ngModel)]="searchText"
+            (input)="filterRegiments()"
+          />
+          <i class="fa-solid fa-search field-icon"></i>
+        </div>
+      </div>
 
+      <div *ngFor="let usaRegiment of regiments">
+        <div *ngIf="usaRegiment.side == 'USA'">
+          <div class="">
+            <div
+              class="my-4 bg-slate-800/80 rounded-lg shadow-md min-h-[100px] p-2 pl-5 flex items-center justify-center"
+            >
+              <div
+                class="grid grid-cols-[100px_auto_200px] grid-rows-2 w-full gap-2"
+              >
+                <div
+                  class="row-start-1 row-end-3 col-start-1 col-span-1 flex items-center"
+                >
+                  <img
+                    [src]="usaRegiment.guild_avatar"
+                    class="h-[100px] w-auto rounded-md shadow-md pointer-events-none"
+                  />
+                </div>
+                <div
+                  class="ml-2 row-start-1 col-start-2 lg:col-end-3 col-end-4 flex flex-col justify-center"
+                >
+                  <div class="flex flex-col h-full justify-center">
+                    <p class="text-slate-400 text-xl font-[500]">
+                      {{ usaRegiment.regiment }}
+                    </p>
+                    <p class="text-slate-400 text-lg font-[400]">
+                      {{ usaRegiment.side }} Regiment
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="row-start-2 col-start-2 col-end-3 pl-2 font-[300] text-neutral-200"
+                >
+                  <p>{{ usaRegiment.description }}</p>
+                </div>
 
-		<div
-			class="bg-[#717268] opacity-[65%] rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-fit !my-auto left-in ng-star-inserted lg:!mt-[1em]">
-			<div class="grid grid-cols-[auto_minmax(30px,_1fr)] h-fit w-fit">
+                <div
+                  class="lg:col-start-3 lg:col-span-1 col-span-3 col-start-1 lg:row-start-1 lg:row-span-2 row-start-3 row-span-1 lg:place-self-center text-right place-self-end"
+                >
+                  <button
+                    mat-button
+                    color="primary"
+                    class="!w-fit"
+                    (click)="open(usaRegiment.invite_link)"
+                  >
+                    <i class="fa-brands fa-discord"></i>
+                  </button>
 
-				<div class="text-[#252525ce] text-xl font-[500]">Regimental Assistant </div>
+                  <button
+                    *ngIf="usaRegiment.website"
+                    mat-button
+                    color="primary"
+                    class="!w-fit"
+                    (click)="open(usaRegiment.website)"
+                  >
+                    <i class="fa-solid fa-globe"></i>
+                  </button>
 
-				<div
-					class="!font-[400] !text-neutral-300 bg-[#5865f2] px-1 rounded-sm !text-xs !font-sans mx-2 w-fit h-fit mt-[6.5px]">
-					BOT</div>
-			</div>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    class=" !text-neutral-200 mt-2 !block !min-h-fit !w-full !p-1"
+					(click)="notYet()"
+                  >
+                    View Regiment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
 
+    <mat-tab label="CSA Regiments">
+      <ng-template mat-tab-label>
+        <img
+          src="https://wortool.com/assets/csaReg.png"
+          class="h-[22px] mr-2 sepia brightness-75 opacity-70"
+        />
+        CSA Regiments
+      </ng-template>
+	  <div
+        class="m-6 text-center lg:w-[420px] ml-auto"
+      >
+        <div class="field-box">
+          <input
+            type="text"
+            style="
+              padding-top: 11px;
+              padding-bottom: 11px;
+              font-size: 15px;
+              border: 1px solid #7c7d72 !important;
+            "
+            class="field-input"
+            placeholder="Filter Regiment Name.."
+            [(ngModel)]="searchText"
+            (input)="filterRegiments()"
+          />
+          <i class="fa-solid fa-search field-icon"></i>
+        </div>
+      </div>
 
-			<div
-				class="grid grid-cols-1 lg:grid-cols-[calc(100%-120px)_minmax(120px,_1fr)_120px] !mt-4 !mx-2 text-[#252525ce] !font-[500] gap-3">
+	  <div *ngFor="let csaRegiment of regiments">
+        <div *ngIf="csaRegiment.side == 'CSA'">
+          <div class="">
+            <div
+              class="my-4 bg-slate-800/80 rounded-lg shadow-md min-h-[100px] p-2 pl-5 flex items-center justify-center"
+            >
+              <div
+                class="grid grid-cols-[100px_auto_200px] grid-rows-2 w-full gap-2"
+              >
+                <div
+                  class="row-start-1 row-end-3 col-start-1 col-span-1 flex items-center"
+                >
+                  <img
+                    [src]="csaRegiment.guild_avatar"
+                    class="h-[100px] w-auto rounded-md shadow-md pointer-events-none"
+                  />
+                </div>
+                <div
+                  class="ml-2 row-start-1 col-start-2 lg:col-end-3 col-end-4 flex flex-col justify-center"
+                >
+                  <div class="flex flex-col h-full justify-center">
+                    <p class="text-slate-400 text-xl font-[500]">
+                      {{ csaRegiment.regiment }}
+                    </p>
+                    <p class="text-slate-400 text-lg font-[400]">
+                      {{ csaRegiment.side }} Regiment
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="row-start-2 col-start-2 col-end-3 pl-2 font-[300] text-neutral-200"
+                >
+                  <p>{{ csaRegiment.description }}</p>
+                </div>
 
-				<div class="col-start-1 col-span-1">
-					<p class="indent-5">
-						Reggie the Regimental Assistant is designed to make life easier for regiment owners like you.
-						It's is here to lend a helping hand by streamlining regiment management processes, and
-						ultimately enhancing organization and coordination. Say goodbye to the hassle and hello to a
-						Reggie, a more efficient way of managing your regiment!</p>
-				</div>
+                <div
+                  class="lg:col-start-3 lg:col-span-1 col-span-3 col-start-1 lg:row-start-1 lg:row-span-2 row-start-3 row-span-1 lg:place-self-center text-right place-self-end"
+                >
+                  <button
+                    mat-button
+                    color="primary"
+                    class="!w-fit"
+                    (click)="open(csaRegiment.invite_link)"
+                  >
+                    <i class="fa-brands fa-discord"></i>
+                  </button>
 
-				<div class="lg:col-start-2 col-start-1 col-span-1 place-self-center lg:place-self-auto">
-					<img class="pointer-events-none h-[100px] w-auto" src="https://app.paarmy.com/assets/boticon.png">
-					<div>
-						<a href="https://discord.com/api/oauth2/authorize?client_id=1116114432502808617&permissions=2953571409&scope=bot%20applications.commands"
-							mat-raised-button
-							class="!text-neutral-300 !m-2 !bg-[#1d2638] !w-fit !text-[0.75rem] !px-2 !h-[28px]"
-							target="_blank">Invite Me!</a>
-					</div>
-				</div>
+                  <button
+                    *ngIf="csaRegiment.website"
+                    mat-button
+                    color="primary"
+                    class="!w-fit"
+                    (click)="open(csaRegiment.website)"
+                  >
+                    <i class="fa-solid fa-globe"></i>
+                  </button>
 
-				<div class="col-start-1 col-span-2">
-					<p class="mt-[1em] indent-5">Reggie the Regimental Assistant goes the extra mile to
-						simplify communication within your regiment. It allows you to effortlessly share event
-						information with your members directly on Discord. This feature boosts communication by ensuring
-						that everyone stays in the loop with crucial event details and important announcements. With
-						Reggie by your side, no more missed updates or confusion—just seamless coordination and
-						effective communication.
-					</p>
-				</div>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    class=" !text-neutral-200 mt-2 !block !min-h-fit !w-full !p-1"
+					(click)="notYet()"
+                  >
+                    View Regiment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-				<div class="col-start-1 col-span-2 text-center">
-					<p class="my-[1em] !text-sm">Use the command <span
-							class="text-slate-700 mx-1 !font-[700]">pa!help</span> for a list of commands.</p>
-				</div>
+    </mat-tab>
 
-			</div>
+    <mat-tab label="Add Regiment">
+      <ng-template mat-tab-label>
+        <i
+          class="fa-solid fa-plus mr-1.5 mb-0.5 !inline-block !text-[#756e5f]"
+        ></i>
+        Add Regiment
+      </ng-template>
 
-			<!-- <div>
-				<a href="https://discord.com/api/oauth2/authorize?client_id=1116114432502808617&permissions=2953571409&scope=bot%20applications.commands"
-					mat-raised-button class="!text-neutral-300 !m-2" target="_blank">Invite to Discord</a>
-			</div> -->
-
-
-
-		</div>
-
-
-
-		<div class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-fit scale-center ng-star-inserted mt-[1em]"
-			style="background-image: linear-gradient(-27deg, #263855e1, #1e293b00, #1e293b00, #1e293b00)">
-			<h3 class="text-slate-400 text-xl">Requirements</h3>
-
-
-			<ul class="fa-ul text-neutral-300 mt-[1em]">
-
-				<li class="!my-3">
-					<span class="fa-li">
-						<i class="fa-solid fa-check-square"></i>
-					</span>
-					Must be a registered user with a synced Discord account.
-				</li>
-
-				<li class="!my-3">
-					<span class="fa-li">
-						<i class="fa-solid fa-check-square"></i>
-					</span>
-					Must invite the
-					<span class="text-slate-400 mx-1">
-						Regimental Assistant
-
-					</span>
-					bot to your Discord server.
-				</li>
-
-				<li class="!my-3">
-					<span class="fa-li">
-						<i class="fa-solid fa-check-square"></i>
-					</span>
-					Must have Administrative privileges on your Discord Server.
-				</li>
-
-			</ul>
-
-			<h3 class="text-slate-400 text-xl mt-[3.33em]">Step-by-Step</h3>
-
-			<ul class="fa-ul mt-[1.5em] text-neutral-300">
-				<li class="!my-5"><span class="fa-li"><i class="fa-brands fa-discord"></i></span>Sync Discord in <span
-						class="text-slate-400 mx-1">Settings > Profile & Accounts</span> to enable ability to own a
-					regiment.</li>
-				<li class="!my-5"><span class="fa-li"><i class="fa-solid fa-robot"></i></span>Invite the Regimental
-					Assistant to your Discord server using the <span class="text-slate-400 mx-1">"Invite to
-						Discord"</span> button.</li>
-				<li class="!my-5"><span class="fa-li"><i class="fa-solid fa-terminal"></i></span>Run the command <span
-						class="text-slate-400 mx-1">"pa!setup &lt;usa/csa&gt;"</span> in an applicable bot-spam channel.
-					<p class="!font-[300] text-sm text-neutral-300"><i>*You must have admin privileges and being using
-							the same Discord account that is synced to your user account.</i></p>
-				</li>
-				<li class="!my-5"><span class="fa-li"><i class="fa-solid fa-champagne-glasses"></i></span>Your Regiment
-					has been added! Users can now navigate to <span class="text-slate-400 mx-1">Settings > Profile &
-						Accounts</span> and join your regiment.</li>
-			</ul>
-
-		</div>
-
-
-	</div>
-
+      <app-add-bot></app-add-bot>
+    </mat-tab>
+  </mat-tab-group>
 </div>
