@@ -800,3 +800,33 @@ html {
   --mdc-snackbar-container-shape: 0 !important;
   position: static;
 }
+
+
+.mat-mdc-tab-header {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  filter: drop-shadow(0px 0px 2px #7c7d72be);
+  --mdc-tab-indicator-active-indicator-height: 1px !important; 
+  --mdc-tab-indicator-active-indicator-shape: 0;
+  --mdc-secondary-navigation-tab-container-height: 69px !important;
+  --mat-tab-header-label-text-font: 'Roboto Slab', sans-serif !important;
+  --mat-tab-header-label-text-size: 20px;
+  --mat-tab-header-label-text-line-height: 36px;
+  --mat-tab-header-label-text-weight: 300;
+}
+
+// mat tab header css for mobile
+
+@media (max-width: 900px) {
+  .mat-mdc-tab-header {
+    --mdc-tab-indicator-active-indicator-height: 1px !important; 
+    --mdc-tab-indicator-active-indicator-shape: 0;
+    --mdc-secondary-navigation-tab-container-height: 48px !important;
+    --mat-tab-header-label-text-font: 'Roboto Slab', sans-serif !important;
+    --mat-tab-header-label-text-size: 16px;
+    --mat-tab-header-label-text-line-height: 36px;
+    --mat-tab-header-label-text-weight: 300;
+  }
+}

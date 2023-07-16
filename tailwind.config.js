@@ -4,6 +4,7 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
+
     extend: {
       keyframes: {
         top: {

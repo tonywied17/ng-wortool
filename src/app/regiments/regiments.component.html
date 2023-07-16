@@ -30,77 +30,83 @@
         </div>
       </div>
 
-      <div *ngFor="let usaRegiment of regiments">
-        <div *ngIf="usaRegiment.side == 'USA'">
-          <div class="">
-            <div
-              class="my-4 bg-slate-800/80 rounded-lg shadow-md min-h-[100px] p-2 pl-5 flex items-center justify-center"
-            >
+
+      <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+
+        <div *ngFor="let usaRegiment of regiments">
+          <div *ngIf="usaRegiment.side == 'USA'">
+            <div class="">
               <div
-                class="grid grid-cols-[100px_auto_200px] grid-rows-2 w-full gap-2"
+                class="my-4 bg-slate-800/80 rounded-lg shadow-md min-h-[100px] p-2 pl-5 flex items-center justify-center"
               >
                 <div
-                  class="row-start-1 row-end-3 col-start-1 col-span-1 flex items-center"
+                  class="grid grid-cols-[100px_auto_200px] grid-rows-[130px_fit_110px] w-full gap-2 min-h-[222px]"
                 >
-                  <img
-                    [src]="usaRegiment.guild_avatar"
-                    class="h-[100px] w-auto rounded-md shadow-md pointer-events-none"
-                  />
-                </div>
-                <div
-                  class="ml-2 row-start-1 col-start-2 lg:col-end-3 col-end-4 flex flex-col justify-center"
-                >
-                  <div class="flex flex-col h-full justify-center">
-                    <p class="text-slate-400 text-xl font-[500]">
-                      {{ usaRegiment.regiment }}
-                    </p>
-                    <p class="text-slate-400 text-lg font-[400]">
-                      {{ usaRegiment.side }} Regiment
-                    </p>
+                  <div
+                    class="row-start-1 row-end-4 col-start-1 col-span-1"
+                  >
+                    <img
+                      [src]="usaRegiment.guild_avatar"
+                      class="h-[100px] w-auto rounded-md shadow-md pointer-events-none"
+                    />
                   </div>
-                </div>
-                <div
-                  class="row-start-2 col-start-2 col-end-3 pl-2 font-[300] text-neutral-200"
-                >
-                  <p>{{ usaRegiment.description }}</p>
-                </div>
-
-                <div
-                  class="lg:col-start-3 lg:col-span-1 col-span-3 col-start-1 lg:row-start-1 lg:row-span-2 row-start-3 row-span-1 lg:place-self-center text-right place-self-end"
-                >
-                  <button
-                    mat-button
-                    color="primary"
-                    class="!w-fit"
-                    (click)="open(usaRegiment.invite_link)"
+                  <div
+                    class="ml-2 row-start-1 col-start-2 col-end-4"
                   >
-                    <i class="fa-brands fa-discord"></i>
-                  </button>
-
-                  <button
-                    *ngIf="usaRegiment.website"
-                    mat-button
-                    color="primary"
-                    class="!w-fit"
-                    (click)="open(usaRegiment.website)"
+                    <div class="flex flex-col h-full">
+                      <p class="text-slate-400 text-xl font-[500]">
+                        {{ usaRegiment.regiment }}
+                      </p>
+                      <p class="text-slate-400 text-lg font-[400]">
+                        {{ usaRegiment.side }} Regiment
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="row-start-2 col-start-2 col-end-4 pl-2 font-[300] text-neutral-200"
                   >
-                    <i class="fa-solid fa-globe"></i>
-                  </button>
-
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    class=" !text-neutral-200 mt-2 !block !min-h-fit !w-full !p-1"
-					(click)="notYet()"
+                    <p>{{ usaRegiment.description }}</p>
+                  </div>
+  
+                  <div
+                    class="lg:col-start-3 lg:col-span-1 col-span-3 col-start-1 lg:row-start-3 row-start-3 row-span-1 lg:place-self-end text-right place-self-end"
                   >
-                    View Regiment
-                  </button>
+                    <button
+                      mat-button
+                      color="primary"
+                      class="!w-fit"
+                      (click)="open(usaRegiment.invite_link)"
+                    >
+                      <i class="fa-brands fa-discord"></i>
+                    </button>
+  
+                    <button
+                      *ngIf="usaRegiment.website"
+                      mat-button
+                      color="primary"
+                      class="!w-fit"
+                      (click)="open(usaRegiment.website)"
+                    >
+                      <i class="fa-solid fa-globe"></i>
+                    </button>
+  
+                    <button
+                      mat-stroked-button
+                      color="primary"
+                      class=" !text-neutral-300 mt-2 !block !min-h-fit !w-full !p-1 font-[300]"
+                      [routerLink]="['/regiments', usaRegiment.id]"
+                    >
+                      Regiment Info
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
     </mat-tab>
 
     <mat-tab label="CSA Regiments">

@@ -1,0 +1,140 @@
+<div
+  *ngIf="isDataLoaded"
+  class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]"
+>
+  <!-- <h3 class="text-[#88887b] text-3xl tracking-tight mb-[1em]">Event Recaps</h3> -->
+
+  <div
+    *ngFor="let recap of recaps"
+    class="rounded-lg w-full mb-10 bg-slate-800/80 shadow-lg"
+  >
+    <div
+      class="grid lg:grid-cols-[200px_1fr] gird-rows-[80px_auto] grid-cols-2 gap-x-4"
+    >
+      <div
+        class="row-start-1 row-span-1 col-start-1 col-span-2 p-4 rounded-sm rounded-tl-lg shadow-sm"
+        style="
+          background: linear-gradient(
+            130deg,
+            #263855e1,
+            #1e293b00,
+            #1e293b00,
+            #1e293b00
+          );
+        "
+      >
+
+      <div class="grid grid-cols-2">
+        <div>
+            <p class="text-[#7c7d72] text-2xl font-[400]">
+              {{ recap.serverName }}
+            </p>
+          </div>
+  
+          <div class="text-right flex items-center justify-end">
+            <p class="text-slate-400 text-base font-[300]">
+              {{ convertToLocaleTime(recap.endTime) }}
+            </p>
+          </div>
+      </div>
+       
+
+        <div class="w-full">
+          <div class="min-w-min flex items-center">
+            <p class="text-slate-400 text-lg font-[300]">
+              {{ recap.gameMode }} on {{ recap.map }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-start-2 col-start-1 p-2">
+        <img
+          [src]="'https://wortool.com/' + recap.mapObject.image"
+          class="rounded-sm shadow-lg w-full brightness-[55%] sepia-[50%] blur-[0.5px]"
+        />
+      </div>
+      <div class="row-start-2 col-start-2">
+        <div class="grid grid-cols-[auto_1fr] gap-5 p-2 w-full h-fit">
+
+            <div>
+                <p class="text-lg font-[400] text-slate-400">USA Players</p>
+                <div *ngFor="let player of recap.players">
+                    <p class="font-[200] text-sm ml-2" *ngIf="player.TeamId == 1">{{player.Nickname}}</p>
+                </div>
+            </div>
+            <div>
+                <p class="text-lg font-[400] text-slate-400">CSA Players</p>
+                <div *ngFor="let player of recap.players">
+                    <p class="font-[200] text-sm ml-2" *ngIf="player.TeamId == 2">{{player.Nickname}}</p>
+                </div>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 
+    EXAMPLE RECAP OBJECT:
+    
+    {
+    "id": 9,
+    "serverName": "Example Event Hosted by Dad",
+    "players": [
+        {
+            "Admin": false,
+            "TeamId": 1,
+            "SteamID": 76561198002413200,
+            "Nickname": "",
+            "Developer": true
+        },
+        {
+            "Admin": true,
+            "TeamId": 2,
+            "SteamID": 76561198000469630,
+            "Nickname": "PA-[HQ] QM. Molex",
+            "Developer": false
+        },
+        {
+            "Admin": true,
+            "TeamId": 2,
+            "SteamID": 76561198309525360,
+            "Nickname": "PA-LtCol.Ninja",
+            "Developer": false
+        },
+        {
+            "Admin": true,
+            "TeamId": 2,
+            "SteamID": 76561197995236050,
+            "Nickname": "PA-[72ndPVI] Sgt. Oney",
+            "Developer": false
+        }
+    ],
+    "map": "Hatchs Attack",
+    "gameMode": "Skirmish",
+    "area": "South Mountain",
+    "winner": "USA",
+    "duration": 90,
+    "startTime": "1689263677",
+    "endTime": "1689263767",
+    "usaInFormation": 214,
+    "usaSkirmishing": 56,
+    "usaOutOfLine": 11,
+    "csaInFormation": 950,
+    "csaSkirmishing": 174,
+    "csaOutOfLine": 37,
+    "mapObject": {
+        "id": 31,
+        "map": "Hatchs Attack",
+        "image": "assets/maps/hatchs-attack.jpg",
+        "usaArty": "",
+        "csaArty": "",
+        "campaign": "South Mountain",
+        "youtube": "_T3nVNGmy78",
+        "attacker": "USA",
+        "strat": "EDLhrOKIUoV"
+    }
+} -->

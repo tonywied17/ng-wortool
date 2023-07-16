@@ -28,6 +28,8 @@ import { VersionChecker } from "./version-checker";
 import { environment } from "src/environments/environment.prod";
 import { RegimentSettingsComponent } from './board-moderator/regiment-settings/regiment-settings.component';
 import { AddBotComponent } from './regiments/add-bot/add-bot.component';
+import { RegimentInfoComponent } from './regiments/regiment-info/regiment-info.component';
+import { EventRecapsComponent } from './regiments/event-recaps/event-recaps.component';
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
@@ -45,6 +47,8 @@ const routes: Routes = [
   { path: "admin", component: BoardAdminComponent },
   { path: "admin/:page", component: BoardAdminComponent },
   { path: "admin/:page/:weapon", component: BoardAdminComponent },
+  { path: "regiments/:id", component: RegimentInfoComponent },
+  { path: "recaps", component: EventRecapsComponent},
   { path: "", redirectTo: "/home", pathMatch: "full" },
 ];
 
@@ -67,6 +71,8 @@ const routes: Routes = [
     GameInfoComponent,
     RegimentSettingsComponent,
     AddBotComponent,
+    RegimentInfoComponent,
+    EventRecapsComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,8 +84,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      // enabled: !isDevMode(),
-      enabled: environment.production,
+      enabled: !isDevMode(),
+      // enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",
