@@ -61,24 +61,30 @@ export class EventRecapsComponent implements OnInit {
   }
 
   async getRecaps(): Promise<void> {
-    this.recaps = await firstValueFrom(this.worService.getRecaps());
-    console.log(this.recaps);
+    try {
+      this.recaps = await firstValueFrom(this.worService.getRecaps());
+      console.log(this.recaps);
   
-    this.players = this.recaps.flatMap((recap: any) => recap.players);
-    console.log(this.players);
+      this.players = this.recaps.flatMap((recap: any) => recap.players);
+      console.log(this.players);
   
-    this.commaIDS = this.players.map((player: any) => player.SteamID).join(",");
+      this.commaIDS = this.players.map((player: any) => player.SteamID).join(",");
   
-    this.steamPlayers = await this.getSteamUser(this.commaIDS);
-    console.log(this.steamPlayers);
-    this.players.forEach((player: any) => {
-      const steamPlayer = this.steamPlayers.find((steamPlayer: any) => steamPlayer.steamid === player.SteamID.toString());
-      if (steamPlayer) {
-        player.avatar= steamPlayer.avatar;
-      }
-    });
-
+      this.steamPlayers = await this.getSteamUser(this.commaIDS);
+      console.log(this.steamPlayers);
+  
+      this.players.forEach((player: any) => {
+        const steamPlayer = this.steamPlayers.find((steamPlayer: any) => steamPlayer.steamid === player.SteamID.toString());
+        if (steamPlayer) {
+          player.avatar = steamPlayer.avatar;
+        }
+      });
+  
+    } catch (error) {
+      console.error(error);
+    }
   }
+  
   
   async getSteamUser(steamIds: string): Promise<any> {
     const steamUser = await firstValueFrom(

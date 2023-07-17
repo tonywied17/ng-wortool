@@ -153,7 +153,7 @@ export class RegimentSettingsComponent implements OnInit {
         .then((response: any) => {
           this.regimentUsers = response;
           this.updateCurrentUserRoles();
-
+  
           const promises = this.regimentUsers.map((user: any) => {
             if (user.discordId && user.avatar_url) {
               return this.getDiscordRegimentUsers(
@@ -177,7 +177,13 @@ export class RegimentSettingsComponent implements OnInit {
                       user.regimentId
                     )
                     .toPromise()
-                    .then(() => user);
+                    .then(() => {
+                      // Update the current user object with the new avatar URL
+                      if (user.id === this.currentUser.id) {
+                        this.currentUser.avatar_url = discordUser.USER_SPECIFIC.DISCORD_AVATAR;
+                      }
+                      return user;
+                    });
                 } else {
                   return user;
                 }
@@ -186,17 +192,20 @@ export class RegimentSettingsComponent implements OnInit {
               return Promise.resolve(user);
             }
           });
-
+  
           Promise.all(promises).then((updatedUsers) => {
             this.regimentUsers = updatedUsers;
-            console.log(
-              "Regiment users updated with Discord avatar URLs:",
-              this.regimentUsers
-            );
+            // console.log(
+            //   "Regiment users updated with Discord avatar URLs:",
+            //   this.regimentUsers
+            // );
           });
         });
     }
   }
+  
+
+  
 
   async getDiscordRegimentUsers(discordId: any, guildId: string): Promise<any> {
 
@@ -204,7 +213,7 @@ export class RegimentSettingsComponent implements OnInit {
       .getUserGuildInfo(discordId, guildId)
       .toPromise()
       .then((response: any) => {
-        console.log(response);
+        // console.log(response);
         this.discordRegimentUsers = response;
         this.updateCurrentUserRoles();
         return response;
@@ -234,7 +243,7 @@ export class RegimentSettingsComponent implements OnInit {
       .createWebhook(guildId, channelId)
       .toPromise()
       .then((response: any) => {
-        console.log(response);
+        // console.log(response);
         this.webhook = response;
         this.snackBar.open(
           `$Webhook created for channel ${this.targetChannel}!`,
@@ -352,7 +361,7 @@ export class RegimentSettingsComponent implements OnInit {
       .setModerator(userId)
       .toPromise()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         const userIndex = this.regimentUsers.findIndex(
           (user: { id: any }) => user.id === userId
         );
@@ -426,7 +435,7 @@ export class RegimentSettingsComponent implements OnInit {
       .removeUsersRegiment(userId)
       .toPromise()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         this.getRegimentUsers(this.regimentData.id);
         this.token.saveUser(response);
       })
