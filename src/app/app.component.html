@@ -11,12 +11,16 @@
 
 
 
+
+
 				<button (click)="toggle();scroll()"
 					type="button"
 					class="!mt-auto inline-flex items-center justify-center rounded-md p-2 text-[#bbbbb1] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#88887b]"
 					aria-controls="mobile-menu"
 					aria-expanded="false">
 					<span class="sr-only">Open main menu</span>
+
+
 
 
 
@@ -42,6 +46,8 @@
 
 
 
+
+
 					<svg class="hidden h-6 w-6"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -60,10 +66,14 @@
 
 
 
+
+
 				</button>
 			</div>
 			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 				<div class="flex flex-shrink-0 items-center">
+
+
 
 
 
@@ -83,10 +93,14 @@
 
 
 
+
+
 					<img class="block h-8 w-auto pointer-events-none"
 						src="https://paarmy.com/assets/pa.png"
 						alt="The Pennsylvania Army">
 				</div>
+
+
 
 
 
@@ -117,15 +131,12 @@
 
 
 
-
-
-
-						<button [routerLink]="['/maps']"
+						<!-- <button [routerLink]="['/maps']"
 							mat-button
 							routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
 							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Maps
-						</button>
+						</button> -->
 
 
 						<!-- <button [matMenuTriggerFor]="resources"
@@ -135,6 +146,8 @@
 							Resources
 							<i class="fa-solid fa-caret-down"></i>
 						</button> -->
+
+
 
 
 						<ng-template #notActive>
@@ -148,7 +161,9 @@
 
 
 
-						<button *ngIf="currentRoute == '/game-info' || currentRoute == '/weapons'; else notActive"
+
+
+						<button *ngIf="currentRoute == '/game-info' || currentRoute == '/weapons' || currentRoute == '/maps'; else notActive"
 							[matMenuTriggerFor]="resources"
 							mat-button
 							class="navitem !bg-[#111827]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
@@ -158,9 +173,19 @@
 
 
 
+
+
 						<mat-menu #resources="matMenu"
 							xPosition="after"
-							class="!mt-[0.82rem] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
+							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
+							<button routerLink="/maps"
+								class="ml-2 select-none"
+								mat-menu-item>
+								<span class="!text-[#252525ce] font-[500] !text-lg">
+									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
+									Maps
+								</span>
+							</button>
 							<button routerLink="/weapons"
 								class="ml-2 select-none"
 								mat-menu-item>
@@ -174,7 +199,50 @@
 								mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
-									WoR News
+									News
+								</span>
+							</button>
+						</mat-menu>
+
+
+						<ng-template #notActive2>
+							<button [matMenuTriggerFor]="regiments"
+								mat-button
+								class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+								Community
+								<i class="fa-solid fa-caret-down"></i>
+							</button>
+						</ng-template>
+
+
+
+						<button *ngIf="currentRoute == '/regiments' || currentRoute == '/recaps'; else notActive2"
+							[matMenuTriggerFor]="regiments"
+							mat-button
+							class="navitem !bg-[#111827]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Community
+							<i class="fa-sharp fa-solid fa-caret-down"></i>
+						</button>
+
+
+
+						<mat-menu #regiments="matMenu"
+							xPosition="after"
+							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
+							<button routerLink="/regiments"
+								class="ml-2 select-none"
+								mat-menu-item>
+								<span class="!text-[#252525ce] font-[500] !text-lg">
+									<!-- <i class="fa-solid fa-person-rifle mr-1.5"></i> -->
+									Regiments
+								</span>
+							</button>
+							<button routerLink="/recaps"
+								class="ml-2 select-none"
+								mat-menu-item>
+								<span class="!text-[#252525ce] font-[500] !text-lg">
+									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
+									Event Recaps
 								</span>
 							</button>
 						</mat-menu>
@@ -182,20 +250,9 @@
 
 
 
-						<button [routerLink]="['/regiments']"
-							mat-button
-							routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Regiments
-						</button>
-
-
-
-
-
-
-
 					</div>
+
+
 
 
 
@@ -212,8 +269,12 @@
 
 
 
+
+
 			<div *ngIf="isLoggedIn"
 				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+
 
 
 
@@ -234,6 +295,8 @@
 
 
 
+
+
 				<mat-menu #beforeMenu="matMenu"
 					xPosition="before"
 					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-1">
@@ -243,7 +306,11 @@
 
 
 
+
+
 					<mat-list class="!px-[0]">
+
+
 
 
 
@@ -267,6 +334,8 @@
 
 
 
+
+
 						<div *ngIf="showUser">
 							<button routerLink="/user/3"
 								class="text-[0.8rem] ml-2 select-none"
@@ -277,6 +346,8 @@
 								</span>
 							</button>
 						</div>
+
+
 
 
 
@@ -303,7 +374,11 @@
 
 
 
+
+
 			</div>
+
+
 
 
 
@@ -322,8 +397,12 @@
 
 
 
+
+
 		</div>
 	</div>
+
+
 
 
 
@@ -335,6 +414,8 @@
 	<div *ngIf="menuOpen"
 		class="sm:hidden h-fit py-[1em] animate-top sm:animate-none mx-auto !m-3"
 		id="mobile-menu">
+
+
 
 
 
@@ -402,7 +483,11 @@
 
 
 
+
+
 </nav>
+
+
 
 
 
