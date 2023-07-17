@@ -34,7 +34,7 @@ export class GameInfoComponent implements OnInit {
         this.isDataLoaded = true;
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       }
     );
   }
@@ -48,7 +48,7 @@ export class GameInfoComponent implements OnInit {
         this.latestDate = this.formatUnixTimestamp(this.gameNews[0].date);
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       }
     );
   }

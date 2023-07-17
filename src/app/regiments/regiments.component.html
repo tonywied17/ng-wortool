@@ -38,6 +38,7 @@
 									<div class="row-start-1 row-end-4 col-start-1 col-span-1">
 										<img [src]="usaRegiment.guild_avatar"
 											class="h-[100px] w-auto rounded-md shadow-md pointer-events-none">
+	
 									</div>
 									<div class="ml-2 row-start-1 col-start-2 col-end-4">
 										<div class="flex flex-col h-full">
@@ -60,7 +61,7 @@
 										<button (click)="open(usaRegiment.invite_link)"
 											mat-button
 											color="primary"
-											class="!w-fit">
+											class="!w-fit !text-2xl">
 											<i class="fa-brands fa-discord"></i>
 										</button>
 
@@ -69,7 +70,7 @@
 											(click)="open(usaRegiment.website)"
 											mat-button
 											color="primary"
-											class="!w-fit">
+											class="!w-fit !text-2xl">
 											<i class="fa-solid fa-globe"></i>
 										</button>
 
@@ -77,7 +78,7 @@
 										<button [routerLink]="['/regiments', usaRegiment.id]"
 											mat-stroked-button
 											color="primary"
-											class=" !text-neutral-300 mt-2 !block !min-h-fit !w-full !p-1 font-[300]">
+											class=" !text-neutral-300 mt-2 !block !min-h-fit !w-full !p-1 font-[300] !text-base">
 											Regiment Info
 										</button>
 									</div>

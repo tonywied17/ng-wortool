@@ -36,6 +36,7 @@ export class RegimentSettingsComponent implements OnInit {
 
   regimentChannels: any;
   regimentUsers: any;
+  discordRegimentUsers: any;
 
   targetChannel: any;
   webhook: any;
@@ -63,7 +64,9 @@ export class RegimentSettingsComponent implements OnInit {
           this.showMod = response.access;
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
-            this.getRegiment();
+            this.getRegiment().then(() => {
+              this.getRegimentDiscordData();
+            });
           }
         })
         .catch((error) => {
@@ -76,7 +79,6 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
-
   async getRegiment(): Promise<void> {
     if (this.regimentID) {
       await this.regimentService
@@ -87,20 +89,20 @@ export class RegimentSettingsComponent implements OnInit {
           this.getRegimentChannels(this.regimentData.guild_id);
           this.getRegimentUsers(this.regimentData.id);
           this.regimentSelected = true;
-  
+
           this.regiment = this.regimentData.regiment;
           this.guild_id = this.regimentData.guild_id;
           this.guild_avatar = this.regimentData.guild_avatar;
           this.description = this.regimentData.description;
           this.invite_link = this.regimentData.invite_link;
           this.website = this.regimentData.website;
-  
+
           setTimeout(() => {
             // Get the select element by its ID
             const selectElement = document.getElementById(
               "side-select"
             ) as HTMLSelectElement;
-  
+
             // Set the index of the select box to the first option
             selectElement.selectedIndex = 0;
           }, 200);
@@ -112,9 +114,25 @@ export class RegimentSettingsComponent implements OnInit {
       this.regimentSelected = false;
     }
   }
-  
 
-  
+  async getRegimentDiscordData(): Promise<void> {
+    if (this.guild_id) {
+      await this.discordService
+        .getRegimentGuild(this.guild_id)
+        .toPromise()
+        .then((response: any) => {
+          if (
+            !this.guild_avatar ||
+            this.guild_avatar !== response.guild.iconURL
+          ) {
+            this.regimentData.guild_avatar = response.guild.iconURL;
+            this.guild_avatar = response.guild.iconURL;
+
+            this.updateRegiment();
+          }
+        });
+    }
+  }
 
   async getRegimentChannels(guildId: string): Promise<void> {
     if (this.regimentID) {
@@ -133,11 +151,64 @@ export class RegimentSettingsComponent implements OnInit {
         .getRegimentUsers(guildId)
         .toPromise()
         .then((response: any) => {
-          console.log(response);
           this.regimentUsers = response;
           this.updateCurrentUserRoles();
+
+          const promises = this.regimentUsers.map((user: any) => {
+            if (user.discordId && user.avatar_url) {
+              return this.getDiscordRegimentUsers(
+                user.discordId,
+                this.guild_id
+              ).then((discordUser: any) => {
+                if (
+                  discordUser &&
+                  discordUser.USER_SPECIFIC &&
+                  discordUser.USER_SPECIFIC.DISCORD_AVATAR &&
+                  user.avatar_url !== discordUser.USER_SPECIFIC.DISCORD_AVATAR
+                ) {
+                  user.avatar_url = discordUser.USER_SPECIFIC.DISCORD_AVATAR;
+                  // Update the user's profile in auth.service
+                  return this.authService
+                    .profile(
+                      user.id,
+                      user.email,
+                      discordUser.USER_SPECIFIC.DISCORD_AVATAR,
+                      user.discordId,
+                      user.regimentId
+                    )
+                    .toPromise()
+                    .then(() => user);
+                } else {
+                  return user;
+                }
+              });
+            } else {
+              return Promise.resolve(user);
+            }
+          });
+
+          Promise.all(promises).then((updatedUsers) => {
+            this.regimentUsers = updatedUsers;
+            console.log(
+              "Regiment users updated with Discord avatar URLs:",
+              this.regimentUsers
+            );
+          });
         });
     }
+  }
+
+  async getDiscordRegimentUsers(discordId: any, guildId: string): Promise<any> {
+
+    return this.discordService
+      .getUserGuildInfo(discordId, guildId)
+      .toPromise()
+      .then((response: any) => {
+        console.log(response);
+        this.discordRegimentUsers = response;
+        this.updateCurrentUserRoles();
+        return response;
+      });
   }
 
   updateCurrentUserRoles() {
@@ -190,7 +261,6 @@ export class RegimentSettingsComponent implements OnInit {
         )
         .toPromise()
         .then((response) => {
-          console.log(response);
           this.snackBar.open(`Regiment Information Updated`, "Close", {
             duration: 3000,
           });
@@ -200,24 +270,6 @@ export class RegimentSettingsComponent implements OnInit {
           console.error("Error:", error);
         });
     }
-  }
-
-  async syncDiscord() {
-    const response = await fetch(
-      `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentData.guild_id}/get`
-    );
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch data from endpoint. Status: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-    const discord = data.guild;
-
-    this.regiment = discord.name;
-    this.guild_avatar = discord.iconURL;
-    this.guild_id = discord.id;
   }
 
   toggleModerator(userId: any) {
@@ -266,7 +318,6 @@ export class RegimentSettingsComponent implements OnInit {
         if (dismissedAction.dismissedByAction) {
           this.setModerator(userId);
         } else {
-          console.log('User clicked "Cancel"');
           this.getRegimentUsers(this.regimentData.id);
         }
       });
@@ -291,7 +342,6 @@ export class RegimentSettingsComponent implements OnInit {
         if (dismissedAction.dismissedByAction) {
           this.removeModerator(userId);
         } else {
-          console.log('User clicked "Cancel"');
           this.getRegimentUsers(this.regimentData.id);
         }
       });
@@ -320,7 +370,6 @@ export class RegimentSettingsComponent implements OnInit {
       })
       .catch((error) => {
         console.error("Error:", error);
-        // Handle error case, if needed
       });
   }
 
@@ -351,7 +400,6 @@ export class RegimentSettingsComponent implements OnInit {
       })
       .catch((error) => {
         console.error("Error:", error);
-        // Handle error case, if needed
       });
   }
 

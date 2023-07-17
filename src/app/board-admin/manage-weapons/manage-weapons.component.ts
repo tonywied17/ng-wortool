@@ -62,7 +62,7 @@ export class ManageWeaponsComponent implements OnInit {
         this.weaponsList = JSON.parse(data);
       },
       (error: any) => {
-        console.error(error);
+        
       }
     );
   }
@@ -73,10 +73,10 @@ export class ManageWeaponsComponent implements OnInit {
         (weapon) => weapon.id === parseInt(this.selectedWeaponId)
       );
 
-      console.log(selectedIndex);
+      
       if (selectedIndex !== -1) {
         const selectedWeapon = this.weaponsList[selectedIndex];
-        // console.log(selectedWeapon);
+        // 
         this.weaponName = selectedWeapon.weapon;
         this.weaponType = selectedWeapon.type;
         this.weaponRange = selectedWeapon.range;
@@ -186,20 +186,20 @@ export class ManageWeaponsComponent implements OnInit {
         (weapon) => weapon.id === parseInt(this.selectedWeaponId)
       );
 
-      // console.log(selectedIndex);
+      // 
       if (selectedIndex !== -1) {
         const selectedWeapon = this.weaponsList[selectedIndex];
-        // console.log(selectedWeapon);
+        // 
         this.weaponService.delete(userId, selectedWeapon.id).subscribe(
           (response) => {
-            // console.log(response);
+            // 
             this.showSnackBar("Weapon deleted successfully!");
             this.loadWeapons();
             this.createNew();
             this.isCreating = false;
           },
           (error) => {
-            console.error(error);
+            
             this.showSnackBar("An error occurred while deleting the weapon.");
           }
         );

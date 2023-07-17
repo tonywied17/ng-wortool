@@ -23,6 +23,10 @@ export class DiscordService {
     return this.http.get<any>(`${API}/user/${userId}`);
   }
 
+  getRegimentGuild(guildId: string): Observable<any> {
+    return this.http.get<any>(`${API}/guild/${guildId}/get`);
+  }
+
   getGuildChannels(guildId: string): Observable<any> {
     return this.http.get<any>(`${API}/guild/${guildId}/channels`);
   }

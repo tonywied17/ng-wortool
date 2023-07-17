@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { RegimentService } from "../_services/regiment.service";
+import { DiscordService } from "../_services/discord.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { map } from "rxjs/operators";
 
@@ -13,12 +14,13 @@ export class RegimentsComponent implements OnInit {
   regimentUsers: any;
   regimentID: any;
   searchText: any;
+  isDataLoaded: boolean = false;
 
   constructor(
     private regimentService: RegimentService,
-    private snackBar: MatSnackBar
-    
-    ) {}
+    private snackBar: MatSnackBar,
+    private discordService: DiscordService
+  ) {}
 
   ngOnInit(): void {
     this.getRegiments();
@@ -38,24 +40,27 @@ export class RegimentsComponent implements OnInit {
       )
       .subscribe((filteredRegiments) => {
         this.regiments = filteredRegiments;
-      }); 
+      });
   }
 
   getRegiments() {
     this.regimentService.getRegiments().subscribe((regiments) => {
       this.regiments = regiments;
       this.fetchRegimentUsers();
-      console.log(this.regiments);
+      // 
     });
   }
-  
+
   async fetchRegimentUsers(): Promise<void> {
-    for (const regiment of this.regiments) {
-      await this.getRegimentUsers(regiment.id).then(() => {
+    const fetchPromises = this.regiments.map((regiment: any) =>
+      this.getRegimentUsers(regiment.id).then(() => {
         regiment.members = this.regimentUsers;
-        console.log(regiment);
-      });
-    }
+        return this.getDiscordRegimentData(regiment.guild_id, regiment);
+      })
+    );
+
+    await Promise.all(fetchPromises);
+    
   }
 
   async getRegimentUsers(guildId: string): Promise<void> {
@@ -63,10 +68,42 @@ export class RegimentsComponent implements OnInit {
       .getRegimentUsers(guildId)
       .toPromise()
       .then((response: any) => {
-        console.log(response);
+        
         this.regimentUsers = response;
       });
   }
+
+  async getDiscordRegimentData(guildId: string, regiment: any): Promise<void> {
+    await this.discordService
+      .getRegimentGuild(guildId)
+      .toPromise()
+      .then((response: any) => {
+        if (!regiment.guild_avatar || regiment.guild_avatar !== response.guild.iconURL) {
+          regiment.guild_avatar = response.guild.iconURL;
+          // Update the guild_avatar using the regiment service
+          this.regimentService.updateRegiment(
+            regiment.userId,
+            regiment.id,
+            regiment.regiment,
+            regiment.guild_id,
+            regiment.guild_avatar,
+            regiment.invite_link,
+            regiment.website,
+            regiment.description,
+            regiment.side
+          ).subscribe(
+            (updatedRegiment: any) => {
+              // Update successful, do something if needed
+            },
+            (error: any) => {
+              // Update failed, handle the error if needed
+            }
+          );
+        }
+        this.isDataLoaded = true;
+      });
+  }
+  
   
 
   open(url: string) {
@@ -78,7 +115,7 @@ export class RegimentsComponent implements OnInit {
 
   // mat snackbar for popup message
 
-  notYet(){
+  notYet() {
     this.snackBar.open("This feature is not yet available", "OK", {
       duration: 5000,
       verticalPosition: "top",

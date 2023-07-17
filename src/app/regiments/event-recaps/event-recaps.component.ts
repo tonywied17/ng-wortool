@@ -41,7 +41,7 @@ export class EventRecapsComponent implements OnInit {
       this.screenshots = this.gameDetails.screenshots;
       this.assignRandomScreenshots();
     } catch (error) {
-      console.log(error);
+      
     }
   }
 
@@ -60,7 +60,7 @@ export class EventRecapsComponent implements OnInit {
 
   async getRecaps(): Promise<void> {
     this.recaps = await firstValueFrom(this.worService.getRecaps());
-    console.log(this.recaps);
+    
   }
 
   async getMaps(): Promise<void> {
@@ -76,7 +76,7 @@ export class EventRecapsComponent implements OnInit {
       }
     });
   
-    console.log(this.recaps);
+    
   }
 
   convertToLocaleTime(epochTime: number): string {

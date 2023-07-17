@@ -153,15 +153,15 @@
 							{{ regimentData.regiment }}
 						</h3>
 
-						<img [src]="regimentData.guild_avatar"
+						<img *ngIf="guild_avatar" [src]="guild_avatar"
 							class="mx-auto w-[100px] h-[100px] shadow-sm mb-[1em] pointer-events-none rounded-md">
 
 						<p class="my-1 text-sm font-[200]">
-							<i class="fa-solid fa-link w-[25px] ml-[1em] mr-2"></i>
+							<i class="fa-brands fa-discord w-[25px] ml-[1em] mr-2"></i>
 							{{ regimentData.invite_link }}
 						</p>
 
-						<p class="my-1 text-sm font-[200]">
+						<!-- <p class="my-1 text-sm font-[200]">
 							<i class="fa-solid fa-globe w-[25px] ml-[1em] mr-[0.5em]"></i>
 							{{ regimentData.website }}
 						</p>
@@ -169,7 +169,7 @@
 						<p class="mt-[1em] my-1 text-sm font-[200]">
 							<i class="fa-solid fa-align-left w-[25px] ml-[1em] mr-[0.5em]"></i>
 							{{ regimentData.description }}
-						</p>
+						</p> -->
 					</div>
 					<div class="place-self-auto w-full">
 						<div *ngFor="let user of regimentUsers.slice(0, 8)" class="relative">

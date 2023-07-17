@@ -50,7 +50,7 @@ export class BoardModeratorComponent implements OnInit {
           if (error.status === 403) {
             this.showMod = false;
           } else {
-            console.error("Error:", error);
+            
           }
           this.loading = false;
         }
@@ -80,7 +80,7 @@ export class BoardModeratorComponent implements OnInit {
 
     if (regimentId) {
       this.regimentService.getRegiment(regimentId).subscribe((response) => {
-        console.log(response);
+        
         this.regimentData = response;
         this.regimentSelected = true;
       });
