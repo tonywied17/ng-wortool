@@ -13,3 +13,22 @@
 	padding-left: 1em;
 	font-size: 0.875rem;
 }
+
+.icon {
+	animation: swayAnimation 2s infinite linear;
+	transform-origin: center;
+}
+
+@keyframes swayAnimation {
+	0% {
+		transform: translateX(-10%) rotateZ(-15deg)
+	}
+
+	50% {
+		transform: translateX(10%) rotateZ(15deg);
+	}
+
+	100% {
+		transform: translateX(-10%) rotateZ(-15deg);
+	}
+}

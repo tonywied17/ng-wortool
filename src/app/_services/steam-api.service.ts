@@ -53,4 +53,10 @@ export class SteamApiService {
       map(response => response.appnews.newsitems)
     );
   }
+
+  //https://api.tonewebdesign.com/pa/steamid/76561198000469634
+  getSteamId(steamId: string): Observable<any> {
+    const url = `https://api.tonewebdesign.com/pa/steamid/${steamId}`;
+    return this.http.get(url);
+  }
 }
