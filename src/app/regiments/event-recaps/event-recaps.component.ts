@@ -65,13 +65,14 @@ export class EventRecapsComponent implements OnInit {
       this.recaps = await firstValueFrom(this.worService.getRecaps());
       console.log(this.recaps);
   
-      this.players = this.recaps.flatMap((recap: any) => recap.players);
-      console.log(this.players);
-  
+      if (this.recaps) {
+        this.players = this.recaps.flatMap((recap: any) => recap.players || []);
+      }
+      
       this.commaIDS = this.players.map((player: any) => player.SteamID).join(",");
   
       this.steamPlayers = await this.getSteamUser(this.commaIDS);
-      console.log(this.steamPlayers);
+
   
       this.players.forEach((player: any) => {
         const steamPlayer = this.steamPlayers.find((steamPlayer: any) => steamPlayer.steamid === player.SteamID.toString());
@@ -87,11 +88,25 @@ export class EventRecapsComponent implements OnInit {
   
   
   async getSteamUser(steamIds: string): Promise<any> {
-    const steamUser = await firstValueFrom(
-      this.steamApiService.getSteamId(steamIds)
-    );
-    return steamUser.response.players;
+    try {
+      const steamUser = await firstValueFrom(
+        this.steamApiService.getSteamId(steamIds)
+      );
+  
+  
+      if (!steamUser || !steamUser.response) {
+        console.error('Steam user or response is undefined');
+        return [];
+      }
+  
+      return steamUser.response.players;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }
+  
+  
   
 
   async getMaps(): Promise<void> {
@@ -111,9 +126,9 @@ export class EventRecapsComponent implements OnInit {
   }
 
   convertToLocaleTime(epochTime: number): string {
-    const date = new Date(epochTime * 1000); // Convert epoch time to milliseconds
+    const date = new Date(epochTime * 1000); 
 
-    return date.toLocaleString(); // Convert to the browser's local time string
+    return date.toLocaleString(); 
   }
 
   chunkArray(array: any[], size: number): any[][] {

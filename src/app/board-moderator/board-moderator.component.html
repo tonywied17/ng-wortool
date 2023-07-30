@@ -130,12 +130,12 @@
 					<div style="border-left: dotted 1px #7c7d738f;"
 						class="p-[1em] grid lg:grid-cols-1 grid-cols-2 gap-[1em] !text-center">
 
-						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
+						<button *ngIf="isOwner" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Manage Regiment Specific Settings."
 							class="!py-2 !pt-4 !text-neutral-400 !block !min-w-full">
 							<i class="fa-solid fa-users-gear !text-neutral-400 !block text-3xl !mx-auto"></i>
-							My Regiment
+							Owner Tool
 						</button>
 
 
@@ -144,7 +144,15 @@
 							matTooltip="Share event information through Discord announcements."
 							class="!py-2 !h-full !pt-4 !text-neutral-400 !block !min-w-full">
 							<i class="fa-brands fa-discord !text-neutral-400 !text-center !block text-3xl !mx-auto"></i>
-							Event Tool
+							Event Share
+						</button>
+
+						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/3" mat-button
+							matTooltipClass="form-tooltip" matTooltipPosition="right"
+							matTooltip="Keep track of Steam IDs for unbanning & statistics."
+							class="!py-2 !h-full !pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-brands fa-steam !text-neutral-400 !text-center !block text-3xl !mx-auto"></i>
+							Steam IDs
 						</button>
 
 
@@ -182,6 +190,11 @@
 				<div *ngIf="showPage2" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 fade-center">
 					
 					<app-server-info></app-server-info>
+				</div>
+
+				<div *ngIf="showPage3" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 fade-center">
+					
+					<app-steam-ids></app-steam-ids>
 				</div>
 
 

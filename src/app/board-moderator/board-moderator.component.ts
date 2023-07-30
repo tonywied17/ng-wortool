@@ -17,9 +17,12 @@ export class BoardModeratorComponent implements OnInit {
   showMod = false;
   showPage1 = false;
   showPage2 = false;
+  showPage3 = false;
   loading = true;
   regimentData: any;
   regimentSelected = true;
+
+  isOwner = false;
 
   constructor(
     private token: TokenStorageService,
@@ -40,10 +43,12 @@ export class BoardModeratorComponent implements OnInit {
     const userID = this.currentUser.id;
 
     if (this.isLoggedIn) {
+
       this.authService.checkModeratorRole(userID, this.currentUser.regimentId).subscribe(
         (response) => {
           this.showMod = response.access;
           this.getRegiment();
+
           this.loading = false;
         },
         (error) => {
@@ -53,11 +58,14 @@ export class BoardModeratorComponent implements OnInit {
             
           }
           this.loading = false;
+
         }
       );
     } else {
       this.loading = false;
     }
+
+   
   }
 
   goBack(): void {
@@ -67,11 +75,13 @@ export class BoardModeratorComponent implements OnInit {
   private loadContent(page: string): void {
     this.showPage1 = false;
     this.showPage2 = false;
-
+    this.showPage3 = false;
     if (page === "1") {
       this.showPage1 = true;
     } else if (page === "2") {
       this.showPage2 = true;
+    } else if (page === "3") {
+      this.showPage3 = true;
     }
   }
 
@@ -83,6 +93,13 @@ export class BoardModeratorComponent implements OnInit {
         
         this.regimentData = response;
         this.regimentSelected = true;
+
+        if(this.currentUser.discordId == this.regimentData.ownerId) {
+          this.isOwner = true;
+        }else{
+          this.isOwner = false;
+        }
+
       });
     }else{
       this.regimentSelected = false;

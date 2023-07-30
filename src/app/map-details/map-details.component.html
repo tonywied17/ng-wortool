@@ -2,7 +2,7 @@
   <i class="fas fa-spinner fa-pulse mr-2"></i> Verifying credentials...
 </div>
 
-<div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[2em] lg:mt-[3.5em]" id="map-contained">
+<div *ngIf="!loading && currentMap" class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[2em] lg:mt-[3.5em]" id="map-contained">
   <div class="text-[#88887b] text-3xl mb-[1em]">
     <div class="grid grid-cols-1 lg:grid-cols-2">
       <div class="col-start-1 col-span-1">
@@ -281,7 +281,7 @@
       </div>
 
       <div class="block pr-[20px] text-center text-3xl font-[300] select-none">
-        <img src="https://app.paarmy.com/assets/bayo.png" class="icon mx-auto h-[43px] w-auto pointer-events-none brightness-75 sepia-[70%]">
+        <img src="https://app.paarmy.com/assets/swords.png" class="icon mx-auto h-[43px] w-auto pointer-events-none brightness-75 sepia-[70%]">
         <span class="block text-base font-[200]">vs.</span>
       </div>
 

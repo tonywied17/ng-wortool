@@ -30,6 +30,7 @@ import { RegimentSettingsComponent } from './board-moderator/regiment-settings/r
 import { AddBotComponent } from './regiments/add-bot/add-bot.component';
 import { RegimentInfoComponent } from './regiments/regiment-info/regiment-info.component';
 import { EventRecapsComponent } from './regiments/event-recaps/event-recaps.component';
+import { SteamIdsComponent } from './board-moderator/steam-ids/steam-ids.component';
 
 const routes: Routes = [
   { path: "home", component: HomeComponent },
@@ -73,6 +74,7 @@ const routes: Routes = [
     AddBotComponent,
     RegimentInfoComponent,
     EventRecapsComponent,
+    SteamIdsComponent,
   ],
   imports: [
     BrowserModule,

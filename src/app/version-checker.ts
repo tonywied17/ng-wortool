@@ -20,7 +20,6 @@ export class VersionChecker {
       const snackBarRef = this.snackBar.open(
         `A new version is available. Would you like to update?`,
         "Yes", {
-          duration: 5000,
           verticalPosition: "top",
         }
       );

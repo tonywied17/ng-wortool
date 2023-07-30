@@ -180,7 +180,7 @@ export class MapDetailsComponent implements OnInit {
   getFavorites(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
       next: (favorite: Favorite[]) => {
-        if (favorite[0].mapId == mapId && favorite[0].userId == userId) {
+        if (favorite && favorite.length > 0 && favorite[0].mapId == mapId && favorite[0].userId == userId) {
           this.isFavorited = true;
         } else {
           this.isFavorited = false;
@@ -191,6 +191,7 @@ export class MapDetailsComponent implements OnInit {
       },
     });
   }
+  
 
   toggleFavorite(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
@@ -273,11 +274,17 @@ export class MapDetailsComponent implements OnInit {
   getMap(id: string): void {
     this.mapService.get(id).subscribe({
       next: (data) => {
-        this.currentMap = data;
+        if (data) {
+          this.currentMap = data;
+        } else {
+          // Handle the case when data is empty or undefined
+          console.error("No data received from the API.");
+        }
       },
       error: (e) => console.error(e),
     });
   }
+  
 
   toggle(event: MatSlideToggleChange) {
     if (event.checked) {

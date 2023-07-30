@@ -3,6 +3,7 @@ import { RegimentService } from "../_services/regiment.service";
 import { DiscordService } from "../_services/discord.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { map } from "rxjs/operators";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-regiments",
@@ -15,14 +16,17 @@ export class RegimentsComponent implements OnInit {
   regimentID: any;
   searchText: any;
   isDataLoaded: boolean = false;
+  currentRoute!: string;
 
   constructor(
     private regimentService: RegimentService,
     private snackBar: MatSnackBar,
-    private discordService: DiscordService
+    private discordService: DiscordService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.currentRoute = this.router.url;
     this.getRegiments();
   }
 
@@ -73,38 +77,49 @@ export class RegimentsComponent implements OnInit {
       });
   }
 
-  async getDiscordRegimentData(guildId: string, regiment: any): Promise<void> {
-    await this.discordService
-      .getRegimentGuild(guildId)
-      .toPromise()
-      .then((response: any) => {
-        if (!regiment.guild_avatar || regiment.guild_avatar !== response.guild.iconURL) {
-          regiment.guild_avatar = response.guild.iconURL;
-          // Update the guild_avatar using the regiment service
-          this.regimentService.updateRegiment(
-            regiment.userId,
-            regiment.id,
-            regiment.regiment,
-            regiment.guild_id,
-            regiment.guild_avatar,
-            regiment.invite_link,
-            regiment.website,
-            regiment.description,
-            regiment.side
-          ).subscribe(
-            (updatedRegiment: any) => {
-              // Update successful, do something if needed
-            },
-            (error: any) => {
-              // Update failed, handle the error if needed
-            }
-          );
-        }
-        this.isDataLoaded = true;
-      });
-  }
-  
-  
+ async getDiscordRegimentData(guildId: string, regiment: any): Promise<void> {
+  await this.discordService.getRegimentGuild(guildId).toPromise()
+    .then((response: any) => {
+      let hasChanged = false;
+
+      if (!regiment.guild_avatar || regiment.guild_avatar !== response.guild.iconURL) {
+        regiment.guild_avatar = response.guild.iconURL;
+        hasChanged = true;
+      }
+
+      if (regiment.regiment !== response.guild.name) {
+        regiment.regiment = response.guild.name;
+        hasChanged = true;
+      }
+
+      if (hasChanged) {
+        const requestedDomain = window.location.origin + this.currentRoute;
+        this.regimentService.syncRegiment(
+          requestedDomain,
+          regiment.userId,
+          regiment.id,
+          regiment.regiment,
+          regiment.guild_id,
+          regiment.guild_avatar,
+          regiment.invite_link,
+          regiment.website,
+          regiment.description,
+          regiment.side
+        ).subscribe(
+          (updatedRegiment: any) => {
+
+
+          },
+          (error: any) => {
+
+          }
+        );
+      }
+
+      this.isDataLoaded = true;
+    });
+}
+
 
   open(url: string) {
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -113,7 +128,6 @@ export class RegimentsComponent implements OnInit {
     window.open(url, "_blank");
   }
 
-  // mat snackbar for popup message
 
   notYet() {
     this.snackBar.open("This feature is not yet available", "OK", {

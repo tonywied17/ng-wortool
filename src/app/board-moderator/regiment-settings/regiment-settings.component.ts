@@ -34,6 +34,8 @@ export class RegimentSettingsComponent implements OnInit {
   website: any;
   side: any;
 
+  isOwner: boolean = false;
+
   regimentChannels: any;
   regimentUsers: any;
   discordRegimentUsers: any;
@@ -62,10 +64,17 @@ export class RegimentSettingsComponent implements OnInit {
         .toPromise()
         .then((response) => {
           this.showMod = response.access;
+
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
             this.getRegiment().then(() => {
               this.getRegimentDiscordData();
+
+              if(this.currentUser.discordId == this.regimentData.ownerId) {
+                this.isOwner = true;
+              }else{
+                this.isOwner = false;
+              }
             });
           }
         })
@@ -153,7 +162,7 @@ export class RegimentSettingsComponent implements OnInit {
         .then((response: any) => {
           this.regimentUsers = response;
           this.updateCurrentUserRoles();
-  
+
           const promises = this.regimentUsers.map((user: any) => {
             if (user.discordId && user.avatar_url) {
               return this.getDiscordRegimentUsers(
@@ -180,7 +189,8 @@ export class RegimentSettingsComponent implements OnInit {
                     .then(() => {
                       // Update the current user object with the new avatar URL
                       if (user.id === this.currentUser.id) {
-                        this.currentUser.avatar_url = discordUser.USER_SPECIFIC.DISCORD_AVATAR;
+                        this.currentUser.avatar_url =
+                          discordUser.USER_SPECIFIC.DISCORD_AVATAR;
                       }
                       return user;
                     });
@@ -192,7 +202,7 @@ export class RegimentSettingsComponent implements OnInit {
               return Promise.resolve(user);
             }
           });
-  
+
           Promise.all(promises).then((updatedUsers) => {
             this.regimentUsers = updatedUsers;
             // console.log(
@@ -203,12 +213,8 @@ export class RegimentSettingsComponent implements OnInit {
         });
     }
   }
-  
-
-  
 
   async getDiscordRegimentUsers(discordId: any, guildId: string): Promise<any> {
-
     return this.discordService
       .getUserGuildInfo(discordId, guildId)
       .toPromise()
