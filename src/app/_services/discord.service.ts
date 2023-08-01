@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\_services\discord.service.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:24:16 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,30 +27,74 @@ export class DiscordService {
   ) { }
 
 
+  /**
+   * Get all users
+   * This observable is used to get all discord users from the database
+   * @returns {Observable<any>}
+   */
   getAll(): Observable<any> {
     return this.http.get<any>(`${API}/users`);
   }
 
+  /**
+   * Get one user
+   * This observable is used to get one discord user from the database
+   * @param userId - string - the discord user id
+   * @returns {Observable<any>}
+   */
   getOne(userId: string): Observable<any> {
     return this.http.get<any>(`${API}/user/${userId}`);
   }
 
+  /**
+   * Get all guilds
+   * This observable is used to get the discord guild data from the database
+   * @param guildId - string - the discord guild id
+   * @returns {Observable<any>}
+   */
   getRegimentGuild(guildId: string): Observable<any> {
     return this.http.get<any>(`${API}/guild/${guildId}/get`);
   }
 
+  /**
+   * Get all guild channels
+   * This observable is used to get the discord guild channels from the database
+   * TODO: Cache into session storage or find a more efficient way to do this. Querying is slow.
+   * @param guildId - string - the discord guild id
+   * @returns {Observable<any>}
+   */
   getGuildChannels(guildId: string): Observable<any> {
     return this.http.get<any>(`${API}/guild/${guildId}/channels`);
   }
 
+  /**
+   * Get all discord user information from a guild
+   * This observable is used to get the discord user information from a guild
+   * @param discordId - string - the discord user id
+   * @param guildId - string - the discord guild id
+   * @returns {Observable<any>}
+   */
   getUserGuildInfo(discordId: string, guildId: string): Observable<any> {
     return this.http.get<any>(`${API}/guild/${guildId}/user/${discordId}/get`);
   }
-  //https://api.tonewebdesign.com/pa/discord/guild/850786736756883496/channel/901993697888051200/webhook
+
+  /**
+   * Create a webhook for a guild channel and return the webhook url
+   * This observable is used to create a webhook for a guild channel and return the webhook url
+   * @param guildId - string - the discord guild id
+   * @param channelId - string - the discord channel id
+   * @returns - Webhook url
+   */
   createWebhook(guildId: string, channelId: string): Observable<any> {
     return this.http.get<any>(`${API}/guild/${guildId}/channel/${channelId}/webhook`);
   }
 
+  /**
+   * Remove a discord user from the database
+   * This observable is used to remove a discord user from the database
+   * @param userId - string - the discord user id
+   * @returns {Observable<any>}
+   */
   removeDiscordUser(userId: string): Observable<any> {
     return this.http.delete<any>(`${API}/user/${userId}/remove`);
   }

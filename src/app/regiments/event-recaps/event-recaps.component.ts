@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\regiments\event-recaps\event-recaps.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 16th 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:16:50 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { WorService } from "../../_services/wor.service";
 import { RegimentService } from "../../_services/regiment.service";
@@ -28,6 +40,10 @@ export class EventRecapsComponent implements OnInit {
     private mapService: MapService
   ) {}
 
+  /**
+   * On init, get all recaps and maps
+   * @returns void
+   */
   async ngOnInit(): Promise<void> {
     await this.getRecaps();
     await this.getMaps();
@@ -35,6 +51,9 @@ export class EventRecapsComponent implements OnInit {
     this.isDataLoaded = true;
   }
 
+  /**
+   * Get app details from Steam API
+   */
   async getAppDetails(): Promise<void> {
     try {
       const data = await this.steamApiService.getAppDetails().toPromise();
@@ -44,6 +63,9 @@ export class EventRecapsComponent implements OnInit {
     } catch (error) {}
   }
 
+  /**
+   * Assign random screenshots to recaps
+   */
   assignRandomScreenshots(): void {
     this.recaps.forEach((recap: any) => {
       const randomIndex = Math.floor(Math.random() * this.screenshots.length);
@@ -51,6 +73,9 @@ export class EventRecapsComponent implements OnInit {
     });
   }
 
+  /**
+   * Helper function to get random image
+   */
   randomImg(): void {
     this.recaps.forEach((recap: any) => {
       recap.randThumbnail =
@@ -60,6 +85,9 @@ export class EventRecapsComponent implements OnInit {
     });
   }
 
+  /**
+   * Get all recaps
+   */
   async getRecaps(): Promise<void> {
     try {
       this.recaps = await firstValueFrom(this.worService.getRecaps());
@@ -86,7 +114,11 @@ export class EventRecapsComponent implements OnInit {
     }
   }
   
-  
+  /**
+   * Get steam user data for a comma separated list of steam ids
+   * @param steamIds - comma separated list of steam ids
+   * @returns 
+   */
   async getSteamUser(steamIds: string): Promise<any> {
     try {
       const steamUser = await firstValueFrom(
@@ -106,9 +138,9 @@ export class EventRecapsComponent implements OnInit {
     }
   }
   
-  
-  
-
+  /**
+   * Get all maps
+   */
   async getMaps(): Promise<void> {
     this.maps = await firstValueFrom(this.mapService.getAll());
 
@@ -125,12 +157,23 @@ export class EventRecapsComponent implements OnInit {
     });
   }
 
+  /**
+   * Convert epoch time to locale time
+   * @param epochTime - epoch time
+   * @returns 
+   */
   convertToLocaleTime(epochTime: number): string {
     const date = new Date(epochTime * 1000); 
 
     return date.toLocaleString(); 
   }
 
+  /**
+   * Chunk array into smaller arrays
+   * @param array - array to chunk
+   * @param size - size of chunks
+   * @returns 
+   */
   chunkArray(array: any[], size: number): any[][] {
     const chunks = [];
     for (let i = 0; i < array.length; i += size) {
@@ -139,6 +182,11 @@ export class EventRecapsComponent implements OnInit {
     return chunks;
   }
 
+  /**
+   * Filter players by team id
+   * @param teamId - team id
+   * @returns 
+   */
   filterPlayersByTeamId(teamId: number): any[] {
     return this.recaps.players.filter(
       (player: { TeamId: number }) => player.TeamId === teamId

@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-admin\board-admin.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:44:32 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import {
   Component,
   OnInit,
@@ -34,10 +46,17 @@ export class BoardAdminComponent implements OnInit {
     private location: Location
   ) {}
 
+  /**
+   * Go back
+   * This function is used to go back to the previous page
+   */
   goBack(): void {
     this.location.back();
   }
 
+  /**
+   * On init
+   */
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       const page = params["page"];
@@ -68,6 +87,11 @@ export class BoardAdminComponent implements OnInit {
     }
   }
 
+  /**
+   * Load content
+   * This function is used to load the content
+   * @param page - string - the page
+   */
   private loadContent(page: string): void {
     this.showPage1 = false;
     this.showPage2 = false;

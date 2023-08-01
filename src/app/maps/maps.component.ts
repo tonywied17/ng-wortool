@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\maps\maps.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:08:47 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { MapService } from "../_services/map.service";
 import { TokenStorageService } from "../_services/token-storage.service";
@@ -71,6 +83,10 @@ export class MapsComponent implements OnInit {
     }, 120);
   }
 
+  /**
+   * Retrieve filter state
+   * This function is used to retrieve the filter state from local storage
+   */
   retrieveFilterState(): void {
     const savedFilterState = localStorage.getItem("filterState");
     if (savedFilterState) {
@@ -89,6 +105,10 @@ export class MapsComponent implements OnInit {
     }
   }
 
+  /**
+   * Save filter state
+   * This function is used to save the filter state to local storage
+   */
   saveFilterState(): void {
     const filterState = {
       selectedCampaigns: this.selectedCampaigns,
@@ -103,17 +123,31 @@ export class MapsComponent implements OnInit {
     localStorage.setItem("filterState", JSON.stringify(filterState));
   }
 
+  /**
+   * Clear search text
+   * This function is used to clear the search text
+   */
   clearSearchText() {
     this.searchText = "";
     this.filterMaps();
   }
 
+  /**
+   * Set active map
+   * This function is used to set the active map
+   * @param map - map
+   * @param index - index
+   */
   setActiveMap(map: Map, index: number): void {
     this.currentMap = map;
     this.currentIndex = index;
     this.showMapPage = true;
   }
 
+  /**
+   * Get maps
+   * This function is used to get all maps
+   */
   getMaps(): void {
     this.mapService.getAll().subscribe({
       next: (data) => {
@@ -125,6 +159,12 @@ export class MapsComponent implements OnInit {
     });
   }
 
+  /**
+   * Get unique campaigns
+   * This function is used to get all unique campaigns
+   * @param data - data
+   * @returns - unique campaigns
+   */
   private getUniqueCampaigns(data: Map[]): string[] {
     const excludedCampaigns = ["Picket Patrol", "Drill Camp"];
     const campaigns = data
@@ -133,6 +173,10 @@ export class MapsComponent implements OnInit {
     return [...new Set(campaigns)];
   }
 
+  /**
+   * Toggle favorite
+   * This function is used to filter map data by a user's favorites
+   */
   filterMaps(): void {
     let filteredMap: Map[] = this.originalMap || [];
 
@@ -179,6 +223,11 @@ export class MapsComponent implements OnInit {
     this.saveFilterState();
   }
 
+  /**
+   * Get favorites
+   * This function is used to get all favorites for a user
+   * @returns - favorites
+   */
   private getFavorites(): void {
     const userID = this.currentUser.id;
 
@@ -195,6 +244,10 @@ export class MapsComponent implements OnInit {
     );
   }
 
+  /**
+   * This function is used to toggle the campaign filter
+   * @param campaign - campaign 
+   */
   toggleCampaignSelection(campaign: string): void {
     const index = this.selectedCampaigns.indexOf(campaign);
 
@@ -209,50 +262,76 @@ export class MapsComponent implements OnInit {
     this.filterMaps();
   }
 
+  /**
+   * Set selected campaign
+   * This function is used to set the selected campaign
+   * @param campaign 
+   */
   setSelectedCampaign(campaign: string): void {
     this.selectedCampaigns = [campaign];
     this.selectedCampaign = campaign;
     this.filterMaps();
   }
 
+  /**
+   * Toggle filter by campaign
+   * This function is used to toggle the filter by campaign
+   */
   toggleFilterByCampaign(): void {
     this.filterByCampaignDiv = !this.filterByCampaignDiv;
   }
 
+  /**
+   * Toggle filter by campaign
+   * This function is used to toggle the filter by campaign
+   */
   toggleFilterCampaign(): void {
     this.filterByCampaign = !this.filterByCampaign;
   }
 
+  /**
+   * Toggle filter by favorites
+   * This function is used to toggle the filter by favorites
+   */
   toggleFavoritesOnly(): void {
     this.showFavoritesOnly = !this.showFavoritesOnly;
     this.filterMaps();
   }
 
+  /**
+   * Toggle filter by favorites desktop element
+   */
   toggleFavoritesOnlyDesktop(): void {
     this.showFavoritesOnlyDesktop = !this.showFavoritesOnlyDesktop;
     this.filterMaps();
   }
 
+  /**
+   * Toggle filter by favorites
+   */
   toggleFavoritesDiv(): void {
     this.showFavoritesDiv = !this.showFavoritesDiv;
   }
-
   toggleFavorites(): void {
     this.showFavoritesDesktop = !this.showFavoritesDesktop;
   }
 
+  /**
+   * Toggle filter by attackers
+   */
   toggleAttackerDiv() {
     this.showAttackerDiv = !this.showAttackerDiv;
   }
-
   toggleAttacker() {
     this.showAttackerDesktop = !this.showAttackerDesktop;
   }
 
+  /**
+   * Toggle filter by artillery
+   */
   toggleFilterByArtillery(): void {
     this.filterByArtillery = !this.filterByArtillery;
   }
-
   toggleArty(): void {
     this.showArtyDesktop = !this.showArtyDesktop;
   }
@@ -260,10 +339,20 @@ export class MapsComponent implements OnInit {
     this.showArtyDiv = !this.showArtyDiv;
   }
 
+  /**
+   * Check selected campaign
+   * This function is used to check if a campaign is selected
+   * @param campaign - campaign
+   * @returns - boolean
+   */
   isCampaignSelected(campaign: string): boolean {
     return this.selectedCampaigns.includes(campaign);
   }
 
+  /**
+   * Clear all search filters
+   * This function is used to clear all search filters
+   */
   clearFilters(): void {
     this.searchText = "";
     this.selectedCampaign = "";
@@ -289,6 +378,10 @@ export class MapsComponent implements OnInit {
     this.getFavorites();
   }
 
+  /**
+   * Scroll to top
+   * This function is used to scroll to the top of the page
+   */
   scrollToTop(): void {
     window.scrollTo({
       top: 0,

@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\_services\regiment.service.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:36:46 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -19,18 +31,49 @@ export class RegimentService {
     private http: HttpClient
   ) { }
 
+  /**
+   * Get all regiments
+   * This observable is used to get all regiments from the database
+   * @returns {Observable<any>}
+   */
   getRegiments(): Observable<any> {
     return this.http.get(API);
   }
 
+  /**
+   * Get regiment by id
+   * This observable is used to get a regiment by id from the database
+   * @param regimentId - number - the regiment id
+   * @returns - Observable<any>
+   */
   getRegiment(regimentId: number): Observable<any> {
     return this.http.get(API + regimentId);
   }
 
+  /**
+   * Get all the users in a regiment by regiment id
+   * This observable is used to get all the users in a regiment by regiment id from the database
+   * @param regimentId - number - the regiment id
+   * @returns - Observable<any>
+   */
   getRegimentUsers(regimentId: any): Observable<any> {
     return this.http.get(API + regimentId  + '/users');
   }
 
+  /**
+   * Update the regiment
+   * This observable is used to update the regiment in the database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param regiment - any - the regiment
+   * @param guild_id - any - the guild id
+   * @param guild_avatar - any - the guild avatar
+   * @param invite_link - any - the invite link
+   * @param website - any - the website
+   * @param description - any - the description 
+   * @param side - any - the side
+   * @returns - Observable<any>
+   */
   updateRegiment(userId: any, regimentId: number, regiment: any, guild_id: any, guild_avatar: any, invite_link: any, website: any, description: any, side: any): Observable<any> {
     
     return this.http.put(API + regimentId + '/update', {
@@ -45,6 +88,21 @@ export class RegimentService {
     }, httpOptions);
   }
 
+  /**
+   * Sync the discord guild with the database
+   * This observable is used to sync the discord guild with the database
+   * @param requestedDomain - string - the requested domain
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param regiment - any - the regiment
+   * @param guild_id - any - the guild id
+   * @param guild_avatar - any - the guild avatar
+   * @param invite_link - any - the invite link
+   * @param website - any - the website
+   * @param description - any - the description
+   * @param side - any - the side
+   * @returns - Observable<any>
+   */
   syncRegiment(requestedDomain: string, userId: any, regimentId: number, regiment: any, guild_id: any, guild_avatar: any, invite_link: any, website: any, description: any, side: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -65,37 +123,82 @@ export class RegimentService {
     return this.http.put(API + regimentId + '/change', data, { headers });
   }
 
+  /**
+   * Remove the regiment
+   * This observable is used to remove the regiment from the database
+   * @param userId - number - the user id
+   * @returns - Observable<any>
+   */
   removeUsersRegiment(userId: number): Observable<any> {
     return this.http.delete(API + userId + '/remove');
   }
-  
 
+  /**
+   * Set a regiment moderator
+   * This observable is used to set a regiment moderator in the database
+   * @param userId - number - the user id
+   * @returns - Observable<any>
+   */
   setModerator(userId: any): Observable<any> {
     return this.http.put(AUTH_API + userId + '/setModerator', {
       userId
     }, httpOptions);
   }
 
+  /**
+   * Remove a regiment moderator
+   * This observable is used to remove a regiment moderator in the database
+   * @param userId - number - the user id
+   * @returns - Observable<any>
+   */
   removeModerator(userId: number): Observable<any> {
     return this.http.put(AUTH_API + userId + '/removeModerator', {
       userId
     }, httpOptions);
   }
 
-  ///pa/regiments/gameid/:steamId
+  /**
+   * Get steam data for a regiment user by steam id
+   * This observable is used to get steam data for a regiment user by steam id from the database
+   * @param userId - number - the user id
+   * @param steamId - number - the steam id
+   * @returns - Observable<any>
+   */
   getSteamId(userId: number, steamId: number): Observable<any> {
     return this.http.get(API + 'gameid/' + steamId);
   }
 
+  /**
+   * Get all game ids by regiment id
+   * This observable is used to get all game ids by regiment id from the database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @returns - Observable<any>
+   */
   getGameIds(userId: number, regimentId: number): Observable<any> {
     return this.http.get(API + regimentId + '/gameids');
   }
-  
+
+  /**
+   * Get steam data for a regiment user by game id (primary key id)
+   * This observable is used to get steam data for a regiment user by game id (primary key id) from the database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param gameId - number - the game id
+   * @returns - Observable<any>
+   */
   getGameId(userId: number, regimentId: number, gameId: number): Observable<any> {
     return this.http.get(API + regimentId + '/gameids/' + gameId);
   }
 
-  // set game id // /pa/regiments/:regimentId/gameid
+  /**
+   * Add steam id to regiment database
+   * This observable is used to add steam id to regiment database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param steamId - number - the steam id
+   * @returns - Observable<any>
+   */
   setGameId(userId: number, regimentId: number, steamId: number): Observable<any> {
     return this.http.post(API + regimentId + '/gameid', {
       steamId,

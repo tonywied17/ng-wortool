@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\home\home.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:58:05 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../_services/auth.service";
 import { TokenStorageService } from "../_services/token-storage.service";
@@ -57,22 +69,46 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Is authenticated
+   * This function is used to check if the user is authenticated
+   * @returns boolean
+   */
   get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
 
+  /**
+   * Is administrator
+   * This function is used to check if the user is administrator
+   * @returns boolean
+   */
   get isAdministrator(): boolean {
     return this.authService.isAdministrator;
   }
 
+  /**
+   * Is moderator
+   * This function is used to check if the user is moderator
+   * @returns boolean
+   */
   get isModerator(): boolean {
     return this.authService.isModerator;
   }
 
+  /**
+   * Counter
+   * This function is used to create an array of numbers
+   * @param i - number
+   * @returns - array
+   */
   counter(i: number) {
     return new Array(i);
   }
 
+  /**
+   * On init
+   */
   ngOnInit(): void {
     this.initializeComponent();
 
@@ -87,6 +123,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * initialize component
+   * This function is used to initialize the component
+   * @returns void
+   */
   initializeComponent(): void {
     this.isLoggedIn = !!this.tokenStorage.getToken();
     this.currentUser = this.tokenStorage.getUser();
@@ -142,6 +183,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * On register
+   * This function is used to register a user
+   */
   onRegister(): void {
     const { username, email, password } = this.registerForm;
 
@@ -157,6 +202,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * On login
+   * This function is used to login a user
+   */
   onLogin(): void {
     const { username, password } = this.loginForm;
 
@@ -196,16 +245,28 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Login btn
+   * This function is used to show the login form
+   */
   loginBtn(): void {
     this.loginTask = true;
     this.registerTask = false;
   }
 
+  /**
+   * Register btn
+   * This function is used to show the register form
+   */
   registerBtn(): void {
     this.loginTask = false;
     this.registerTask = true;
   }
 
+  /**
+   * Logout
+   * This function is used to logout a user
+   */
   logout(): void {
     this.tokenStorage.signOut();
     this.authService.isAuthenticated = false;
@@ -222,6 +283,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/home"]);
   }
 
+  /**
+   * Open portfolio
+   * This function is used to open the portfolio in a new tab
+   */
   openPortfolio() {
     window.open("https://tonewebdesign.com/portfolio", "_blank");
   }

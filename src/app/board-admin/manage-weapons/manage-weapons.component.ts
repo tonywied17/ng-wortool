@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-admin\manage-weapons\manage-weapons.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:46:30 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../../_services/token-storage.service";
@@ -37,6 +49,9 @@ export class ManageWeaponsComponent implements OnInit {
     private weaponService: WeaponService
   ) {}
 
+  /**
+   * On init
+   */
   ngOnInit(): void {
     this.loadWeapons();
 
@@ -56,6 +71,10 @@ export class ManageWeaponsComponent implements OnInit {
     });
   }
 
+  /**
+   * Load weapons
+   * This function is used to load all weapons
+   */
   loadWeapons(): void {
     this.weaponService.getAll().subscribe(
       (data: any) => {
@@ -67,6 +86,10 @@ export class ManageWeaponsComponent implements OnInit {
     );
   }
 
+  /**
+     Handle selection change
+   * This function is used to handle the selection change
+   */
   handleSelectionChange() {
     if (this.selectedWeaponId) {
       const selectedIndex = this.weaponsList.findIndex(
@@ -90,6 +113,10 @@ export class ManageWeaponsComponent implements OnInit {
     }
   }
 
+  /**
+   * Create new
+   * This function is used to reset the form and create a new weapon
+   */
   createNew() {
     this.weaponName = "";
     this.weaponType = "";
@@ -103,6 +130,10 @@ export class ManageWeaponsComponent implements OnInit {
     this.isUpdating = false;
   }
 
+  /**
+   * Back
+   * This function is used to reset the form and go back to the previous page
+   */
   back() {
     this.weaponName = "";
     this.weaponType = "";
@@ -116,6 +147,11 @@ export class ManageWeaponsComponent implements OnInit {
     this.isCreating = false;
   }
 
+  /**
+   * Show snack bar
+   * This function is used to show a snackbar
+   * @param message - string - the message
+   */
   private showSnackBar(message: string) {
     this.snackBar.open(message, "Close", {
       duration: 5000,
@@ -123,6 +159,11 @@ export class ManageWeaponsComponent implements OnInit {
     });
   }
 
+  /**
+   * Create or update weapon
+   * This function is used to create or update a weapon
+   * @returns - Promise<void>
+   */
   async createOrUpdateWeapon() {
     if (!this.weaponName || !this.weaponType) {
       this.showSnackBar("Please fill in at least the weapon name & type.");
@@ -160,6 +201,10 @@ export class ManageWeaponsComponent implements OnInit {
     this.back();
   }
 
+  /**
+   * Confirm delete
+   * This function is used to confirm the deletion of a weapon
+   */
   confirmDelete(): void {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -178,6 +223,10 @@ export class ManageWeaponsComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete weapon
+   * This function is used to delete a weapon
+   */
   deleteWeapon() {
     let userId = this.currentUser.id;
 

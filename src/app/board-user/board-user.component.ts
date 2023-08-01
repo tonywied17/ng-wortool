@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-user\board-user.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:53:54 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
@@ -81,11 +93,19 @@ export class BoardUserComponent implements OnInit {
     private regimentService: RegimentService
   ) {}
 
+  /**
+   * onPageSizeChange
+   * This function is used to change the page size of the table
+   * @param event - any - the event
+   */
   onPageSizeChange(event: any) {
     this.pageSize = event.pageSize;
     localStorage.setItem("pageSize", event.pageSize);
   }
 
+  /**
+   * On init
+   */
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe((params: Params) => {
       const page = params["page"];
@@ -164,6 +184,11 @@ export class BoardUserComponent implements OnInit {
     this.pageSize = storedPageSize ? +storedPageSize : 5;
   }
 
+  /**
+   * Get favorites
+   * This function is used to get all the favorites for the current user
+   * @returns - void
+   */
   private getFavorites(): void {
     const userID = this.currentUser.id;
 
@@ -199,10 +224,19 @@ export class BoardUserComponent implements OnInit {
     );
   }
 
+  /**
+   * Go back
+   * This function is used to go back to the previous page
+   */
   goBack(): void {
     this.location.back();
   }
 
+  /**
+   * Load content
+   * This function is used to load the content for the selected page
+   * @param page - string - the page number
+   */
   private loadContent(page: string): void {
     this.showPage1 = false;
     this.showPage2 = false;
@@ -217,6 +251,11 @@ export class BoardUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Update password
+   * This function is used to update the password
+   * @returns - void
+   */
   async updatePassword() {
     if (
       !this.passwordCurrent ||
@@ -256,6 +295,10 @@ export class BoardUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Sync user account with discord
+   * This function is used to sync the user account with discord
+   */
   sync(): void {
     const state = encodeURIComponent(this.currentUser.id);
     const left = window.screenX + 100;
@@ -316,12 +359,21 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Update avatar url
+   * This function is used to update the avatar url
+   */
   updateAvatarUrl() {
     if (this.discordIsSynced) {
       this.avatar_url = this.discordData.avatar;
     }
   }
 
+  /**
+   * Update profile
+   * This function is used to update the profile
+   * @param alert - boolean - whether to show the snackbar or not
+   */
   async updateProfile(alert: boolean = true) {
     const userId = this.currentUser.id;
     try {
@@ -381,6 +433,11 @@ export class BoardUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Logout
+   * This function is used to logout the user
+   * @returns - void
+   */
   logout(): void {
     this.token.signOut();
     this.authService.isAuthenticated = false;
@@ -399,6 +456,11 @@ export class BoardUserComponent implements OnInit {
     this.router.navigate(["/home"]);
   }
 
+  /**
+   * Show snackbar
+   * This function is used to show a snackbar
+   * @param message - string - the message
+   */
   private showSnackBar(message: string) {
     this.snackBar.open(message, "Close", {
       duration: 5000,
@@ -406,6 +468,11 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete favorite
+   * This function is used to delete a favorite
+   * @param mapId - string - the map id
+   */
   deleteFavorite(mapId: string) {
     let userId = this.currentUser.id;
 
@@ -415,7 +482,12 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Confirm delete
+   * This function is used to confirm the deletion of a favorite
+   * @param mapId - string - the map id
+   * @param mapName - string - the map name
+   */
   confirmDelete(mapId: string, mapName: string): void {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -435,6 +507,10 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Confirm unSync of discord account
+   * This function is used to confirm the unSync of a discord account
+   */
   confirmUnSync(): void {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -453,6 +529,11 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Get discord user
+   * This function is used to get the discord user data
+   * @returns - Promise<void>
+   */
   async getDiscordUser(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const userId = this.currentUser.id;
@@ -460,59 +541,70 @@ export class BoardUserComponent implements OnInit {
 
       if (!discordId) {
         this.discordIsSynced = false;
-        resolve(); // Resolve immediately since there is no Discord ID
+        resolve();
       } else {
         this.discordService.getOne(userId).subscribe(
           (response) => {
             // console.log(response);
             this.discordData = response;
             this.discordIsSynced = true;
-            resolve(); // Resolve without any argument
+            resolve(); 
           },
           (error) => {
-            reject(error); // Reject with the error
+            reject(error); 
           }
         );
       }
     });
   }
 
+  /**
+   * Get regiment
+   * This function is used to get the regiment data
+   * @returns - Promise<void>
+   */
   async getRegiment(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const regimentId = this.currentUser.regimentId;
 
       if (!regimentId) {
         this.regimentSelected = false;
-        resolve(); // Resolve immediately since there is no regiment ID
+        resolve(); 
       } else {
         this.regimentService.getRegiment(regimentId).subscribe(
           (response) => {
             console.log(response);
             this.regimentData = response;
             this.regimentSelected = true;
-            resolve(); // Resolve without any argument
+            resolve();
           },
           (error) => {
-            reject(error); // Reject with the error
+            reject(error); 
           }
         );
       }
     });
   }
 
+  /**
+   * Get all regiments
+   * This function is used to get all the regiments
+   */
   getAllRegiments() {
     this.regimentService.getRegiments().subscribe((response) => {
-      // console.log(response);
       this.allRegimentsList = response;
     });
   }
 
+  /**
+   * Update regiment
+   * This function is used to update the regiment
+   */
   updateRegiment() {
     const selectedRegiment = this.allRegimentsList.find(
       (regiment: { id: any }) => regiment.id == this.regimentId
     );
     if (selectedRegiment) {
-      // this.guild_avatar_url = selectedRegiment.guild_avatar;
       this.regimentData = selectedRegiment;
       this.stillSelecting = true;
       this.confirmSyncRegiment();
@@ -523,6 +615,10 @@ export class BoardUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Remove discord account after confirmation
+   * This function is used to remove the discord account
+   */
   remove() {
     this.discordService
       .removeDiscordUser(this.currentUser.id)
@@ -539,6 +635,10 @@ export class BoardUserComponent implements OnInit {
       });
   }
 
+  /**
+   * Confirm sync regiment
+   * This function is used to confirm the sync of a regiment
+   */
   confirmSyncRegiment() {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -557,6 +657,10 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Confirm unSync regiment
+   * This function is used to confirm the unSync of a regiment
+   */
   confirmUnSyncRegiment() {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -575,6 +679,10 @@ export class BoardUserComponent implements OnInit {
     });
   }
 
+  /**
+   * Remove regiment
+   * This function is used to remove the regiment after confirmation
+   */
   removeRegiment() {
     this.regimentService
       .removeUsersRegiment(this.currentUser.id)

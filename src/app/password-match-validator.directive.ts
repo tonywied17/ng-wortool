@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\password-match-validator.directive.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:19:57 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Directive, Input } from "@angular/core";
 import {
   NG_VALIDATORS,
@@ -19,6 +31,11 @@ import {
 export class PasswordMatchValidatorDirective implements Validator {
   @Input("appPasswordMatchValidator") password!: string;
 
+  /**
+   * Validate the password match
+   * @param control - form control
+   * @returns - validation errors
+   */
   validate(control: AbstractControl): ValidationErrors | null {
     const confirmPassword = control.value;
 

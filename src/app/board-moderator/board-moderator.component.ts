@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-moderator\board-moderator.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:47:44 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../_services/token-storage.service";
@@ -32,6 +44,9 @@ export class BoardModeratorComponent implements OnInit {
     private regimentService: RegimentService
   ) {}
 
+  /**
+   * on init
+   */
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       const page = params["page"];
@@ -68,10 +83,19 @@ export class BoardModeratorComponent implements OnInit {
    
   }
 
+  /**
+   * Go back
+   * This function is used to go back to the previous page
+   */
   goBack(): void {
     this.location.back();
   }
 
+  /**
+   * load content
+   * This function is used to load the content for the page based on the page number
+   * @param page - string - the page number
+   */
   private loadContent(page: string): void {
     this.showPage1 = false;
     this.showPage2 = false;
@@ -85,6 +109,10 @@ export class BoardModeratorComponent implements OnInit {
     }
   }
 
+  /**
+   * Get regiment
+   * This function is used to get the regiment data
+   */
   getRegiment() {
     let regimentId = this.currentUser.regimentId;
 

@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\weapons\weapons.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:18:56 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { WeaponService } from "../_services/weapon.service";
@@ -43,6 +55,9 @@ export class WeaponsComponent implements OnInit {
     private location: Location
   ) {}
 
+  /**
+   * On init
+   */
   ngOnInit(): void {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
@@ -64,14 +79,12 @@ export class WeaponsComponent implements OnInit {
         }
       );
     }
-
     this.weaponService.getAll().subscribe((data) => {
       this.weaponsObj = JSON.parse(data);
       this.loadWeapon(this.weaponsObj[0]);
 
       this.contentLoaded = true;
     });
-
     this.route.params.subscribe((params: Params) => {
       const weaponId = params["weapon"];
       console.log("route found for: " + weaponId);
@@ -83,6 +96,11 @@ export class WeaponsComponent implements OnInit {
     });
   }
 
+  /**
+   * Load weapon
+   * This function is used to load a weapon from the list
+   * @param weapon - weapon object 
+   */
   loadWeapon(weapon: any) {
     this.spotlight = null;
     setTimeout(() => {
@@ -93,6 +111,15 @@ export class WeaponsComponent implements OnInit {
     this.activeWeaponId = weapon.id;
   }
 
+  /**
+   * Open a new window
+   * This function is used to open a new window
+   * @param url - url to open
+   * @param title - title of the window
+   * @param w - width
+   * @param h - height
+   * @returns - window
+   */
   open(url: any, title: any, w: any, h: any) {
     var left = screen.width / 2 - w / 2;
     var top = screen.height / 2 - h / 2;

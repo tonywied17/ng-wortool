@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\app.module.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:19:20 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { NgModule, isDevMode } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { MaterialModule } from "./material-module";
@@ -32,6 +44,10 @@ import { RegimentInfoComponent } from './regiments/regiment-info/regiment-info.c
 import { EventRecapsComponent } from './regiments/event-recaps/event-recaps.component';
 import { SteamIdsComponent } from './board-moderator/steam-ids/steam-ids.component';
 
+/**
+ * Routes for the application
+ * @type Routes
+ */
 const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "maps", component: MapsComponent },

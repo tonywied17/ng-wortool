@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\_services\steam-api.service.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Mon July 31st 2023 11:38:40 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
@@ -5,7 +17,6 @@ import { Observable, map } from 'rxjs';
 interface SteamApiResponse {
   [key: string]: {
     data: any;
-    // Add other properties if necessary
   };
 }
 
@@ -37,9 +48,13 @@ interface NewsItem {
 
 export class SteamApiService {
 
-
   constructor(private http: HttpClient) { }
 
+  /**
+   * Get app details
+   * This observable is used to get the app details from the database
+   * @returns - Observable<any>
+   */
   getAppDetails(): Observable<any> {
     const url = `https://api.tonewebdesign.com/pa/steam/appdetails?appid=424030`;
     return this.http.get<SteamApiResponse>(url).pipe(
@@ -47,6 +62,11 @@ export class SteamApiService {
     );
   }
 
+  /**
+   * Get app news
+   * This observable is used to get the app news from the database
+   * @returns - Observable<NewsItem[]>
+   */
   getAppNews(): Observable<NewsItem[]> {
     const url = `https://api.tonewebdesign.com/pa/steam/appnews?appid=424030`;
     return this.http.get<SteamApiResponse2>(url).pipe(
@@ -54,7 +74,12 @@ export class SteamApiService {
     );
   }
 
-  //https://api.tonewebdesign.com/pa/steamid/76561198000469634
+  /**
+   * Get steam id
+   * This observable is used to get the steam id from the database
+   * @param steamId - string - the steam id
+   * @returns - Observable<any>
+   */
   getSteamId(steamId: string): Observable<any> {
     const url = `https://api.tonewebdesign.com/pa/steamid/${steamId}`;
     return this.http.get(url);

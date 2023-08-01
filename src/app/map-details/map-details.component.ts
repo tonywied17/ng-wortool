@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\map-details\map-details.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:01:42 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import {
   Component,
   OnInit,
@@ -71,10 +83,18 @@ export class MapDetailsComponent implements OnInit {
     private viewportScroller: ViewportScroller
   ) {}
 
+  /**
+   * on init
+   */
   goBack(): void {
     this.location.back();
   }
 
+  /**
+   * open snackbar
+   * @param message 
+   * @param duration 
+   */
   openSnackBar(message: string, duration: number) {
     const config = new MatSnackBarConfig();
     config.duration = duration;
@@ -84,10 +104,18 @@ export class MapDetailsComponent implements OnInit {
     this._snackBar.open(message, "Okay", config);
   }
 
+  /**
+   * copy to clipboard
+   * This is a function that copies a string to the clipboard
+   * @param text - the string to copy to the clipboard
+   */
   copyToClipboard(text: string) {
     this.clipboard.copy(text);
   }
 
+  /**
+   * on after view init
+   */
   ngAfterViewInit() {
     this._portal = new TemplatePortal(
       this._dialogTemplate,
@@ -104,20 +132,33 @@ export class MapDetailsComponent implements OnInit {
     this._overlayRef.backdropClick().subscribe(() => this._overlayRef.detach());
   }
 
+  /**
+   * on destroy
+   */
   ngOnDestroy() {
     this._overlayRef.dispose();
   }
 
+  /**
+   * open dialog
+   * This is a function that opens a dialog
+   */
   openDialog() {
     this._overlayRef.attach(this._portal);
   }
 
+  /**
+   * close popup
+   */
   closePopup() {
     if (this._overlayRef && this._overlayRef.hasAttached()) {
       this._overlayRef.detach();
     }
   }
 
+  /**
+   * on init
+   */
   ngOnInit(): void {
     this.getMap(this.route.snapshot.params["id"]);
     this.getCurrentNotes();
@@ -177,6 +218,12 @@ export class MapDetailsComponent implements OnInit {
     }
   }
 
+  /**
+   * get favorites
+   * This is a function that gets the favorites
+   * @param mapId 
+   * @param userId 
+   */
   getFavorites(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
       next: (favorite: Favorite[]) => {
@@ -192,7 +239,12 @@ export class MapDetailsComponent implements OnInit {
     });
   }
   
-
+  /**
+   * toggle favorite
+   * This is a function that toggles the favorite
+   * @param mapId 
+   * @param userId 
+   */
   toggleFavorite(mapId: string, userId: string): void {
     this.favoriteService.getByBothIds(mapId, userId).subscribe({
       next: (favorite: Favorite[]) => {
@@ -243,6 +295,10 @@ export class MapDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * get current notes
+   * This is a function that gets the current notes
+   */
   getCurrentNotes(): void {
     const currentUserId = this.token.getUser().id;
     const currentMapId = this.route.snapshot.params["id"];
@@ -257,6 +313,12 @@ export class MapDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * save notes
+   * This is a function that saves the notes
+   * @param noteText - the text of the note
+   * @param mapId - the id of the map
+   */
   saveNotes(noteText: string, mapId: string): void {
     const currentUserId = this.token.getUser().id;
     this.noteService.createOrUpdate(mapId, currentUserId, noteText).subscribe(
@@ -271,6 +333,11 @@ export class MapDetailsComponent implements OnInit {
     );
   }
 
+  /**
+   * get map
+   * This is a function that gets the map
+   * @param id - the id of the map
+   */
   getMap(id: string): void {
     this.mapService.get(id).subscribe({
       next: (data) => {
@@ -285,7 +352,11 @@ export class MapDetailsComponent implements OnInit {
     });
   }
   
-
+  /**
+   * toggle
+   * This is a function that toggles the map image and flyover camera
+   * @param event 
+   */
   toggle(event: MatSlideToggleChange) {
     if (event.checked) {
       this.CamMap = "Enabled";
@@ -305,6 +376,15 @@ export class MapDetailsComponent implements OnInit {
     }
   }
 
+  /**
+   * open window
+   * This is a function that opens a window
+   * @param url - the url of the window
+   * @param title - the title of the window
+   * @param w - the width of the window
+   * @param h - the height of the window
+   * @returns - the window
+   */
   open(url: any, title: any, w: any, h: any) {
     var left = screen.width / 2 - w / 2;
     var top = screen.height / 2 - h / 2;
