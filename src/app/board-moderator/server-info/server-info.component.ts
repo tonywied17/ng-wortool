@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-moderator\server-info\server-info.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:30:45 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { MapService } from "src/app/_services/map.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -53,27 +65,31 @@ export class ServerInfoComponent implements OnInit {
   discordWebhook: any;
 
   constructor(
-    private mapService: MapService, 
+    private mapService: MapService,
     private snackBar: MatSnackBar,
     private regimentService: RegimentService,
     private discordService: DiscordService,
     private token: TokenStorageService,
     private authService: AuthService
-    ) {}
+  ) {}
 
+  /**
+   * @method ngOnInit
+   */
   async ngOnInit(): Promise<void> {
     this.getMaps();
     setTimeout(() => {
       // console.log(this.map)
     }, 1000);
 
-
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
     const userID = this.currentUser.id;
 
     if (this.isLoggedIn) {
-      await this.authService.checkModeratorRole(userID, this.currentUser.regimentId).toPromise()
+      await this.authService
+        .checkModeratorRole(userID, this.currentUser.regimentId)
+        .toPromise()
         .then((response) => {
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
@@ -87,10 +103,14 @@ export class ServerInfoComponent implements OnInit {
             console.error("Error:", error);
           }
         });
-    } 
-    
+    }
   }
 
+  /**
+   * @method getMaps
+   * @description Get all maps
+   * @returns void
+   */
   getMaps(): void {
     this.mapService.getAll().subscribe({
       next: (data) => {
@@ -104,6 +124,11 @@ export class ServerInfoComponent implements OnInit {
     });
   }
 
+  /**
+   * @method onCampaignChange
+   * @description Filter maps by campaign
+   * @returns void
+   */
   onCampaignChange(): void {
     if (this.skirm.includes("Antietam")) {
       const organizedData = this.organizeByCampaign(this.mapNames);
@@ -128,6 +153,11 @@ export class ServerInfoComponent implements OnInit {
     }
   }
 
+  /**
+   * @method onCampaignChange2
+   * @description Filter maps by campaign
+   * @returns void
+   */
   onCampaignChange2(): void {
     if (this.skirm2.includes("Antietam")) {
       const organizedData = this.organizeByCampaign(this.mapNames);
@@ -152,6 +182,12 @@ export class ServerInfoComponent implements OnInit {
     }
   }
 
+  /**
+   * @method organizeByCampaign
+   * @description Organize maps by campaign
+   * @returns void
+   * @param mapNames - Map names
+   */
   organizeByCampaign(mapNames: any): any {
     const organizedData: any = {};
 
@@ -171,9 +207,11 @@ export class ServerInfoComponent implements OnInit {
     return organizedData;
   }
 
-
-
-
+  /**
+   * @method sendMessage
+   * @description Send message to discord
+   * @returns void
+   */
   sendMessage(): void {
     const embed: any = {
       username: "Server Info",
@@ -194,7 +232,7 @@ export class ServerInfoComponent implements OnInit {
         },
       ],
     };
-  
+
     if (!this.sn || !this.pw) {
       this.snackBar.open(
         "Please fill in the required fields: server name and password",
@@ -209,20 +247,29 @@ export class ServerInfoComponent implements OnInit {
         embed.embeds[0].fields.push({ name: "Server Name", value: this.sn });
       }
       if (this.pw) {
-        embed.embeds[0].fields.push({ name: "Password", value: `\`${this.pw}\`` });
+        embed.embeds[0].fields.push({
+          name: "Password",
+          value: `\`${this.pw}\``,
+        });
       }
       const firstRoundInfo = this.getFirstRoundInfo();
       if (firstRoundInfo) {
-        embed.embeds[0].fields.push({ name: "__**First Round**__", value: firstRoundInfo });
+        embed.embeds[0].fields.push({
+          name: "__**First Round**__",
+          value: firstRoundInfo,
+        });
       }
       const secondRoundInfo = this.getSecondRoundInfo();
       if (secondRoundInfo) {
-        embed.embeds[0].fields.push({ name: "__**Second Round**__", value: secondRoundInfo });
+        embed.embeds[0].fields.push({
+          name: "__**Second Round**__",
+          value: secondRoundInfo,
+        });
       }
       if (this.extra) {
         embed.embeds[0].fields.push({ name: "Extras", value: this.extra });
       }
-  
+
       this.sendWebhook(this.discordWebhook, embed);
       this.snackBar.open(
         "Server information posted to announcements",
@@ -234,11 +281,12 @@ export class ServerInfoComponent implements OnInit {
       );
     }
   }
-  
-  
-  
-  
-  
+
+  /**
+   * @method getFirstRoundInfo
+   * @description Get first round info
+   * @returns void 
+   */
   getFirstRoundInfo(): string {
     let info = "";
     if (this.skirm) {
@@ -258,7 +306,12 @@ export class ServerInfoComponent implements OnInit {
     }
     return info;
   }
-  
+
+  /**
+   * @method getSecondRoundInfo
+   * @description Get second round info
+   * @returns void
+   */
   getSecondRoundInfo(): string {
     let info = "";
     if (this.skirm2) {
@@ -278,10 +331,12 @@ export class ServerInfoComponent implements OnInit {
     }
     return info;
   }
-  
 
-  
-
+  /**
+   * @method getRoles
+   * @description Get roles to mention in discord event post
+   * @returns void
+   */
   getRoles(): string {
     let roles = "";
     if (this.allChecked) {
@@ -294,15 +349,19 @@ export class ServerInfoComponent implements OnInit {
       roles += "<@&682502128929079321> ";
     }
 
-    if (this.regimentData.guild_id !== '681641606398607401') {
+    if (this.regimentData.guild_id !== "681641606398607401") {
       roles = "";
     }
-    
-    
+
     return roles.trim();
-    
   }
 
+  /**
+   * @method getMapLink
+   * @description Get map link
+   * @returns void
+   * @param map - Map name
+   */
   getMapLink(map: string): string {
     const matchedMap = this.map.find((item: any) => item.map === map);
     if (matchedMap) {
@@ -311,6 +370,13 @@ export class ServerInfoComponent implements OnInit {
     return "";
   }
 
+  /**
+   * @method sendWebhook
+   * @description Send webhook to discord
+   * @returns void
+   * @param url - Discord webhook url
+   * @param params - Discord webhook params
+   */
   sendWebhook(url: string, params: any): void {
     const request = new XMLHttpRequest();
     request.open("POST", url);
@@ -318,16 +384,17 @@ export class ServerInfoComponent implements OnInit {
     request.send(JSON.stringify(params));
   }
 
-
   async getRegiment(): Promise<void> {
     if (this.regimentID) {
-      await this.regimentService.getRegiment(this.regimentID).toPromise()
+      await this.regimentService
+        .getRegiment(this.regimentID)
+        .toPromise()
         .then((response) => {
           this.regimentData = response;
           this.regimentSelected = true;
           this.discordWebhook = this.regimentData.webhook;
           this.targetChannel = this.regimentData.webhook_channel;
-          console.log(this.discordWebhook)
+          console.log(this.discordWebhook);
         })
         .catch(() => {
           this.regimentSelected = false;
@@ -336,5 +403,4 @@ export class ServerInfoComponent implements OnInit {
       this.regimentSelected = false;
     }
   }
-
 }

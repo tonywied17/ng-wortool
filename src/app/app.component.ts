@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\app.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:40:56 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { TokenStorageService } from "./_services/token-storage.service";
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Event as NavigationEvent} from '@angular/router';
@@ -43,33 +55,26 @@ export class AppComponent implements OnInit {
 
     this.currentRoute = "";
     this.router.events.subscribe((event: Event) => {
-        if (event instanceof NavigationStart) {
-            // Show progress spinner or progress bar
-            
-            
-        }
-
+        if (event instanceof NavigationStart) {}
         if (event instanceof NavigationEnd) {
-            // Hide progress spinner or progress bar
             this.currentRoute = event.url;          
-            
         }
 
-        if (event instanceof NavigationError) {
-             // Hide progress spinner or progress bar
-
-            // Present error to user
-            
-        }
+        if (event instanceof NavigationError) {}
     });
-
-
   }
 
+  /**
+   * Go back
+   * This function is used to go back to the previous page
+   */
   goBack(): void {
     this.location.back();
   }
 
+  /**
+   * On init
+   */
   ngOnInit(): void {
     this.initializeComponent();
 
@@ -80,6 +85,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Initialize component
+   * This function is used to initialize the component
+   */
   initializeComponent(): void {
     if (this.tokenStorage.getToken()) {
       this.currentUser = this.tokenStorage.getUser();
@@ -110,10 +119,19 @@ export class AppComponent implements OnInit {
 
   menuOpen = false;
 
+  /**
+   * Toggle
+   * This function is used to toggle the menu
+   */
   toggle() {
     this.menuOpen = !this.menuOpen;
   }
 
+  /**
+   * On activate event scroll to top
+   * This function is used to scroll to top on activate event
+   * @param event - scroll to top
+   */
   onActivate(event: any) {
     window.scroll({
       top: 0,
@@ -122,6 +140,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Logout
+   * This function is used to logout
+   */
   logout(): void {
     this.tokenStorage.signOut();
     this.authService.isAuthenticated = false;
@@ -132,12 +154,14 @@ export class AppComponent implements OnInit {
     this.showMod = this.authService.isModerator;
     this.showAdmin = this.authService.isAdministrator;
     this.showUser = this.authService.isAuthenticated;
-
     this.sharedService.triggerLogoutEvent();
-
     this.router.navigate(["/home"]);
   }
 
+  /**
+   * Scroll
+   * This function is used to scroll to top
+   */
   scroll() {
     window.scroll({
       top: 0,
@@ -146,6 +170,11 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Translate website
+   * This function is used to translate the website
+   * @param event - translate website
+   */
   translateWebsite(event: any): void {
     const language = event.target.value;
     const url = `https://translate.google.com/translate?hl=en&sl=auto&tl=${language}&u=${window.location.href}`;

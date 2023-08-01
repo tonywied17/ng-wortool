@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-moderator\steam-ids\steam-ids.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Saturday July 29th 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:38:33 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../../_services/auth.service";
 import { RegimentService } from "../../_services/regiment.service";
@@ -45,6 +57,9 @@ export class SteamIdsComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
+  /**
+   * @method ngOnInit
+   */
   async ngOnInit(): Promise<void> {
 
     this.steamIdForm = this.formBuilder.group({
@@ -66,7 +81,7 @@ export class SteamIdsComponent implements OnInit {
           this.regimentID = this.currentUser.regimentId;
           await this.getRegiment();
           await this.getSteamIds();
-          this.allSteamIds = this.steamIds.slice(); // Store the initial data in allSteamIds
+          this.allSteamIds = this.steamIds.slice();
 
           console.log(this.steamIds);
           console.log(this.allSteamIds);
@@ -83,16 +98,36 @@ export class SteamIdsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method getSteamId
+   * @description extract value from steam data object
+   * @param steamId - the steam id of the user
+   * @param key - the key to get the value from
+   * @returns - the value of the key
+   */
   getValue(steamId: any, key: string) {
     const stat = steamId.liveGameStats.find((item: { name: string; }) => item.name === key);
     return stat ? stat.value : 'N/A';
   }
   
+  /**
+   * @method getStatValue
+   * @description extract value from stats array
+   * @param stats - the stats array
+   * @param name - the name of the stat to get the value from
+   * @returns - the value of the stat
+   */
   getStatValue(stats: any[], name: any) {
     const stat = stats.find((s: { name: any; }) => s.name === name);
     return stat ? stat.value : null;
   }
   
+  /**
+   * @method getGameType
+   * @description extract game type from stats array
+   * @param name - the name of the stat to get the game type from
+   * @returns - the game type
+   */
   getGameType(name: any) {
     switch (name) {
       case 'STAT_GAMES_PLAYED_SKIRMISH':
@@ -108,8 +143,12 @@ export class SteamIdsComponent implements OnInit {
     }
   }
   
-  
-
+  /**
+   * @method getGameType
+   * @description extract game type from stats array
+   * @param name - the name of the stat to get the game type from
+   * @returns - the game type
+   */
   async getRegiment(): Promise<void> {
     try {
       this.regimentData = await firstValueFrom(
@@ -121,6 +160,11 @@ export class SteamIdsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method getSteamIds
+   * @description get the steam ids for the regiment
+   * @returns - the steam ids for the regiment
+   */
   async getSteamIds(): Promise<void> {
     try {
       this.steamIds = await firstValueFrom(
@@ -132,17 +176,22 @@ export class SteamIdsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method filterSteamIds
+   * @description filter the steam ids for the regiment
+   * @param searchText - the search text to filter the steam ids by
+   * @returns - the filtered steam ids for the regiment
+   */
   filterSteamIds(): void {
     if (!this.searchText) {
-      this.steamIds = this.allSteamIds.slice(); // Restore original data
-      this.currentPage = 1; // Reset to the first page after filtering
-      this.updatePaginatedSteamIds(); // Update paginated results after filtering
+      this.steamIds = this.allSteamIds.slice(); 
+      this.currentPage = 1; 
+      this.updatePaginatedSteamIds(); 
       return;
     }
   
     const searchTextLowerCase = this.searchText.toLowerCase();
   
-    // Filter the allSteamIds array based on the search text
     this.steamIds = this.allSteamIds.filter((user: any) => {
       const nickname = user.nickname ? user.nickname.toLowerCase() : "";
       const steamId = user.steamId ? user.steamId.toLowerCase() : "";
@@ -161,17 +210,22 @@ export class SteamIdsComponent implements OnInit {
     this.updatePaginatedSteamIds(); 
   }
   
-  
-  
-
+  /**
+   * @method updatePaginatedSteamIds
+   * @description update the paginated steam ids for the regiment
+   * @returns - the paginated steam ids for the regiment
+   */
   updatePaginatedSteamIds(): void {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     this.paginatedSteamIds = this.steamIds.slice(start, end);
   }
   
-
-
+  /**
+   * @method setGameId
+   * @description set the game id for the regiment
+   * @returns - the game id for the regiment
+   */
   async setGameId(): Promise<void> {
     const gameIdFormControl = this.steamIdForm.get('gameIdForm');
     if (gameIdFormControl && gameIdFormControl.valid) {
@@ -202,6 +256,12 @@ export class SteamIdsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method getLevelData
+   * @description get the level data for the xp
+   * @param xp - the xp to get the level data for
+   * @returns - the level data for the xp
+   */
   getLevelData(xp: number): any {
     if (xp < 0 || !xp) {
       return "User has no experience.";
@@ -247,6 +307,11 @@ export class SteamIdsComponent implements OnInit {
     return resObj;
   }
 
+  /**
+   * @method getSteamIdPreview
+   * @description get the steam id preview for the entered steam id
+   * @returns - the steam id preview data
+   */
   getSteamIdPreview() {
     const gameIdFormControl = this.steamIdForm.get('gameIdForm');
     if (gameIdFormControl && gameIdFormControl.valid) {
@@ -269,8 +334,12 @@ export class SteamIdsComponent implements OnInit {
     }
   }
   
-  
-
+  /**
+   * @method getExperienceValue
+   * @description get the experience value for the stats array
+   * @param stats - the stats array
+   * @returns - the experience value for the stats array
+   */
   getExperienceValue(stats: any[]): number {
     if (!stats) {
       return 1;
@@ -282,15 +351,32 @@ export class SteamIdsComponent implements OnInit {
     return stat ? stat.value : 1;
   }
 
+  /**
+   * @method roundNumber
+   * @description round the number to the nearest whole number
+   * @param value - the value to round
+   * @returns - the rounded number
+   */
   roundNumber(value: number): number {
     return Math.round(value);
   }
 
+  /**
+   * @method toggleAddingSteam
+   * @description toggle the adding steam id form
+   * @returns - the adding steam id form
+   */
   toggleAddingSteam(): void {
     this.addingSteam = !this.addingSteam;
     this.addString = this.addingSteam ? "<i class='fa-solid fa-xmark mr-1'></i> Cancel" : "<i class='fa-solid fa-plus mr-1'></i> Add Steam ID";
   }
 
+  /**
+   * @method openSnackBar
+   * @description open the snack bar
+   * @param message - the message to display in the snack bar
+   * @param duration - the duration to display the snack bar for 
+   */
   openSnackBar(message: string, duration: number) {
     const config = new MatSnackBarConfig();
     config.duration = duration;
@@ -300,10 +386,19 @@ export class SteamIdsComponent implements OnInit {
     this._snackBar.open(message, "Okay", config);
   }
 
+  /**
+   * @method copyToClipboard
+   * @param text - the text to copy to the clipboard
+   */
   copyToClipboard(text: string) {
     this.clipboard.copy(text);
   }
 
+  /**
+   * @method openProfileUrl
+   * @description open the profile url in a new tab
+   * @returns - the profile url in a new tab
+   */
   openProfileUrl() {
     const url = this.previewData?.profileurl;
     if (url) {
@@ -311,17 +406,36 @@ export class SteamIdsComponent implements OnInit {
     }
   }
   
+  /**
+   * @method convertTo12HourTime
+   * @description convert the unix timestamp to 12 hour time
+   * @param unixTimestamp - the unix timestamp to convert
+   * @returns - the 12 hour time
+   */
   convertTo12HourTime(unixTimestamp: number): string {
     const date = new Date(unixTimestamp * 1000); 
     return date.toLocaleTimeString('en-US', { hour12: true });
   }
 
+  /**
+   * @method getPaginatedSteamIds
+   * @description get the paginated steam ids
+   * @param steamIds - the steam ids to paginate
+   * @param currentPage - the current page of the steam ids
+   * @param itemsPerPage - the number of items per page
+   * @returns - the paginated steam ids
+   */
   getPaginatedSteamIds() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     return this.steamIds.slice(start, end);
   }
 
+  /**
+   * @method nextPage
+   * @description go to the next page of steam ids
+   * @returns - the next page of steam ids
+   */
   nextPage() {
     if (this.currentPage < this.getTotalPages()) {
       this.currentPage++;
@@ -329,6 +443,11 @@ export class SteamIdsComponent implements OnInit {
     }
   }
   
+  /**
+   * @method previousPage
+   * @description go to the previous page of steam ids
+   * @returns - the previous page of steam ids
+   */
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -336,12 +455,28 @@ export class SteamIdsComponent implements OnInit {
     }
   }
   
-  
+  /**
+   * @method getTotalPages
+   * @description get the total number of pages
+   * @param steamIds - the steam ids to get the total number of pages for
+   * @param itemsPerPage - the number of items per page
+   * @param currentPage - the current page of the steam ids
+   * @param itemsPerPage - the number of items per page
+   * @returns - the total number of pages
+   */
   getTotalPages() {
     return Math.ceil(this.steamIds.length / this.itemsPerPage);
   }
   
-
+  /**
+   * @method goToPage
+   * @description go to the specified page
+   * @param steamIds - the steam ids to get the total number of pages for
+   * @param itemsPerPage - the number of items per page
+   * @param currentPage - the current page of the steam ids
+   * @param itemsPerPage - the number of items per page
+   * @returns - the total number of pages
+   */
   goToPage(page: number) {
     if (page < 1) {
       page = 1;
@@ -353,16 +488,29 @@ export class SteamIdsComponent implements OnInit {
     this.updatePaginatedSteamIds();
   }
   
-  
+  /**
+   * @method shouldShowFirstEllipsis
+   * @description show the first ellipsis
+   * @deprecated - not used
+   */
   shouldShowFirstEllipsis() {
     return this.currentPage > 3 && this.getTotalPages() > 3;
   }
   
+  /**
+   * @method shouldShowLastEllipsis
+   * @description show the last ellipsis
+   * @deprecated - not used
+   */
   shouldShowLastEllipsis() {
     return this.getTotalPages() - this.currentPage > 2;
   }
   
-  
+  /**
+   * @method getVisiblePages
+   * @description get the visible pages
+   * @returns - the visible pages
+   */
   getVisiblePages() {
     const pages = [];
   
@@ -379,7 +527,11 @@ export class SteamIdsComponent implements OnInit {
     return pages;
   }
   
-  
+  /**
+   * @method isCurrentPage
+   * @description check if the page is the current page
+   * @returns - the current page
+   */
   isFormValid(): boolean {
     return this.steamIdForm.get("gameIdForm")?.valid || false;
   }

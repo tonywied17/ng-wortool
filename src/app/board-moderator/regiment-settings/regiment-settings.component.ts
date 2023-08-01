@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-moderator\regiment-settings\regiment-settings.component.ts
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Tue August 1st 2023 12:28:24 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../../_services/token-storage.service";
@@ -53,6 +65,9 @@ export class RegimentSettingsComponent implements OnInit {
     private userService: UserService
   ) {}
 
+  /**
+   * @method ngOnInit
+   */
   async ngOnInit(): Promise<void> {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
@@ -88,6 +103,11 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method getRegiment
+   * @description Get the regiment data from the database
+   * @returns {Promise<void>}
+   */
   async getRegiment(): Promise<void> {
     if (this.regimentID) {
       await this.regimentService
@@ -107,12 +127,9 @@ export class RegimentSettingsComponent implements OnInit {
           this.website = this.regimentData.website;
 
           setTimeout(() => {
-            // Get the select element by its ID
             const selectElement = document.getElementById(
               "side-select"
             ) as HTMLSelectElement;
-
-            // Set the index of the select box to the first option
             selectElement.selectedIndex = 0;
           }, 200);
         })
@@ -124,6 +141,11 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method getRegimentDiscordData
+   * @description Get the regiment data from Discord
+   * @returns {Promise<void>}
+   */
   async getRegimentDiscordData(): Promise<void> {
     if (this.guild_id) {
       await this.discordService
@@ -143,6 +165,12 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method getRegimentChannels
+   * @description Get the regiment channels from Discord
+   * @returns {Promise<void>}
+   * @param guildId - The Discord guild ID
+   */
   async getRegimentChannels(guildId: string): Promise<void> {
     if (this.regimentID) {
       await this.discordService
@@ -154,6 +182,12 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method getRegimentUsers
+   * @description Get the regiment users from the database
+   * @returns {Promise<void>}
+   * @param guildId - The Discord guild ID
+   */
   async getRegimentUsers(guildId: string): Promise<void> {
     if (this.regimentID) {
       await this.regimentService
@@ -176,7 +210,6 @@ export class RegimentSettingsComponent implements OnInit {
                   user.avatar_url !== discordUser.USER_SPECIFIC.DISCORD_AVATAR
                 ) {
                   user.avatar_url = discordUser.USER_SPECIFIC.DISCORD_AVATAR;
-                  // Update the user's profile in auth.service
                   return this.authService
                     .profile(
                       user.id,
@@ -187,7 +220,6 @@ export class RegimentSettingsComponent implements OnInit {
                     )
                     .toPromise()
                     .then(() => {
-                      // Update the current user object with the new avatar URL
                       if (user.id === this.currentUser.id) {
                         this.currentUser.avatar_url =
                           discordUser.USER_SPECIFIC.DISCORD_AVATAR;
@@ -205,15 +237,18 @@ export class RegimentSettingsComponent implements OnInit {
 
           Promise.all(promises).then((updatedUsers) => {
             this.regimentUsers = updatedUsers;
-            // console.log(
-            //   "Regiment users updated with Discord avatar URLs:",
-            //   this.regimentUsers
-            // );
           });
         });
     }
   }
 
+  /**
+   * @method getDiscordRegimentUsers
+   * @description Get the regiment users from Discord
+   * @returns {Promise<void>}
+   * @param discordId - The Discord user ID
+   * @param guildId - The Discord guild ID
+   */
   async getDiscordRegimentUsers(discordId: any, guildId: string): Promise<any> {
     return this.discordService
       .getUserGuildInfo(discordId, guildId)
@@ -226,6 +261,11 @@ export class RegimentSettingsComponent implements OnInit {
       });
   }
 
+  /**
+   * @method updateCurrentUserRoles
+   * @description Update the current user roles
+   * @returns {void}
+   */
   updateCurrentUserRoles() {
     const matchedUser = this.regimentUsers.find(
       (user: { id: any }) => user.id === this.currentUser.id
@@ -236,6 +276,12 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method updateTargetChannel
+   * @description Update the target channel
+   * @returns {Promise<void>}
+   * @param selectedValue - The selected channel value
+   */
   async updateTargetChannel(selectedValue: string): Promise<void> {
     this.targetChannel = selectedValue;
 
@@ -244,6 +290,13 @@ export class RegimentSettingsComponent implements OnInit {
     }, 300);
   }
 
+  /**
+   * @method createWebhook
+   * @description Create a webhook
+   * @returns {Promise<void>}
+   * @param guildId - The Discord guild ID
+   * @param channelId - The Discord channel ID
+   */
   async createWebhook(guildId: string, channelId: string): Promise<void> {
     await this.discordService
       .createWebhook(guildId, channelId)
@@ -260,6 +313,18 @@ export class RegimentSettingsComponent implements OnInit {
       });
   }
 
+  /**
+   * @method updateRegiment
+   * @description Update the regiment
+   * @returns {Promise<void>}
+   * @param regiment - The regiment name
+   * @param guild_id - The Discord guild ID
+   * @param guild_avatar - The Discord guild avatar
+   * @param invite_link - The Discord invite link
+   * @param website - The regiment website
+   * @param description - The regiment description
+   * @param side - The regiment side
+   */
   async updateRegiment() {
     if (this.regimentID) {
       await this.regimentService
@@ -287,6 +352,12 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * @method toggleModerator
+   * @description Toggle the moderator
+   * @returns {void}
+   * @param userId - The user ID
+   */
   toggleModerator(userId: any) {
     const regimentId = this.regimentData.id;
 
@@ -314,6 +385,12 @@ export class RegimentSettingsComponent implements OnInit {
       });
   }
 
+  /**
+   * @method confirmAddModerator
+   * @description Confirm add moderator
+   * @returns {void}
+   * @param userId - The user ID
+   */
   confirmAddModerator(userId: any) {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -338,6 +415,12 @@ export class RegimentSettingsComponent implements OnInit {
       });
   }
 
+  /**
+   * @method confirmRemoveModerator
+   * @description Confirm remove moderator
+   * @returns {void}
+   * @param userId - The user ID
+   */
   confirmRemoveModerator(userId: any) {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -362,12 +445,17 @@ export class RegimentSettingsComponent implements OnInit {
       });
   }
 
+  /**
+   * @method setModerator
+   * @description Set the moderator
+   * @returns {void}
+   * @param userId - The user ID
+   */
   setModerator(userId: any) {
     this.regimentService
       .setModerator(userId)
       .toPromise()
       .then((response) => {
-        // console.log(response);
         const userIndex = this.regimentUsers.findIndex(
           (user: { id: any }) => user.id === userId
         );
@@ -388,6 +476,12 @@ export class RegimentSettingsComponent implements OnInit {
       });
   }
 
+  /**
+   * @method removeModerator
+   * @description Remove the moderator
+   * @returns {void}
+   * @param userId - The user ID
+   */
   removeModerator(userId: any) {
     this.regimentService
       .removeModerator(userId)
@@ -418,6 +512,12 @@ export class RegimentSettingsComponent implements OnInit {
       });
   }
 
+  /**
+   * @method confirmRemoveUser
+   * @description Confirm remove user
+   * @returns {void}
+   * @param userId - The user ID
+   */
   confirmRemoveUser(userId: any) {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -436,6 +536,12 @@ export class RegimentSettingsComponent implements OnInit {
     });
   }
 
+  /**
+   * @method removeUserFromRegiment
+   * @description Remove the user from the regiment
+   * @returns {void}
+   * @param userId - The user ID
+   */
   removeUserFromRegiment(userId: any) {
     this.regimentService
       .removeUsersRegiment(userId)
