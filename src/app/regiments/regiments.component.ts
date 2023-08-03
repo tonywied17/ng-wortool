@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 2:40:12 
+ * Last Modified: Thu August 3rd 2023 6:45:07 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -14,7 +14,6 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RegimentService } from "../_services/regiment.service";
 import { DiscordService } from "../_services/discord.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 
 @Component({
@@ -26,7 +25,6 @@ export class RegimentsComponent implements OnInit {
   @ViewChild('overlayContainer', { static: false }) overlayContainer!: ElementRef;
   showOverlay: boolean = false;
   regiments: any;
-  regimentUsers: any;
   regimentID: any;
   searchText: any;
   isDataLoaded: boolean = false;
@@ -81,11 +79,10 @@ export class RegimentsComponent implements OnInit {
     this.regimentService.getRegiments().subscribe((regiments) => {
       this.regiments = regiments;
       
-      this.fetchRegimentUsers();
+      this.fetchRegimentDiscordData();
       //
       this.allRegiments = this.regiments.slice();
       console.log("regiments", regiments);
-      console.log("regimentUsers", this.regimentUsers);
     });
   }
 
@@ -93,28 +90,12 @@ export class RegimentsComponent implements OnInit {
    * Fetch all users for each regiment
    * @returns void
    */
-  async fetchRegimentUsers(): Promise<void> {
+  async fetchRegimentDiscordData(): Promise<void> {
     const fetchPromises = this.regiments.map(async (regiment: any) => {
-      await this.getRegimentUsers(regiment.id);
-      regiment.members = [...this.regimentUsers];
       await this.getDiscordRegimentData(regiment.guild_id, regiment);
     });
   
     await Promise.all(fetchPromises);
-  }
-  
-
-  /**
-   * Get all users for a regiment by the regiment id
-   * @param guildId - The guild id of the regiment
-   */
-  async getRegimentUsers(guildId: string): Promise<void> {
-    await this.regimentService
-      .getRegimentUsers(guildId)
-      .toPromise()
-      .then((response: any) => {
-        this.regimentUsers = response;
-      });
   }
 
   /**
@@ -225,7 +206,7 @@ export class RegimentsComponent implements OnInit {
   getPaginatedRegiments() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    return this.regiments.slice(start, end); // Use this.regiments instead of this.allRegiments
+    return this.regiments.slice(start, end); 
   }
   
 
@@ -334,7 +315,7 @@ export class RegimentsComponent implements OnInit {
     }
 
     closeOverlay(event: MouseEvent) {
-      event.stopPropagation(); // Prevent the click event from propagating
+      event.stopPropagation();
       this.toggleOverlay();
     }
     

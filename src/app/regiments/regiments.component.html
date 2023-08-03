@@ -4,30 +4,32 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 2:43:22 
+Last Modified: Thu August 3rd 2023 6:44:22 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
 -->
 
 <div class="relative">
-	<div class="fixed top-0 left-0 right-0 bottom-0 z-50 bg-slate-900/90 cursor-pointer" [hidden]="!showOverlay" (click)="toggleOverlay()">
-	  <div class="flex justify-center items-center h-full">
-		<div class="lg:w-[70vw] w-full m-auto" id="overlayContainer">
-		  <div (click)="handleClickInside($event)" class="cursor-default">
-			<app-add-bot></app-add-bot>
-		  </div>
-		  <div class="text-right mt-4">
-			<button mat-stroked-button color="primary" class="!text-lg" (click)="closeOverlay($event)"><i class="fa-solid fa-xmark mr-1"></i> Close</button>
-		  </div>
+	<div class="fixed top-0 left-0 right-0 bottom-0 z-50 bg-slate-900/90 cursor-pointer" [hidden]="!showOverlay"
+		(click)="toggleOverlay()">
+		<div class="flex justify-center items-center h-full">
+			<div class="lg:w-[70vw] w-full m-auto" id="overlayContainer">
+				<div (click)="handleClickInside($event)" class="cursor-default">
+					<app-add-bot></app-add-bot>
+				</div>
+				<div class="text-right mt-4">
+					<button mat-stroked-button color="primary" class="!text-lg" (click)="closeOverlay($event)"><i
+							class="fa-solid fa-xmark mr-1"></i> Close</button>
+				</div>
+			</div>
 		</div>
-	  </div>
 	</div>
-  </div>
-  
-  
-  
-  
+</div>
+
+
+
+
 
 <div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 
@@ -60,7 +62,9 @@ Copyright (c) 2023 Tone Web Design, Molex
 		</div>
 
 		<div>
-			<button mat-stroked-button color="primary" class="!h-[46.5px] w-full !text-[#a09e94] !font-[500]" style="border: 1px solid #7c7d72 !important;" (click)="toggleOverlay()"><i class="fa-regular fa-circle-question mr-1"></i> Add Regiment</button>
+			<button mat-stroked-button color="primary" class="!h-[46.5px] w-full !text-[#a09e94] !font-[500]"
+				style="border: 1px solid #7c7d72 !important;" (click)="toggleOverlay()"><i
+					class="fa-regular fa-circle-question mr-1"></i> Add Regiment</button>
 		</div>
 
 	</div>
@@ -92,11 +96,37 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<div class="flex items-center justify-center">
 									<div class="text-slate-400 text-xl font-[500] text-center">
 										{{ regiment.regiment }}
-										<span class="block font-[300] p-1 text-center text-sm">{{regiment.side}}
-											Regiment<span *ngIf="regiment.memberCount">, {{ regiment.memberCount }}
-												members</span></span>
+										<span class="block font-[500] p-1 text-center text-base">
+
+											<span *ngIf="regiment.side == 'CSA'"
+												class="text-[#838479]">{{ regiment.side }} Regiment</span>
+											<span *ngIf="regiment.side == 'USA'"
+												class="text-[#37568b]">{{ regiment.side }} Regiment</span>
+
+											<span class="pl-2" *ngIf="!regiment.memberCount; else memberCount">
+												<span *ngIf="regiment.side == 'CSA'">
+													<span class="wave-csa"></span>
+													<span class="wave-csa"></span>
+													<span class="wave-csa"></span>
+												</span>
+
+												<span *ngIf="regiment.side == 'USA'">
+													<span class="wave-usa"></span>
+													<span class="wave-usa"></span>
+													<span class="wave-usa"></span>
+												</span>
+
+											</span>
+
+
+											<ng-template #memberCount> 
+												<span *ngIf="regiment.side == 'CSA'" class="font-[300] text-sm pl-2 text-[#838479]">({{ regiment.memberCount }} members)</span>
+												<span *ngIf="regiment.side == 'USA'" class="font-[300] text-sm pl-2 text-[#37568b]">({{ regiment.memberCount }} members)</span>
+											</ng-template>
+										</span>
 									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>
