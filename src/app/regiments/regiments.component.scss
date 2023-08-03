@@ -1,8 +1,20 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\regiments\regiments.component.scss
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Thu August 3rd 2023 1:12:45 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 .lds-ellipsis{
     display: inline-block;
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
 }
 
 .lds-ellipsis div{
@@ -11,7 +23,7 @@
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: #fff;
+    background: #7c7d72;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
@@ -61,3 +73,94 @@
         transform: translate(24px, 0);
     }
 }
+
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* or absolute */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+  }
+  
+  .centered-box {
+    width: 50%;
+    background-color: #0c101a;
+    border-radius: 10px;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+    opacity: 0.9;
+  }
+  
+  .pagination-button {
+    background-color: #12192c;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .pagination-button:hover {
+    background-color: #0c101d;
+    // filter: brightness(0.7)
+  }
+  
+  .pagination-button:disabled {
+    background-color: #646f85;
+    color: #a1a7b3;
+    cursor: not-allowed;
+  }
+  
+  /* Page numbers */
+  .page-number {
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  /* Container for page numbers, if you use them */
+  .page-numbers {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .page-numbers .pagination-button {
+    background-color: #12192c;
+    color: #e0e0e0;
+  }
+  
+  .page-numbers .pagination-button:hover {
+    background-color: #0c101d;
+    // filter: brightness(0.7)
+  }
+
+
+  .alert-danger{
+	font-weight: 200;
+	font-size: .875rem;
+	border-left: 3px #993434ce solid;
+    padding-left: 0.5em;
+    border-radius: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: #ffa1a1;
+	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	width: fit-content;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background: linear-gradient(90deg, #99343491, #99343400);
+	font-family: "Poppins", sans-serif !important;
+}
+
+select {
+    background-color: #17202e !important;
+    transition: none !important;
+  }
+
+  

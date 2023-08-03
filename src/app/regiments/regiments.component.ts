@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:13:58 
+ * Last Modified: Thu August 3rd 2023 1:19:32 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -29,6 +29,11 @@ export class RegimentsComponent implements OnInit {
   searchText: any;
   isDataLoaded: boolean = false;
   currentRoute!: string;
+  selectedSide: string = "all";
+  itemsPerPage = 6;
+  currentPage = 1;
+  paginatedRegiments: any[] = [];
+  allRegiments: any[] = [];
 
   constructor(
     private regimentService: RegimentService,
@@ -43,25 +48,28 @@ export class RegimentsComponent implements OnInit {
   }
 
   /**
-   * Filter regiments by the search text
+   * Filter regiments by the search text, or side
    * @returns void
    */
   filterRegiments() {
-    this.regimentService
-      .getRegiments()
-      .pipe(
-        map((regiments) =>
-          regiments.filter((regiment: any) => {
-            return regiment.regiment
-              .toLowerCase()
-              .includes(this.searchText.toLowerCase());
-          })
-        )
-      )
-      .subscribe((filteredRegiments) => {
-        this.regiments = filteredRegiments;
+    this.regimentService.getRegiments().subscribe((regiments) => {
+      this.allRegiments = regiments;
+      this.regiments = regiments.filter((regiment: any) => {
+        const searchTextMatch =
+          !this.searchText ||
+          regiment.regiment.toLowerCase().includes(this.searchText.toLowerCase());
+  
+        const sideMatch =
+          this.selectedSide === 'all' || regiment.side === this.selectedSide;
+  
+        return searchTextMatch && sideMatch;
       });
+  
+      this.currentPage = 1; // Reset the current page index when filtering is applied
+      this.updatePaginatedRegiments(); // Update the paginated regiments after filtering
+    });
   }
+  
 
   /**
    * Get all regiments and their users
@@ -70,8 +78,12 @@ export class RegimentsComponent implements OnInit {
   getRegiments() {
     this.regimentService.getRegiments().subscribe((regiments) => {
       this.regiments = regiments;
+      
       this.fetchRegimentUsers();
       //
+      this.allRegiments = this.regiments.slice();
+      console.log("regiments", regiments);
+      console.log("regimentUsers", this.regimentUsers);
     });
   }
 
@@ -80,15 +92,15 @@ export class RegimentsComponent implements OnInit {
    * @returns void
    */
   async fetchRegimentUsers(): Promise<void> {
-    const fetchPromises = this.regiments.map((regiment: any) =>
-      this.getRegimentUsers(regiment.id).then(() => {
-        regiment.members = this.regimentUsers;
-        return this.getDiscordRegimentData(regiment.guild_id, regiment);
-      })
-    );
-
+    const fetchPromises = this.regiments.map(async (regiment: any) => {
+      await this.getRegimentUsers(regiment.id);
+      regiment.members = [...this.regimentUsers];
+      await this.getDiscordRegimentData(regiment.guild_id, regiment);
+    });
+  
     await Promise.all(fetchPromises);
   }
+  
 
   /**
    * Get all users for a regiment by the regiment id
@@ -115,6 +127,8 @@ export class RegimentsComponent implements OnInit {
       .toPromise()
       .then((response: any) => {
         let hasChanged = false;
+
+        regiment.memberCount = response.guild.memberCount;
 
         if (
           !regiment.guild_avatar ||
@@ -166,6 +180,28 @@ export class RegimentsComponent implements OnInit {
   }
 
   /**
+   * Truncate text to a specified length
+   * @param text - The text to truncate
+   * @param maxLength - The max length of the text
+   * @returns - The truncated text
+   */
+  ellipsisText(text: string, maxLength: number = 256): string {
+    if (!text || text.trim() === '') {
+      return 'No description available.';
+    }
+  
+    if (text.length <= maxLength) {
+      return text;
+    }
+  
+    if (maxLength <= 3) {
+      maxLength = 3;
+    }
+  
+    return text.substring(0, maxLength - 3) + '...';
+  }
+
+  /**
    * Display a snackbar message that the feature is not yet available
    */
   notYet() {
@@ -174,4 +210,88 @@ export class RegimentsComponent implements OnInit {
       verticalPosition: "top",
     });
   }
+
+
+  /**
+   * @method getPaginatedSteamIds
+   * @description get the paginated steam ids
+   * @param steamIds - the steam ids to paginate
+   * @param currentPage - the current page of the steam ids
+   * @param itemsPerPage - the number of items per page
+   * @returns - the paginated steam ids
+   */
+  getPaginatedRegiments() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.regiments.slice(start, end); // Use this.regiments instead of this.allRegiments
+  }
+  
+
+  /**
+   * @method nextPage
+   * @description go to the next page of steam ids
+   * @returns - the next page of steam ids
+   */
+  nextPage() {
+    if (this.currentPage < this.getTotalPages()) {
+      this.currentPage++;
+      this.updatePaginatedRegiments(); 
+    }
+  }
+  
+  /**
+   * @method previousPage
+   * @description go to the previous page of steam ids
+   * @returns - the previous page of steam ids
+   */
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePaginatedRegiments(); 
+    }
+  }
+  
+  /**
+   * @method getTotalPages
+   * @description get the total number of pages
+   * @param steamIds - the steam ids to get the total number of pages for
+   * @param itemsPerPage - the number of items per page
+   * @param currentPage - the current page of the steam ids
+   * @param itemsPerPage - the number of items per page
+   * @returns - the total number of pages
+   */
+  getTotalPages() {
+    return Math.ceil(this.regiments.length / this.itemsPerPage);
+  }
+  
+  /**
+   * @method goToPage
+   * @description go to the specified page
+   * @param steamIds - the steam ids to get the total number of pages for
+   * @param itemsPerPage - the number of items per page
+   * @param currentPage - the current page of the steam ids
+   * @param itemsPerPage - the number of items per page
+   * @returns - the total number of pages
+   */
+  goToPage(page: number) {
+    if (page < 1) {
+      page = 1;
+    } else if (page > this.getTotalPages()) {
+      page = this.getTotalPages();
+    }
+  
+    this.currentPage = page;
+    this.updatePaginatedRegiments();
+  }
+
+    /**
+   * @method updatePaginatedSteamIds
+   * @description update the paginated steam ids for the regiment
+   * @returns - the paginated steam ids for the regiment
+   */
+    updatePaginatedRegiments(): void {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      this.paginatedRegiments = this.regiments.slice(start, end);
+    }
 }
