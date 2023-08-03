@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 1:19:32 
+ * Last Modified: Thu August 3rd 2023 2:00:32 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -52,22 +52,19 @@ export class RegimentsComponent implements OnInit {
    * @returns void
    */
   filterRegiments() {
-    this.regimentService.getRegiments().subscribe((regiments) => {
-      this.allRegiments = regiments;
-      this.regiments = regiments.filter((regiment: any) => {
-        const searchTextMatch =
-          !this.searchText ||
-          regiment.regiment.toLowerCase().includes(this.searchText.toLowerCase());
+    this.regiments = this.allRegiments.filter((regiment: any) => {
+      const searchTextMatch =
+        !this.searchText ||
+        regiment.regiment.toLowerCase().includes(this.searchText.toLowerCase());
   
-        const sideMatch =
-          this.selectedSide === 'all' || regiment.side === this.selectedSide;
+      const sideMatch =
+        this.selectedSide === 'all' || regiment.side === this.selectedSide;
   
-        return searchTextMatch && sideMatch;
-      });
-  
-      this.currentPage = 1; // Reset the current page index when filtering is applied
-      this.updatePaginatedRegiments(); // Update the paginated regiments after filtering
+      return searchTextMatch && sideMatch;
     });
+  
+    this.currentPage = 1; 
+    this.updatePaginatedRegiments(); 
   }
   
 
