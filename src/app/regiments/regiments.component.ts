@@ -4,13 +4,13 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 2:00:32 
+ * Last Modified: Thu August 3rd 2023 2:40:12 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RegimentService } from "../_services/regiment.service";
 import { DiscordService } from "../_services/discord.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -23,6 +23,8 @@ import { Router } from "@angular/router";
   styleUrls: ["./regiments.component.scss"],
 })
 export class RegimentsComponent implements OnInit {
+  @ViewChild('overlayContainer', { static: false }) overlayContainer!: ElementRef;
+  showOverlay: boolean = false;
   regiments: any;
   regimentUsers: any;
   regimentID: any;
@@ -39,8 +41,11 @@ export class RegimentsComponent implements OnInit {
     private regimentService: RegimentService,
     private snackBar: MatSnackBar,
     private discordService: DiscordService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private elementRef: ElementRef
+  ) {
+    this.showOverlay = false;
+  }
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
@@ -291,4 +296,47 @@ export class RegimentsComponent implements OnInit {
       const end = start + this.itemsPerPage;
       this.paginatedRegiments = this.regiments.slice(start, end);
     }
+
+    /**
+     * @method toggleOverlay
+     * @description toggle the overlay
+     * @returns - the overlay
+     */
+    toggleOverlay() {
+      this.showOverlay = !this.showOverlay;
+      // Add or remove click event listener based on the overlay display status
+      if (this.showOverlay) {
+        document.addEventListener('click', this.closeOverlayOnClickOutside);
+      } else {
+        document.removeEventListener('click', this.closeOverlayOnClickOutside);
+      }
+    }
+  
+    /**
+     * 
+     * @param event - the mouse event
+     */
+    closeOverlayOnClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!this.overlayContainer.nativeElement.contains(target)) {
+        this.toggleOverlay();
+      }
+    };
+
+    /**
+     * @method handleClickInside
+     * @description handle the click inside the overlay (prevent propagation on click inside add bot div's)
+     * @returns - the overlay
+     * @param event - the mouse event
+     */
+    handleClickInside(event: MouseEvent): void {
+      event.stopPropagation(); 
+    }
+
+    closeOverlay(event: MouseEvent) {
+      event.stopPropagation(); // Prevent the click event from propagating
+      this.toggleOverlay();
+    }
+    
+    
 }

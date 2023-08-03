@@ -4,11 +4,30 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 1:58:08 
+Last Modified: Thu August 3rd 2023 2:43:22 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
 -->
+
+<div class="relative">
+	<div class="fixed top-0 left-0 right-0 bottom-0 z-50 bg-slate-900/90 cursor-pointer" [hidden]="!showOverlay" (click)="toggleOverlay()">
+	  <div class="flex justify-center items-center h-full">
+		<div class="lg:w-[70vw] w-full m-auto" id="overlayContainer">
+		  <div (click)="handleClickInside($event)" class="cursor-default">
+			<app-add-bot></app-add-bot>
+		  </div>
+		  <div class="text-right mt-4">
+			<button mat-stroked-button color="primary" class="!text-lg" (click)="closeOverlay($event)"><i class="fa-solid fa-xmark mr-1"></i> Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+  
+  
+  
 
 <div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 
@@ -41,7 +60,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 		</div>
 
 		<div>
-			<button mat-stroked-button color="primary" class="!h-[46.5px] w-full !text-[#a09e94] !font-[500]">Add Regiment</button>
+			<button mat-stroked-button color="primary" class="!h-[46.5px] w-full !text-[#a09e94] !font-[500]" style="border: 1px solid #7c7d72 !important;" (click)="toggleOverlay()"><i class="fa-regular fa-circle-question mr-1"></i> Add Regiment</button>
 		</div>
 
 	</div>
@@ -88,31 +107,33 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<!--  -->
 				<div class="grid grid-cols-[2fr_0.5fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
 					<div class="font-[300] hidden xl:inline-block p-3">
-					  {{ ellipsisText(regiment.description, 256) }}
+						{{ ellipsisText(regiment.description, 256) }}
 					</div>
-				  
+
 					<div class="font-[300] inline-block xl:hidden p-3">
-					  {{ ellipsisText(regiment.description, 155) }}
+						{{ ellipsisText(regiment.description, 155) }}
 					</div>
-				  
-					<div class="flex flex-col justify-center items-center bg-[#1e293b] brightness-105 shadow-md rounded-br-lg">
-					<span class="font-[200] text-xs text-neutral-300">Links</span>
-					  <button (click)="open(regiment.invite_link)" mat-button color="primary" class="!w-[80px] !text-2xl">
-						<i class="fa-brands fa-discord"></i>
-					  </button>
-				  
-					  <button *ngIf="regiment.website" (click)="open(regiment.website)" mat-button color="primary"
-						class="!w-[80px] !text-2xl">
-						<i class="fa-solid fa-globe"></i>
-					  </button>
-				  
-					  <button [routerLink]="['/regiments', regiment.id]" mat-stroked-button color="primary"
-						class="!text-neutral-300 mt-1 !block !min-h-fit !w-[80px] !p-1 !px-4 font-[300] !text-base">
-						Details
-					  </button>
+
+					<div
+						class="flex flex-col justify-center items-center bg-[#1e293b] brightness-105 shadow-md rounded-br-lg">
+						<span class="font-[200] text-xs text-neutral-300">Links</span>
+						<button (click)="open(regiment.invite_link)" mat-button color="primary"
+							class="!w-[80px] !text-2xl">
+							<i class="fa-brands fa-discord"></i>
+						</button>
+
+						<button *ngIf="regiment.website" (click)="open(regiment.website)" mat-button color="primary"
+							class="!w-[80px] !text-2xl">
+							<i class="fa-solid fa-globe"></i>
+						</button>
+
+						<button [routerLink]="['/regiments', regiment.id]" mat-stroked-button color="primary"
+							class="!text-neutral-300 mt-1 !block !min-h-fit !w-[80px] !p-1 !px-4 font-[300] !text-base">
+							Details
+						</button>
 					</div>
-				  </div>
-				  
+				</div>
+
 			</div>
 
 
