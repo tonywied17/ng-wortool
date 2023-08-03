@@ -837,8 +837,61 @@ html {
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 1:12:34 
+ * Last Modified: Thu August 3rd 2023 7:28:00 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
+
+
+ @keyframes swing-left {
+	0% {
+		opacity: 0;
+		transform: rotateY(100deg);
+		transform-origin: left;
+	}
+
+	100% {
+		opacity: 1;
+		transform: rotateY(0);
+		transform-origin: left;
+	}
+}
+
+.swing-left{
+  animation: swing-left 1s ease 0s 1 normal forwards;
+}
+
+@keyframes swing-top {
+	0% {
+		opacity: 0;
+		transform: rotateX(-100deg);
+		transform-origin: top;
+	}
+
+	100% {
+		opacity: 1;
+		transform: rotateX(0deg);
+		transform-origin: top;
+	}
+}
+
+.swing-top {
+  animation: swing-top .8s ease 0s 1 normal forwards;
+}
+
+@keyframes slide-bottom {
+	0% {
+		opacity: 0;
+		transform: translateY(150px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.slide-bottom{
+  animation: slide-bottom .3s ease 0s 1 normal forwards;
+}

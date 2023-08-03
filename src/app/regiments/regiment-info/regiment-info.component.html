@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 7:14:29 
+Last Modified: Thu August 3rd 2023 7:27:31 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -13,26 +13,26 @@ Copyright (c) 2023 Tone Web Design, Molex
 <div *ngIf="isDataLoaded" class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
     <h3 class="text-[#88887b] text-3xl tracking-tight mb-[1em]">{{regiment.regiment}}</h3>
 
-    <div class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center"
+    <div class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center slide-bottom"
         style="border: 2px dashed #7c7d72">
         <span><i class="fa-regular fa-images"></i> Cover Photo </span>
 
         <!-- Profile Picture Wrapper -->
-        <div class="absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-sm flex justify-center items-center"
+        <div class="absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-sm flex justify-center items-center scale-center"
             style="padding: 5px;">
             <img [src]="regiment.guild_avatar"
                 class="w-[140px] h-[140px] shadow-md pointer-events-none brightness-90 rounded-sm">
         </div>
 
         <!-- Description -->
-        <div class="absolute bottom-[-70px] left-[180px] w-[60%] bg-white bg-opacity-30 p-4 rounded shadow-md">
+        <div class="absolute bottom-[-70px] left-[180px] w-[60%] bg-white bg-opacity-30 p-4 rounded shadow-md swing-left">
             {{regiment.description}}
         </div>
     </div>
 
     <div class="mt-[90px] grid grid-cols-[1fr_2fr] gap-6">
         <!-- Social Media Links -->
-        <div class="p-4 bg-slate-900/25 shadow-lg rounded-lg">
+        <div class="p-4 bg-slate-900/25 shadow-lg rounded-lg left-in">
             <h4 class="text-[#7c7d72] mb-4">Social Media</h4>
             <a *ngIf="regiment.invite_link" [href]="regiment.invite_link" class="block text-[#7c7d72] mb-2" target="_blank"><i
                     class="fab fa-discord"></i> Discord</a>
@@ -44,7 +44,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
         <!-- Schedule Placeholder -->
-        <div class="p-4 bg-slate-900/25 shadow-lg rounded-lg">
+        <div class="p-4 bg-slate-900/25 shadow-lg rounded-lg right-in">
             <h4 class="text-[#7c7d72] mb-4">Schedule</h4>
             <div class="text-[#7c7d72] italic">Coming Soon...</div>
         </div>
