@@ -4,163 +4,176 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 1:12:45 
+ * Last Modified: Thu August 3rd 2023 7:20:09 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-.lds-ellipsis{
-    display: inline-block;
-    position: relative;
-    width: 50px;
-    height: 50px;
+@keyframes wave-csa {
+
+  0%,
+  100% {
+    transform: scaleY(0.5);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
 }
 
-.lds-ellipsis div{
-    position: absolute;
-    top: 33px;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: #7c7d72;
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+.wave-csa {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 5px;
+  background: #7c7d72;
+  transform-origin: center;
+  animation: wave-csa 0.5s ease-in-out infinite;
 }
 
-.lds-ellipsis div:nth-child(1){
-    left: 8px;
-    animation: lds-ellipsis1 0.6s infinite;
+.wave-csa:nth-child(2) {
+  animation-delay: 0.2s;
 }
 
-.lds-ellipsis div:nth-child(2){
-    left: 8px;
-    animation: lds-ellipsis2 0.6s infinite;
+.wave-csa:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
-.lds-ellipsis div:nth-child(3){
-    left: 32px;
-    animation: lds-ellipsis2 0.6s infinite;
+@keyframes wave-usa {
+
+  0%,
+  100% {
+    transform: scaleY(0.5);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
 }
 
-.lds-ellipsis div:nth-child(4){
-    left: 56px;
-    animation: lds-ellipsis3 0.6s infinite;
+.wave-usa {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 5px;
+  background: #6488c5;
+  transform-origin: center;
+  animation: wave-usa 0.5s ease-in-out infinite;
 }
 
-@keyframes lds-ellipsis1{
-    0%{
-        transform: scale(0);
-    }
-    100%{
-        transform: scale(1);
-    }
+.wave-usa:nth-child(2) {
+  animation-delay: 0.2s;
 }
 
-@keyframes lds-ellipsis3{
-    0%{
-        transform: scale(1);
-    }
-    100%{
-        transform: scale(0);
-    }
+.wave-usa:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
-@keyframes lds-ellipsis2{
-    0%{
-        transform: translate(0, 0);
-    }
-    100%{
-        transform: translate(24px, 0);
-    }
-}
+// @keyframes spin {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
+
+// .spinner {
+//   display: inline-block;
+//   vertical-align: middle;
+//   border: 2px solid rgba(124, 125, 114, 0.2);
+//   border-radius: 50%;
+//   border-top: 2px solid #7c7d72;
+//   width: 12px;
+//   height: 12px;
+//   animation: spin 2s linear infinite;
+// }
 
 
 .center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed; /* or absolute */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    
-  }
-  
-  .centered-box {
-    width: 50%;
-    background-color: #0c101a;
-    border-radius: 10px;
-    padding: 20px;
-    backdrop-filter: blur(3px);
-    opacity: 0.9;
-  }
-  
-  .pagination-button {
-    background-color: #12192c;
-    color: white;
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .pagination-button:hover {
-    background-color: #0c101d;
-    // filter: brightness(0.7)
-  }
-  
-  .pagination-button:disabled {
-    background-color: #646f85;
-    color: #a1a7b3;
-    cursor: not-allowed;
-  }
-  
-  /* Page numbers */
-  .page-number {
-    padding: 10px;
-    font-weight: bold;
-  }
-  
-  /* Container for page numbers, if you use them */
-  .page-numbers {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .page-numbers .pagination-button {
-    background-color: #12192c;
-    color: #e0e0e0;
-  }
-  
-  .page-numbers .pagination-button:hover {
-    background-color: #0c101d;
-    // filter: brightness(0.7)
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  /* or absolute */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+}
+
+.centered-box {
+  width: 50%;
+  background-color: #0c101a;
+  border-radius: 10px;
+  padding: 20px;
+  backdrop-filter: blur(3px);
+  opacity: 0.9;
+}
+
+.pagination-button {
+  background-color: #12192c;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.pagination-button:hover {
+  background-color: #0c101d;
+}
+
+.pagination-button:disabled {
+  background-color: #646f85;
+  color: #a1a7b3;
+  cursor: not-allowed;
+}
+
+.page-number {
+  padding: 10px;
+  font-weight: bold;
+}
+
+.page-numbers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.page-numbers .pagination-button {
+  background-color: #12192c;
+  color: #e0e0e0;
+}
+
+.page-numbers .pagination-button:hover {
+  background-color: #0c101d;
+}
 
 
-  .alert-danger{
-	font-weight: 200;
-	font-size: .875rem;
-	border-left: 3px #993434ce solid;
-    padding-left: 0.5em;
-    border-radius: 5px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    color: #ffa1a1;
-	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-	width: fit-content;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	background: linear-gradient(90deg, #99343491, #99343400);
-	font-family: "Poppins", sans-serif !important;
+.alert-danger {
+  font-weight: 200;
+  font-size: .875rem;
+  border-left: 3px #993434ce solid;
+  padding-left: 0.5em;
+  border-radius: 5px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  color: #ffa1a1;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  width: fit-content;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background: linear-gradient(90deg, #99343491, #99343400);
+  font-family: "Poppins", sans-serif !important;
 }
 
 select {
-    background-color: #17202e !important;
-    transition: none !important;
-  }
+  background-color: #17202e !important;
+  transition: none !important;
+}
 
-  

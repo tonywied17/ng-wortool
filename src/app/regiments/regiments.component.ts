@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 2:40:12 
+ * Last Modified: Thu August 3rd 2023 7:15:58 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -14,7 +14,6 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RegimentService } from "../_services/regiment.service";
 import { DiscordService } from "../_services/discord.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 
 @Component({
@@ -26,7 +25,6 @@ export class RegimentsComponent implements OnInit {
   @ViewChild('overlayContainer', { static: false }) overlayContainer!: ElementRef;
   showOverlay: boolean = false;
   regiments: any;
-  regimentUsers: any;
   regimentID: any;
   searchText: any;
   isDataLoaded: boolean = false;
@@ -72,7 +70,6 @@ export class RegimentsComponent implements OnInit {
     this.updatePaginatedRegiments(); 
   }
   
-
   /**
    * Get all regiments and their users
    * This function will get all regiments and then fetch the users for each regiment
@@ -81,11 +78,10 @@ export class RegimentsComponent implements OnInit {
     this.regimentService.getRegiments().subscribe((regiments) => {
       this.regiments = regiments;
       
-      this.fetchRegimentUsers();
+      this.fetchRegimentDiscordData();
       //
       this.allRegiments = this.regiments.slice();
       console.log("regiments", regiments);
-      console.log("regimentUsers", this.regimentUsers);
     });
   }
 
@@ -93,28 +89,12 @@ export class RegimentsComponent implements OnInit {
    * Fetch all users for each regiment
    * @returns void
    */
-  async fetchRegimentUsers(): Promise<void> {
+  async fetchRegimentDiscordData(): Promise<void> {
     const fetchPromises = this.regiments.map(async (regiment: any) => {
-      await this.getRegimentUsers(regiment.id);
-      regiment.members = [...this.regimentUsers];
       await this.getDiscordRegimentData(regiment.guild_id, regiment);
     });
   
     await Promise.all(fetchPromises);
-  }
-  
-
-  /**
-   * Get all users for a regiment by the regiment id
-   * @param guildId - The guild id of the regiment
-   */
-  async getRegimentUsers(guildId: string): Promise<void> {
-    await this.regimentService
-      .getRegimentUsers(guildId)
-      .toPromise()
-      .then((response: any) => {
-        this.regimentUsers = response;
-      });
   }
 
   /**
@@ -213,7 +193,6 @@ export class RegimentsComponent implements OnInit {
     });
   }
 
-
   /**
    * @method getPaginatedSteamIds
    * @description get the paginated steam ids
@@ -225,10 +204,9 @@ export class RegimentsComponent implements OnInit {
   getPaginatedRegiments() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    return this.regiments.slice(start, end); // Use this.regiments instead of this.allRegiments
+    return this.regiments.slice(start, end); 
   }
   
-
   /**
    * @method nextPage
    * @description go to the next page of steam ids
@@ -313,7 +291,9 @@ export class RegimentsComponent implements OnInit {
     }
   
     /**
-     * 
+     * @method closeOverlayOnClickOutside
+     * @description close the overlay on click outside
+     * @returns - the overlay
      * @param event - the mouse event
      */
     closeOverlayOnClickOutside = (event: MouseEvent) => {
@@ -334,7 +314,7 @@ export class RegimentsComponent implements OnInit {
     }
 
     closeOverlay(event: MouseEvent) {
-      event.stopPropagation(); // Prevent the click event from propagating
+      event.stopPropagation();
       this.toggleOverlay();
     }
     
