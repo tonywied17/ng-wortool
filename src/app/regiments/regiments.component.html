@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 6:44:22 
+Last Modified: Thu August 3rd 2023 6:47:41 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -101,7 +101,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 											<span *ngIf="regiment.side == 'CSA'"
 												class="text-[#838479]">{{ regiment.side }} Regiment</span>
 											<span *ngIf="regiment.side == 'USA'"
-												class="text-[#37568b]">{{ regiment.side }} Regiment</span>
+												class="text-[#6488c5]">{{ regiment.side }} Regiment</span>
 
 											<span class="pl-2" *ngIf="!regiment.memberCount; else memberCount">
 												<span *ngIf="regiment.side == 'CSA'">
@@ -121,7 +121,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 											<ng-template #memberCount> 
 												<span *ngIf="regiment.side == 'CSA'" class="font-[300] text-sm pl-2 text-[#838479]">({{ regiment.memberCount }} members)</span>
-												<span *ngIf="regiment.side == 'USA'" class="font-[300] text-sm pl-2 text-[#37568b]">({{ regiment.memberCount }} members)</span>
+												<span *ngIf="regiment.side == 'USA'" class="font-[300] text-sm pl-2 text-[#6488c5]">({{ regiment.memberCount }} members)</span>
 											</ng-template>
 										</span>
 									</div>
