@@ -1,197 +1,170 @@
-<div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
-	<mat-tab-group dynamicHeight="true">
-		<mat-tab label="USA Regiments">
-			<ng-template mat-tab-label>
-				<img src="https://wortool.com/assets/usaReg.png"
-					class="h-[22px] mr-2 sepia brightness-75 opacity-70">
-				USA Regiments
-			</ng-template>
+<!--
+File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\regiments\regiments.component.html
+Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+Created Date: Sunday July 2nd 2023
+Author: Tony Wiedman
+-----
+Last Modified: Thu August 3rd 2023 2:43:22 
+Modified By: Tony Wiedman
+-----
+Copyright (c) 2023 Tone Web Design, Molex
+-->
 
-
-			<div class="m-6 text-center lg:w-[420px] ml-auto">
-				<div class="field-box">
-					<input [(ngModel)]="searchText"
-						(input)="filterRegiments()"
-						type="text"
-						style="
-              padding-top: 11px;
-              padding-bottom: 11px;
-              font-size: 15px;
-              border: 1px solid #7c7d72 !important;
-            "
-						class="field-input"
-						placeholder="Filter Regiment Name..">
-					<i class="fa-solid fa-search field-icon"></i>
-				</div>
-			</div>
-
-
-
-			<div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
-
-
-				<div *ngFor="let usaRegiment of regiments">
-					<div *ngIf="usaRegiment.side == 'USA'">
-						<div class>
-							<div class="my-4 bg-slate-800/80 rounded-lg shadow-md p-5 flex items-center justify-center">
-								<div class="grid grid-cols-[100px_auto_200px] grid-rows-[130px_fit_110px] w-full gap-2 min-h-[222px]">
-									<div class="row-start-1 row-end-4 col-start-1 col-span-1">
-										<img [src]="usaRegiment.guild_avatar"
-											class="h-[100px] w-auto rounded-md shadow-md pointer-events-none">
-	
-									</div>
-									<div class="ml-2 row-start-1 col-start-2 col-end-4">
-										<div class="flex flex-col h-full">
-											<p class="text-slate-400 text-xl font-[500]">
-												{{ usaRegiment.regiment }}
-											</p>
-											<p class="text-slate-400 text-lg font-[400]">
-												{{ usaRegiment.side }} Regiment
-											</p>
-										</div>
-									</div>
-									<div class="row-start-2 col-start-2 col-end-4 pl-2 font-[300] text-neutral-200 min-h-[140px] max-h-[140px]">
-										<p>
-											{{ usaRegiment.description }}
-										</p>
-									</div>
-
-
-									<div class="lg:col-start-3 lg:col-span-1 col-span-3 col-start-1 lg:row-start-3 row-start-3 row-span-1 text-right place-self-end">
-										<button (click)="open(usaRegiment.invite_link)"
-											mat-button
-											color="primary"
-											class="!w-fit !text-2xl">
-											<i class="fa-brands fa-discord"></i>
-										</button>
-
-
-										<button *ngIf="usaRegiment.website"
-											(click)="open(usaRegiment.website)"
-											mat-button
-											color="primary"
-											class="!w-fit !text-2xl">
-											<i class="fa-solid fa-globe"></i>
-										</button>
-
-
-										<button [routerLink]="['/regiments', usaRegiment.id]"
-											mat-stroked-button
-											color="primary"
-											class=" !text-neutral-300 mt-2 !block !min-h-fit !w-full !p-1 font-[300] !text-base">
-											Regiment Info
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-		</mat-tab>
-
-
-		<mat-tab label="CSA Regiments">
-			<ng-template mat-tab-label>
-				<img src="https://wortool.com/assets/csaReg.png"
-					class="h-[22px] mr-2 sepia brightness-75 opacity-70">
-				CSA Regiments
-			</ng-template>
-			<div class="m-6 text-center lg:w-[420px] ml-auto">
-				<div class="field-box">
-					<input [(ngModel)]="searchText"
-						(input)="filterRegiments()"
-						type="text"
-						style="
-              padding-top: 11px;
-              padding-bottom: 11px;
-              font-size: 15px;
-              border: 1px solid #7c7d72 !important;
-            "
-						class="field-input"
-						placeholder="Filter Regiment Name..">
-					<i class="fa-solid fa-search field-icon"></i>
-				</div>
-			</div>
-
-
-			<div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
-
-
-				<div *ngFor="let csaRegiment of regiments">
-					<div *ngIf="csaRegiment.side == 'CSA'">
-						<div class>
-							<div class="my-4 bg-slate-800/80 rounded-lg shadow-md p-5 flex items-center justify-center">
-								<div class="grid grid-cols-[100px_auto_200px] grid-rows-[130px_fit_110px] w-full gap-2 min-h-[222px]">
-									<div class="row-start-1 row-end-4 col-start-1 col-span-1">
-										<img [src]="csaRegiment.guild_avatar"
-											class="h-[100px] w-auto rounded-md shadow-md pointer-events-none">
-	
-									</div>
-									<div class="ml-2 row-start-1 col-start-2 col-end-4">
-										<div class="flex flex-col h-full">
-											<p class="text-slate-400 text-xl font-[500]">
-												{{ csaRegiment.regiment }}
-											</p>
-											<p class="text-slate-400 text-lg font-[400]">
-												{{ csaRegiment.side }} Regiment
-											</p>
-										</div>
-									</div>
-									<div class="row-start-2 col-start-2 col-end-4 pl-2 font-[300] text-neutral-200 min-h-[140px] max-h-[140px]">
-										<p>
-											{{ csaRegiment.description }}
-										</p>
-									</div>
-
-
-									<div class="lg:col-start-3 lg:col-span-1 col-span-3 col-start-1 lg:row-start-3 row-start-3 row-span-1 text-right place-self-end">
-										<button (click)="open(csaRegiment.invite_link)"
-											mat-button
-											color="primary"
-											class="!w-fit !text-2xl">
-											<i class="fa-brands fa-discord"></i>
-										</button>
-
-
-										<button *ngIf="csaRegiment.website"
-											(click)="open(csaRegiment.website)"
-											mat-button
-											color="primary"
-											class="!w-fit !text-2xl">
-											<i class="fa-solid fa-globe"></i>
-										</button>
-
-
-										<button [routerLink]="['/regiments', csaRegiment.id]"
-											mat-stroked-button
-											color="primary"
-											class=" !text-neutral-300 mt-2 !block !min-h-fit !w-full !p-1 font-[300] !text-base">
-											Regiment Info
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-		</mat-tab>
-
-
-		<mat-tab label="Add Regiment">
-			<ng-template mat-tab-label>
-				<i class="fa-solid fa-plus mr-1.5 mb-0.5 !inline-block !text-[#756e5f]"></i>
-				Add Regiment
-			</ng-template>
-
-
+<div class="relative">
+	<div class="fixed top-0 left-0 right-0 bottom-0 z-50 bg-slate-900/90 cursor-pointer" [hidden]="!showOverlay" (click)="toggleOverlay()">
+	  <div class="flex justify-center items-center h-full">
+		<div class="lg:w-[70vw] w-full m-auto" id="overlayContainer">
+		  <div (click)="handleClickInside($event)" class="cursor-default">
 			<app-add-bot></app-add-bot>
-		</mat-tab>
-	</mat-tab-group>
+		  </div>
+		  <div class="text-right mt-4">
+			<button mat-stroked-button color="primary" class="!text-lg" (click)="closeOverlay($event)"><i class="fa-solid fa-xmark mr-1"></i> Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+  
+  
+  
+
+<div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
+
+	<div class="grid grid-cols-[auto_1fr_auto] gap-4 my-2 mb-8">
+
+		<div>
+			<div class="field-box">
+				<select [(ngModel)]="selectedSide" (change)="filterRegiments()" style=" padding-top: 11px;
+				padding-bottom: 11px;
+				padding-left: 10px;
+				font-size: 15px;
+				border: 1px solid #7c7d72 !important;" class="field-input2 inline-block">
+					<option value="all">All Sides</option>
+					<option value="USA">Union</option>
+					<option value="CSA">Confederate</option>
+				</select>
+			</div>
+		</div>
+
+		<div>
+			<div class="field-box">
+				<input [(ngModel)]="searchText" (input)="filterRegiments()" type="text" style="
+		  padding-top: 11px;
+		  padding-bottom: 11px;
+		  font-size: 15px;
+		  border: 1px solid #7c7d72 !important;
+		" class="field-input" placeholder="Filter Regiment Name..">
+				<i class="fa-solid fa-search field-icon"></i>
+			</div>
+		</div>
+
+		<div>
+			<button mat-stroked-button color="primary" class="!h-[46.5px] w-full !text-[#a09e94] !font-[500]" style="border: 1px solid #7c7d72 !important;" (click)="toggleOverlay()"><i class="fa-regular fa-circle-question mr-1"></i> Add Regiment</button>
+		</div>
+
+	</div>
+
+
+
+
+
+	<div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+
+
+		<div *ngFor="let regiment of getPaginatedRegiments()">
+
+
+			<div class="rounded-lg w-full bg-slate-900/80 shadow-lg">
+				<!-- Top -->
+				<div class="grid grid-cols-[78px_auto] w-full">
+					<div class="text-left rounded-t-lg"
+						style="background: linear-gradient(130deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
+						<img [src]="regiment.guild_avatar"
+							class="h-[75px] w-auto rounded-tl-lg shadow-md pointer-events-none brightness-90 sepia-[50%]">
+					</div>
+
+					<div class="flex items-center rounded-t-lg h-full w-full"
+						style="background: linear-gradient(-25deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
+						<div class="flex-grow">
+							<div class="grid grid-cols-[auto_100px]">
+
+								<div class="flex items-center justify-center">
+									<div class="text-slate-400 text-xl font-[500] text-center">
+										{{ regiment.regiment }}
+										<span class="block font-[300] p-1 text-center text-sm">{{regiment.side}}
+											Regiment<span *ngIf="regiment.memberCount">, {{ regiment.memberCount }}
+												members</span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--  -->
+				<mat-divider></mat-divider>
+				<!--  -->
+				<div class="grid grid-cols-[2fr_0.5fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
+					<div class="font-[300] hidden xl:inline-block p-3">
+						{{ ellipsisText(regiment.description, 256) }}
+					</div>
+
+					<div class="font-[300] inline-block xl:hidden p-3">
+						{{ ellipsisText(regiment.description, 155) }}
+					</div>
+
+					<div
+						class="flex flex-col justify-center items-center bg-[#1e293b] brightness-105 shadow-md rounded-br-lg">
+						<span class="font-[200] text-xs text-neutral-300">Links</span>
+						<button (click)="open(regiment.invite_link)" mat-button color="primary"
+							class="!w-[80px] !text-2xl">
+							<i class="fa-brands fa-discord"></i>
+						</button>
+
+						<button *ngIf="regiment.website" (click)="open(regiment.website)" mat-button color="primary"
+							class="!w-[80px] !text-2xl">
+							<i class="fa-solid fa-globe"></i>
+						</button>
+
+						<button [routerLink]="['/regiments', regiment.id]" mat-stroked-button color="primary"
+							class="!text-neutral-300 mt-1 !block !min-h-fit !w-[80px] !p-1 !px-4 font-[300] !text-base">
+							Details
+						</button>
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+	<div class="w-full text-center mt-6">
+
+		<button matTooltipClass="form-tooltip" matTooltipPosition="above" matTooltip="First Page" type="button"
+			class="pagination-button" (click)="goToPage(1)" [disabled]="currentPage === 1"><i
+				class="fa-solid fa-angles-left"></i></button>
+
+		<button matTooltipClass="form-tooltip" matTooltipPosition="above" matTooltip="Previous Page" type="button"
+			class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1"><i
+				class="fa-solid fa-angle-left"></i></button>
+
+		<button type="button" class="pagination-button" (click)="goToPage(currentPage - 1)"
+			[hidden]="currentPage === 1">{{ currentPage - 1 }}</button>
+		<button type="button" class="pagination-button" [disabled]="true">{{ currentPage }}</button>
+		<button type="button" class="pagination-button" (click)="goToPage(currentPage + 1)"
+			[hidden]="currentPage === getTotalPages()">{{ currentPage + 1 }}</button>
+
+		<button matTooltipClass="form-tooltip" matTooltipPosition="above" matTooltip="Next Page" type="button"
+			class="pagination-button" (click)="nextPage()" [disabled]="currentPage === getTotalPages()"><i
+				class="fa-solid fa-angle-right"></i></button>
+
+		<button matTooltipClass="form-tooltip" matTooltipPosition="above" matTooltip="Last Page" type="button"
+			class="pagination-button" (click)="goToPage(getTotalPages())"
+			[disabled]="currentPage === getTotalPages()"><i class="fa-solid fa-angles-right"></i></button>
+	</div>
+
 </div>

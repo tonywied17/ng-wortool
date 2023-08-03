@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:19:20 
+ * Last Modified: Thu August 3rd 2023 2:51:19 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -65,6 +65,7 @@ const routes: Routes = [
   { path: "admin/:page", component: BoardAdminComponent },
   { path: "admin/:page/:weapon", component: BoardAdminComponent },
   { path: "regiments/:id", component: RegimentInfoComponent },
+  { path: "add-bot", component: AddBotComponent},
   { path: "recaps", component: EventRecapsComponent},
   { path: "", redirectTo: "/home", pathMatch: "full" },
 ];

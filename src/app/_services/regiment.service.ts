@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:36:46 
+ * Last Modified: Tue August 1st 2023 11:30:54 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -203,6 +203,81 @@ export class RegimentService {
     return this.http.post(API + regimentId + '/gameid', {
       steamId,
     }, httpOptions);
+  }
+
+  /**
+   * Remove steam id from regiment database
+   * This observable is used to remove steam id from regiment database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param day - string - the day
+   * @returns - Observable<any>
+   */
+  getScheduleByDay(userId: number, regimentId: number, day: string): Observable<any> {
+    return this.http.get(API + regimentId + '/schedules/' + day);
+  }
+
+  /**
+   * Get all schedules by regiment id
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @returns - Observable<any>
+   */
+  getSchedulesByRegiment(userId: number, regimentId: number): Observable<any> {
+    return this.http.get(API + regimentId + '/schedules');
+  }
+
+  /**
+   * Get schedule by regiment id and schedule id
+   * This observable is used to get schedule by regiment id and schedule id from the database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param day - string - the day
+   * @param time - string - the time
+   * @param event_type - string - the event type
+   * @param event_name - string - the event name
+   * @returns - Observable<any>
+   */
+  createSchedule(userId: number, regimentId: number, day: string, time: string, event_type: string, event_name: string): Observable<any> {
+    return this.http.post(API + regimentId + '/schedules', {
+      day,
+      time,
+      event_type,
+      event_name
+    }, httpOptions);
+  }
+
+  /**
+   * Update schedule by regiment id and schedule id
+   * This observable is used to update schedule by regiment id and schedule id from the database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param scheduleId - number - the schedule id
+   * @param day - string - the day
+   * @param time - string - the time
+   * @param event_type - string - the event type
+   * @param event_name - string - the event name
+   * @returns - Observable<any>
+   */
+  updateSchedule(userId: number, regimentId: number, scheduleId: number, day: string, time: string, event_type: string, event_name: string): Observable<any> {
+    return this.http.put(API + regimentId + '/schedules/' + scheduleId, {
+      day,
+      time,
+      event_type,
+      event_name
+    }, httpOptions);
+  }
+
+  /**
+   * Remove schedule by regiment id and schedule id
+   * This observable is used to remove schedule by regiment id and schedule id from the database
+   * @param userId - number - the user id
+   * @param regimentId - number - the regiment id
+   * @param scheduleId - number - the schedule id
+   * @returns - Observable<any>
+   */
+  removeSchedule(userId: number, regimentId: number, scheduleId: number): Observable<any> {
+    return this.http.delete(API + regimentId + '/schedules/' + scheduleId);
   }
 
 }
