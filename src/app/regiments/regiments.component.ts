@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 6:45:07 
+ * Last Modified: Thu August 3rd 2023 7:15:58 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -70,7 +70,6 @@ export class RegimentsComponent implements OnInit {
     this.updatePaginatedRegiments(); 
   }
   
-
   /**
    * Get all regiments and their users
    * This function will get all regiments and then fetch the users for each regiment
@@ -194,7 +193,6 @@ export class RegimentsComponent implements OnInit {
     });
   }
 
-
   /**
    * @method getPaginatedSteamIds
    * @description get the paginated steam ids
@@ -209,7 +207,6 @@ export class RegimentsComponent implements OnInit {
     return this.regiments.slice(start, end); 
   }
   
-
   /**
    * @method nextPage
    * @description go to the next page of steam ids
@@ -294,7 +291,9 @@ export class RegimentsComponent implements OnInit {
     }
   
     /**
-     * 
+     * @method closeOverlayOnClickOutside
+     * @description close the overlay on click outside
+     * @returns - the overlay
      * @param event - the mouse event
      */
     closeOverlayOnClickOutside = (event: MouseEvent) => {

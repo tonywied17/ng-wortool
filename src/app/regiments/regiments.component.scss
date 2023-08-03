@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 6:47:41 
+ * Last Modified: Thu August 3rd 2023 7:15:10 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -70,26 +70,26 @@
   animation-delay: 0.4s;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
+// @keyframes spin {
+//   0% {
+//     transform: rotate(0deg);
+//   }
 
-  100% {
-    transform: rotate(360deg);
-  }
-}
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
 
-.spinner {
-  display: inline-block;
-  vertical-align: middle;
-  border: 2px solid rgba(124, 125, 114, 0.2);
-  border-radius: 50%;
-  border-top: 2px solid #7c7d72;
-  width: 12px;
-  height: 12px;
-  animation: spin 2s linear infinite;
-}
+// .spinner {
+//   display: inline-block;
+//   vertical-align: middle;
+//   border: 2px solid rgba(124, 125, 114, 0.2);
+//   border-radius: 50%;
+//   border-top: 2px solid #7c7d72;
+//   width: 12px;
+//   height: 12px;
+//   animation: spin 2s linear infinite;
+// }
 
 
 .center-container {
@@ -127,7 +127,6 @@
 
 .pagination-button:hover {
   background-color: #0c101d;
-  // filter: brightness(0.7)
 }
 
 .pagination-button:disabled {
@@ -136,13 +135,11 @@
   cursor: not-allowed;
 }
 
-/* Page numbers */
 .page-number {
   padding: 10px;
   font-weight: bold;
 }
 
-/* Container for page numbers, if you use them */
 .page-numbers {
   display: flex;
   flex-wrap: wrap;
@@ -155,7 +152,6 @@
 
 .page-numbers .pagination-button:hover {
   background-color: #0c101d;
-  // filter: brightness(0.7)
 }
 
 
