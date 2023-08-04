@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 10:40:39 
+Last Modified: Thu August 3rd 2023 11:36:24 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -99,9 +99,9 @@ Copyright (c) 2023 Tone Web Design, Molex
 										<span class="block font-[500] p-1 text-center text-base">
 
 											<span *ngIf="regiment.side == 'CSA'"
-												class="text-[#838479]">{{ regiment.side }} Regiment</span>
+												class="text-[#838479]">Confederate Regiment</span>
 											<span *ngIf="regiment.side == 'USA'"
-												class="text-[#6488c5]">{{ regiment.side }} Regiment</span>
+												class="text-[#6488c5]">Union Regiment</span>
 
 											<span class="pl-2" *ngIf="!regiment.memberCount; else memberCount">
 												<span *ngIf="regiment.side == 'CSA'">
@@ -136,33 +136,30 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<mat-divider></mat-divider>
 				<!--  -->
 				<div class="grid grid-cols-[2fr_0.5fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
-					<div class="font-[300] hidden xl:inline-block p-3">
-						{{ ellipsisText(regiment.description, 256) }}
+					<div class="font-[300] hidden xl:inline-block p-3 overflow-hidden break-all">
+						{{ ellipsisText(regiment.description, 320) }}
 					</div>
-
-					<div class="font-[300] inline-block xl:hidden p-3">
+				
+					<div class="font-[300] inline-block xl:hidden p-3 overflow-hidden break-all">
 						{{ ellipsisText(regiment.description, 155) }}
 					</div>
-
-					<div
-						class="flex flex-col justify-center items-center bg-[#1e293b] brightness-105 shadow-md rounded-br-lg">
+				
+					<div class="flex flex-col justify-center items-center bg-[#1e293b] brightness-105 shadow-md rounded-br-lg overflow-hidden">
 						<span class="font-[200] text-xs text-neutral-300">Links</span>
-						<button (click)="open(regiment.invite_link)" mat-button color="primary"
-							class="!w-[80px] !text-2xl">
+						<button (click)="open(regiment.invite_link)" mat-button color="primary" class="!w-[80px] !text-2xl">
 							<i class="fa-brands fa-discord"></i>
 						</button>
-
-						<button *ngIf="regiment.website" (click)="open(regiment.website)" mat-button color="primary"
-							class="!w-[80px] !text-2xl">
+				
+						<button *ngIf="regiment.website" (click)="open(regiment.website)" mat-button color="primary" class="!w-[80px] !text-2xl">
 							<i class="fa-solid fa-globe"></i>
 						</button>
-
-						<button [routerLink]="['/regiments', regiment.id]" mat-stroked-button color="primary"
-							class="!text-neutral-300 mt-1 !block !min-h-fit !w-[80px] !p-1 !px-4 font-[300] !text-base">
+				
+						<button [routerLink]="['/regiments', regiment.id]" mat-stroked-button color="primary" class="!text-neutral-300 mt-1 !block !min-h-fit !w-[80px] !p-1 !px-4 font-[300] !text-base">
 							Details
 						</button>
 					</div>
 				</div>
+				
 
 			</div>
 

@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 10:32:28 
+ * Last Modified: Fri August 4th 2023 5:11:39 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -110,7 +110,7 @@ export class RegimentsComponent implements OnInit {
       .then((response: any) => {
         let hasChanged = false;
 
-        regiment.memberCount = response.guild.memberCount;
+        // regiment.memberCount = response.guild.memberCount;
 
         if (
           !regiment.guild_avatar ||
