@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 7:15:58 
+ * Last Modified: Thu August 3rd 2023 10:32:28 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -24,7 +24,7 @@ import { Router } from "@angular/router";
 export class RegimentsComponent implements OnInit {
   @ViewChild('overlayContainer', { static: false }) overlayContainer!: ElementRef;
   showOverlay: boolean = false;
-  regiments: any;
+  regiments: any[] = [];
   regimentID: any;
   searchText: any;
   isDataLoaded: boolean = false;
@@ -169,7 +169,7 @@ export class RegimentsComponent implements OnInit {
    */
   ellipsisText(text: string, maxLength: number = 256): string {
     if (!text || text.trim() === '') {
-      return 'No description available.';
+      return 'No description provided.';
     }
   
     if (text.length <= maxLength) {

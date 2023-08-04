@@ -1,0 +1,25 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\regiments\regiment-info\regiment-info.component.scss
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 16th 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Thu August 3rd 2023 10:37:45 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
+
+.sepia-effect::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: inherit;
+    filter: sepia(0.3) brightness(0.8);
+    z-index: -1;
+    border-radius: 0.5rem;
+  }

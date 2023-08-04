@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 7:22:05 
+Last Modified: Thu August 3rd 2023 10:40:39 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -73,7 +73,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-	<div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+	<div class="grid lg:grid-cols-2 grid-cols-1 gap-4" *ngIf="regiments">
 
 
 		<div *ngFor="let regiment of getPaginatedRegiments()">
@@ -85,7 +85,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 					<div class="text-left rounded-t-lg"
 						style="background: linear-gradient(130deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
 						<img [src]="regiment.guild_avatar"
-							class="h-[75px] w-auto rounded-tl-lg shadow-md pointer-events-none brightness-90 sepia-[50%]">
+							class="h-[75px] w-auto rounded-tl-lg shadow-md pointer-events-none brightness-90 sepia-[30%]">
 					</div>
 
 					<div class="flex items-center rounded-t-lg h-full w-full"
