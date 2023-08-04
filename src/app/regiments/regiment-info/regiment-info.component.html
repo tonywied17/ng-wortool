@@ -4,33 +4,51 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 7:27:31 
+Last Modified: Thu August 3rd 2023 10:40:09 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
 -->
 
-<div *ngIf="isDataLoaded" class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
-    <h3 class="text-[#88887b] text-3xl tracking-tight mb-[1em]">{{regiment.regiment}}</h3>
 
-    <div class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center slide-bottom"
-        style="border: 2px dashed #7c7d72">
-        <span><i class="fa-regular fa-images"></i> Cover Photo </span>
+<div *ngIf="isDataLoaded" class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
+    <div class="grid grid-cols-[auto_1fr] gap-7">
+        <div class="place-self-center">
+            <button (click)="goBack()"
+            mat-button
+            color="primary"
+            class="!mb-[1em]">
+            <i class="fa-sharp fa-solid fa-arrow-left"></i>
+            Back
+        </button>
+        </div>
+
+        <div>
+            <h3 class="text-[#88887b] text-3xl tracking-tight mb-[1em]">{{regiment.regiment}}</h3>
+        </div>
+    </div>
+    
+
+
+    <div id="cover-photo"
+     class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center slide-bottom"
+     [style.backgroundImage]="'url(' + randomScreenshot + ')'"
+     style="background-size: cover; background-position: center;">
 
         <!-- Profile Picture Wrapper -->
-        <div class="absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-sm flex justify-center items-center scale-center"
-            style="padding: 5px;">
+        <div class="absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-md flex justify-center items-center scale-center"
+            style="padding:1px">
             <img [src]="regiment.guild_avatar"
-                class="w-[140px] h-[140px] shadow-md pointer-events-none brightness-90 rounded-sm">
+                class="w-[140px] h-[140px] shadow-md pointer-events-none brightness-90 rounded-md">
         </div>
 
         <!-- Description -->
-        <div class="absolute bottom-[-70px] left-[180px] w-[60%] bg-white bg-opacity-30 p-4 rounded shadow-md swing-left">
-            {{regiment.description}}
+        <div class="absolute bottom-[-70px] left-[180px] w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md swing-left min-h-[115px] text-neutral-100">
+            <span *ngIf="!regiment.description">No description provided.</span>{{regiment.description}}
         </div>
     </div>
 
-    <div class="mt-[90px] grid grid-cols-[1fr_2fr] gap-6">
+    <div class="mt-[90px] grid lg:grid-cols-[1fr_2fr] grid-cols-1 gap-6">
         <!-- Social Media Links -->
         <div class="p-4 bg-slate-900/25 shadow-lg rounded-lg left-in">
             <h4 class="text-[#7c7d72] mb-4">Social Media</h4>

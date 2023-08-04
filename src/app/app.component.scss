@@ -1,3 +1,15 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\app.component.scss
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Sunday July 2nd 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Fri August 4th 2023 12:06:45 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
+
 .navitem{
     transition: all 0.1s ease-in-out;
 }
@@ -26,3 +38,31 @@ button.hidden {
     pointer-events: none;
   }
   
+  .logo {
+    position: relative;
+    font-weight: 900;
+    font-size: 1rem;
+    color: #111827;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #C0C0C0 10%, #AFAFAF 25%, #BDBDBD 50%, #AFAFAF 75%, #C0C0C0 90%);
+    padding: 8px;
+    border-radius: 5px;
+    border: 2px solid #696969;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    filter: sepia(10%);
+    max-height: 40px;
+}
+
+.screw {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: radial-gradient(circle at center, #FFFFFF 25%, #666666 50%, #333333 75%, #000000 100%);
+    border-radius: 50%;
+}
+
+.top-left { top: 2px; left: 2px; }
+.top-right { top: 2px; right: 2px; }
+.bottom-left { bottom: 2px; left: 2px; }
+.bottom-right { bottom: 2px; right: 2px; }
