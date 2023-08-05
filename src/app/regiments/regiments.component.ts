@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri August 4th 2023 9:05:13 
+ * Last Modified: Sat August 5th 2023 4:25:47 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -12,7 +12,6 @@
 
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RegimentService } from "../_services/regiment.service";
-import { DiscordService } from "../_services/discord.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 
@@ -38,7 +37,6 @@ export class RegimentsComponent implements OnInit {
   constructor(
     private regimentService: RegimentService,
     private snackBar: MatSnackBar,
-    private discordService: DiscordService,
     private router: Router,
     private elementRef: ElementRef
   ) {
@@ -46,8 +44,11 @@ export class RegimentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.currentRoute = this.router.url;
+
     this.getRegiments();
+
   }
 
   /**
@@ -77,76 +78,11 @@ export class RegimentsComponent implements OnInit {
   getRegiments() {
     this.regimentService.getRegiments().subscribe((regiments) => {
       this.regiments = regiments;
-      
-      this.fetchRegimentDiscordData();
       this.allRegiments = this.regiments.slice();
+      this.isDataLoaded = true;
     });
   }
 
-  /**
-   * Fetch all users for each regiment
-   * @returns void
-   */
-  async fetchRegimentDiscordData(): Promise<void> {
-    const fetchPromises = this.regiments.map(async (regiment: any) => {
-      await this.getDiscordRegimentData(regiment.guild_id, regiment);
-    });
-  
-    await Promise.all(fetchPromises);
-  }
-
-  /**
-   * Get the discord guild data for a regiment
-   * This function will get the guild data for a regiment and then update the regiment data if it has changed
-   * @param guildId - The guild id of the regiment
-   * @param regiment - The regiment object
-   */
-  async getDiscordRegimentData(guildId: string, regiment: any): Promise<void> {
-    await this.discordService
-      .getRegimentGuild(guildId)
-      .toPromise()
-      .then((response: any) => {
-        let hasChanged = false;
-
-        // regiment.memberCount = response.guild.memberCount;
-
-        if (
-          !regiment.guild_avatar ||
-          regiment.guild_avatar !== response.guild.iconURL
-        ) {
-          regiment.guild_avatar = response.guild.iconURL;
-          hasChanged = true;
-        }
-
-        if (regiment.regiment !== response.guild.name) {
-          regiment.regiment = response.guild.name;
-          hasChanged = true;
-        }
-
-        if (hasChanged) {
-          const requestedDomain = window.location.origin + this.currentRoute;
-          this.regimentService
-            .syncRegiment(
-              requestedDomain,
-              regiment.userId,
-              regiment.id,
-              regiment.regiment,
-              regiment.guild_id,
-              regiment.guild_avatar,
-              regiment.invite_link,
-              regiment.website,
-              regiment.description,
-              regiment.side
-            )
-            .subscribe(
-              (updatedRegiment: any) => {},
-              (error: any) => {}
-            );
-        }
-
-        this.isDataLoaded = true;
-      });
-  }
 
   /**
    * Open a url in a new tab
