@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri August 4th 2023 5:11:39 
+ * Last Modified: Fri August 4th 2023 9:05:13 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -79,9 +79,7 @@ export class RegimentsComponent implements OnInit {
       this.regiments = regiments;
       
       this.fetchRegimentDiscordData();
-      //
       this.allRegiments = this.regiments.slice();
-      console.log("regiments", regiments);
     });
   }
 

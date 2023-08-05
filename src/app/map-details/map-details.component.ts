@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:01:42 
+ * Last Modified: Fri August 4th 2023 9:04:00 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -305,7 +305,9 @@ export class MapDetailsComponent implements OnInit {
 
     this.noteService.getById(currentMapId, currentUserId).subscribe({
       next: (notes: Note[]) => {
-        this.currentNotes = notes[0].note;
+        if (notes && notes.length > 0) {
+          this.currentNotes = notes[0].note;
+        }
       },
       error: (error) => {
         console.error(error);

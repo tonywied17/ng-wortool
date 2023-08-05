@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:28:24 
+ * Last Modified: Fri August 4th 2023 9:11:02 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -109,37 +109,39 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns {Promise<void>}
    */
   async getRegiment(): Promise<void> {
-    if (this.regimentID) {
-      await this.regimentService
-        .getRegiment(this.regimentID)
-        .toPromise()
-        .then((response) => {
+    try {
+      if (this.regimentID) {
+        const response = await this.regimentService.getRegiment(this.regimentID).toPromise();
+  
+        if (response) {
           this.regimentData = response;
           this.getRegimentChannels(this.regimentData.guild_id);
           this.getRegimentUsers(this.regimentData.id);
           this.regimentSelected = true;
-
+  
           this.regiment = this.regimentData.regiment;
           this.guild_id = this.regimentData.guild_id;
           this.guild_avatar = this.regimentData.guild_avatar;
           this.description = this.regimentData.description;
           this.invite_link = this.regimentData.invite_link;
           this.website = this.regimentData.website;
-
+  
           setTimeout(() => {
-            const selectElement = document.getElementById(
-              "side-select"
-            ) as HTMLSelectElement;
+            const selectElement = document.getElementById("side-select") as HTMLSelectElement;
             selectElement.selectedIndex = 0;
           }, 200);
-        })
-        .catch(() => {
-          this.regimentSelected = false;
-        });
-    } else {
+        } else {
+          throw new Error('Response is undefined');
+        }
+      } else {
+        this.regimentSelected = false;
+      }
+    } catch (error) {
+      console.error('Error fetching regiment data:', error);
       this.regimentSelected = false;
     }
   }
+  
 
   /**
    * @method getRegimentDiscordData
@@ -152,13 +154,9 @@ export class RegimentSettingsComponent implements OnInit {
         .getRegimentGuild(this.guild_id)
         .toPromise()
         .then((response: any) => {
-          if (
-            !this.guild_avatar ||
-            this.guild_avatar !== response.guild.iconURL
-          ) {
+          if (response.guild.iconURL && this.guild_avatar !== response.guild.iconURL) {
             this.regimentData.guild_avatar = response.guild.iconURL;
             this.guild_avatar = response.guild.iconURL;
-
             this.updateRegiment();
           }
         });

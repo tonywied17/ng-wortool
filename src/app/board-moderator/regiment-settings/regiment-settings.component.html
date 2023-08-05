@@ -1,3 +1,14 @@
+<!--
+File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-moderator\regiment-settings\regiment-settings.component.html
+Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+Created Date: Sunday July 2nd 2023
+Author: Tony Wiedman
+-----
+Last Modified: Fri August 4th 2023 9:10:03 
+Modified By: Tony Wiedman
+-----
+Copyright (c) 2023 Tone Web Design, Molex
+-->
 <div *ngIf="!isOwner">
 	<p>This is reserved for regiment owners.</p>
 </div>
@@ -175,7 +186,7 @@
 						</p> -->
 						</div>
 						<div class="place-self-auto w-full">
-							<div *ngFor="let user of regimentUsers.slice(0, 8)" class="relative">
+							<div *ngFor="let user of regimentUsers?.slice(0, 8)" class="relative">
 
 								<div class="p-1 m-1 !text-[0.9rem] font-[300] w-full">
 									<div class="bg-slate-600 shadow-sm rounded-t-sm">

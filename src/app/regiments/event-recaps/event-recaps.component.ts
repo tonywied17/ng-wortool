@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:16:50 
+ * Last Modified: Fri August 4th 2023 9:04:37 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -91,7 +91,6 @@ export class EventRecapsComponent implements OnInit {
   async getRecaps(): Promise<void> {
     try {
       this.recaps = await firstValueFrom(this.worService.getRecaps());
-      console.log(this.recaps);
   
       if (this.recaps) {
         this.players = this.recaps.flatMap((recap: any) => recap.players || []);
@@ -140,14 +139,13 @@ export class EventRecapsComponent implements OnInit {
   
   /**
    * Get all maps
+   * @returns
    */
   async getMaps(): Promise<void> {
     this.maps = await firstValueFrom(this.mapService.getAll());
-
-    // Joining maps with recaps based on matching map names
     this.recaps.forEach((recap: any) => {
       const matchingMap = this.maps.find(
-        (map: any) => map.map.toLowerCase() === recap.map.toLowerCase()
+        (map: any) => map.map.toLowerCase() === recap.area.toLowerCase()
       );
       if (matchingMap) {
         recap.mapObject = matchingMap;

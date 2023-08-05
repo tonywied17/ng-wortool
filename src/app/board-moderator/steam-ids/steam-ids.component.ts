@@ -4,7 +4,7 @@
  * Created Date: Saturday July 29th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:38:33 
+ * Last Modified: Fri August 4th 2023 9:14:15 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -82,9 +82,6 @@ export class SteamIdsComponent implements OnInit {
           await this.getRegiment();
           await this.getSteamIds();
           this.allSteamIds = this.steamIds.slice();
-
-          console.log(this.steamIds);
-          console.log(this.allSteamIds);
         }
       }
     } catch (error: any) {
@@ -230,7 +227,6 @@ export class SteamIdsComponent implements OnInit {
     const gameIdFormControl = this.steamIdForm.get('gameIdForm');
     if (gameIdFormControl && gameIdFormControl.valid) {
       const steamId = gameIdFormControl.value;
-      console.log(steamId);
       this.gameIdForm = steamId;
     }
     
@@ -318,11 +314,9 @@ export class SteamIdsComponent implements OnInit {
       const steamId = gameIdFormControl.value;
       this.steamApiService.getSteamId(steamId).subscribe(
         (data) => {
-          console.log('API response:', data); // Log the entire data object to inspect its structure
   
           if (data && data.response && data.response.players && data.response.players.length > 0) {
-            this.previewData = data.response.players[0]; // Assign the first player's data to the previewData property
-            console.log('Preview data:', this.previewData); // Log the extracted previewData
+            this.previewData = data.response.players[0];
           } else {
             console.log('No data found in the response.');
           }
