@@ -1,3 +1,14 @@
+<!--
+File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\board-moderator\regiment-settings\regiment-settings.component.html
+Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+Created Date: Sunday July 2nd 2023
+Author: Tony Wiedman
+-----
+Last Modified: Sat August 5th 2023 1:36:08 
+Modified By: Tony Wiedman
+-----
+Copyright (c) 2023 Tone Web Design, Molex
+-->
 <div *ngIf="!isOwner">
 	<p>This is reserved for regiment owners.</p>
 </div>
@@ -5,67 +16,64 @@
 <div *ngIf="isOwner">
 
 	<div *ngIf="regimentData" class="max-w-full">
-		<h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2>
-		<!-- <h2 class="mt-[1em]">
-		Event Tool Configuration
-	</h2>
-	<mat-divider></mat-divider> -->
-		<div>
+		<!-- <h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2> -->
 
 
-
-
-			<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
-				<div class="col-start-1 col-span-1">
-					<h3 class="text-slate-400 ml-1">Event Channel</h3>
-					<span *ngIf="regimentData.webhook_channel" [innerHTML]="regimentData.webhook_channel"
-						class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
-					</span>
-					<span *ngIf="!regimentData.webhook_channel"
-						class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
-						No event channel selected.
-					</span>
+		<mat-tab-group dynamicHeight>
+		<!-- Settings Tab -->
+			<mat-tab label="Settings">
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					Event Tool Settings
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Select the Discord channel where you'd like to share event server information using the event share tool.
+				</p>
+				
+				<!-- Event Webhook Tool -->
+				<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
+					<div class="col-start-1 col-span-1">
+						<h3 class="text-slate-400 ml-1">Event Channel</h3>
+						<span *ngIf="regimentData.webhook_channel" [innerHTML]="regimentData.webhook_channel"
+							class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
+						</span>
+						<span *ngIf="!regimentData.webhook_channel"
+							class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
+							No event channel selected.
+						</span>
+					</div>
+					<!-- 	
+					<div class="sm:col-start-2 col-span-1">
+						<h3 class="text-slate-400">Webhook URL</h3>
+						<span [innerHTML]="regimentData.webhook" class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm truncate shadow-sm"></span>
+					</div>
+	 				-->
+					<div class="sm:col-start-3 sm:col-span-2 sm:place-self-end">
+						<select #channelSelect style=" padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" class="field-input2 inline-block" id="channel-select">
+							<option value="0">Select a Channel</option>
+							<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
+								{{ channel.name }}
+							</option>
+						</select>
+	
+						<button (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
+							class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1" color="primary">
+							Set Channel
+						</button>
+					</div>
 				</div>
 
-				<div class="sm:col-start-2 col-span-1">
-					<!-- <h3 class="text-slate-400">Webhook URL</h3>
-
-			<span [innerHTML]="regimentData.webhook"
-				class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm truncate shadow-sm"></span> -->
-				</div>
-
-				<div class="sm:col-start-3 sm:col-span-2 sm:place-self-end">
-					<select #channelSelect style=" padding-top: 11px;
-    padding-bottom: 11px;
-    font-size: 15px;
-    border: 1px solid #7c7d72 !important;" class="field-input2 inline-block" id="channel-select">
-						<option value="0">Select a Channel</option>
-						<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
-							{{ channel.name }}
-						</option>
-					</select>
-
-					<button (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
-						class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1" color="primary">
-						Set Channel
-					</button>
-				</div>
-			</div>
-			<!-- <mat-divider></mat-divider> -->
-
-			<div class="grid sm:grid-cols-2 grid-cols-1 !mt-[0.5em] !mx-2">
-				<div>
-					<h2 class="mt-[1em] ml-2 mb-[-1em] text-slate-400">Regimental Profile</h2>
-				</div>
-				<div class="place-self-end !mt-[0.5em] !mr-2">
-					<!-- <button (click)="syncDiscord()" class="!ml-auto" type="button" mat-stroked-button color="primary">
-				Resync Discord
-			</button> -->
-				</div>
-			</div>
-
-			<div class="grid sm:grid-cols-[40%_minmax(auto,_1fr)] grid-cols-1 gap-4">
-				<div>
+				<!-- Update Regiment Form -->
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					{{regimentData.regiment}} Information	
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Personalize your regiment's profile information.
+				</p>
+				
+				<div class="">
 					<form (ngSubmit)="updateRegiment()">
 						<div class="form-group p-2 m-2">
 							<div class="field-box">
@@ -79,10 +87,10 @@
 							</div>
 
 							<div class="field-box">
-								<select [(ngModel)]="side" style=" padding-top: 11px;
-    						padding-bottom: 11px;
+								<select [(ngModel)]="side" style=" padding-top: 8px;
+    						padding-bottom: 8px;
     						font-size: 15px;
-    						border: 1px solid #7c7d72 !important;" class="field-input2 inline-block" id="side-select" name="side">
+    						border: 1px solid #7c7d72 !important;" class="field-input2 inline-block my-2" id="side-select" name="side">
 									<option value="regimentData.side" selected disabled>
 										{{regimentData.side}}
 									</option>
@@ -136,7 +144,7 @@
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              " class="field-input !font-[300] my-[0.5em]" placeholder="Description...">
+              " class="field-input !font-[300] my-[0.5em] textarea" placeholder="Description...">
 						</textarea>
 								<i class="fa-solid fa-book field-icon"></i>
 							</div>
@@ -147,108 +155,116 @@
 							Update Regiment
 						</button>
 					</form>
+					
 				</div>
+				<!--  -->
+			</mat-tab>
+			<mat-tab label="Members">
 
-				<div class="p-[2em] text-neutral-300 reg-info">
-					<div class="grid sm:grid-cols-[300px_minmax(auto,_1fr)] grid-cols-1 gap-2 h-full">
-						<div class="place-self-start w-full">
-							<h3 class="text-slate-400 mb-1 text-lg text-center">
-								{{ regimentData.regiment }}
-							</h3>
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					Manage Members &amp; Managers
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your regiment.
+				</p>
 
-							<img *ngIf="guild_avatar" [src]="guild_avatar"
-								class="mx-auto w-[100px] h-[100px] shadow-sm mb-[1em] pointer-events-none rounded-md">
+				<div class="">
+					
+					<!-- Owner -->
+					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">
+						{{regimentData.regiment}} Owner
 
-							<p class="my-1 text-sm font-[200]">
-								<i class="fa-brands fa-discord w-[25px] ml-[1em] mr-2"></i>
-								{{ regimentData.invite_link }}
-							</p>
+					</h3>
 
-							<!-- <p class="my-1 text-sm font-[200]">
-							<i class="fa-solid fa-globe w-[25px] ml-[1em] mr-[0.5em]"></i>
-							{{ regimentData.website }}
-						</p>
-
-						<p class="mt-[1em] my-1 text-sm font-[200]">
-							<i class="fa-solid fa-align-left w-[25px] ml-[1em] mr-[0.5em]"></i>
-							{{ regimentData.description }}
-						</p> -->
+					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
+						<div *ngIf="user.discordId == regimentData.ownerId;" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
+						  <img *ngIf="user.avatar_url" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
+						  <span class="text-lg font-[300] flex items-center">
+							{{user.username}} <i class="ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
+						  </span>
 						</div>
-						<div class="place-self-auto w-full">
-							<div *ngFor="let user of regimentUsers.slice(0, 8)" class="relative">
-
-								<div class="p-1 m-1 !text-[0.9rem] font-[300] w-full">
-									<div class="bg-slate-600 shadow-sm rounded-t-sm">
-										<div *ngIf="user.avatar_url" class="py-[5px]">
-											<img [src]="user.avatar_url"
-												class="h-[31px] w-auto ml-1 mr-1 left-[4.20px] top-[4px] shadow-neutral-800 shadow-md hover:opacity-80 cursor-pointer absolute pointer-events-none">
-											<span class="ml-[38px]">{{ user.username }}</span>
-											<mat-checkbox *ngIf="user.discordId != regimentData.ownerId"
-												[checked]="user.roles.includes('ROLE_MODERATOR')"
-												[disabled]="user.discordId == regimentData.ownerId"
-												(change)="toggleModerator(user.id)"
-												class="!text-xs settings mr-2 mt-[-8px] float-right">
-												<span class="text-sm ml-[-5px] !text-[#9a9b97]">Manager</span>
-											</mat-checkbox>
-											<span *ngIf="user.discordId == regimentData.ownerId"
-												class="float-right owner font-[500] text-slate-400 mr-2">
-												Owner
-												<span *ngIf="user.discordId == regimentData.ownerId"
-													class="text-xs font-[200]">
-													<i class=" ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-												</span>
-											</span>
-										</div>
-
-										<span *ngIf="!user.avatar_url">
-
-											<div class="grid grid-rows-2">
-
-												<div class="row-start-1 row-span-1">
-													<i
-														class="fa-solid fa-user ml-2 mr-1 mt-[0.75rem] left-[8px] hover:opacity-80 cursor-pointer"></i>
-													{{ user.username }}
-												</div>
-
-												<div class="row-start-2 row-span-1 bg-slate-700 pt-[0.4rem]">
-													<!--  -->
-													<mat-checkbox *ngIf="user.discordId != regimentData.ownerId"
-														[checked]="user.roles.includes('ROLE_MODERATOR')"
-														[disabled]="user.discordId == regimentData.ownerId"
-														(change)="toggleModerator(user.id)"
-														class="!text-xs settings mr-2 mt-[-8px]">
-														<span class="text-sm ml-[-5px] !text-[#9a9b97]">Manager</span>
-													</mat-checkbox>
-
-													<span *ngIf="user.discordId == regimentData.ownerId"
-														class="owner font-[500] text-slate-400 mr-2">
-														Owner
-														<span *ngIf="user.discordId == regimentData.ownerId"
-															class="text-xs font-[200]">
-															<i
-																class=" ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-														</span>
-													</span>
-													<!--  -->
-												</div>
-
-											</div>
-
-										</span>
-
-									</div>
-
-								</div>
-
-							</div>
-							<button mat-button color="primary" class="float-right">
-								All Members
-								<i class="fa-solid fa-angles-right ml-1"></i>
-							</button>
+					  
+						<div class="grid grid-cols-[auto_1fr]">
+					  
 						</div>
-					</div>
+					  </div>
+					  
+
+					
+
+					<!-- Managers -->
+					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Managers</h3>
+
+					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
+						<div *ngIf="(user.discordId != regimentData.ownerId) && user.roles.includes('ROLE_MODERATOR');" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+						  <div class="flex items-center">
+							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
+							<ng-template #noAvatar>
+							  <i class="fa-solid fa-user h-[25px] px-2"></i>
+							</ng-template>
+					  
+							<span class="text-lg font-[300]">
+							  {{user.username}}
+							</span>
+						  </div>
+						  
+						  <button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="warn" (click)="confirmRemoveModerator(user.id)">
+							<i class="fa-solid fa-minus"></i> Manager
+						  </button>
+						</div>
+					  
+						<div class="grid grid-cols-[auto_1fr]">
+					  
+						</div>
+					  </div>
+					  
+					  
+
+					<!-- Members -->
+					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Members</h3>
+
+					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
+						<div *ngIf="(user.discordId != regimentData.ownerId) && !user.roles.includes('ROLE_MODERATOR');" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+						  <div class="flex items-center">
+							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
+							<ng-template #noAvatar>
+							  <i class="fa-solid fa-user h-[25px] px-2"></i>
+							</ng-template>
+					  
+							<span class="text-lg font-[300]">
+							  {{user.username}}
+							</span>
+						  </div>
+					  
+						  <button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="primary" (click)="confirmAddModerator(user.id)">
+							<i class="fa-solid fa-plus"></i> Manager
+						  </button>
+						</div>
+					  
+						<div class="grid grid-cols-[auto_1fr]">
+					  
+						</div>
+					  </div>
+					  
 				</div>
-			</div>
+			</mat-tab>
+			<mat-tab label="Schedule"> 
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					Manage Regimental Schedules
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Publish and update your schedule for viewing on regimental profiles.
+				</p>
+
+				<p>
+					Under Development!
+				</p>
+			</mat-tab>
+		  </mat-tab-group>
+
+
+		<div>
+
 		</div>
 	</div>
 

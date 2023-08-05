@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:30:45 
+ * Last Modified: Fri August 4th 2023 9:13:28 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -394,7 +394,6 @@ export class ServerInfoComponent implements OnInit {
           this.regimentSelected = true;
           this.discordWebhook = this.regimentData.webhook;
           this.targetChannel = this.regimentData.webhook_channel;
-          console.log(this.discordWebhook);
         })
         .catch(() => {
           this.regimentSelected = false;

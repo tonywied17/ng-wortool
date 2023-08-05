@@ -510,7 +510,8 @@ button {
 }
 
 .field-input:focus {
-  transform: scale(1.01);
+  // transform: scale(1.01);
+  filter: brightness(1.1)
 }
 
 .field-input2 {
@@ -528,7 +529,8 @@ button {
 }
 
 .field-input2:focus {
-  transform: scale(1.01);
+  // transform: scale(1.01);
+  filter: brightness(1.1)
 }
 
 ::placeholder {
@@ -591,7 +593,8 @@ button {
 
 .field-input:focus {
   opacity: 1;
-  transform: scale(1.008);
+  // transform: scale(1.008);
+  filter: brightness(1.1);
 }
 
 
@@ -837,7 +840,7 @@ html {
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 7:28:00 
+ * Last Modified: Sat August 5th 2023 12:32:27 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -894,4 +897,9 @@ html {
 
 .slide-bottom{
   animation: slide-bottom .3s ease 0s 1 normal forwards;
+}
+
+.mat-mdc-tab-list {
+  background: linear-gradient(0deg,#1d273923,#1e293b00);
+  box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.1);
 }
