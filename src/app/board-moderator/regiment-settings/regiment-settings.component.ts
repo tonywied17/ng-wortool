@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 3:34:55 
+ * Last Modified: Sat August 5th 2023 7:32:11 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -77,6 +77,8 @@ export class RegimentSettingsComponent implements OnInit {
 
   objectKeys = Object.keys;
   scheduleNames: { [key: string]: Schedule[] } = {};
+  selectedScheduleName: string | null = null;
+  creatingSchedule: boolean = false;
 
   scheduleForm = {
     schedule_name: "",
@@ -478,19 +480,36 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns - The sorted schedules
    */
   sortSchedules(schedules: Schedule[]): Schedule[] {
-    return schedules.sort((a, b) => {
-      if (a.day < b.day) return -1;
-      if (a.day > b.day) return 1;
+    const dayOrder: { [day: string]: number } = { 
+      'Monday': 0, 
+      'Tuesday': 1, 
+      'Wednesday': 2, 
+      'Thursday': 3, 
+      'Friday': 4, 
+      'Saturday': 5, 
+      'Sunday': 6 
+    };
+    
 
+    return schedules.sort((a, b) => {
+      // Map days to their order in the week and then sort
+      const dayA = dayOrder[a.day];
+      const dayB = dayOrder[b.day];
+
+      if(dayA < dayB) return -1;
+      if(dayA > dayB) return 1;
+  
+      // If days are equal, sort by time
       const timeA = this.getTimeInMinutes(a.time);
       const timeB = this.getTimeInMinutes(b.time);
-
-      if (timeA < timeB) return -1;
-      if (timeA > timeB) return 1;
-
+  
+      if(timeA < timeB) return -1;
+      if(timeA > timeB) return 1;
+  
       return 0;
     });
-  }
+}
+
 
   /**
    * @method getTimeInMinutes
@@ -548,18 +567,15 @@ export class RegimentSettingsComponent implements OnInit {
     });
   }
 
-
   /**
-   * @method onSubmit
-   * @description Submit the schedule
+   * @method createSchedule
+   * @description Create the schedule
    * @returns {void}
-   * @param regimentID - The regiment ID
-   * @param userID - The user ID
-   * @param scheduleName - The schedule name
-   * @param day - The day
-   * @param time - The time
    */
-  onSubmit(): void {
+  createSchedule(): void {
+    this.selectedScheduleName = null;
+    this.creatingSchedule = true;
+
     this.regimentService
       .createSchedule(
         this.currentUser.id,
@@ -573,16 +589,91 @@ export class RegimentSettingsComponent implements OnInit {
       )
       .subscribe((response) => {
         console.log(response);
+        this.scheduleNames = {};
+        this.getSchedules(); 
+
+        this.creatingSchedule = false;
+        this.selectedScheduleName = this.scheduleForm.schedule_name;
+        
+        this.scheduleForm = {
+          schedule_name: '',
+          region: '',
+          day: '',
+          time: '',
+          event_type: '',
+          event_name: ''
+        };
+      });
+  }
+
+  /**
+   * @method addDay
+   * @description - Add the day
+   * @returns {void}
+   * @returns - The time in minutes
+   */
+  addDay(): void {
+    if(this.selectedScheduleName === null) {
+      // Handle the case when no schedule is selected, for example:
+      alert("Please select a schedule before adding a day");
+      return;
+    }
+  
+    this.regimentService
+      .createSchedule(
+        this.currentUser.id,
+        this.selectedScheduleName, // replaced this.scheduleForm.schedule_name with this.selectedScheduleName
+        this.scheduleForm.region,
+        this.regimentID,
+        this.scheduleForm.day,
+        this.scheduleForm.time,  
+        this.scheduleForm.event_type,
+        this.scheduleForm.event_name
+      )
+      .subscribe((response) => {
+        console.log(response);
+        // Reset the scheduleNames before fetching the updated list of schedules
+        this.scheduleNames = {};
         this.getSchedules(); 
       });
   }
-  
 
   /**
    * @method deleteSchedule
    * @description Delete the schedule
    * @returns {void}
    * @param scheduleId - The schedule ID
+   */
+  removeDay(scheduleId: number): void {
+    this.regimentService.removeSchedule(this.currentUser.id, this.regimentID, scheduleId).subscribe((response) => {
+      console.log(response);
+      this.scheduleNames = {};
+      this.getSchedules();
+
+      let totalEntries = 0;
+      for (let scheduleName in this.scheduleNames) {
+        totalEntries += this.scheduleNames[scheduleName].length;
+      }
+
+      if (totalEntries === 0) {
+        this.scheduleForm = { 
+          schedule_name: '',
+          region: '',
+          day: '',
+          time: '',
+          event_type: '',
+          event_name: '',
+        };
+        this.display12HourTime = true; 
+        this.selectedScheduleName = null; 
+      }
+    });
+  }
+  
+  /**
+   * @method toggleTimeFormat
+   * @description Toggle the time format
+   * @returns {void}
    */
   toggleTimeFormat(): void {
     this.display12HourTime = !this.display12HourTime;
@@ -617,4 +708,15 @@ export class RegimentSettingsComponent implements OnInit {
 
     return `${hours}:${minuteStr} ${period}`;
   }
+
+  /**
+   * @method selectSchedule
+   * @description Select the schedule
+   * @returns {void}
+   * @param scheduleName - The schedule name
+   */
+  selectSchedule(scheduleName: string): void {
+    this.selectedScheduleName = scheduleName;
+  }
+  
 }
