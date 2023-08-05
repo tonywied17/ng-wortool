@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sat August 5th 2023 1:19:54 
+Last Modified: Sat August 5th 2023 1:36:08 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -22,7 +22,13 @@ Copyright (c) 2023 Tone Web Design, Molex
 		<mat-tab-group dynamicHeight>
 		<!-- Settings Tab -->
 			<mat-tab label="Settings">
-				<h3 class="text-slate-300 ml-1 mt-4 text-lg font-[300]">Event Tool Settings</h3>
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					Event Tool Settings
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Select the Discord channel where you'd like to share event server information using the event share tool.
+				</p>
+				
 				<!-- Event Webhook Tool -->
 				<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
 					<div class="col-start-1 col-span-1">
@@ -60,7 +66,13 @@ Copyright (c) 2023 Tone Web Design, Molex
 				</div>
 
 				<!-- Update Regiment Form -->
-				<h3 class="text-slate-300 ml-1 mt-6 text-lg font-[300]">{{regimentData.regiment}} Information</h3>
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					{{regimentData.regiment}} Information	
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Personalize your regiment's profile information.
+				</p>
+				
 				<div class="">
 					<form (ngSubmit)="updateRegiment()">
 						<div class="form-group p-2 m-2">
@@ -149,35 +161,44 @@ Copyright (c) 2023 Tone Web Design, Molex
 			</mat-tab>
 			<mat-tab label="Members">
 
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					Manage Members &amp; Managers
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your regiment.
+				</p>
+
 				<div class="">
 					
 					<!-- Owner -->
-					<h3 class="text-slate-300 ml-1 mt-6 text-lg font-[300]">{{regimentData.regiment}} Owner</h3>
+					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">
+						{{regimentData.regiment}} Owner
+
+					</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
-
-						<div *ngIf="user.discordId == regimentData.ownerId;" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px]">
-							<img *ngIf="user.avatar_url" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
-							<span class="text-lg font-[300]">
-								{{user.username}} <i class=" ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-							</span>
+						<div *ngIf="user.discordId == regimentData.ownerId;" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
+						  <img *ngIf="user.avatar_url" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
+						  <span class="text-lg font-[300] flex items-center">
+							{{user.username}} <i class="ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
+						  </span>
 						</div>
-
+					  
 						<div class="grid grid-cols-[auto_1fr]">
-
+					  
 						</div>
-
-					</div>
+					  </div>
+					  
 
 					
 
 					<!-- Managers -->
-					<h3 class="text-slate-300 ml-1 mt-6 text-lg font-[300]">{{regimentData.regiment}} Members</h3>
+					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Managers</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
-						<div *ngIf="(user.discordId != regimentData.ownerId) && user.roles.includes('ROLE_MODERATOR');" class="bg-slate-900/80 rounded-t-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+						<div *ngIf="(user.discordId != regimentData.ownerId) && user.roles.includes('ROLE_MODERATOR');" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
 						  <div class="flex items-center">
-							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-tl-lg pr-2">
+							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
 							<ng-template #noAvatar>
 							  <i class="fa-solid fa-user h-[25px] px-2"></i>
 							</ng-template>
@@ -200,7 +221,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 					  
 
 					<!-- Members -->
-					<h3 class="text-slate-300 ml-1 mt-6 text-lg font-[300]">{{regimentData.regiment}} Members</h3>
+					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Members</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
 						<div *ngIf="(user.discordId != regimentData.ownerId) && !user.roles.includes('ROLE_MODERATOR');" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
@@ -225,89 +246,19 @@ Copyright (c) 2023 Tone Web Design, Molex
 						</div>
 					  </div>
 					  
-
-					<div class="place-self-auto w-full hidden">
-						<div *ngFor="let user of regimentUsers?.slice(0, 8)" class="relative">
-
-							<div class="p-1 m-1 !text-[0.9rem] font-[300] w-full">
-								<div class="bg-slate-600 shadow-sm rounded-t-sm">
-
-									<div *ngIf="user.avatar_url" class="py-[5px]">
-
-										<img [src]="user.avatar_url" class="h-[31px] w-auto ml-1 mr-1 left-[4.20px] top-[4px] shadow-neutral-800 shadow-md hover:opacity-80 cursor-pointer absolute pointer-events-none">
-										
-										<span class="ml-[38px]">{{ user.username }}</span>
-
-										<mat-checkbox *ngIf="user.discordId != regimentData.ownerId"
-											[checked]="user.roles.includes('ROLE_MODERATOR')"
-											[disabled]="user.discordId == regimentData.ownerId"
-											(change)="toggleModerator(user.id)"
-											class="!text-xs settings mr-2 mt-[-8px] float-right">
-											<span class="text-sm ml-[-5px] !text-[#9a9b97]">Manager</span>
-										</mat-checkbox>
-
-										<span *ngIf="user.discordId == regimentData.ownerId"
-											class="float-right owner font-[500] text-slate-400 mr-2">
-											Owner
-											<span *ngIf="user.discordId == regimentData.ownerId"
-												class="text-xs font-[200]">
-												<i class=" ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-											</span>
-										</span>
-
-									</div>
-
-									<span *ngIf="!user.avatar_url">
-
-										<div class="grid grid-rows-2">
-
-											<div class="row-start-1 row-span-1">
-												<i
-													class="fa-solid fa-user ml-2 mr-1 mt-[0.75rem] left-[8px] hover:opacity-80 cursor-pointer"></i>
-												{{ user.username }}
-											</div>
-
-											<div class="row-start-2 row-span-1 bg-slate-700 pt-[0.4rem]">
-												<!--  -->
-												<mat-checkbox *ngIf="user.discordId != regimentData.ownerId"
-													[checked]="user.roles.includes('ROLE_MODERATOR')"
-													[disabled]="user.discordId == regimentData.ownerId"
-													(change)="toggleModerator(user.id)"
-													class="!text-xs settings mr-2 mt-[-8px]">
-													<span class="text-sm ml-[-5px] !text-[#9a9b97]">Manager</span>
-												</mat-checkbox>
-
-												<span *ngIf="user.discordId == regimentData.ownerId"
-													class="owner font-[500] text-slate-400 mr-2">
-													Owner
-													<span *ngIf="user.discordId == regimentData.ownerId"
-														class="text-xs font-[200]">
-														<i
-															class=" ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-													</span>
-												</span>
-												<!--  -->
-											</div>
-
-										</div>
-
-									</span>
-
-								</div>
-
-							</div>
-
-						</div>
-						<button mat-button color="primary" class="float-right">
-							All Members
-							<i class="fa-solid fa-angles-right ml-1"></i>
-						</button>
-					</div>
-
 				</div>
 			</mat-tab>
 			<mat-tab label="Schedule"> 
+				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					Manage Regimental Schedules
+				</h3>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> Publish and update your schedule for viewing on regimental profiles.
+				</p>
 
+				<p>
+					Under Development!
+				</p>
 			</mat-tab>
 		  </mat-tab-group>
 
