@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 11:30:54 
+ * Last Modified: Sat August 5th 2023 1:12:36 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -139,8 +139,8 @@ export class RegimentService {
    * @param userId - number - the user id
    * @returns - Observable<any>
    */
-  setModerator(userId: any): Observable<any> {
-    return this.http.put(AUTH_API + userId + '/setModerator', {
+  setModerator(memberId: number, userId: number): Observable<any> {
+    return this.http.put(AUTH_API + memberId + '/setModerator', {
       userId
     }, httpOptions);
   }
@@ -151,8 +151,8 @@ export class RegimentService {
    * @param userId - number - the user id
    * @returns - Observable<any>
    */
-  removeModerator(userId: number): Observable<any> {
-    return this.http.put(AUTH_API + userId + '/removeModerator', {
+  removeModerator(memberId: number, userId: number): Observable<any> {
+    return this.http.put(AUTH_API + memberId + '/removeModerator', {
       userId
     }, httpOptions);
   }

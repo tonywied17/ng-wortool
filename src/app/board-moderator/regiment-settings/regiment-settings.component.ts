@@ -4,13 +4,13 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri August 4th 2023 9:11:02 
+ * Last Modified: Sat August 5th 2023 1:12:44 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../../_services/token-storage.service";
 import { AuthService } from "../../_services/auth.service";
@@ -24,6 +24,7 @@ import { UserService } from "src/app/_services/user.service";
   selector: "app-regiment-settings",
   templateUrl: "./regiment-settings.component.html",
   styleUrls: ["./regiment-settings.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class RegimentSettingsComponent implements OnInit {
   content?: string;
@@ -451,7 +452,7 @@ export class RegimentSettingsComponent implements OnInit {
    */
   setModerator(userId: any) {
     this.regimentService
-      .setModerator(userId)
+      .setModerator(userId, this.currentUser.id)
       .toPromise()
       .then((response) => {
         const userIndex = this.regimentUsers.findIndex(
@@ -482,7 +483,7 @@ export class RegimentSettingsComponent implements OnInit {
    */
   removeModerator(userId: any) {
     this.regimentService
-      .removeModerator(userId)
+      .removeModerator(userId, this.currentUser.id)
       .toPromise()
       .then((response) => {
         console.log(response);
