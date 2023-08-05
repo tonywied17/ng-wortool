@@ -4,14 +4,14 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 1:12:36 
+ * Last Modified: Sat August 5th 2023 2:33:14 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 let API = "https://api.tonewebdesign.com/pa/regiments/";
@@ -228,18 +228,50 @@ export class RegimentService {
   }
 
   /**
+   * Get schedule by regiment id and region
+   * This observable is used to get schedule by regiment id and region from the database
+   * @param regimentId 
+   * @param region 
+   * @returns 
+   */
+  getScheduleByRegion(regimentId: number, region: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('region', region);
+
+    return this.http.get(`${API}${regimentId}/schedules/region`, { params });
+  }
+
+  /**
+   * Get schedule by regiment id and schedule name
+   * This observable is used to get schedule by regiment id and schedule name from the database
+   * @param regimentId - number - the regiment id
+   * @param scheduleName - string - the schedule name
+   * @returns - Observable<any>
+   */
+  getScheduleByName(regimentId: number, scheduleName: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('schedule_name', scheduleName);
+
+    return this.http.get(`${API}${regimentId}/schedules/region`, { params });
+  }
+
+  /**
    * Get schedule by regiment id and schedule id
    * This observable is used to get schedule by regiment id and schedule id from the database
    * @param userId - number - the user id
    * @param regimentId - number - the regiment id
+   * @param schedule_name - string - the schedule name
+   * @param region_tz - string - the region time zone
    * @param day - string - the day
    * @param time - string - the time
    * @param event_type - string - the event type
    * @param event_name - string - the event name
    * @returns - Observable<any>
    */
-  createSchedule(userId: number, regimentId: number, day: string, time: string, event_type: string, event_name: string): Observable<any> {
+  createSchedule(userId: number, schedule_name: string, region: string, regimentId: number, day: string, time: string, event_type: string, event_name: string): Observable<any> {
     return this.http.post(API + regimentId + '/schedules', {
+      schedule_name,
+      region,
       day,
       time,
       event_type,
@@ -253,14 +285,18 @@ export class RegimentService {
    * @param userId - number - the user id
    * @param regimentId - number - the regiment id
    * @param scheduleId - number - the schedule id
+   * @param schedule_name - string - the schedule name
+   * @param region_tz - string - the region
    * @param day - string - the day
    * @param time - string - the time
    * @param event_type - string - the event type
    * @param event_name - string - the event name
    * @returns - Observable<any>
    */
-  updateSchedule(userId: number, regimentId: number, scheduleId: number, day: string, time: string, event_type: string, event_name: string): Observable<any> {
+  updateSchedule(userId: number, schedule_name: string, region_tz: string, regimentId: number, scheduleId: number, day: string, time: string, event_type: string, event_name: string): Observable<any> {
     return this.http.put(API + regimentId + '/schedules/' + scheduleId, {
+      schedule_name,
+      region_tz,
       day,
       time,
       event_type,
