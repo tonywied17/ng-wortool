@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 1:12:44 
+ * Last Modified: Sat August 5th 2023 5:11:02 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -84,7 +84,6 @@ export class RegimentSettingsComponent implements OnInit {
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
             this.getRegiment().then(() => {
-              this.getRegimentDiscordData();
 
               if(this.currentUser.discordId == this.regimentData.ownerId) {
                 this.isOwner = true;
@@ -142,27 +141,7 @@ export class RegimentSettingsComponent implements OnInit {
       this.regimentSelected = false;
     }
   }
-  
 
-  /**
-   * @method getRegimentDiscordData
-   * @description Get the regiment data from Discord
-   * @returns {Promise<void>}
-   */
-  async getRegimentDiscordData(): Promise<void> {
-    if (this.guild_id) {
-      await this.discordService
-        .getRegimentGuild(this.guild_id)
-        .toPromise()
-        .then((response: any) => {
-          if (response.guild.iconURL && this.guild_avatar !== response.guild.iconURL) {
-            this.regimentData.guild_avatar = response.guild.iconURL;
-            this.guild_avatar = response.guild.iconURL;
-            this.updateRegiment();
-          }
-        });
-    }
-  }
 
   /**
    * @method getRegimentChannels
@@ -194,84 +173,19 @@ export class RegimentSettingsComponent implements OnInit {
         .toPromise()
         .then((response: any) => {
           this.regimentUsers = response;
-          this.updateCurrentUserRoles();
-
+  
           const promises = this.regimentUsers.map((user: any) => {
-            if (user.discordId && user.avatar_url) {
-              return this.getDiscordRegimentUsers(
-                user.discordId,
-                this.guild_id
-              ).then((discordUser: any) => {
-                if (
-                  discordUser &&
-                  discordUser.USER_SPECIFIC &&
-                  discordUser.USER_SPECIFIC.DISCORD_AVATAR &&
-                  user.avatar_url !== discordUser.USER_SPECIFIC.DISCORD_AVATAR
-                ) {
-                  user.avatar_url = discordUser.USER_SPECIFIC.DISCORD_AVATAR;
-                  return this.authService
-                    .profile(
-                      user.id,
-                      user.email,
-                      discordUser.USER_SPECIFIC.DISCORD_AVATAR,
-                      user.discordId,
-                      user.regimentId
-                    )
-                    .toPromise()
-                    .then(() => {
-                      if (user.id === this.currentUser.id) {
-                        this.currentUser.avatar_url =
-                          discordUser.USER_SPECIFIC.DISCORD_AVATAR;
-                      }
-                      return user;
-                    });
-                } else {
-                  return user;
-                }
-              });
+            if (user.avatar_url) {
+              return Promise.resolve(user);
             } else {
               return Promise.resolve(user);
             }
           });
-
+  
           Promise.all(promises).then((updatedUsers) => {
             this.regimentUsers = updatedUsers;
           });
         });
-    }
-  }
-
-  /**
-   * @method getDiscordRegimentUsers
-   * @description Get the regiment users from Discord
-   * @returns {Promise<void>}
-   * @param discordId - The Discord user ID
-   * @param guildId - The Discord guild ID
-   */
-  async getDiscordRegimentUsers(discordId: any, guildId: string): Promise<any> {
-    return this.discordService
-      .getUserGuildInfo(discordId, guildId)
-      .toPromise()
-      .then((response: any) => {
-        // console.log(response);
-        this.discordRegimentUsers = response;
-        this.updateCurrentUserRoles();
-        return response;
-      });
-  }
-
-  /**
-   * @method updateCurrentUserRoles
-   * @description Update the current user roles
-   * @returns {void}
-   */
-  updateCurrentUserRoles() {
-    const matchedUser = this.regimentUsers.find(
-      (user: { id: any }) => user.id === this.currentUser.id
-    );
-    if (matchedUser) {
-      this.roles = matchedUser.roles;
-      this.isModerator = this.roles.includes("ROLE_MODERATOR");
     }
   }
 
