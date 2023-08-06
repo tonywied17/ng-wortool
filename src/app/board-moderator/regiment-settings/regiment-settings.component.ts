@@ -4,13 +4,13 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 5:11:02 
+ * Last Modified: Sat August 5th 2023 8:24:43 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../../_services/token-storage.service";
 import { AuthService } from "../../_services/auth.service";
@@ -19,12 +19,28 @@ import { DiscordService } from "src/app/_services/discord.service";
 import { MatSnackBar, MatSnackBarDismiss } from "@angular/material/snack-bar";
 import { ConfirmDeleteSnackbarComponent } from "../../confirm-delete-snackbar/confirm-delete-snackbar.component";
 import { UserService } from "src/app/_services/user.service";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+
+interface Schedule {
+  id: number;
+  schedule_name: string;
+  region_tz: string;
+  regimentId: number;
+  day: string;
+  time: string;
+  time24: string;
+  time12: string;
+  event_type: string;
+  event_name: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
 
 @Component({
   selector: "app-regiment-settings",
   templateUrl: "./regiment-settings.component.html",
   styleUrls: ["./regiment-settings.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class RegimentSettingsComponent implements OnInit {
   content?: string;
@@ -53,8 +69,27 @@ export class RegimentSettingsComponent implements OnInit {
   regimentUsers: any;
   discordRegimentUsers: any;
 
+  display12HourTime: boolean = true;
+  timeString: string = "24hr time";
+
   targetChannel: any;
   webhook: any;
+
+  objectKeys = Object.keys;
+  scheduleNames: { [key: string]: Schedule[] } = {};
+  selectedScheduleName: string | null = null;
+  creatingSchedule: boolean = false;
+  editingSchedule: boolean = false;
+  lastDayRemoved = false
+
+  scheduleForm = {
+    schedule_name: "",
+    region: "",
+    day: "",
+    time: "",
+    event_type: "",
+    event_name: "",
+  };
 
   constructor(
     private token: TokenStorageService,
@@ -63,7 +98,9 @@ export class RegimentSettingsComponent implements OnInit {
     private discordService: DiscordService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService,
+    private matDatepicker: MatDatepickerModule,
+    private cd: ChangeDetectorRef
   ) {}
 
   /**
@@ -84,10 +121,9 @@ export class RegimentSettingsComponent implements OnInit {
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
             this.getRegiment().then(() => {
-
-              if(this.currentUser.discordId == this.regimentData.ownerId) {
+              if (this.currentUser.discordId == this.regimentData.ownerId) {
                 this.isOwner = true;
-              }else{
+              } else {
                 this.isOwner = false;
               }
             });
@@ -101,6 +137,8 @@ export class RegimentSettingsComponent implements OnInit {
           }
         });
     }
+
+    this.getSchedules();
   }
 
   /**
@@ -111,37 +149,40 @@ export class RegimentSettingsComponent implements OnInit {
   async getRegiment(): Promise<void> {
     try {
       if (this.regimentID) {
-        const response = await this.regimentService.getRegiment(this.regimentID).toPromise();
-  
+        const response = await this.regimentService
+          .getRegiment(this.regimentID)
+          .toPromise();
+
         if (response) {
           this.regimentData = response;
           this.getRegimentChannels(this.regimentData.guild_id);
           this.getRegimentUsers(this.regimentData.id);
           this.regimentSelected = true;
-  
+
           this.regiment = this.regimentData.regiment;
           this.guild_id = this.regimentData.guild_id;
           this.guild_avatar = this.regimentData.guild_avatar;
           this.description = this.regimentData.description;
           this.invite_link = this.regimentData.invite_link;
           this.website = this.regimentData.website;
-  
+
           setTimeout(() => {
-            const selectElement = document.getElementById("side-select") as HTMLSelectElement;
+            const selectElement = document.getElementById(
+              "side-select"
+            ) as HTMLSelectElement;
             selectElement.selectedIndex = 0;
           }, 200);
         } else {
-          throw new Error('Response is undefined');
+          throw new Error("Response is undefined");
         }
       } else {
         this.regimentSelected = false;
       }
     } catch (error) {
-      console.error('Error fetching regiment data:', error);
+      console.error("Error fetching regiment data:", error);
       this.regimentSelected = false;
     }
   }
-
 
   /**
    * @method getRegimentChannels
@@ -173,7 +214,7 @@ export class RegimentSettingsComponent implements OnInit {
         .toPromise()
         .then((response: any) => {
           this.regimentUsers = response;
-  
+
           const promises = this.regimentUsers.map((user: any) => {
             if (user.avatar_url) {
               return Promise.resolve(user);
@@ -181,7 +222,7 @@ export class RegimentSettingsComponent implements OnInit {
               return Promise.resolve(user);
             }
           });
-  
+
           Promise.all(promises).then((updatedUsers) => {
             this.regimentUsers = updatedUsers;
           });
@@ -238,7 +279,7 @@ export class RegimentSettingsComponent implements OnInit {
    * @param description - The regiment description
    * @param side - The regiment side
    */
-  async updateRegiment() {
+  async updateRegiment(): Promise<void> {
     if (this.regimentID) {
       await this.regimentService
         .updateRegiment(
@@ -266,45 +307,12 @@ export class RegimentSettingsComponent implements OnInit {
   }
 
   /**
-   * @method toggleModerator
-   * @description Toggle the moderator
-   * @returns {void}
-   * @param userId - The user ID
-   */
-  toggleModerator(userId: any) {
-    const regimentId = this.regimentData.id;
-
-    this.regimentService
-      .getRegimentUsers(regimentId)
-      .toPromise()
-      .then((users) => {
-        const matchedUser = users.find(
-          (user: { id: any }) => user.id === userId
-        );
-        if (matchedUser) {
-          const hasModeratorRole = matchedUser.roles.includes("ROLE_MODERATOR");
-
-          if (hasModeratorRole) {
-            this.confirmRemoveModerator(userId);
-          } else {
-            this.confirmAddModerator(userId);
-          }
-        } else {
-          console.log("User not found.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
-  /**
    * @method confirmAddModerator
    * @description Confirm add moderator
    * @returns {void}
    * @param userId - The user ID
    */
-  confirmAddModerator(userId: any) {
+  confirmAddModerator(userId: any): void {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
       {
@@ -334,7 +342,7 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns {void}
    * @param userId - The user ID
    */
-  confirmRemoveModerator(userId: any) {
+  confirmRemoveModerator(userId: any): void {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
       {
@@ -364,7 +372,7 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns {void}
    * @param userId - The user ID
    */
-  setModerator(userId: any) {
+  setModerator(userId: any): void {
     this.regimentService
       .setModerator(userId, this.currentUser.id)
       .toPromise()
@@ -395,7 +403,7 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns {void}
    * @param userId - The user ID
    */
-  removeModerator(userId: any) {
+  removeModerator(userId: any): void {
     this.regimentService
       .removeModerator(userId, this.currentUser.id)
       .toPromise()
@@ -431,7 +439,7 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns {void}
    * @param userId - The user ID
    */
-  confirmRemoveUser(userId: any) {
+  confirmRemoveUser(userId: any): void {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
       {
@@ -455,17 +463,284 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns {void}
    * @param userId - The user ID
    */
-  removeUserFromRegiment(userId: any) {
+  removeUserFromRegiment(userId: any): void {
     this.regimentService
       .removeUsersRegiment(userId)
       .toPromise()
       .then((response) => {
-        // console.log(response);
         this.getRegimentUsers(this.regimentData.id);
         this.token.saveUser(response);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+  }
+
+  /**
+   * @method sortSchedules
+   * @description Sort the schedules
+   * @param schedules - The schedules
+   * @returns - The sorted schedules
+   */
+  sortSchedules(schedules: Schedule[]): Schedule[] {
+    const dayOrder: { [day: string]: number } = {
+      Monday: 0,
+      Tuesday: 1,
+      Wednesday: 2,
+      Thursday: 3,
+      Friday: 4,
+      Saturday: 5,
+      Sunday: 6,
+    };
+
+    return schedules.sort((a, b) => {
+      // Map days to their order in the week and then sort
+      const dayA = dayOrder[a.day];
+      const dayB = dayOrder[b.day];
+
+      if (dayA < dayB) return -1;
+      if (dayA > dayB) return 1;
+
+      // If days are equal, sort by time
+      const timeA = this.getTimeInMinutes(a.time);
+      const timeB = this.getTimeInMinutes(b.time);
+
+      if (timeA < timeB) return -1;
+      if (timeA > timeB) return 1;
+
+      return 0;
+    });
+  }
+
+  /**
+   * @method getTimeInMinutes
+   * @description Get the time in minutes
+   * @param time - The time
+   * @returns - The time in minutes
+   */
+  getTimeInMinutes(time: string): number {
+    let [hour, minute] = time.split(":");
+    let hours = parseInt(hour);
+    let minutes = parseInt(minute);
+
+    return hours * 60 + minutes;
+  }
+
+  /**
+   * @method trimLeadingZero
+   * @description Trim the leading zero
+   * @param time - The time
+   * @returns - The time with leading zero trimmed
+   */
+  trimLeadingZero(time: string): string {
+    if (time.startsWith("0")) {
+      return time.slice(1);
+    }
+    return time;
+  }
+
+  /**
+   * @method getSchedules
+   * @description Get the schedules
+   * @returns {void}
+   * @param regimentID - The regiment ID
+   * @param userID - The user ID
+   * @param scheduleName - The schedule name
+   * @param day - The day
+   * @param time - The time
+   */
+    async getSchedules(): Promise<void> {
+    let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(this.currentUser.id, this.regimentID).toPromise();
+    response = this.sortSchedules(response);
+
+    response.forEach((schedule) => {
+      const scheduleName = schedule.schedule_name || "null";
+
+      if (!this.scheduleNames[scheduleName]) {
+        this.scheduleNames[scheduleName] = [];
+      }
+
+      schedule.time24 = schedule.time;
+      schedule.time12 = this.convertTo12Hour(schedule.time);
+
+      this.scheduleNames[scheduleName].push(schedule);
+    });
+  
+    // Check if the selected schedule still has any days after the removal
+    if (this.lastDayRemoved && (!this.selectedScheduleName || !this.scheduleNames[this.selectedScheduleName] || this.scheduleNames[this.selectedScheduleName].length === 0)) {
+      this.scheduleForm = { // Reset form
+        schedule_name: '',
+        region: '',
+        day: '',
+        time: '',
+        event_type: '',
+        event_name: '',
+      };
+      this.display12HourTime = true; // reset the time format
+      this.selectedScheduleName = null; // reset the selected schedule name
+      this.editingSchedule = false; // Hide the edit schedule div
+      this.lastDayRemoved = false; // Reset the flag
+    }
+  }
+  
+  /**
+   * @method createSchedule
+   * @description Create the schedule
+   * @returns {void}
+   */
+  createSchedule(): void {
+    this.selectedScheduleName = null;
+    this.editingSchedule = false;
+    this.creatingSchedule = true;
+
+    this.regimentService
+      .createSchedule(
+        this.currentUser.id,
+        this.scheduleForm.schedule_name,
+        this.scheduleForm.region,
+        this.regimentID,
+        this.scheduleForm.day,
+        this.scheduleForm.time,
+        this.scheduleForm.event_type,
+        this.scheduleForm.event_name
+      )
+      .subscribe((response) => {
+        console.log(response);
+        this.scheduleNames = {};
+        this.getSchedules();
+
+        this.creatingSchedule = false;
+        this.selectedScheduleName = this.scheduleForm.schedule_name;
+        this.editingSchedule = true;
+
+        this.scheduleForm = {
+          schedule_name: "",
+          region: "",
+          day: "",
+          time: "",
+          event_type: "",
+          event_name: "",
+        };
+      });
+  }
+
+  /**
+   * @method addDay
+   * @description - Add the day
+   * @returns {void}
+   * @returns - The time in minutes
+   */
+  addDay(): void {
+    if (this.selectedScheduleName === null) {
+      // Handle the case when no schedule is selected, for example:
+      alert("Please select a schedule before adding a day");
+      return;
+    }
+
+    this.regimentService
+      .createSchedule(
+        this.currentUser.id,
+        this.selectedScheduleName, // replaced this.scheduleForm.schedule_name with this.selectedScheduleName
+        this.scheduleForm.region,
+        this.regimentID,
+        this.scheduleForm.day,
+        this.scheduleForm.time,
+        this.scheduleForm.event_type,
+        this.scheduleForm.event_name
+      )
+      .subscribe((response) => {
+        console.log(response);
+        // Reset the scheduleNames before fetching the updated list of schedules
+        this.scheduleNames = {};
+        this.getSchedules();
+      });
+  }
+
+  /**
+   * @method deleteSchedule
+   * @description Delete the schedule
+   * @returns {void}
+   * @param scheduleId - The schedule ID
+   */
+  async removeDay(scheduleId: number): Promise<void> {
+    const response = await this.regimentService.removeSchedule(this.currentUser.id, this.regimentID, scheduleId).toPromise();
+    console.log(response);
+  
+    if (this.selectedScheduleName && this.scheduleNames[this.selectedScheduleName] && this.scheduleNames[this.selectedScheduleName].length === 1) {
+      this.lastDayRemoved = true;
+    }
+  
+    this.scheduleNames = {};
+    await this.getSchedules();
+  }
+
+  /**
+   * @method toggleTimeFormat
+   * @description Toggle the time format
+   * @returns {void}
+   */
+  toggleTimeFormat(): void {
+    this.display12HourTime = !this.display12HourTime;
+    if (this.display12HourTime) {
+      this.timeString = "24hr time";
+    } else {
+      this.timeString = "12hr time";
+    }
+  }
+
+  /**
+   * @method convertTo12Hour
+   * @description Convert the time to 12 hour format
+   * @returns - The time in 12 hour format
+   * @param time24 - The time in 24 hour format
+   */
+  convertTo12Hour(time24: string): string {
+    let [hour, minute] = time24.split(":");
+    let hours = parseInt(hour);
+    let minutes = parseInt(minute);
+
+    let period = hours >= 12 ? "PM" : "AM";
+
+    if (hours === 0) {
+      hours = 12;
+    } else if (hours > 12) {
+      hours -= 12;
+    }
+
+    let minuteStr =
+      minutes < 10 ? "0" + minutes.toString() : minutes.toString();
+
+    return `${hours}:${minuteStr} ${period}`;
+  }
+
+  /**
+   * @method selectSchedule
+   * @description Select the schedule
+   * @returns {void}
+   * @param scheduleName - The schedule name
+   */
+  selectSchedule(scheduleName: string): void {
+    this.selectedScheduleName = scheduleName;
+    this.editingSchedule = true;
+  }
+
+  /**
+   * @method editSchedule
+   * @description Edit the schedule
+   * @returns {void}
+   * @param scheduleId - The schedule ID
+   */
+  cancelEdit(): void {
+    this.editingSchedule = false;
+    this.selectedScheduleName = null;
+    this.creatingSchedule = false;
+    this.scheduleForm = {
+      schedule_name: "",
+      region: "",
+      day: "",
+      time: "",
+      event_type: "",
+      event_name: "",
+    };
   }
 }

@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sat August 5th 2023 1:36:08 
+Last Modified: Sat August 5th 2023 8:21:27 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -20,15 +20,16 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 		<mat-tab-group dynamicHeight>
-		<!-- Settings Tab -->
+			<!-- Settings Tab -->
 			<mat-tab label="Settings">
 				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
 					Event Tool Settings
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Select the Discord channel where you'd like to share event server information using the event share tool.
+					<i class="fa-regular fa-circle-question mr-1"></i> Select the Discord channel where you'd like to
+					share event server information using the event share tool.
 				</p>
-				
+
 				<!-- Event Webhook Tool -->
 				<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
 					<div class="col-start-1 col-span-1">
@@ -57,7 +58,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 								{{ channel.name }}
 							</option>
 						</select>
-	
+
 						<button (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
 							class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1" color="primary">
 							Set Channel
@@ -67,12 +68,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 				<!-- Update Regiment Form -->
 				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
-					{{regimentData.regiment}} Information	
+					{{regimentData.regiment}} Information
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
 					<i class="fa-regular fa-circle-question mr-1"></i> Personalize your regiment's profile information.
 				</p>
-				
+
 				<div class="">
 					<form (ngSubmit)="updateRegiment()">
 						<div class="form-group p-2 m-2">
@@ -155,7 +156,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 							Update Regiment
 						</button>
 					</form>
-					
+
 				</div>
 				<!--  -->
 			</mat-tab>
@@ -165,11 +166,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 					Manage Members &amp; Managers
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your regiment.
+					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your
+					regiment.
 				</p>
 
 				<div class="">
-					
+
 					<!-- Owner -->
 					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">
 						{{regimentData.regiment}} Owner
@@ -177,90 +179,208 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
-						<div *ngIf="user.discordId == regimentData.ownerId;" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
-						  <img *ngIf="user.avatar_url" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
-						  <span class="text-lg font-[300] flex items-center">
-							{{user.username}} <i class="ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-						  </span>
+						<div *ngIf="user.discordId == regimentData.ownerId;"
+							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
+							<img *ngIf="user.avatar_url" [src]="user.avatar_url"
+								class="h-[45px] w-auto inline rounded-l-lg pr-2">
+							<span class="text-lg font-[300] flex items-center">
+								{{user.username}} <i class="ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
+							</span>
 						</div>
-					  
-						<div class="grid grid-cols-[auto_1fr]">
-					  
-						</div>
-					  </div>
-					  
 
-					
+						<div class="grid grid-cols-[auto_1fr]">
+
+						</div>
+					</div>
+
+
+
 
 					<!-- Managers -->
 					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Managers</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
-						<div *ngIf="(user.discordId != regimentData.ownerId) && user.roles.includes('ROLE_MODERATOR');" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
-						  <div class="flex items-center">
-							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
-							<ng-template #noAvatar>
-							  <i class="fa-solid fa-user h-[25px] px-2"></i>
-							</ng-template>
-					  
-							<span class="text-lg font-[300]">
-							  {{user.username}}
-							</span>
-						  </div>
-						  
-						  <button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="warn" (click)="confirmRemoveModerator(user.id)">
-							<i class="fa-solid fa-minus"></i> Manager
-						  </button>
+						<div *ngIf="(user.discordId != regimentData.ownerId) && user.roles.includes('ROLE_MODERATOR');"
+							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+							<div class="flex items-center">
+								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+									class="h-[45px] w-auto inline rounded-l-lg pr-2">
+								<ng-template #noAvatar>
+									<i class="fa-solid fa-user h-[25px] px-2"></i>
+								</ng-template>
+
+								<span class="text-lg font-[300]">
+									{{user.username}}
+								</span>
+							</div>
+
+							<button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="warn"
+								(click)="confirmRemoveModerator(user.id)">
+								<i class="fa-solid fa-minus"></i> Manager
+							</button>
 						</div>
-					  
+
 						<div class="grid grid-cols-[auto_1fr]">
-					  
+
 						</div>
-					  </div>
-					  
-					  
+					</div>
+
+
 
 					<!-- Members -->
 					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Members</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
-						<div *ngIf="(user.discordId != regimentData.ownerId) && !user.roles.includes('ROLE_MODERATOR');" class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
-						  <div class="flex items-center">
-							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url" class="h-[45px] w-auto inline rounded-l-lg pr-2">
-							<ng-template #noAvatar>
-							  <i class="fa-solid fa-user h-[25px] px-2"></i>
-							</ng-template>
-					  
-							<span class="text-lg font-[300]">
-							  {{user.username}}
-							</span>
-						  </div>
-					  
-						  <button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="primary" (click)="confirmAddModerator(user.id)">
-							<i class="fa-solid fa-plus"></i> Manager
-						  </button>
+						<div *ngIf="(user.discordId != regimentData.ownerId) && !user.roles.includes('ROLE_MODERATOR');"
+							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+							<div class="flex items-center">
+								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+									class="h-[45px] w-auto inline rounded-l-lg pr-2">
+								<ng-template #noAvatar>
+									<i class="fa-solid fa-user h-[25px] px-2"></i>
+								</ng-template>
+
+								<span class="text-lg font-[300]">
+									{{user.username}}
+								</span>
+							</div>
+
+							<button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="primary"
+								(click)="confirmAddModerator(user.id)">
+								<i class="fa-solid fa-plus"></i> Manager
+							</button>
 						</div>
-					  
+
 						<div class="grid grid-cols-[auto_1fr]">
-					  
+
 						</div>
-					  </div>
-					  
+					</div>
+
 				</div>
 			</mat-tab>
-			<mat-tab label="Schedule"> 
+			<mat-tab label="Schedule">
 				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
 					Manage Regimental Schedules
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Publish and update your schedule for viewing on regimental profiles.
+					<i class="fa-regular fa-circle-question mr-1"></i> Publish and update your schedule for viewing on
+					regimental profiles. <span class="text-amber-500">[Under Development]</span>"
 				</p>
 
-				<p>
-					Under Development!
-				</p>
+				<button *ngIf="!creatingSchedule" mat-stroked-button color="primary" (click)="createSchedule()">Create New Schedule</button>
+
+				<mat-divider class="!my-2"></mat-divider>
+
+				<!-- Choose a Schedule -->
+				<div *ngIf="!creatingSchedule">
+					<div *ngFor="let scheduleName of objectKeys(scheduleNames)">
+						<span class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{scheduleName}}</span>
+						<button mat-stroked-button (click)="selectSchedule(scheduleName)"><i
+								class="fa-solid fa-pen-to-square"></i> Edit</button>	
+					</div>
+					<mat-divider class="!my-2"></mat-divider>
+				</div>
+				
+				
+
+
+				<!-- Editing Schedule -->
+				<div *ngIf="editingSchedule">
+					
+					<div *ngIf="selectedScheduleName">
+
+						<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">Editing: {{selectedScheduleName}}</h3>
+	
+						<button mat-stroked-button color="primary" (click)="toggleTimeFormat()" class="!inline-block">
+							<i class="fa-solid fa-clock pr-1"></i> {{timeString}}
+						</button>
+
+						<button *ngIf="editingSchedule" mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
+							class="fa-solid fa-pen-to-square"></i> Cancel</button>
+	
+						<div class="ml-4" *ngFor="let schedule of scheduleNames[selectedScheduleName]">
+							{{ schedule.day }} {{ display12HourTime ? schedule.time12 : schedule.time24}}
+							[{{schedule.event_type}}]
+							<button (click)="removeDay(schedule.id)" mat-button
+								class="!min-h-fit !h-fit !w-fit !min-w-fit !p-2 !mx-1" color="warn">X</button>
+						</div>
+	
+	
+						<h1>Add a day to schedule</h1>
+	
+						<form (ngSubmit)="addDay()">
+	
+							<label>
+								Day:
+								<select [(ngModel)]="scheduleForm.day" name="day">
+									<option value="Monday">Monday</option>
+									<option value="Tuesday">Tuesday</option>
+									<option value="Wednesday">Wednesday</option>
+									<option value="Thursday">Thursday</option>
+									<option value="Friday">Friday</option>
+									<option value="Saturday">Saturday</option>
+									<option value="Sunday">Sunday</option>
+								</select>
+							</label>
+	
+	
+							<label>
+								Time:
+								<input [(ngModel)]="scheduleForm.time" name="time" type="time">
+							</label>
+	
+							<label>
+								Event Type:
+								<input [(ngModel)]="scheduleForm.event_type" name="event_type">
+							</label>
+	
+							<button type="submit">Submit</button>
+						</form>
+	
+					</div>
+				</div>
+				
+
+
+				<!-- Create New Schedule Form -->
+				<div *ngIf="creatingSchedule">
+					<form (ngSubmit)="createSchedule()">
+						<button mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
+							class="fa-solid fa-pen-to-square"></i> Cancel</button>
+						<label>
+							Schedule Name:
+							<input [(ngModel)]="scheduleForm.schedule_name" name="schedule_name">
+						</label>
+
+						<label>
+							Day:
+							<select [(ngModel)]="scheduleForm.day" name="day">
+								<option value="Monday">Monday</option>
+								<option value="Tuesday">Tuesday</option>
+								<option value="Wednesday">Wednesday</option>
+								<option value="Thursday">Thursday</option>
+								<option value="Friday">Friday</option>
+								<option value="Saturday">Saturday</option>
+								<option value="Sunday">Sunday</option>
+							</select>
+						</label>
+
+						<label>
+							Time:
+							<input [(ngModel)]="scheduleForm.time" name="time" type="time">
+						</label>
+
+						<label>
+							Event Type:
+							<input [(ngModel)]="scheduleForm.event_type" name="event_type">
+						</label>
+
+						<button type="submit">Submit</button>
+					</form>
+				</div>
+
 			</mat-tab>
-		  </mat-tab-group>
+		</mat-tab-group>
 
 
 		<div>
