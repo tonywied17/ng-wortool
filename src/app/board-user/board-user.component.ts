@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:53:54 
+ * Last Modified: Sun August 6th 2023 12:51:45 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -376,16 +376,23 @@ export class BoardUserComponent implements OnInit {
    */
   async updateProfile(alert: boolean = true) {
     const userId = this.currentUser.id;
+
+    this.email = this.email || '';
+    this.avatar_url = this.avatar_url || '';
+    this.discordId = this.discordId || '';
+    this.regimentId = this.regimentId || '';
+
+
     try {
       await this.authService
-        .profile(
-          userId,
-          this.email,
-          this.avatar_url,
-          this.discordId,
-          this.regimentId
-        )
-        .toPromise();
+      .profile(
+        userId,
+        this.email,
+        this.avatar_url,
+        this.discordId,
+        this.regimentId
+      )
+      .toPromise();
 
         if (alert){
           this.showSnackBar("Profile updated successfully!");
@@ -403,6 +410,7 @@ export class BoardUserComponent implements OnInit {
         discordId: this.discordId,
         regimentId: this.regimentId,
       };
+
       this.token.saveUser(updatedUser);
 
       this.email = updatedUser.email;
