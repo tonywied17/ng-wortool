@@ -4,13 +4,13 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 7:32:11 
+ * Last Modified: Sat August 5th 2023 8:24:43 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../../_services/token-storage.service";
 import { AuthService } from "../../_services/auth.service";
@@ -79,6 +79,8 @@ export class RegimentSettingsComponent implements OnInit {
   scheduleNames: { [key: string]: Schedule[] } = {};
   selectedScheduleName: string | null = null;
   creatingSchedule: boolean = false;
+  editingSchedule: boolean = false;
+  lastDayRemoved = false
 
   scheduleForm = {
     schedule_name: "",
@@ -97,7 +99,8 @@ export class RegimentSettingsComponent implements OnInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private userService: UserService,
-    private matDatepicker: MatDatepickerModule
+    private matDatepicker: MatDatepickerModule,
+    private cd: ChangeDetectorRef
   ) {}
 
   /**
@@ -480,36 +483,34 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns - The sorted schedules
    */
   sortSchedules(schedules: Schedule[]): Schedule[] {
-    const dayOrder: { [day: string]: number } = { 
-      'Monday': 0, 
-      'Tuesday': 1, 
-      'Wednesday': 2, 
-      'Thursday': 3, 
-      'Friday': 4, 
-      'Saturday': 5, 
-      'Sunday': 6 
+    const dayOrder: { [day: string]: number } = {
+      Monday: 0,
+      Tuesday: 1,
+      Wednesday: 2,
+      Thursday: 3,
+      Friday: 4,
+      Saturday: 5,
+      Sunday: 6,
     };
-    
 
     return schedules.sort((a, b) => {
       // Map days to their order in the week and then sort
       const dayA = dayOrder[a.day];
       const dayB = dayOrder[b.day];
 
-      if(dayA < dayB) return -1;
-      if(dayA > dayB) return 1;
-  
+      if (dayA < dayB) return -1;
+      if (dayA > dayB) return 1;
+
       // If days are equal, sort by time
       const timeA = this.getTimeInMinutes(a.time);
       const timeB = this.getTimeInMinutes(b.time);
-  
-      if(timeA < timeB) return -1;
-      if(timeA > timeB) return 1;
-  
+
+      if (timeA < timeB) return -1;
+      if (timeA > timeB) return 1;
+
       return 0;
     });
-}
-
+  }
 
   /**
    * @method getTimeInMinutes
@@ -548,25 +549,40 @@ export class RegimentSettingsComponent implements OnInit {
    * @param day - The day
    * @param time - The time
    */
-  getSchedules(): void {
-    this.regimentService.getSchedulesByRegiment(this.currentUser.id, this.regimentID).subscribe((response: Schedule[]) => {
-      response = this.sortSchedules(response);
-    
-      response.forEach(schedule => {
-        const scheduleName = schedule.schedule_name || 'null'; 
-    
-        if(!this.scheduleNames[scheduleName]) {
-          this.scheduleNames[scheduleName] = [];
-        }
-  
-        schedule.time24 = schedule.time;
-        schedule.time12 = this.convertTo12Hour(schedule.time);
-    
-        this.scheduleNames[scheduleName].push(schedule);
-      });
-    });
-  }
+    async getSchedules(): Promise<void> {
+    let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(this.currentUser.id, this.regimentID).toPromise();
+    response = this.sortSchedules(response);
 
+    response.forEach((schedule) => {
+      const scheduleName = schedule.schedule_name || "null";
+
+      if (!this.scheduleNames[scheduleName]) {
+        this.scheduleNames[scheduleName] = [];
+      }
+
+      schedule.time24 = schedule.time;
+      schedule.time12 = this.convertTo12Hour(schedule.time);
+
+      this.scheduleNames[scheduleName].push(schedule);
+    });
+  
+    // Check if the selected schedule still has any days after the removal
+    if (this.lastDayRemoved && (!this.selectedScheduleName || !this.scheduleNames[this.selectedScheduleName] || this.scheduleNames[this.selectedScheduleName].length === 0)) {
+      this.scheduleForm = { // Reset form
+        schedule_name: '',
+        region: '',
+        day: '',
+        time: '',
+        event_type: '',
+        event_name: '',
+      };
+      this.display12HourTime = true; // reset the time format
+      this.selectedScheduleName = null; // reset the selected schedule name
+      this.editingSchedule = false; // Hide the edit schedule div
+      this.lastDayRemoved = false; // Reset the flag
+    }
+  }
+  
   /**
    * @method createSchedule
    * @description Create the schedule
@@ -574,6 +590,7 @@ export class RegimentSettingsComponent implements OnInit {
    */
   createSchedule(): void {
     this.selectedScheduleName = null;
+    this.editingSchedule = false;
     this.creatingSchedule = true;
 
     this.regimentService
@@ -583,25 +600,26 @@ export class RegimentSettingsComponent implements OnInit {
         this.scheduleForm.region,
         this.regimentID,
         this.scheduleForm.day,
-        this.scheduleForm.time,  
+        this.scheduleForm.time,
         this.scheduleForm.event_type,
         this.scheduleForm.event_name
       )
       .subscribe((response) => {
         console.log(response);
         this.scheduleNames = {};
-        this.getSchedules(); 
+        this.getSchedules();
 
         this.creatingSchedule = false;
         this.selectedScheduleName = this.scheduleForm.schedule_name;
-        
+        this.editingSchedule = true;
+
         this.scheduleForm = {
-          schedule_name: '',
-          region: '',
-          day: '',
-          time: '',
-          event_type: '',
-          event_name: ''
+          schedule_name: "",
+          region: "",
+          day: "",
+          time: "",
+          event_type: "",
+          event_name: "",
         };
       });
   }
@@ -613,12 +631,12 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns - The time in minutes
    */
   addDay(): void {
-    if(this.selectedScheduleName === null) {
+    if (this.selectedScheduleName === null) {
       // Handle the case when no schedule is selected, for example:
       alert("Please select a schedule before adding a day");
       return;
     }
-  
+
     this.regimentService
       .createSchedule(
         this.currentUser.id,
@@ -626,7 +644,7 @@ export class RegimentSettingsComponent implements OnInit {
         this.scheduleForm.region,
         this.regimentID,
         this.scheduleForm.day,
-        this.scheduleForm.time,  
+        this.scheduleForm.time,
         this.scheduleForm.event_type,
         this.scheduleForm.event_name
       )
@@ -634,7 +652,7 @@ export class RegimentSettingsComponent implements OnInit {
         console.log(response);
         // Reset the scheduleNames before fetching the updated list of schedules
         this.scheduleNames = {};
-        this.getSchedules(); 
+        this.getSchedules();
       });
   }
 
@@ -644,32 +662,18 @@ export class RegimentSettingsComponent implements OnInit {
    * @returns {void}
    * @param scheduleId - The schedule ID
    */
-  removeDay(scheduleId: number): void {
-    this.regimentService.removeSchedule(this.currentUser.id, this.regimentID, scheduleId).subscribe((response) => {
-      console.log(response);
-      this.scheduleNames = {};
-      this.getSchedules();
-
-      let totalEntries = 0;
-      for (let scheduleName in this.scheduleNames) {
-        totalEntries += this.scheduleNames[scheduleName].length;
-      }
-
-      if (totalEntries === 0) {
-        this.scheduleForm = { 
-          schedule_name: '',
-          region: '',
-          day: '',
-          time: '',
-          event_type: '',
-          event_name: '',
-        };
-        this.display12HourTime = true; 
-        this.selectedScheduleName = null; 
-      }
-    });
-  }
+  async removeDay(scheduleId: number): Promise<void> {
+    const response = await this.regimentService.removeSchedule(this.currentUser.id, this.regimentID, scheduleId).toPromise();
+    console.log(response);
   
+    if (this.selectedScheduleName && this.scheduleNames[this.selectedScheduleName] && this.scheduleNames[this.selectedScheduleName].length === 1) {
+      this.lastDayRemoved = true;
+    }
+  
+    this.scheduleNames = {};
+    await this.getSchedules();
+  }
+
   /**
    * @method toggleTimeFormat
    * @description Toggle the time format
@@ -677,7 +681,7 @@ export class RegimentSettingsComponent implements OnInit {
    */
   toggleTimeFormat(): void {
     this.display12HourTime = !this.display12HourTime;
-    if(this.display12HourTime) {
+    if (this.display12HourTime) {
       this.timeString = "24hr time";
     } else {
       this.timeString = "12hr time";
@@ -717,6 +721,26 @@ export class RegimentSettingsComponent implements OnInit {
    */
   selectSchedule(scheduleName: string): void {
     this.selectedScheduleName = scheduleName;
+    this.editingSchedule = true;
   }
-  
+
+  /**
+   * @method editSchedule
+   * @description Edit the schedule
+   * @returns {void}
+   * @param scheduleId - The schedule ID
+   */
+  cancelEdit(): void {
+    this.editingSchedule = false;
+    this.selectedScheduleName = null;
+    this.creatingSchedule = false;
+    this.scheduleForm = {
+      schedule_name: "",
+      region: "",
+      day: "",
+      time: "",
+      event_type: "",
+      event_name: "",
+    };
+  }
 }

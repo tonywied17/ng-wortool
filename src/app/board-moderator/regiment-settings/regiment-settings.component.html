@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sat August 5th 2023 7:23:03 
+Last Modified: Sat August 5th 2023 8:21:27 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -267,71 +267,86 @@ Copyright (c) 2023 Tone Web Design, Molex
 					regimental profiles. <span class="text-amber-500">[Under Development]</span>"
 				</p>
 
-				<button mat-stroked-button color="primary" (click)="createSchedule()">Create New Schedule</button>
+				<button *ngIf="!creatingSchedule" mat-stroked-button color="primary" (click)="createSchedule()">Create New Schedule</button>
+
+				<mat-divider class="!my-2"></mat-divider>
 
 				<!-- Choose a Schedule -->
-				<div *ngFor="let scheduleName of objectKeys(scheduleNames)">
-					<span class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{scheduleName}}</span>
-					<button mat-stroked-button (click)="selectSchedule(scheduleName)"><i
-							class="fa-solid fa-pen-to-square"></i> Edit</button>
+				<div *ngIf="!creatingSchedule">
+					<div *ngFor="let scheduleName of objectKeys(scheduleNames)">
+						<span class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{scheduleName}}</span>
+						<button mat-stroked-button (click)="selectSchedule(scheduleName)"><i
+								class="fa-solid fa-pen-to-square"></i> Edit</button>	
+					</div>
+					<mat-divider class="!my-2"></mat-divider>
 				</div>
+				
+				
 
 
 				<!-- Editing Schedule -->
-				<div *ngIf="selectedScheduleName">
+				<div *ngIf="editingSchedule">
+					
+					<div *ngIf="selectedScheduleName">
 
-					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">Editing: {{selectedScheduleName}}</h3>
+						<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">Editing: {{selectedScheduleName}}</h3>
+	
+						<button mat-stroked-button color="primary" (click)="toggleTimeFormat()" class="!inline-block">
+							<i class="fa-solid fa-clock pr-1"></i> {{timeString}}
+						</button>
 
-					<button mat-stroked-button color="primary" (click)="toggleTimeFormat()">
-						<i class="fa-solid fa-clock pr-1"></i> {{timeString}}
-					</button>
-
-					<div class="ml-4" *ngFor="let schedule of scheduleNames[selectedScheduleName]">
-						{{ schedule.day }} {{ display12HourTime ? schedule.time12 : schedule.time24}}
-						[{{schedule.event_type}}]
-						<button (click)="removeDay(schedule.id)" mat-button
-							class="!min-h-fit !h-fit !w-fit !min-w-fit !p-2 !mx-1" color="warn">X</button>
+						<button *ngIf="editingSchedule" mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
+							class="fa-solid fa-pen-to-square"></i> Cancel</button>
+	
+						<div class="ml-4" *ngFor="let schedule of scheduleNames[selectedScheduleName]">
+							{{ schedule.day }} {{ display12HourTime ? schedule.time12 : schedule.time24}}
+							[{{schedule.event_type}}]
+							<button (click)="removeDay(schedule.id)" mat-button
+								class="!min-h-fit !h-fit !w-fit !min-w-fit !p-2 !mx-1" color="warn">X</button>
+						</div>
+	
+	
+						<h1>Add a day to schedule</h1>
+	
+						<form (ngSubmit)="addDay()">
+	
+							<label>
+								Day:
+								<select [(ngModel)]="scheduleForm.day" name="day">
+									<option value="Monday">Monday</option>
+									<option value="Tuesday">Tuesday</option>
+									<option value="Wednesday">Wednesday</option>
+									<option value="Thursday">Thursday</option>
+									<option value="Friday">Friday</option>
+									<option value="Saturday">Saturday</option>
+									<option value="Sunday">Sunday</option>
+								</select>
+							</label>
+	
+	
+							<label>
+								Time:
+								<input [(ngModel)]="scheduleForm.time" name="time" type="time">
+							</label>
+	
+							<label>
+								Event Type:
+								<input [(ngModel)]="scheduleForm.event_type" name="event_type">
+							</label>
+	
+							<button type="submit">Submit</button>
+						</form>
+	
 					</div>
-
-
-					<h1>Add a day to schedule</h1>
-
-					<form (ngSubmit)="addDay()">
-
-						<label>
-							Day:
-							<select [(ngModel)]="scheduleForm.day" name="day">
-								<option value="Monday">Monday</option>
-								<option value="Tuesday">Tuesday</option>
-								<option value="Wednesday">Wednesday</option>
-								<option value="Thursday">Thursday</option>
-								<option value="Friday">Friday</option>
-								<option value="Saturday">Saturday</option>
-								<option value="Sunday">Sunday</option>
-							</select>
-						</label>
-
-
-						<label>
-							Time:
-							<input [(ngModel)]="scheduleForm.time" name="time" type="time">
-						</label>
-
-						<label>
-							Event Type:
-							<input [(ngModel)]="scheduleForm.event_type" name="event_type">
-						</label>
-
-						<button type="submit">Submit</button>
-					</form>
-
 				</div>
+				
 
 
 				<!-- Create New Schedule Form -->
 				<div *ngIf="creatingSchedule">
 					<form (ngSubmit)="createSchedule()">
-
+						<button mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
+							class="fa-solid fa-pen-to-square"></i> Cancel</button>
 						<label>
 							Schedule Name:
 							<input [(ngModel)]="scheduleForm.schedule_name" name="schedule_name">
