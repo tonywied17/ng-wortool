@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 4:25:47 
+ * Last Modified: Mon August 7th 2023 1:25:41 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -43,12 +43,12 @@ export class RegimentsComponent implements OnInit {
     this.showOverlay = false;
   }
 
+  /**
+   * Initialize the component
+   */
   ngOnInit(): void {
-
     this.currentRoute = this.router.url;
-
     this.getRegiments();
-
   }
 
   /**
@@ -60,13 +60,10 @@ export class RegimentsComponent implements OnInit {
       const searchTextMatch =
         !this.searchText ||
         regiment.regiment.toLowerCase().includes(this.searchText.toLowerCase());
-  
       const sideMatch =
         this.selectedSide === 'all' || regiment.side === this.selectedSide;
-  
       return searchTextMatch && sideMatch;
     });
-  
     this.currentPage = 1; 
     this.updatePaginatedRegiments(); 
   }
@@ -82,7 +79,6 @@ export class RegimentsComponent implements OnInit {
       this.isDataLoaded = true;
     });
   }
-
 
   /**
    * Open a url in a new tab
@@ -247,6 +243,11 @@ export class RegimentsComponent implements OnInit {
       event.stopPropagation(); 
     }
 
+    /**
+     * @method closeOverlay
+     * @description close the overlay
+     * @param event - the mouse event
+     */
     closeOverlay(event: MouseEvent) {
       event.stopPropagation();
       this.toggleOverlay();
