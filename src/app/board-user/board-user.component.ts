@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun August 6th 2023 12:51:45 
+ * Last Modified: Wed August 9th 2023 1:29:05 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -396,11 +396,8 @@ export class BoardUserComponent implements OnInit {
 
         if (alert){
           this.showSnackBar("Profile updated successfully!");
-        }else{
-          console.log("Profile updated successfully!")
         }
       
-
       this.stillSelecting = false;
 
       const updatedUser = {
@@ -581,7 +578,7 @@ export class BoardUserComponent implements OnInit {
       } else {
         this.regimentService.getRegiment(regimentId).subscribe(
           (response) => {
-            console.log(response);
+            // console.log(response);
             this.regimentData = response;
             this.regimentSelected = true;
             resolve();

@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:40:56 
+ * Last Modified: Wed August 9th 2023 1:39:11 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -15,6 +15,7 @@ import { TokenStorageService } from "./_services/token-storage.service";
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Event as NavigationEvent} from '@angular/router';
 import { AuthService } from "./_services/auth.service";
 import { SharedService } from "./_services/shared.service";
+import { RegimentService } from "./_services/regiment.service";
 import { VersionChecker } from "./version-checker";
 import { RouteService } from "./_services/route-service.service";
 
@@ -33,6 +34,9 @@ export class AppComponent implements OnInit {
   showAdmin = false;
   showUser = false;
   showMod = false;
+  isOwner: boolean = false;
+  modRoute?: string;
+
   private roles: string[] = [];
 
   message = "";
@@ -46,7 +50,8 @@ export class AppComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private versionChecker: VersionChecker,
     public routeService: RouteService,
-    private location: Location
+    private location: Location,
+    private regimentService: RegimentService
   ) {
     this.versionChecker.listenForUpdates();
     this.authService.authenticationEvent.subscribe(() => {
@@ -76,46 +81,54 @@ export class AppComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
-    this.initializeComponent();
-
     this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-
-      this.initializeComponent();
+        this.isLoggedIn = isLoggedIn;
+        if (isLoggedIn) {
+            this.setRoleProperties();
+        }
     });
-  }
+
+    this.initializeComponent();
+}
+
+  private setRoleProperties(): void {
+    const user = this.tokenStorage.getUser();
+    this.roles = user.roles;
+
+    this.showAdmin = this.roles.includes("ROLE_ADMIN");
+    this.showMod = this.roles.includes("ROLE_MODERATOR");
+    this.showUser = this.isLoggedIn;
+}
 
   /**
    * Initialize component
    * This function is used to initialize the component
    */
-  initializeComponent(): void {
-    if (this.tokenStorage.getToken()) {
-      this.currentUser = this.tokenStorage.getUser();
-      this.roles = this.tokenStorage.getUser().roles;
-    }
-
-    this.authService.isAuthenticated =
-      localStorage.getItem("isAuthenticated") === "true";
-    this.authService.isAdministrator =
-      localStorage.getItem("isAdmin") === "true";
-    this.authService.isModerator =
-      localStorage.getItem("isModerator") === "true";
-
-    this.isLoggedIn = localStorage.getItem("isAuthenticated") === "true";
-    this.showMod = this.authService.isModerator;
-    this.showAdmin = this.authService.isAdministrator;
-
+  async initializeComponent(): Promise<void> {
+    this.isLoggedIn = !!this.tokenStorage.getToken();
     this.currentUser = this.tokenStorage.getUser();
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorage.getUser();
-      this.roles = user.roles;
+      this.roles = this.tokenStorage.getUser().roles;
       this.showAdmin = this.roles.includes("ROLE_ADMIN");
       this.showMod = this.roles.includes("ROLE_MODERATOR");
       this.showUser = true;
     }
+
+    const response = await this.regimentService
+    .getRegiment(this.currentUser.regimentId)
+    .toPromise();
+
+    if (response.ownerId === this.currentUser.discordId) {
+      this.isOwner = true;
+      this.modRoute = "/mod/1";
+    } else {
+      this.isOwner = false;
+      this.modRoute = "/mod/2";
+    }
+
   }
+
 
   menuOpen = false;
 
