@@ -1,3 +1,14 @@
+<!--
+File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\home\home.component.html
+Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+Created Date: Tuesday August 8th 2023
+Author: Tony Wiedman
+-----
+Last Modified: Wed August 9th 2023 1:30:35 
+Modified By: Tony Wiedman
+-----
+Copyright (c) 2023 Tone Web Design, Molex
+-->
 <div *ngIf="loading"
 	class="text-center text-xl opacity-75">
 	<i class="fas fa-spinner fa-pulse mr-2"></i>
@@ -95,7 +106,7 @@
 
 
 							<button *ngIf="showMod"
-								routerLink="/mod/1"
+								[routerLink]="modRoute"
 								mat-list-item
 								class="!py-[0.7em]">
 								<i class="fa-solid fa-tents w-[25px] ml-[1em] mr-[0.5em]"></i>

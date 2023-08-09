@@ -1,8 +1,17 @@
+/*
+ * File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\maps\maps.component.scss
+ * Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+ * Created Date: Tuesday August 8th 2023
+ * Author: Tony Wiedman
+ * -----
+ * Last Modified: Wed August 9th 2023 2:08:04 
+ * Modified By: Tony Wiedman
+ * -----
+ * Copyright (c) 2023 Tone Web Design, Molex
+ */
 .spinner {
   border: 16px solid #f3f3f3;
-  /* Light grey */
   border-top: 16px solid #3498db;
-  /* Blue */
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -24,16 +33,15 @@
 }
 
 .search-input {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   padding: 12px 36px 12px 48px;
-  /* Adjusted padding values */
   width: 100%;
   border: 2px solid #7c7d72;
   border-radius: 4px;
   background: linear-gradient(9deg, #121a29, #121a29, #7c7d727a);
   color: #fff;
   outline: none;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 .search-input:focus {
@@ -51,30 +59,26 @@
 ::placeholder {
   color: #fff;
   opacity: 0.7;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 .search-input:focus::placeholder {
   opacity: 1;
   text-indent: 0;
-  /* Adjusted text-indent value */
 }
 
 .search-icon {
   position: absolute;
   top: 50%;
   left: 1em;
-  /* Adjusted left value */
   transform: translate(0, -50%);
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   color: #7c7d72;
 }
 
-.search-input:focus+.search-icon {
+.search-input:focus + .search-icon {
   margin-left: -4px;
-  /* Adjusted left value */
 }
-
 
 .search-input:hover {
   opacity: 0.7;
@@ -85,12 +89,11 @@
   transform: scale(1.02);
 }
 
-
 .search-input::placeholder {
   color: #ccc;
 }
 
-.filter-options { 
+.filter-options {
   color: #7c7d72 !important;
 }
 
@@ -103,7 +106,7 @@
 .filter-label {
   align-items: center;
   color: #7c7d72 !important;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
@@ -116,9 +119,8 @@
 }
 
 .mat-checkbox-label ::ng-deep {
-  font-size: 16px !important
+  font-size: 16px !important;
 }
-
 
 .test {
   display: block;
@@ -131,5 +133,5 @@
 }
 
 .filter-container {
-  animation: fade-left .5s ease 0s 1 normal forwards;
+  animation: fade-left 0.5s ease 0s 1 normal forwards;
 }

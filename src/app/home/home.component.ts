@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:58:05 
+ * Last Modified: Wed August 9th 2023 2:07:07 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -15,7 +15,9 @@ import { AuthService } from "../_services/auth.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { NavigationEnd, Router } from "@angular/router";
 import { SharedService } from "../_services/shared.service";
+import { RegimentService } from "../_services/regiment.service";
 import { PasswordMatchValidatorDirective } from "../password-match-validator.directive";
+import { ChangeDetectorRef } from "@angular/core";
 
 @Component({
   selector: "app-home",
@@ -49,6 +51,9 @@ export class HomeComponent implements OnInit {
   currentUser: any;
   loading = true;
 
+  isOwner: boolean = false;
+  modRoute?: string;
+
   currentYear!: number;
   nextYear!: number;
 
@@ -56,44 +61,15 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
     private sharedService: SharedService,
-    private router: Router
+    private router: Router,
+    private regimentService: RegimentService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.initializeComponent();
-      }
-
       const date = new Date();
       this.currentYear = date.getFullYear();
       this.nextYear = this.currentYear + 1;
     });
-  }
-
-  /**
-   * Is authenticated
-   * This function is used to check if the user is authenticated
-   * @returns boolean
-   */
-  get isAuthenticated(): boolean {
-    return this.authService.isAuthenticated;
-  }
-
-  /**
-   * Is administrator
-   * This function is used to check if the user is administrator
-   * @returns boolean
-   */
-  get isAdministrator(): boolean {
-    return this.authService.isAdministrator;
-  }
-
-  /**
-   * Is moderator
-   * This function is used to check if the user is moderator
-   * @returns boolean
-   */
-  get isModerator(): boolean {
-    return this.authService.isModerator;
   }
 
   /**
@@ -110,17 +86,24 @@ export class HomeComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
-    this.initializeComponent();
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    this.currentUser = this.tokenStorage.getUser();
+
+    if (!this.isLoggedIn) {
+      this.initializeComponent();
+    }
 
     this.sharedService.logoutEvent$.subscribe(() => {
       this.initializeComponent();
     });
 
-    this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
+    if (this.isLoggedIn) {
+      this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
+        this.isLoggedIn = isLoggedIn;
 
-      this.initializeComponent();
-    });
+        this.initializeComponent();
+      });
+    }
   }
 
   /**
@@ -128,12 +111,22 @@ export class HomeComponent implements OnInit {
    * This function is used to initialize the component
    * @returns void
    */
-  initializeComponent(): void {
+  async initializeComponent(): Promise<void> {
     this.isLoggedIn = !!this.tokenStorage.getToken();
     this.currentUser = this.tokenStorage.getUser();
     const userID = this.currentUser.id;
 
-    if (this.isLoggedIn) {
+    if (this.isLoggedIn && this.currentUser) {
+      try {
+        const response = await this.regimentService
+          .getRegiment(this.currentUser.regimentId)
+          .toPromise();
+        this.isOwner = response.ownerId === this.currentUser.discordId;
+        this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
+      } catch (error) {
+        console.error("Error fetching regiment:", error);
+      }
+
       this.authService.checkUserRole(userID).subscribe(
         (response) => {
           this.showUser = response.access;
@@ -149,20 +142,22 @@ export class HomeComponent implements OnInit {
         }
       );
 
-      this.authService.checkModeratorRole(userID, this.currentUser.regimentId).subscribe(
-        (response) => {
-          this.showMod = response.access;
-          this.loading = false;
-        },
-        (error) => {
-          if (error.status === 403) {
-            this.showMod = false;
-          } else {
-            console.error("Error:", error);
+      this.authService
+        .checkModeratorRole(userID, this.currentUser.regimentId)
+        .subscribe(
+          (response) => {
+            this.showMod = response.access;
+            this.loading = false;
+          },
+          (error) => {
+            if (error.status === 403) {
+              this.showMod = false;
+            } else {
+              console.error("Error:", error);
+            }
+            this.loading = false;
           }
-          this.loading = false;
-        }
-      );
+        );
 
       this.authService.checkAdminRole(userID).subscribe(
         (response) => {
@@ -181,6 +176,10 @@ export class HomeComponent implements OnInit {
     } else {
       this.loading = false;
     }
+
+    this.cdRef.detectChanges();
+
+    console.log("init component ran");
   }
 
   /**
@@ -210,10 +209,10 @@ export class HomeComponent implements OnInit {
     const { username, password } = this.loginForm;
 
     this.authService.login(username, password).subscribe({
-      next: (data) => {
+      next: async (data) => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
-        this.roles = this.tokenStorage.getUser().roles;
+        this.roles = data.roles; // Directly using the roles from the response
 
         this.isLoginFailed = false;
         this.authService.isAuthenticated = true;
@@ -237,6 +236,19 @@ export class HomeComponent implements OnInit {
         this.showMod = this.authService.isModerator;
 
         this.authService.authenticationEvent.next();
+
+        // Check if data exists and contains regimentId
+        if (data && data.regimentId) {
+          try {
+            const response = await this.regimentService
+              .getRegiment(data.regimentId)
+              .toPromise();
+            this.isOwner = response.ownerId === data.discordId;
+            this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
+          } catch (error) {
+            console.error("Error fetching regiment:", error);
+          }
+        }
       },
       error: (err) => {
         this.errorMessage = err.error.message;
