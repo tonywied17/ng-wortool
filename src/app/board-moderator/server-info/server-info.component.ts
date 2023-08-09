@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri August 4th 2023 9:13:28 
+ * Last Modified: Wed August 9th 2023 6:29:32 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -225,7 +225,7 @@ export class ServerInfoComponent implements OnInit {
           },
           fields: [],
           footer: {
-            text: "#PA Army App",
+            text: "WorTool.com",
             icon_url: "https://app.paarmy.com/assets/icon.png",
           },
           color: 13092744,
