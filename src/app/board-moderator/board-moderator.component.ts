@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:47:44 
+ * Last Modified: Sat September 16th 2023 6:23:29 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -122,7 +122,9 @@ export class BoardModeratorComponent implements OnInit {
         this.regimentData = response;
         this.regimentSelected = true;
 
-        if(this.currentUser.discordId == this.regimentData.ownerId) {
+        console.log(this.currentUser.discordId + ' - ' + this.regimentData.ownerId)
+        
+        if(this.regimentData.ownerId.includes(this.currentUser.discordId)) {
           this.isOwner = true;
         }else{
           this.isOwner = false;

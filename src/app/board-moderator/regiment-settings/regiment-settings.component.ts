@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 8:24:43 
+ * Last Modified: Sat September 16th 2023 6:24:14 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -121,7 +121,7 @@ export class RegimentSettingsComponent implements OnInit {
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
             this.getRegiment().then(() => {
-              if (this.currentUser.discordId == this.regimentData.ownerId) {
+              if (this.regimentData.ownerId.includes(this.currentUser.discordId)) {
                 this.isOwner = true;
               } else {
                 this.isOwner = false;

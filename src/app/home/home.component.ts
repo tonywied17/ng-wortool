@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed August 9th 2023 2:07:07 
+ * Last Modified: Sat September 16th 2023 6:37:00 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit {
         const response = await this.regimentService
           .getRegiment(this.currentUser.regimentId)
           .toPromise();
-        this.isOwner = response.ownerId === this.currentUser.discordId;
+        this.isOwner = response.ownerId.includes(this.currentUser.discordId);
         this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
       } catch (error) {
         console.error("Error fetching regiment:", error);
@@ -243,7 +243,7 @@ export class HomeComponent implements OnInit {
             const response = await this.regimentService
               .getRegiment(data.regimentId)
               .toPromise();
-            this.isOwner = response.ownerId === data.discordId;
+            this.isOwner = response.ownerId.includes(data.discordId);
             this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
           } catch (error) {
             console.error("Error fetching regiment:", error);
