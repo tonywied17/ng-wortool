@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday August 6th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun August 6th 2023 1:00:27 
+Last Modified: Sat September 16th 2023 6:36:21 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -395,12 +395,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 														<i class="fa-brands fa-discord text-neutral-300"></i>
 														{{regimentData?.guild_id}}
 														<div class="cursor-pointer hover:opacity-80 mt-2">
-															<span *ngIf="currentUser.discordId != regimentData.ownerId" (click)="confirmUnSyncRegiment()"
+															<span *ngIf="!regimentData.ownerId.includes(currentUser.discordId)" (click)="confirmUnSyncRegiment()"
 																class="text-red-400">
 																<i class="fa-regular fa-circle-xmark"></i>
 																Unlink
 															</span>
-															<span *ngIf="currentUser.discordId == regimentData.ownerId"
+															<span *ngIf="regimentData.ownerId.includes(currentUser.discordId)"
 																class="text-red-400/50 !cursor-not-allowed">
 																<i class="fa-regular fa-circle-xmark"></i>
 																Regiment Owner

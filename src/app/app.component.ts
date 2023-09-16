@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed August 9th 2023 1:39:11 
+ * Last Modified: Sat September 16th 2023 6:25:15 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -118,8 +118,7 @@ export class AppComponent implements OnInit {
     const response = await this.regimentService
     .getRegiment(this.currentUser.regimentId)
     .toPromise();
-
-    if (response.ownerId === this.currentUser.discordId) {
+    if (response.ownerId.includes(this.currentUser.discordId)) {
       this.isOwner = true;
       this.modRoute = "/mod/1";
     } else {

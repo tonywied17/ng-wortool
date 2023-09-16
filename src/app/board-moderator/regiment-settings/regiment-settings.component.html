@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun August 27th 2023 6:30:26 
+Last Modified: Sat September 16th 2023 6:42:53 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -167,7 +167,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
 					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your
-					regiment.
+					regiment. If you would like to add more than one owner please direct message <b>.molex</b> on discord.
 				</p>
 
 				<div class="">
@@ -179,13 +179,22 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
-						<div *ngIf="user.discordId == regimentData.ownerId;"
+						
+						<div *ngIf="regimentData.ownerId.includes(user.discordId);"
 							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
-							<img *ngIf="user.avatar_url" [src]="user.avatar_url"
-								class="h-[45px] w-auto inline rounded-l-lg pr-2">
-							<span class="text-lg font-[300] flex items-center">
-								{{user.username}} <i class="ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-							</span>
+					
+								
+								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+       								class="h-[45px] max-w-[50px] w-auto inline rounded-l-lg pr-2">
+
+								<ng-template #noAvatar>
+									<i class="fa-solid fa-user h-[25px] px-2"></i>
+								</ng-template>
+
+								<span class="text-lg font-[300] flex items-center">
+									{{user.username}} <i class="ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
+								</span>
+					
 						</div>
 
 						<div class="grid grid-cols-[auto_1fr]">
@@ -200,11 +209,13 @@ Copyright (c) 2023 Tone Web Design, Molex
 					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Managers</h3>
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
-						<div *ngIf="(user.discordId != regimentData.ownerId) && user.roles.includes('ROLE_MODERATOR');"
+						<div *ngIf="(!regimentData.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');"
 							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
 							<div class="flex items-center">
+								
 								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-									class="h-[45px] w-auto inline rounded-l-lg pr-2">
+       								class="h-[45px] max-w-[50px] w-auto inline rounded-l-lg pr-2">
+
 								<ng-template #noAvatar>
 									<i class="fa-solid fa-user h-[25px] px-2"></i>
 								</ng-template>

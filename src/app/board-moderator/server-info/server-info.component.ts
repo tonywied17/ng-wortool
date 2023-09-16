@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed August 9th 2023 6:29:32 
+ * Last Modified: Sat September 16th 2023 6:18:22 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -148,7 +148,13 @@ export class ServerInfoComponent implements OnInit {
         ...(organizedData["South Mountain"] || []),
         ...(organizedData["South Mountain Conquest"] || []),
       ];
-    } else {
+    } else if (this.skirm.includes("Drill Camp") || this.skirm.includes("Drillcamp")) {
+      const organizedData = this.organizeByCampaign(this.mapNames);
+      this.filteredMapNames1 = [
+        ...(organizedData["Drill Camp"] || []),
+        ...(organizedData["Drillcamp Conquest"] || []),
+      ];
+    }else {
       this.filteredMapNames1 = [];
     }
   }
@@ -176,6 +182,12 @@ export class ServerInfoComponent implements OnInit {
       this.filteredMapNames2 = [
         ...(organizedData["South Mountain"] || []),
         ...(organizedData["South Mountain Conquest"] || []),
+      ];
+    } else if (this.skirm2.includes("Drill Camp") || this.skirm2.includes("Drillcamp")) {
+      const organizedData = this.organizeByCampaign(this.mapNames);
+      this.filteredMapNames2 = [
+        ...(organizedData["Drill Camp"] || []),
+        ...(organizedData["Drillcamp Conquest"] || []),
       ];
     } else {
       this.filteredMapNames2 = [];
