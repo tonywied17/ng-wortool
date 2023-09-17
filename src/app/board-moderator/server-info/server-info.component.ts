@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat September 16th 2023 6:18:22 
+ * Last Modified: Sun September 17th 2023 1:39:20 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -41,6 +41,7 @@ export class ServerInfoComponent implements OnInit {
   naChecked = true;
   euChecked!: boolean;
   map: any;
+  isLoaded: boolean = false;
 
   mapNames: any;
 
@@ -104,6 +105,7 @@ export class ServerInfoComponent implements OnInit {
           }
         });
     }
+    
   }
 
   /**
@@ -413,5 +415,7 @@ export class ServerInfoComponent implements OnInit {
     } else {
       this.regimentSelected = false;
     }
+    this.isLoaded = true;
   }
+  
 }

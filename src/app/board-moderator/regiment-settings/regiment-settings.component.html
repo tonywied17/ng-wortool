@@ -4,11 +4,23 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sat September 16th 2023 6:42:53 
+Last Modified: Sun September 17th 2023 1:03:21 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
 -->
+
+<div *ngIf="!isLoaded" class="lds-ellipsis">
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+</div>
+
+<div *ngIf="isLoaded">
+
+
+
 <div *ngIf="!isOwner">
 	<p>This is reserved for regiment owners.</p>
 </div>
@@ -397,5 +409,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 		</div>
 	</div>
+
+</div>
 
 </div>

@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat September 16th 2023 6:24:14 
+ * Last Modified: Sun September 17th 2023 1:06:42 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -47,7 +47,7 @@ export class RegimentSettingsComponent implements OnInit {
   currentUser: any;
   isLoggedIn = false;
   showMod = false;
-
+  isLoaded: boolean = false;
   isModerator = false;
   roles: string[] = [];
 
@@ -123,8 +123,10 @@ export class RegimentSettingsComponent implements OnInit {
             this.getRegiment().then(() => {
               if (this.regimentData.ownerId.includes(this.currentUser.discordId)) {
                 this.isOwner = true;
+                this.isLoaded = true;
               } else {
                 this.isOwner = false;
+                this.isLoaded = true;
               }
             });
           }
@@ -139,6 +141,8 @@ export class RegimentSettingsComponent implements OnInit {
     }
 
     this.getSchedules();
+
+    
   }
 
   /**
