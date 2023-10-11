@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed October 11th 2023 4:26:04 
+Last Modified: Wed October 11th 2023 4:55:50 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -290,20 +290,46 @@ Copyright (c) 2023 Tone Web Design, Molex
 					regimental profiles. <span class="text-amber-500">[Under Development]</span>"
 				</p>
 
-				<button *ngIf="!creatingSchedule" mat-stroked-button color="primary" (click)="createSchedule()">Create New Schedule</button>
+
+				<div class="grid grid-cols-2 w-full">
+					<div>
+
+					</div>
+					<div class="text-right">
+						<button *ngIf="!creatingSchedule" mat-stroked-button color="primary" (click)="createSchedule()"><i class="fa-solid fa-plus"></i> New Schedule</button>
+					</div>
+				</div>
+				
 
 				<mat-divider class="!my-2"></mat-divider>
 
-				<!-- Choose a Schedule -->
-				<div *ngIf="!creatingSchedule">
-					<div *ngFor="let scheduleName of objectKeys(scheduleNames)">
-						<span class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{scheduleName}}</span>
-						<button mat-stroked-button (click)="selectSchedule(scheduleName)"><i
-								class="fa-solid fa-pen-to-square"></i> Edit</button>	
-					</div>
-					<mat-divider class="!my-2"></mat-divider>
+				<div *ngIf="scheduleCount <= 0">
+					<div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+						<div class="flex">
+						  <div class="mr-2">
+							<i class="fas fa-exclamation-triangle"></i>
+						  </div>
+						  <div>
+							<p>No schedules found.</p>
+						  </div>
+						</div>
+					  </div>
 				</div>
-				
+
+				<!-- Choose a Schedule -->
+				<div *ngIf="!creatingSchedule" class="w-full grid grid-cols-3">
+					<div *ngFor="let scheduleName of objectKeys(scheduleNames)" class="grid grid-rows-auto gap-4 p-2 m-2 bg-slate-800 rounded-sm shadow-md">
+					  <div class="row-start-1 row-span-1">
+						<h3 class="text-slate-300 text-base font-[600]">{{scheduleName}}</h3>
+						<p class="ml-2 font-[300] text-neutral-200">{{scheduleCounts[scheduleName]}} slots in schedule</p>
+					  </div>
+					  <div class="row-start-2 row-span-1 text-right">
+						<button mat-stroked-button (click)="selectSchedule(scheduleName)"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+					  </div>
+					</div>
+				  </div>
+				  
+				<mat-divider class="!my-2"></mat-divider>
 				
 
 
