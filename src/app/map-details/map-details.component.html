@@ -97,7 +97,7 @@
             currentMap.map + ' share link copied to clipboard.',
             6000
           );
-          copyToClipboard('https://app.paarmy.com/maps/' + currentMap.id)
+          copyToClipboard('https://wortool.com/maps/' + currentMap.id)
         "
 				class="!text-[#b9b8b0]/80 font-[400]"
 				mat-menu-item>
@@ -136,13 +136,13 @@
 			<img *ngIf="!CamMapBool"
 				(click)="
           open(
-            'https://app.paarmy.com/' + currentMap.image,
+            'https://wortool.com/' + currentMap.image,
             currentMap.map,
             1500,
             868
           )
         "
-				src="https://app.paarmy.com/{{ currentMap.image }}"
+				src="https://wortool.com/{{ currentMap.image }}"
 				class="fade-center transition-all active:!translate-y-2 active:translate-x-2 hover:cursor-pointer hover:brightness-[85%] brightness-75 sepia-[50%] lg:mr-auto lg:w-[80%] lg:h-auto block rounded-lg rounded-tl-none shadow-none duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
 
 
@@ -412,7 +412,7 @@
 
 
 			<div class="block pr-[20px] text-center text-3xl font-[300] select-none">
-				<img src="https://app.paarmy.com/assets/swords.png"
+				<img src="https://wortool.com/assets/swords.png"
 					class="icon mx-auto h-[43px] w-auto pointer-events-none brightness-75 sepia-[70%]">
 				<span class="block text-base font-[200]">vs.</span>
 			</div>
