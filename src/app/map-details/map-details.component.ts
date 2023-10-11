@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri August 4th 2023 9:04:00 
+ * Last Modified: Sun September 17th 2023 1:32:21 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -369,7 +369,7 @@ export class MapDetailsComponent implements OnInit {
       const videoContainer = document.getElementById("videoContainer");
       if (videoContainer) {
         const youtubeUrl = `https://www.youtube.com/embed/${this.currentMap.youtube}`;
-        const iframeHtml = `<iframe class="h-[100%]" width="100%" src="${youtubeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 0.375rem;"></iframe>`;
+        const iframeHtml = `<iframe class="h-[100%]" width="100%" src="${youtubeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 0.375rem;border-top-left-radius: 0;"></iframe>`;
         videoContainer.innerHTML = iframeHtml;
       }
     } else {

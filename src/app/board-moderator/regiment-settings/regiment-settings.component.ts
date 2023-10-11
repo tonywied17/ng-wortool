@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat September 16th 2023 6:24:14 
+ * Last Modified: Wed October 11th 2023 5:31:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -47,7 +47,7 @@ export class RegimentSettingsComponent implements OnInit {
   currentUser: any;
   isLoggedIn = false;
   showMod = false;
-
+  isLoaded: boolean = false;
   isModerator = false;
   roles: string[] = [];
 
@@ -77,6 +77,8 @@ export class RegimentSettingsComponent implements OnInit {
 
   objectKeys = Object.keys;
   scheduleNames: { [key: string]: Schedule[] } = {};
+  scheduleCount: number = 0;
+  scheduleCounts: { [key: string]: number } = {};
   selectedScheduleName: string | null = null;
   creatingSchedule: boolean = false;
   editingSchedule: boolean = false;
@@ -123,8 +125,10 @@ export class RegimentSettingsComponent implements OnInit {
             this.getRegiment().then(() => {
               if (this.regimentData.ownerId.includes(this.currentUser.discordId)) {
                 this.isOwner = true;
+                this.isLoaded = true;
               } else {
                 this.isOwner = false;
+                this.isLoaded = true;
               }
             });
           }
@@ -139,6 +143,8 @@ export class RegimentSettingsComponent implements OnInit {
     }
 
     this.getSchedules();
+
+    
   }
 
   /**
@@ -553,6 +559,10 @@ export class RegimentSettingsComponent implements OnInit {
     let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(this.currentUser.id, this.regimentID).toPromise();
     response = this.sortSchedules(response);
 
+
+    this.scheduleCounts = {};
+    this.scheduleCount = response.length;
+    
     response.forEach((schedule) => {
       const scheduleName = schedule.schedule_name || "null";
 
@@ -564,6 +574,12 @@ export class RegimentSettingsComponent implements OnInit {
       schedule.time12 = this.convertTo12Hour(schedule.time);
 
       this.scheduleNames[scheduleName].push(schedule);
+
+      if (!this.scheduleCounts[scheduleName]) {
+        this.scheduleCounts[scheduleName] = 1;
+      } else {
+        this.scheduleCounts[scheduleName]++;
+      }
     });
   
     // Check if the selected schedule still has any days after the removal
@@ -581,6 +597,13 @@ export class RegimentSettingsComponent implements OnInit {
       this.editingSchedule = false; // Hide the edit schedule div
       this.lastDayRemoved = false; // Reset the flag
     }
+  }
+
+  filterSchedulesByDay(day: string) {
+    if (this.selectedScheduleName) {
+      return this.scheduleNames[this.selectedScheduleName].filter(schedule => schedule.day === day);
+    }
+    return []; 
   }
   
   /**

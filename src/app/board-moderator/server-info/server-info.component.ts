@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat September 16th 2023 6:18:22 
+ * Last Modified: Wed October 11th 2023 5:48:21 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -41,6 +41,7 @@ export class ServerInfoComponent implements OnInit {
   naChecked = true;
   euChecked!: boolean;
   map: any;
+  isLoaded: boolean = false;
 
   mapNames: any;
 
@@ -104,6 +105,7 @@ export class ServerInfoComponent implements OnInit {
           }
         });
     }
+    
   }
 
   /**
@@ -238,7 +240,7 @@ export class ServerInfoComponent implements OnInit {
           fields: [],
           footer: {
             text: "WorTool.com",
-            icon_url: "https://app.paarmy.com/assets/icon.png",
+            icon_url: "https://wortool.com/assets/icon.png",
           },
           color: 13092744,
         },
@@ -377,7 +379,7 @@ export class ServerInfoComponent implements OnInit {
   getMapLink(map: string): string {
     const matchedMap = this.map.find((item: any) => item.map === map);
     if (matchedMap) {
-      return `https://app.paarmy.com/maps/${matchedMap.id}`;
+      return `https://wortool.com/maps/${matchedMap.id}`;
     }
     return "";
   }
@@ -413,5 +415,7 @@ export class ServerInfoComponent implements OnInit {
     } else {
       this.regimentSelected = false;
     }
+    this.isLoaded = true;
   }
+  
 }
