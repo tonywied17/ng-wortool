@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed October 11th 2023 5:43:22 
+Last Modified: Wed October 11th 2023 9:47:46 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -179,7 +179,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
 					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your
-					regiment. If you would like to add more than one owner please direct message <b>.molex</b> on discord.
+					regiment. If you would like to add more than one owner please email support@wortool.com.
 				</p>
 
 				<div class="">
@@ -287,7 +287,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
 					<i class="fa-regular fa-circle-question mr-1"></i> Publish and update your schedule for viewing on
-					regimental profiles. <span class="text-amber-500">[Under Development]</span>"
+					regimental profiles.
 				</p>
 
 
@@ -341,15 +341,16 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 						<div class="w-full grid lg:grid-cols-2 gap-4">
-							<div class="col-start-1 col-span-2">
+							<div class="col-start-1 col-span-1">
 								<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]"><i class="fa-solid fa-pencil"></i> Editing {{selectedScheduleName}}</h3>
-							</div>
 
-							<div>
-								
+								<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+									<i class="fa-regular fa-circle-question mr-1"></i> Add or remove schedule slots from your calendar.
+								</p>
 							</div>
+							
 
-							<div class="text-right">
+							<div class="text-right place-self-end ">
 
 								<button mat-stroked-button color="primary" (click)="toggleTimeFormat()" class="!inline-block">
 									<i class="fa-solid fa-clock pr-1"></i> {{timeString}}
@@ -361,19 +362,26 @@ Copyright (c) 2023 Tone Web Design, Molex
 						</div>
 						
 
-						<div class="w-full grid grid-cols-7 gap-4 hidden lg:grid mt-4">
+						<div class="w-full grid grid-cols-7 gap-2 hidden lg:grid mt-4">
 							<ng-container *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; let i = index">
 							  <div class="col-start-{{i + 1}} col-span-1">
 								<div class="text-center bg-gray-500 p-2 rounded-sm shadow-md">{{ day }}</div> <!-- Header -->
 								<ng-container *ngFor="let schedule of filterSchedulesByDay(day)">
-								  <div class="grid grid-cols-[2fr_1fr] my-2 p-2 w-full bg-slate-700 shadow-md rounded-sm">
-									<div>
-									  <h1 class="text-neutral-200 text-2xl">{{ schedule.event_type }}</h1> {{ display12HourTime ? schedule.time12 : schedule.time24}}
-									</div>
-									<div class="text-right">
-									  <button (click)="removeDay(schedule.id)" mat-button class="!min-h-fit !h-fit !w-fit !min-w-fit !p-2 !mx-1" color="warn"><i class="fa-solid fa-trash-can !text-red-700"></i></button>
-									</div>
-								  </div>
+									
+									<div class="grid grid-rows-[1fr_auto] my-2 p-4 w-full bg-slate-700 shadow-md rounded-sm text-base font-[200]">
+										<div style="overflow: hidden;">
+										  <h1 class="text-neutral-200 text-lg event-type font-[400]">{{ schedule.event_type }}</h1>
+										  {{ display12HourTime ? schedule.time12 : schedule.time24 }}
+										</div>
+										<div class="row-start-2 text-right">
+										  <button (click)="removeDay(schedule.id)" mat-button class="!min-h-fit !h-fit !w-fit !min-w-fit" color="warn">
+											<i class="fa-solid fa-trash-can !text-red-700"></i>
+										  </button>
+										</div>
+									  </div>
+									  
+									  
+									  
 								</ng-container>
 							  </div>
 							</ng-container>
@@ -386,8 +394,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<div>
 								  <div class="text-center bg-gray-400 p-2">{{ day }}</div> <!-- Header for mobile -->
 								  <ng-container *ngFor="let schedule of filterSchedulesByDay(day)">
-									<div class="m-2 p-2 bg-slate-700 shadow-md rounded-sm">
-									  <h1 class="text-neutral-200 text-2xl">{{ schedule.day }}</h1> {{ display12HourTime ? schedule.time12 : schedule.time24}} [{{schedule.event_type}}]
+									<div class="m-2 p-2 bg-slate-700 shadow-md rounded-sm text-base">
+										<div style="overflow: hidden;">
+											<h1 class="text-neutral-200 text-lg event-type font-[400]">{{schedule.event_type}}</h1> {{ display12HourTime ? schedule.time12 : schedule.time24}}
+										</div>
 									  <div class="text-right">
 										<button (click)="removeDay(schedule.id)" mat-button class="!min-h-fit !h-fit !w-fit !min-w-fit !p-2 !mx-1" color="warn"><i class="fa-solid fa-trash-can !text-red-700"></i></button>
 									  </div>
@@ -405,36 +415,73 @@ Copyright (c) 2023 Tone Web Design, Molex
 						
 	
 	
-						<h1>Add a day to schedule</h1>
+						<h1 class="text-slate-300 ml-1 mt-4 text-xl font-[300]">Add a Time Slot</h1>
 	
-						<form (ngSubmit)="addDay()">
+						<div class="lg:p-4">
+							<form (ngSubmit)="addDay()">
+
+
+								<div class="field-box my-2">
+									<select [(ngModel)]="scheduleForm.day"
+										name="day"
+										style="
+							padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" 
+										class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+										id="existing-select">
+										<option value
+											disabled
+											selected>
+											Calendar Day...
+										</option>
+										<option value="Monday">Monday</option>
+										<option value="Tuesday">Tuesday</option>
+										<option value="Wednesday">Wednesday</option>
+										<option value="Thursday">Thursday</option>
+										<option value="Friday">Friday</option>
+										<option value="Saturday">Saturday</option>
+										<option value="Sunday">Sunday</option>
+									</select>
+									<i class="fa-solid fa-calendar-day field-icon"></i>
+								</div>
+		
+		
+								<div class="field-box my-2">
+									<input [(ngModel)]="scheduleForm.time"
+										name="time"
+										style="
+							padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" 
+										class="field-input"
+										type="time">
+										<i class="fa-regular fa-clock field-icon"></i>
+								</div>
 	
-							<label>
-								Day:
-								<select [(ngModel)]="scheduleForm.day" name="day">
-									<option value="Monday">Monday</option>
-									<option value="Tuesday">Tuesday</option>
-									<option value="Wednesday">Wednesday</option>
-									<option value="Thursday">Thursday</option>
-									<option value="Friday">Friday</option>
-									<option value="Saturday">Saturday</option>
-									<option value="Sunday">Sunday</option>
-								</select>
-							</label>
-	
-	
-							<label>
-								Time:
-								<input [(ngModel)]="scheduleForm.time" name="time" type="time">
-							</label>
-	
-							<label>
-								Event Type:
-								<input [(ngModel)]="scheduleForm.event_type" name="event_type">
-							</label>
-	
-							<button type="submit">Submit</button>
-						</form>
+								<div class="field-box my-2">
+									<input [(ngModel)]="scheduleForm.event_type"
+										name="event_type"
+										style="
+							padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" 
+										class="field-input"
+										placeholder="Event Name..."
+										type="text">
+										<i class="fa-solid fa-spell-check field-icon"></i>
+								</div>
+		
+								<div class="text-right">
+									<button mat-stroked-button type="submit">Add Time Slot</button>
+								</div>
+								
+
+							</form>
+						</div>
 	
 					</div>
 				</div>
@@ -444,16 +491,36 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<!-- Create New Schedule Form -->
 				<div *ngIf="creatingSchedule">
 					<form (ngSubmit)="createSchedule()">
-						<button mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
-							class="fa-solid fa-pen-to-square"></i> Cancel</button>
-						<label>
-							Schedule Name:
-							<input [(ngModel)]="scheduleForm.schedule_name" name="schedule_name">
-						</label>
 
-						<label>
-							Day:
-							<select [(ngModel)]="scheduleForm.day" name="day">
+						<div class="field-box my-2">
+							<input [(ngModel)]="scheduleForm.schedule_name"
+								name="schedule_name"
+								style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;" 
+								class="field-input"
+								placeholder="Schedule Name..."
+								type="text">
+								<i class="fa-solid fa-spell-check field-icon"></i>
+						</div>
+
+						<div class="field-box my-2">
+							<select [(ngModel)]="scheduleForm.day"
+								name="day"
+								style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;" 
+								class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+								id="existing-select">
+								<option value
+									disabled
+									selected>
+									Calendar Day...
+								</option>
 								<option value="Monday">Monday</option>
 								<option value="Tuesday">Tuesday</option>
 								<option value="Wednesday">Wednesday</option>
@@ -462,19 +529,42 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<option value="Saturday">Saturday</option>
 								<option value="Sunday">Sunday</option>
 							</select>
-						</label>
+							<i class="fa-solid fa-calendar-day field-icon"></i>
+						</div>
 
-						<label>
-							Time:
-							<input [(ngModel)]="scheduleForm.time" name="time" type="time">
-						</label>
 
-						<label>
-							Event Type:
-							<input [(ngModel)]="scheduleForm.event_type" name="event_type">
-						</label>
+						<div class="field-box my-2">
+							<input [(ngModel)]="scheduleForm.time"
+								name="time"
+								style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;" 
+								class="field-input"
+								type="time">
+								<i class="fa-regular fa-clock field-icon"></i>
+						</div>
 
-						<button type="submit">Submit</button>
+						<div class="field-box my-2">
+							<input [(ngModel)]="scheduleForm.event_type"
+								name="event_type"
+								style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;" 
+								class="field-input"
+								placeholder="Event Name..."
+								type="text">
+								<i class="fa-solid fa-spell-check field-icon"></i>
+						</div>
+
+						<div class="text-right">
+							<button mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
+								class="fa-solid fa-pen-to-square"></i> Cancel</button>
+							<button mat-stroked-button type="submit">Add Time Slot</button>
+						</div>
 					</form>
 				</div>
 
