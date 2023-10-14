@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu August 3rd 2023 10:33:49 
+ * Last Modified: Sat October 14th 2023 2:42:00 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -16,6 +16,23 @@ import { RegimentService } from "../../_services/regiment.service";
 import { SteamApiService } from "../../_services/steam-api.service";
 import { Location } from "@angular/common";
 import { firstValueFrom } from "rxjs";
+
+
+interface Schedule {
+  id: number;
+  schedule_name: string;
+  region_tz: string;
+  regimentId: number;
+  day: string;
+  time: string;
+  time24: string;
+  time12: string;
+  event_type: string;
+  event_name: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 
 @Component({
   selector: "app-regiment-info",
@@ -30,6 +47,15 @@ export class RegimentInfoComponent implements OnInit {
   randomScreenshot: string = "";
   gameDetails: any;
   isDataLoaded: boolean = false;
+
+  display12HourTime: boolean = true;
+  timeString: string = "24hr time";
+
+  objectKeys = Object.keys;
+  scheduleNames: { [name: string]: Schedule[] } = {};
+  scheduleCount: number = 0;
+  scheduleCounts: { [key: string]: number } = {};
+  selectedScheduleName: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +72,8 @@ export class RegimentInfoComponent implements OnInit {
       this.regimentID = id;
       this.retrieveInitialData();
     });
+
+
   }
 
   /**
@@ -56,6 +84,7 @@ export class RegimentInfoComponent implements OnInit {
       this.getRegiment(this.regimentID),
       this.fetchRegimentUsers(),
       this.getScreenshots(),
+      this.getSchedules(),
     ]);
 
     this.isDataLoaded = true;
@@ -133,4 +162,126 @@ export class RegimentInfoComponent implements OnInit {
    goBack(): void {
     this.location.back();
   }
+
+
+  /* Schedule Testing */
+  getScheduleNames(): string[] {
+    return Object.keys(this.scheduleNames);
+  }
+
+  
+  async getSchedules(): Promise<void> {
+    let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(0, this.regimentID).toPromise();
+    response = this.sortSchedules(response);
+  
+    this.scheduleCounts = {};
+    this.scheduleCount = response.length;
+  
+    response.forEach((schedule) => {
+      const scheduleName = schedule.schedule_name || "null";
+  
+      if (!this.scheduleNames[scheduleName]) {
+        this.scheduleNames[scheduleName] = [];
+      }
+  
+      schedule.time24 = schedule.time;
+      schedule.time12 = this.convertTo12Hour(schedule.time);
+  
+      this.scheduleNames[scheduleName].push(schedule);
+  
+      if (!this.scheduleCounts[scheduleName]) {
+        this.scheduleCounts[scheduleName] = 1;
+      } else {
+        this.scheduleCounts[scheduleName]++;
+      }
+    });
+  }
+  
+
+
+  filterSchedulesByDayAndName(day: string, name: string): Schedule[] {
+    if (this.scheduleNames[name]) {
+      return this.scheduleNames[name].filter((schedule) => schedule.day === day);
+    }
+    return [];
+  }
+  
+
+
+  toggleTimeFormat(): void {
+    this.display12HourTime = !this.display12HourTime;
+    if (this.display12HourTime) {
+      this.timeString = "24hr time";
+    } else {
+      this.timeString = "12hr time";
+    }
+  }
+
+
+  convertTo12Hour(time24: string): string {
+    let [hour, minute] = time24.split(":");
+    let hours = parseInt(hour);
+    let minutes = parseInt(minute);
+
+    let period = hours >= 12 ? "PM" : "AM";
+
+    if (hours === 0) {
+      hours = 12;
+    } else if (hours > 12) {
+      hours -= 12;
+    }
+
+    let minuteStr =
+      minutes < 10 ? "0" + minutes.toString() : minutes.toString();
+
+    return `${hours}:${minuteStr} ${period}`;
+  }
+
+  getTimeInMinutes(time: string): number {
+    let [hour, minute] = time.split(":");
+    let hours = parseInt(hour);
+    let minutes = parseInt(minute);
+
+    return hours * 60 + minutes;
+  }
+
+  trimLeadingZero(time: string): string {
+    if (time.startsWith("0")) {
+      return time.slice(1);
+    }
+    return time;
+  }
+
+  sortSchedules(schedules: Schedule[]): Schedule[] {
+    const dayOrder: { [day: string]: number } = {
+      Monday: 0,
+      Tuesday: 1,
+      Wednesday: 2,
+      Thursday: 3,
+      Friday: 4,
+      Saturday: 5,
+      Sunday: 6,
+    };
+
+    return schedules.sort((a, b) => {
+      // Map days to their order in the week and then sort
+      const dayA = dayOrder[a.day];
+      const dayB = dayOrder[b.day];
+
+      if (dayA < dayB) return -1;
+      if (dayA > dayB) return 1;
+
+      // If days are equal, sort by time
+      const timeA = this.getTimeInMinutes(a.time);
+      const timeB = this.getTimeInMinutes(b.time);
+
+      if (timeA < timeB) return -1;
+      if (timeA > timeB) return 1;
+      
+      return 0;
+    });
+
+    
+  }
+
 }
