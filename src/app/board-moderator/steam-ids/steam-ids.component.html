@@ -15,23 +15,23 @@
             </button>
         </div>
 
-
+        <div
+        *ngIf="steamIdForm.get('gameIdForm')!.invalid && (steamIdForm.get('gameIdForm')!.dirty || steamIdForm.get('gameIdForm')!.touched)">
+        <div *ngIf="steamIdForm.get('gameIdForm')!.hasError('required')" class="alert-danger">
+            Steam ID is required.
+        </div>
+        <div *ngIf="steamIdForm.get('gameIdForm')!.hasError('pattern')" class="alert-danger">
+            Steam ID must be exactly 17 characters.
+        </div>
+    </div>
         <div class="field-box">
 
             <form [formGroup]="steamIdForm" (ngSubmit)="setGameId()">
                 <!-- Display error messages for pattern and required validation -->
-                <div
-                    *ngIf="steamIdForm.get('gameIdForm')!.invalid && (steamIdForm.get('gameIdForm')!.dirty || steamIdForm.get('gameIdForm')!.touched)">
-                    <div *ngIf="steamIdForm.get('gameIdForm')!.hasError('required')" class="alert-danger">
-                        Steam ID is required.
-                    </div>
-                    <div *ngIf="steamIdForm.get('gameIdForm')!.hasError('pattern')" class="alert-danger">
-                        Steam ID must be exactly 17 characters.
-                    </div>
-                </div>
+               
                 <!-- Input field with validation -->
                 <input formControlName="gameIdForm" (input)="getSteamIdPreview()" matTooltipClass="form-tooltip"
-                    matTooltipPosition="left" matTooltip="Steam ID of the user you want to add." name="gameIdForm"
+                    matTooltipPosition="left" matTooltip="Please enter the Steam ID of the user you wish to add." name="gameIdForm"
                     class="field-input my-[0.5em]" type="text" placeholder="Steam ID..." pattern=".{17}" required />
                     <i class="fa-brands fa-steam-symbol field-icon"></i>
 
@@ -155,10 +155,11 @@
                     </div>
 
 
-
+                    <mat-divider></mat-divider>
                 </div>
 
                 <!--  -->
+                
 
                 <div class="lg:row-start-2 p-4 place-self-start lg:col-start-1 col-span-1" *ngIf="user.liveSteamData">
                     <img [src]="user.liveSteamData.avatarfull"

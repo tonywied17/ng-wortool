@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat September 16th 2023 6:25:15 
+ * Last Modified: Fri November 3rd 2023 5:49:13 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -107,26 +107,31 @@ export class AppComponent implements OnInit {
   async initializeComponent(): Promise<void> {
     this.isLoggedIn = !!this.tokenStorage.getToken();
     this.currentUser = this.tokenStorage.getUser();
-
+  
     if (this.isLoggedIn) {
       this.roles = this.tokenStorage.getUser().roles;
       this.showAdmin = this.roles.includes("ROLE_ADMIN");
       this.showMod = this.roles.includes("ROLE_MODERATOR");
       this.showUser = true;
     }
-
+  
     const response = await this.regimentService
-    .getRegiment(this.currentUser.regimentId)
-    .toPromise();
-    if (response.ownerId.includes(this.currentUser.discordId)) {
+      .getRegiment(this.currentUser.regimentId)
+      .toPromise();
+    // console.log(response);
+  
+    if (response.ownerId === null) {
+      this.isOwner = false;
+      this.modRoute = "/mod/2";
+    } else if (response.ownerId.includes(this.currentUser.discordId)) {
       this.isOwner = true;
       this.modRoute = "/mod/1";
     } else {
       this.isOwner = false;
       this.modRoute = "/mod/2";
     }
-
   }
+  
 
 
   menuOpen = false;

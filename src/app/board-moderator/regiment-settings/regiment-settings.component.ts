@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat October 14th 2023 1:45:03 
+ * Last Modified: Fri November 3rd 2023 5:49:13 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -262,7 +262,7 @@ export class RegimentSettingsComponent implements OnInit {
       .createWebhook(guildId, channelId)
       .toPromise()
       .then((response: any) => {
-        // console.log(response);
+        // // console.log(response);
         this.webhook = response;
         this.snackBar.open(
           `$Webhook created for channel ${this.targetChannel}!`,
@@ -414,7 +414,7 @@ export class RegimentSettingsComponent implements OnInit {
       .removeModerator(userId, this.currentUser.id)
       .toPromise()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         const userIndex = this.regimentUsers.findIndex(
           (user: { id: any }) => user.id === userId
         );
@@ -628,7 +628,7 @@ export class RegimentSettingsComponent implements OnInit {
         this.scheduleForm.event_name
       )
       .subscribe((response) => {
-        console.log(response);
+        // console.log(response);
         this.scheduleNames = {};
         this.getSchedules();
 
@@ -672,7 +672,7 @@ export class RegimentSettingsComponent implements OnInit {
         this.scheduleForm.event_name
       )
       .subscribe((response) => {
-        console.log(response);
+        // console.log(response);
         // Reset the scheduleNames before fetching the updated list of schedules
         this.scheduleNames = {};
         this.getSchedules();
@@ -687,7 +687,7 @@ export class RegimentSettingsComponent implements OnInit {
    */
   async removeDay(scheduleId: number): Promise<void> {
     const response = await this.regimentService.removeSchedule(this.currentUser.id, this.regimentID, scheduleId).toPromise();
-    console.log(response);
+    // console.log(response);
   
     if (this.selectedScheduleName && this.scheduleNames[this.selectedScheduleName] && this.scheduleNames[this.selectedScheduleName].length === 1) {
       this.lastDayRemoved = true;

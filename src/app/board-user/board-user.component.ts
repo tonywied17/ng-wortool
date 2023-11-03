@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 10:09:24 
+ * Last Modified: Fri November 3rd 2023 5:49:13 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -145,7 +145,7 @@ export class BoardUserComponent implements OnInit {
               this.regimentData.guild_id
             )
             .toPromise();
-          // console.log(discordResponse);
+          // // console.log(discordResponse);
 
           this.discordData.username = discordResponse.USER_SPECIFIC.DISCORD_USERNAME;
           this.regimentData.regiment = discordResponse.GUILD_SPECIFIC.GUILD_NAME;
@@ -163,8 +163,8 @@ export class BoardUserComponent implements OnInit {
           // }));
           
           // rolesArray.forEach((role) => {
-          //   console.log("Role Name:", role.roleName);
-          //   console.log("Role ID:", role.roleId);
+          //   // console.log("Role Name:", role.roleName);
+          //   // console.log("Role ID:", role.roleId);
           // });
 
         }
@@ -344,10 +344,10 @@ export class BoardUserComponent implements OnInit {
     const backendUrl = `https://api.tonewebdesign.com/pa/discord/user/${state}`;
 
     // once stored in db model we will retrieve the object and update the user object with discord info
-    // console.log("backendUrl: ", backendUrl);
+    // // console.log("backendUrl: ", backendUrl);
 
     this.discordService.getOne(state).subscribe((response) => {
-      // console.log(response);
+      // // console.log(response);
       this.discordData = response;
       this.discordId = this.discordData.discordId;
       this.discordIsSynced = true;
@@ -550,7 +550,7 @@ export class BoardUserComponent implements OnInit {
       } else {
         this.discordService.getOne(userId).subscribe(
           (response) => {
-            // console.log(response);
+            // // console.log(response);
             this.discordData = response;
             this.discordIsSynced = true;
             resolve(); 
@@ -578,7 +578,7 @@ export class BoardUserComponent implements OnInit {
       } else {
         this.regimentService.getRegiment(regimentId).subscribe(
           (response) => {
-            // console.log(response);
+            // // console.log(response);
             this.regimentData = response;
             this.regimentSelected = true;
             resolve();
@@ -628,7 +628,7 @@ export class BoardUserComponent implements OnInit {
     this.discordService
       .removeDiscordUser(this.currentUser.id)
       .subscribe((response) => {
-        // console.log(response);
+        // // console.log(response);
         this.discordData = null;
         this.discordIsSynced = false;
         this.discordId = "";
@@ -692,7 +692,7 @@ export class BoardUserComponent implements OnInit {
     this.regimentService
       .removeUsersRegiment(this.currentUser.id)
       .subscribe((response: any) => {
-        // console.log(response);
+        // // console.log(response);
         this.regimentData = null;
         this.regimentSelected = false;
         this.regimentId = "";

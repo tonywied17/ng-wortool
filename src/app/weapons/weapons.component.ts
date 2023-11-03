@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri August 4th 2023 9:12:41 
+ * Last Modified: Fri November 3rd 2023 5:49:13 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -87,7 +87,7 @@ export class WeaponsComponent implements OnInit {
     });
     this.route.params.subscribe((params: Params) => {
       const weaponId = params["weapon"];
-      // console.log("route found for: " + weaponId);
+      // // console.log("route found for: " + weaponId);
       if (weaponId) {
         this.weaponService.get(weaponId).subscribe((data) => {
           this.loadWeapon(JSON.parse(data));
