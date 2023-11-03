@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed October 11th 2023 9:47:46 
+Last Modified: Fri November 3rd 2023 10:07:45 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -197,10 +197,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 					
 								
 								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-       								class="h-[45px] max-w-[50px] w-auto inline rounded-l-lg pr-2" (error)="user.avatar_url = null">
+								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
 
 								<ng-template #noAvatar>
-									<i class="fa-solid fa-user h-[25px] px-2"></i>
+									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
 								</ng-template>
 
 								<span class="text-lg font-[300] flex items-center">
@@ -226,10 +226,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<div class="flex items-center">
 								
 								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-       								class="h-[45px] max-w-[50px] w-auto inline rounded-l-lg pr-2">
+       								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
 
 								<ng-template #noAvatar>
-									<i class="fa-solid fa-user h-[25px] px-2"></i>
+									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
 								</ng-template>
 
 								<span class="text-lg font-[300]">
@@ -258,9 +258,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
 							<div class="flex items-center">
 								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-									class="h-[45px] w-auto inline rounded-l-lg pr-2">
+								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
+
 								<ng-template #noAvatar>
-									<i class="fa-solid fa-user h-[25px] px-2"></i>
+									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
 								</ng-template>
 
 								<span class="text-lg font-[300]">

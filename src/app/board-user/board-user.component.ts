@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed August 9th 2023 1:29:05 
+ * Last Modified: Fri November 3rd 2023 10:09:24 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -58,7 +58,7 @@ export class BoardUserComponent implements OnInit {
   passwordNewConfirm: string = "";
 
   email: string = "";
-  avatar_url: string = "";
+  avatar_url: any;
   discordId: string = "";
   regimentId: string = "";
   discordSyncUrl: string = "";
