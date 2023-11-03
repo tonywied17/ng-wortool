@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sat October 14th 2023 3:00:03 
+Last Modified: Fri November 3rd 2023 10:41:41 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -52,22 +52,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
     <div class="mt-[90px] grid lg:grid-cols-[1fr_2fr] grid-cols-1 gap-6">
 
-        <!-- Media Widget -->
-        <div class="p-4 right-in col-span-2">
-            <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500]">Media</h4>
-            <div class="mt-4">
-                <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
-                    <div class="flex">
-                      <div class="mr-2">
-                        <i class="fas fa-exclamation-triangle"></i>
-                      </div>
-                      <div>
-                        <p>No media found.</p>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-        </div>
+       
 
         
         <!-- Social Media Links -->
@@ -81,67 +66,111 @@ Copyright (c) 2023 Tone Web Design, Molex
               <a *ngIf="regiment.website" [href]="regiment.website" target="_blank" mat-list-item>
                 <span class="text-slate-400"><i class="fas fa-globe"></i> Website</span>
               </a>
-              <mat-divider *ngIf="regiment.website"></mat-divider>
+              <!-- <mat-divider *ngIf="regiment.website"></mat-divider>
               <a href="#" target="_blank" mat-list-item>
                 <span class="text-slate-400"><i class="fab fa-youtube"></i> YouTube</span>
-              </a>
+              </a> -->
             </mat-nav-list>
-          </div>
-          
-          
 
-        <!-- Schedule Widget -->
+            <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500] mt-4">Regiment Staff</h4>
+            
+        </div>
+
+        
+          
+    <mat-tab-group dynamicHeight class="mt-4">
+      <mat-tab label="Schedule">
+              <!-- Schedule Widget -->
         <div class="p-4 right-in">
-            <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500]">Schedule</h4>
-            <div class="mt-4">
+          <!-- <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500]">Schedule</h4> -->
+          <div class="mt-4">
 
-                <div *ngIf="scheduleCount <= 0">
+              <div *ngIf="scheduleCount <= 0">
+                  <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+                      <div class="flex">
+                        <div class="mr-2">
+                          <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                          <p>No schedules found.</p>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+
+              <!-- tab the schedules-->
+
+              <ng-container *ngFor="let scheduleName of getScheduleNames(); let first = first">
+                  <mat-expansion-panel [expanded]="first" #expansionPanel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        {{ scheduleName }}
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="schedule-widget" #contentContainer>
+                      <div class="schedule-days">
+                          <ng-container *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
+                            <ng-container *ngIf="filterSchedulesByDayAndName(day, scheduleName).length > 0">
+                                <div class="schedule-day shadow-md">
+                                    <div class="day-header">
+                                      <div class="text-center text-slate-400 p-2" style="background: linear-gradient(145deg,#263855e1,#1e293b00,#1e293b00,#1e293b00), linear-gradient(-145deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);; border-bottom: 1px solid rgb(33, 49, 75);">{{ day }}</div>
+                                    </div>
+                                    <ng-container *ngFor="let schedule of filterSchedulesByDayAndName(day, scheduleName)">
+                                      <div class="schedule-entry p-2">
+                                        <h1 class="event-type text-neutral-200 font-[400] text-base">{{ schedule.event_type }}</h1>
+                                        <p class="schedule-time text-neutral-300 font-[200] text-base">{{ display12HourTime ? schedule.time12 : schedule.time24 }}</p>
+                                      </div>
+                                    </ng-container>
+                                  </div>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+                    </div>
+                  </mat-expansion-panel>
+                </ng-container>
+                
+            </div>
+      </div>
+      <!--  -->
+            </mat-tab>
+            <mat-tab label="Media">  
+              <!-- Media Widget -->
+              <div class="p-4 right-in col-span-2">
+                  <div class="mt-4">
+                      <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+                          <div class="flex">
+                            <div class="mr-2">
+                              <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                              <p>No media found.</p>
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Recaps">
+              <!-- Recap Widget -->
+              <div class="p-4 right-in col-span-2">
+                <div class="mt-4">
                     <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
                         <div class="flex">
                           <div class="mr-2">
                             <i class="fas fa-exclamation-triangle"></i>
                           </div>
                           <div>
-                            <p>No schedules found.</p>
+                            <p>No game recaps found.</p>
                           </div>
                         </div>
                       </div>
                 </div>
+            </div>
+            </mat-tab>
+          </mat-tab-group>
+          
 
-                <!-- tab the schedules-->
-
-                <ng-container *ngFor="let scheduleName of getScheduleNames(); let first = first">
-                    <mat-expansion-panel [expanded]="first" #expansionPanel>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          {{ scheduleName }}
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <div class="schedule-widget" #contentContainer>
-                        <div class="schedule-days">
-                            <ng-container *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
-                              <ng-container *ngIf="filterSchedulesByDayAndName(day, scheduleName).length > 0">
-                                  <div class="schedule-day shadow-md">
-                                      <div class="day-header">
-                                        <div class="text-center text-slate-400 p-2" style="background: linear-gradient(130deg,#263855e1,#1e293b00,#1e293b00,#1e293b00); border-bottom: 1px solid rgb(33, 49, 75);">{{ day }}</div>
-                                      </div>
-                                      <ng-container *ngFor="let schedule of filterSchedulesByDayAndName(day, scheduleName)">
-                                        <div class="schedule-entry p-2">
-                                          <h1 class="event-type text-neutral-200 font-[400] text-base">{{ schedule.event_type }}</h1>
-                                          <p class="schedule-time text-neutral-300 font-[200] text-base">{{ display12HourTime ? schedule.time12 : schedule.time24 }}</p>
-                                        </div>
-                                      </ng-container>
-                                    </div>
-                              </ng-container>
-                            </ng-container>
-                          </div>
-                      </div>
-                    </mat-expansion-panel>
-                  </ng-container>
-                  
-              </div>
-        </div>
-        <!--  -->
+        
 
 
         

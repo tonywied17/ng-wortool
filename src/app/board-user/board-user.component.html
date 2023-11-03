@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday August 6th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sat September 16th 2023 6:36:21 
+Last Modified: Fri November 3rd 2023 10:22:43 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -306,8 +306,13 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 												<div>
-													<img [src]="avatar_url"
+													<img *ngIf="avatar_url; else noAvatar" [src]="avatar_url" (error)="avatar_url = null"
 														class="h-[80px] mt-2 pointer-events-none">
+
+													<ng-template #noAvatar>
+														<img src="https://molex.cloud/2023/November/3/_vfF/error.png"
+														class="h-[80px] mt-2 pointer-events-none">
+													</ng-template>
 												</div>
 
 
