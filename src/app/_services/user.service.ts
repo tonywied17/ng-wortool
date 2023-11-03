@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:41:20 
+ * Last Modified: Fri November 3rd 2023 5:49:13 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -60,7 +60,7 @@ export class UserService {
    * @returns - Observable<any>
    */
   updateUser(user: User): Observable<any> {
-    // console.log(`${user.id} - ${user.nickname} | ev: ${user.events}, dr: ${user.drills}`)
+    // // console.log(`${user.id} - ${user.nickname} | ev: ${user.events}, dr: ${user.drills}`)
     return this.http.put(`${API_URL}${user.id}`, user);
   }
 

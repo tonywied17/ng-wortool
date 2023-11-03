@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat September 16th 2023 6:37:00 
+ * Last Modified: Fri November 3rd 2023 5:49:13 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -118,14 +118,17 @@ export class HomeComponent implements OnInit {
 
     if (this.isLoggedIn && this.currentUser) {
       try {
-        const response = await this.regimentService
-          .getRegiment(this.currentUser.regimentId)
-          .toPromise();
-        this.isOwner = response.ownerId.includes(this.currentUser.discordId);
+        const response = await this.regimentService.getRegiment(this.currentUser.regimentId).toPromise();
+        if (response.ownerId !== null) {
+          this.isOwner = response.ownerId.includes(this.currentUser.discordId);
+        } else {
+          this.isOwner = false;
+        }
         this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
       } catch (error) {
         console.error("Error fetching regiment:", error);
       }
+      
 
       this.authService.checkUserRole(userID).subscribe(
         (response) => {
@@ -179,7 +182,7 @@ export class HomeComponent implements OnInit {
 
     this.cdRef.detectChanges();
 
-    console.log("init component ran");
+    // console.log("init component ran");
   }
 
   /**
@@ -240,15 +243,20 @@ export class HomeComponent implements OnInit {
         // Check if data exists and contains regimentId
         if (data && data.regimentId) {
           try {
-            const response = await this.regimentService
-              .getRegiment(data.regimentId)
-              .toPromise();
-            this.isOwner = response.ownerId.includes(data.discordId);
-            this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
+            const response = await this.regimentService.getRegiment(data.regimentId).toPromise();
+            if (response.ownerId === null) {
+              this.isOwner = false;
+              this.modRoute = "/mod/2";
+            } else {
+              this.isOwner = response.ownerId ? response.ownerId.includes(data.discordId) : false;
+              this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
+            }
           } catch (error) {
             console.error("Error fetching regiment:", error);
           }
         }
+        
+        
       },
       error: (err) => {
         this.errorMessage = err.error.message;

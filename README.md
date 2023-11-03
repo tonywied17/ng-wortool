@@ -10,11 +10,6 @@
 > View latest live build:
 [View Live](https://_.molex.cloud/git/ng-paapp2)
 
-
-Hello, 
-Currently developing a new War of Rights resource tool using fancy frameworks and api's for overkill planning, collaboration and community fun.
-It is still a work in development but I feel is far along enough to share.
-
 ## Public User Features
 
 ### __Map Resource Tool Features__
