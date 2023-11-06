@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Fri November 3rd 2023 5:51:46 
+Last Modified: Mon November 6th 2023 5:39:06 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -21,11 +21,11 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-<div *ngIf="!isOwner">
+<!-- <div *ngIf="!isOwner">
 	<p>This is reserved for regiment owners.</p>
-</div>
+</div> -->
 
-<div *ngIf="isOwner">
+<div *ngIf="showMod || isOwner">
 
 	<div *ngIf="regimentData" class="max-w-full">
 		<!-- <h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2> -->
@@ -61,13 +61,13 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</div>
 	 				-->
 					<div class="sm:col-start-3 sm:col-span-2 sm:place-self-end">
-						<select #channelSelect style=" padding-top: 11px;
+						<select [disabled]="showMod && !isOwner" #channelSelect style=" padding-top: 11px;
 							padding-bottom: 11px;
 							font-size: 15px;
 							border: 1px solid #7c7d72 !important;" 
 							matTooltipClass="form-tooltip"
 							matTooltipPosition="left"
-							matTooltip="Select the Discord channel where 'Event Share' information will be posted."
+							[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Select the Discord channel where \'Event Share\' information will be posted.'"
 							class="field-input2 inline-block" id="channel-select">
 							<option value="0">Select a Channel</option>
 							<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
@@ -75,7 +75,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 							</option>
 						</select>
 
-						<button (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
+						<button [disabled]="showMod && !isOwner" (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
 							class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1" color="primary">
 							Set Channel
 						</button>
@@ -89,6 +89,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
 					<i class="fa-regular fa-circle-question mr-1"></i> Personalize your regiment's profile information.
 				</p>
+				
 
 				<div class="">
 					<form (ngSubmit)="updateRegiment()">
@@ -104,20 +105,21 @@ Copyright (c) 2023 Tone Web Design, Molex
 							</div>
 
 							<div class="field-box">
-								<select [(ngModel)]="side" style=" padding-top: 8px;
-    						padding-bottom: 8px;
-    						font-size: 15px;
-    						border: 1px solid #7c7d72 !important;" 
-							matTooltipClass="form-tooltip"
-							matTooltipPosition="left"
-							matTooltip="Pick your side in the war..."
-							class="field-input2 inline-block my-2" id="side-select" name="side">
+								<select [disabled]="showMod && !isOwner" [(ngModel)]="side" style="padding-top: 8px;
+								padding-bottom: 8px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
+								matTooltipClass="form-tooltip"
+								matTooltipPosition="left"
+								[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Pick your side in the war...'"
+								class="field-input2 inline-block my-2" id="side-select" name="side">
 									<option value="regimentData.side" selected disabled>
-										{{regimentData.side}}
+										{{ regimentData.side }}
 									</option>
 									<option value="USA">USA</option>
 									<option value="CSA">CSA</option>
-								</select>
+							</select>
+							
 								<i class="fa-solid fa-arrows-up-down field-icon"></i>
 							</div>
 
@@ -141,7 +143,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 							</div>
 
 							<div class="field-box">
-								<input [(ngModel)]="invite_link" name="invite_link" style="
+								<input [disabled]="showMod && !isOwner" [(ngModel)]="invite_link" name="invite_link" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
@@ -149,13 +151,13 @@ Copyright (c) 2023 Tone Web Design, Molex
               " 
 			  matTooltipClass="form-tooltip"
 			  matTooltipPosition="left"
-			  matTooltip="Share a Discord invite link for your regiment." 
+			  [matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Share a Discord invite link for your regiment.'"
 			  class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Invite Link...">
 								<i class="fa-brands fa-discord field-icon"></i>
 							</div>
 
 							<div class="field-box">
-								<input [(ngModel)]="website" name="website" style="
+								<input [disabled]="showMod && !isOwner" [(ngModel)]="website" name="website" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
@@ -163,13 +165,13 @@ Copyright (c) 2023 Tone Web Design, Molex
               " 
 			  matTooltipClass="form-tooltip"
 			  matTooltipPosition="left"
-			  matTooltip="Add your regiment's website URL (if available)." 
+			  [matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Add your regiment\'s website URL (if available).'"
 			  class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Website...">
 								<i class="fa-solid fa-globe field-icon"></i>
 							</div>
 
 							<div class="field-box">
-								<textarea [(ngModel)]="description" name="description" style="
+								<textarea [disabled]="showMod && !isOwner" [(ngModel)]="description" name="description" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
@@ -177,14 +179,14 @@ Copyright (c) 2023 Tone Web Design, Molex
               " 
 			  matTooltipClass="form-tooltip"
 			  matTooltipPosition="left"
-			  matTooltip="Provide a brief summary of your regiment." 
+			  [matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Provide a brief summary of your regiment.'"
 			  class="field-input !font-[300] my-[0.5em] textarea" placeholder="Summary...">
 						</textarea>
 								<i class="fa-solid fa-book field-icon"></i>
 							</div>
 						</div>
 
-						<button mat-raised-button type="submit"
+						<button [disabled]="showMod && !isOwner" mat-raised-button type="submit"
 							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
 							Update Regiment
 						</button>
@@ -199,48 +201,51 @@ Copyright (c) 2023 Tone Web Design, Molex
 					Manage Members &amp; Managers
 				</h3>
 				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your
-					regiment. If you would like to add more than one owner please direct message <span class="font-[500] not-italic m-0.5"><i class="fa-brands fa-discord"></i> tonywied17</span> on Discord.
+					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your regiment. 
+				</p>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> User's will have to re-login to WoRTool to access manager features.
+				</p>
+				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+					<i class="fa-regular fa-circle-question mr-1"></i> If you would like to add more than one owner please direct message <span class="font-[500] not-italic m-0.5"><i class="fa-brands fa-discord"></i> tonywied17</span> on Discord.
 				</p>
 
-				<div class="">
+				<div class="mt-4">
 
 					<!-- Owner -->
 					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">
 						{{regimentData.regiment}} Owner
-
 					</h3>
+					
+					
 
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
+						<div *ngIf="regimentData.ownerId.includes(user.discordId);">
+						  <div class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
+							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+										  class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
+		  
+										  <ng-template #noAvatar>
+											  <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
+										  </ng-template>
+		  
+						  {{user.username}}
+		  
+						  <span class="font-[300] flex items-center ml-auto mr-2 bg-slate-700 p-1 rounded-md text-sm">
+							<i class="mb-[1px] fa-solid fa-crown text-amber-400 mx-1"></i> Owner
+						  </span>
 						
-						<div *ngIf="regimentData.ownerId.includes(user.discordId);"
-							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
-					
-								
-								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
-
-								<ng-template #noAvatar>
-									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
-								</ng-template>
-
-								<span class="text-lg font-[300] flex items-center">
-									{{user.username}} <i class="ml-1 mb-[1px] fa-solid fa-crown text-amber-400"></i>
-								</span>
-					
+						  </div>
 						</div>
 
-						<div class="grid grid-cols-[auto_1fr]">
-
-						</div>
-					</div>
+					  </div>
 
 
 
 
 					<!-- Managers -->
 					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Managers</h3>
-
+					
 					<div *ngFor="let user of regimentUsers?.slice(0, 8)">
 						<div *ngIf="(!regimentData.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');"
 							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
@@ -258,12 +263,11 @@ Copyright (c) 2023 Tone Web Design, Molex
 								</span>
 							</div>
 
-							<button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="warn"
+							<button [disabled]="showMod && !isOwner" mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="warn"
 								(click)="confirmRemoveModerator(user.id)">
 								<i class="fa-solid fa-minus"></i> Manager
 							</button>
 						</div>
-
 						<div class="grid grid-cols-[auto_1fr]">
 
 						</div>
@@ -290,7 +294,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 								</span>
 							</div>
 
-							<button mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="primary"
+							<button [disabled]="showMod && !isOwner" mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="primary"
 								(click)="confirmAddModerator(user.id)">
 								<i class="fa-solid fa-plus"></i> Manager
 							</button>
@@ -300,6 +304,9 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 						</div>
 					</div>
+
+					<p class="font-[300] m-2 ml-5" *ngIf="!hasMembers()">There are no members for this regiment.</p>
+
 
 				</div>
 			</mat-tab>

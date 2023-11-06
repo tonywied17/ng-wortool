@@ -130,12 +130,12 @@
 					<div style="border-left: dotted 1px #7c7d738f;"
 						class="p-[1em] grid lg:grid-cols-1 grid-cols-2 gap-[1em] !text-center">
 
-						<button *ngIf="isOwner" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
+						<button *ngIf="showMod || isOwner" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Manage Regiment-Specific Settings."
 							class="!py-2 !pt-4 !text-neutral-400 !block !min-w-full">
 							<i class="fa-solid fa-users-gear !text-neutral-400 !block text-3xl !mx-auto"></i>
-							Owner Tool
+							Regiment
 						</button>
 
 

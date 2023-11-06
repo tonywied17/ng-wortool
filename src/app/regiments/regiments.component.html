@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu August 3rd 2023 11:36:24 
+Last Modified: Sat November 4th 2023 5:21:34 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -75,90 +75,101 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 	<div class="grid lg:grid-cols-2 grid-cols-1 gap-4" *ngIf="regiments">
 
+		
 
 		<div *ngFor="let regiment of getPaginatedRegiments()">
 
 
 			<div class="rounded-lg w-full bg-slate-900/80 shadow-lg scale-center">
 				<!-- Top -->
-				<div class="grid grid-cols-[78px_auto] w-full">
-					<div class="text-left rounded-t-lg"
-						style="background: linear-gradient(130deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
-						<img [src]="regiment.guild_avatar"
-							class="h-[75px] w-auto rounded-tl-lg shadow-md pointer-events-none brightness-90 sepia-[30%]">
-					</div>
-
-					<div class="flex items-center rounded-t-lg h-full w-full"
-						style="background: linear-gradient(-25deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
-						<div class="flex-grow">
-							<div class="grid grid-cols-[auto_100px]">
-
-								<div class="flex items-center justify-center">
-									<div class="text-slate-400 text-xl font-[500] text-center">
-										{{ regiment.regiment }}
-										<span class="block font-[500] p-1 text-center text-base">
-
-											<span *ngIf="regiment.side == 'CSA'"
-												class="text-[#838479]">Confederate Regiment</span>
-											<span *ngIf="regiment.side == 'USA'"
-												class="text-[#6488c5]">Union Regiment</span>
-
-											<span class="pl-2" *ngIf="!regiment.memberCount; else memberCount">
-												<span *ngIf="regiment.side == 'CSA'">
-													<span class="wave-csa"></span>
-													<span class="wave-csa"></span>
-													<span class="wave-csa"></span>
+				<a [href]="'/regiments/' + regiment.id">
+					<div class="grid grid-cols-[78px_auto] w-full reg-header">
+						<div class="text-left rounded-t-lg"
+							style="background: linear-gradient(130deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
+							<img [src]="regiment.guild_avatar"
+								class="h-[75px] w-auto rounded-tl-lg shadow-md pointer-events-none brightness-90 sepia-[30%]">
+						</div>
+	
+						<div class="flex items-center rounded-t-lg h-full w-full"
+							style="background: linear-gradient(-25deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
+							<div class="flex-grow">
+								<div class="grid grid-cols-[auto_100px] grid-container">
+	
+									<div class="flex items-center justify-center">
+										<div class="text-slate-400 text-xl font-[500] text-center">
+											{{ regiment.regiment }}
+											<span class="block font-[500] p-1 text-center text-base">
+	
+												<span *ngIf="regiment.side == 'CSA'"
+													class="text-[#838479]">Confederate Regiment</span>
+												<span *ngIf="regiment.side == 'USA'"
+													class="text-[#6488c5]">Union Regiment</span>
+	
+												<span class="pl-2" *ngIf="!regiment.memberCount; else memberCount">
+													<span *ngIf="regiment.side == 'CSA'">
+														<span class="wave-csa"></span>
+														<span class="wave-csa"></span>
+														<span class="wave-csa"></span>
+													</span>
+	
+													<span *ngIf="regiment.side == 'USA'">
+														<span class="wave-usa"></span>
+														<span class="wave-usa"></span>
+														<span class="wave-usa"></span>
+													</span>
+	
 												</span>
-
-												<span *ngIf="regiment.side == 'USA'">
-													<span class="wave-usa"></span>
-													<span class="wave-usa"></span>
-													<span class="wave-usa"></span>
-												</span>
-
+	
+	
+												<ng-template #memberCount> 
+													<span *ngIf="regiment.side == 'CSA'" class="font-[300] text-sm pl-2 text-[#838479]">({{ regiment.memberCount }} members)</span>
+													<span *ngIf="regiment.side == 'USA'" class="font-[300] text-sm pl-2 text-[#6488c5]">({{ regiment.memberCount }} members)</span>
+												</ng-template>
 											</span>
-
-
-											<ng-template #memberCount> 
-												<span *ngIf="regiment.side == 'CSA'" class="font-[300] text-sm pl-2 text-[#838479]">({{ regiment.memberCount }} members)</span>
-												<span *ngIf="regiment.side == 'USA'" class="font-[300] text-sm pl-2 text-[#6488c5]">({{ regiment.memberCount }} members)</span>
-											</ng-template>
-										</span>
+										</div>
 									</div>
+										
+	
 								</div>
-
 							</div>
 						</div>
+	
 					</div>
-
-				</div>
+				</a>
+				
 				<!--  -->
 				<mat-divider></mat-divider>
 				<!--  -->
-				<div class="grid grid-cols-[2fr_0.5fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
-					<div class="font-[300] hidden xl:inline-block p-3 overflow-hidden break-all">
-						{{ ellipsisText(regiment.description, 320) }}
+				
+					<div class="grid grid-cols-[2fr_0.5fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
+						
+						<div class="font-[300] hidden xl:inline-block p-3 overflow-hidden">
+							{{ ellipsisText(regiment.description, 320) }}
+						</div>
+					
+						<div class="font-[300] inline-block xl:hidden p-3 overflow-hidden">
+							{{ ellipsisText(regiment.description, 155) }}
+						</div>
+					
+						<div class="flex flex-col justify-center items-center bg-[#1e293b] brightness-105 shadow-md rounded-br-lg overflow-hidden">
+							<span class="font-[200] text-xs text-neutral-300">Links</span>
+							<button (click)="open(regiment.invite_link)" mat-button color="primary" class="!w-[80px] !text-2xl">
+								<i class="fa-brands fa-discord"></i>
+							</button>
+					
+							<button *ngIf="regiment.website" (click)="open(regiment.website)" mat-button color="primary" class="!w-[80px] !text-2xl">
+								<i class="fa-solid fa-globe"></i>
+							</button>
+					
+							<button [routerLink]="['/regiments', regiment.id]" mat-stroked-button color="primary" class="!text-neutral-300 mt-1 !block !min-h-fit !w-auto !max-w-[115px] !p-1 !px-4 !text-base">
+								View <i class="fa-regular fa-circle-right pl-1"></i>
+							</button>
+						</div>
 					</div>
+
+			
+
 				
-					<div class="font-[300] inline-block xl:hidden p-3 overflow-hidden break-all">
-						{{ ellipsisText(regiment.description, 155) }}
-					</div>
-				
-					<div class="flex flex-col justify-center items-center bg-[#1e293b] brightness-105 shadow-md rounded-br-lg overflow-hidden">
-						<span class="font-[200] text-xs text-neutral-300">Links</span>
-						<button (click)="open(regiment.invite_link)" mat-button color="primary" class="!w-[80px] !text-2xl">
-							<i class="fa-brands fa-discord"></i>
-						</button>
-				
-						<button *ngIf="regiment.website" (click)="open(regiment.website)" mat-button color="primary" class="!w-[80px] !text-2xl">
-							<i class="fa-solid fa-globe"></i>
-						</button>
-				
-						<button [routerLink]="['/regiments', regiment.id]" mat-stroked-button color="primary" class="!text-neutral-300 mt-1 !block !min-h-fit !w-[80px] !p-1 !px-4 font-[300] !text-base">
-							Details
-						</button>
-					</div>
-				</div>
 				
 
 			</div>

@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat October 14th 2023 2:42:00 
+ * Last Modified: Mon November 6th 2023 5:43:43 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -71,6 +71,7 @@ export class RegimentInfoComponent implements OnInit {
       const id = params["id"];
       this.regimentID = id;
       this.retrieveInitialData();
+
     });
 
 
@@ -142,6 +143,30 @@ export class RegimentInfoComponent implements OnInit {
       this.regimentService.getRegimentUsers(this.regimentID)
     );
     this.regiment.members = this.regimentUsers;
+
+    console.log(this.regimentUsers)
+
+    console.log(`-- OWNERS --`);
+    this.regimentUsers.forEach((user: any) => {
+      if (this.regiment.ownerId.includes(user.discordId)) {
+          console.log(user.username);
+      }
+    });
+
+    console.log(`-- MANAGERS --`);
+    this.regimentUsers.forEach((user: any) => {
+      if ((!this.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR')) {
+          console.log(user.username);
+      }
+    });
+
+    console.log(`-- MEMBERS --`);
+    this.regimentUsers.forEach((user: any) => {
+      if ((!this.regiment.ownerId.includes(user.discordId)) && !user.roles.includes('ROLE_MODERATOR')) {
+          console.log(user.username);
+      }
+    });
+  
   }
 
   /**
