@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Mon November 6th 2023 5:38:59 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -64,7 +64,7 @@ export class RegimentSettingsComponent implements OnInit {
   side: any;
 
   isOwner: boolean = false;
-
+  isMod: boolean = false;
   regimentChannels: any;
   regimentUsers: any;
   discordRegimentUsers: any;
@@ -113,6 +113,8 @@ export class RegimentSettingsComponent implements OnInit {
     this.currentUser = this.token.getUser();
     const userID = this.currentUser.id;
 
+
+
     if (this.isLoggedIn) {
       await this.authService
         .checkModeratorRole(userID, this.currentUser.regimentId)
@@ -130,6 +132,7 @@ export class RegimentSettingsComponent implements OnInit {
                 this.isOwner = false;
                 this.isLoaded = true;
               }
+
             });
           }
         })
@@ -231,6 +234,7 @@ export class RegimentSettingsComponent implements OnInit {
 
           Promise.all(promises).then((updatedUsers) => {
             this.regimentUsers = updatedUsers;
+            console.log(this.regimentUsers)
           });
         });
     }
@@ -766,4 +770,17 @@ export class RegimentSettingsComponent implements OnInit {
       event_name: "",
     };
   }
+
+  hasMembers(): boolean {
+    if (this.regimentUsers) {
+      return this.regimentUsers.some((user: { discordId: string; roles: string | string[]; }) => {
+        return user.discordId !== this.regiment.ownerId && !user.roles.includes('ROLE_MODERATOR');
+      });
+    }
+    return false;
+  }
+  
+  
 }
+
+
