@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon November 6th 2023 5:43:43 
+ * Last Modified: Mon November 6th 2023 7:59:56 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -144,28 +144,28 @@ export class RegimentInfoComponent implements OnInit {
     );
     this.regiment.members = this.regimentUsers;
 
-    console.log(this.regimentUsers)
+    // console.log(this.regimentUsers)
 
-    console.log(`-- OWNERS --`);
-    this.regimentUsers.forEach((user: any) => {
-      if (this.regiment.ownerId.includes(user.discordId)) {
-          console.log(user.username);
-      }
-    });
+    // console.log(`-- OWNERS --`);
+    // this.regimentUsers.forEach((user: any) => {
+    //   if (this.regiment.ownerId.includes(user.discordId)) {
+    //       console.log(user.username);
+    //   }
+    // });
 
-    console.log(`-- MANAGERS --`);
-    this.regimentUsers.forEach((user: any) => {
-      if ((!this.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR')) {
-          console.log(user.username);
-      }
-    });
+    // console.log(`-- MANAGERS --`);
+    // this.regimentUsers.forEach((user: any) => {
+    //   if ((!this.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR')) {
+    //       console.log(user.username);
+    //   }
+    // });
 
-    console.log(`-- MEMBERS --`);
-    this.regimentUsers.forEach((user: any) => {
-      if ((!this.regiment.ownerId.includes(user.discordId)) && !user.roles.includes('ROLE_MODERATOR')) {
-          console.log(user.username);
-      }
-    });
+    // console.log(`-- MEMBERS --`);
+    // this.regimentUsers.forEach((user: any) => {
+    //   if ((!this.regiment.ownerId.includes(user.discordId)) && !user.roles.includes('ROLE_MODERATOR')) {
+    //       console.log(user.username);
+    //   }
+    // });
   
   }
 
