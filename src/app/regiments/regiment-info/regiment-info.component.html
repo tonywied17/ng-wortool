@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Mon November 6th 2023 8:50:56 
+Last Modified: Mon November 6th 2023 7:34:10 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -24,7 +24,7 @@ Copyright (c) 2023 Tone Web Design, Molex
         </div>
 
         <div>
-            <h3 class="text-[#88887b] text-3xl tracking-tight mb-[1em]">{{regiment.regiment}}</h3>
+            <h3 class="text-[#88887b] lg:text-3xl text-lg tracking-tight mb-[1em]">{{regiment.regiment}}</h3>
         </div>
     </div>
     
@@ -43,7 +43,7 @@ Copyright (c) 2023 Tone Web Design, Molex
         </div>
 
         <!-- Description -->
-        <div class="absolute bottom-[-70px] left-[180px] w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md swing-left min-h-[115px] text-neutral-100">
+        <div class="lg:text-base text-sm absolute bottom-[-70px] left-[180px] w-[50%] lg:w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md swing-left min-h-[115px] text-neutral-100">
             <span *ngIf="!regiment.description">No description provided.</span>{{regiment.description}}
         </div>
     </div>
@@ -56,7 +56,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
         
         <!-- Social Media Links -->
-        <div class="p-4 left-in">
+        <div class="lg:p-4 left-in">
             <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500]">Social Media</h4>
             <mat-nav-list class="text-center">
               <a *ngIf="regiment.invite_link" [href]="regiment.invite_link" target="_blank" mat-list-item>
