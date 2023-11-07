@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Tue November 7th 2023 4:12:30 
+Last Modified: Tue November 7th 2023 5:44:16 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -74,7 +74,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
             <h4 class="text-[#7c7d72] mb-4 lg:text-2xl font-[500] mt-4">Regiment Staff</h4>
 
-            <div *ngFor="let user of regimentUsers?.slice(0, 8)">
+            <div *ngFor="let user of regimentUsers">
               <div *ngIf="this.regiment.ownerId.includes(user.discordId)">
                 <div class="bg-slate-800 rounded-lg my-2 mx-4 h-[45px] flex items-center">
                   <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
@@ -94,7 +94,7 @@ Copyright (c) 2023 Tone Web Design, Molex
               </div>
             </div>
             
-            <div *ngFor="let user of regimentUsers?.slice(0, 8)">
+            <div *ngFor="let user of regimentUsers">
               <div *ngIf="(!this.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');">
                 <div class="bg-slate-800 rounded-lg my-2 mx-4 h-[45px] flex items-center">
                   <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
