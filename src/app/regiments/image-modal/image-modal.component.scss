@@ -1,0 +1,15 @@
+/* Add this CSS to your component's stylesheet or a global stylesheet */
+.image-modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  max-width: none;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+
+  .mat-dialog-container {
+    padding: 0;
+    overflow: hidden;
+  }
+}

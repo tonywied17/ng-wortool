@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon November 6th 2023 7:59:56 
+ * Last Modified: Tue November 7th 2023 2:43:37 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -15,7 +15,11 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { RegimentService } from "../../_services/regiment.service";
 import { SteamApiService } from "../../_services/steam-api.service";
 import { Location } from "@angular/common";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
+import { FileService } from 'src/app/_services/file.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageModalComponent } from '../image-modal/image-modal.component';
+
 
 
 interface Schedule {
@@ -57,14 +61,25 @@ export class RegimentInfoComponent implements OnInit {
   scheduleCounts: { [key: string]: number } = {};
   selectedScheduleName: string | null = null;
 
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+  fileInfos: any;
+  currentPage: number = 1;
+  itemsPerPage: number = 9;
+
   constructor(
     private route: ActivatedRoute,
     private regimentService: RegimentService,
     private steamApiService: SteamApiService,
     private location: Location,
+    private uploadService: FileService,
+    private dialog: MatDialog
   ) {
     this.regiment = {};
   }
+  
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -73,9 +88,18 @@ export class RegimentInfoComponent implements OnInit {
       this.retrieveInitialData();
 
     });
-
-
   }
+
+  openImageModal(imageUrl: string) {
+    const dialogRef = this.dialog.open(ImageModalComponent, {
+      data: { imageUrl },
+      panelClass: 'image-modal-dialog',
+    });
+
+    dialogRef.backdropClick().subscribe(() => dialogRef.close());
+  }
+  
+  
 
   /**
    * Get regiment and regiment users on init
@@ -86,10 +110,46 @@ export class RegimentInfoComponent implements OnInit {
       this.fetchRegimentUsers(),
       this.getScreenshots(),
       this.getSchedules(),
+      this.getFileInfos()
+      
     ]);
 
     this.isDataLoaded = true;
   }
+
+  async getFileInfos() {
+    this.uploadService.getFiles(this.regimentID)
+      .subscribe((data: any) => {
+        this.fileInfos = data;
+      }, (error) => {
+        
+      });
+  }
+
+  getItemsForCurrentPage(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.fileInfos.slice(startIndex, endIndex);
+  }
+
+  get totalItems(): number {
+    return this.fileInfos.length;
+  }
+  
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+changePage(newPage: number): void {
+  if (newPage >= 1 && newPage <= this.totalPages) {
+    this.currentPage = newPage;
+  }
+}
+
+getPagesArray(totalPages: number): number[] {
+  return new Array(totalPages).fill(0).map((_, index) => index + 1);
+}
+
 
   /**
    * Get screenshots
