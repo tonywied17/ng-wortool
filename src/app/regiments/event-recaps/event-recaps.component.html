@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Fri November 3rd 2023 9:55:51 
+Last Modified: Mon November 6th 2023 7:26:19 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -13,7 +13,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 <div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
   <!-- <h3 class="text-[#88887b] text-3xl tracking-tight mb-[1em]">Event Recaps</h3> -->
 
-  <div *ngFor="let recap of recaps" class="rounded-lg w-full mb-10 bg-slate-800/80 shadow-lg swing-left">
+  <div *ngFor="let recap of recaps" class="rounded-lg w-full mb-10 bg-slate-800/80 shadow-lg left-in">
     <div class="grid lg:grid-cols-[1fr_2fr] gird-rows-[80px_auto] grid-cols-2 gap-x-4">
       <div class="row-start-1 row-span-1 col-start-1 col-span-2 p-5 rounded-sm rounded-t-lg shadow-sm" style="
           background: linear-gradient(
@@ -30,6 +30,7 @@ Copyright (c) 2023 Tone Web Design, Molex
             #1e293b00
           );
         ">
+        
         <div class="grid grid-cols-2">
           <div>
             <p class="text-[#7c7d72] text-2xl font-[400]">
@@ -57,9 +58,12 @@ Copyright (c) 2023 Tone Web Design, Molex
               {{ recap?.gameMode }} on <button class="!min-h-fit !h-fit" mat-button color="primary" [routerLink]="'/maps/'+recap.mapObject?.id">{{ recap?.area }} </button>
             </p>
           </div>
+          
         </div>
-      </div>
 
+       
+      </div>
+      
       <div
         class="row-start-2 col-start-1 lg:col-span-1 col-span-2 w-full h-full place-self-center my-auto flex items-center justify-center">
         <div class="w-full h-fit brightness-[75%] sepia-[60%] blur-[0.5px] rounded-r-md rounded-bl-md shadow-lg"

@@ -4,13 +4,13 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon November 6th 2023 5:38:59 
+ * Last Modified: Tue November 7th 2023 3:04:09 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../../_services/token-storage.service";
 import { AuthService } from "../../_services/auth.service";
@@ -20,6 +20,9 @@ import { MatSnackBar, MatSnackBarDismiss } from "@angular/material/snack-bar";
 import { ConfirmDeleteSnackbarComponent } from "../../confirm-delete-snackbar/confirm-delete-snackbar.component";
 import { UserService } from "src/app/_services/user.service";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { FileService } from 'src/app/_services/file.service';
+import { Observable } from 'rxjs';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 interface Schedule {
   id: number;
@@ -93,6 +96,13 @@ export class RegimentSettingsComponent implements OnInit {
     event_name: "",
   };
 
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+
+  fileInfos?: Observable<any>;
+
   constructor(
     private token: TokenStorageService,
     private authService: AuthService,
@@ -102,7 +112,9 @@ export class RegimentSettingsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private userService: UserService,
     private matDatepicker: MatDatepickerModule,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private uploadService: FileService,
+    private elementRef: ElementRef
   ) {}
 
   /**
@@ -146,7 +158,7 @@ export class RegimentSettingsComponent implements OnInit {
     }
 
     this.getSchedules();
-
+    this.fileInfos = this.uploadService.getFiles(this.regimentID);
     
   }
 
@@ -779,7 +791,109 @@ export class RegimentSettingsComponent implements OnInit {
     }
     return false;
   }
+
+
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
   
+  upload(): void {
+    this.progress = 0;
+
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.currentFile = file;
+
+        this.uploadService.upload(this.currentFile, this.regimentID).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+              this.fileInfos = this.uploadService.getFiles(this.regimentID);
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.progress = 0;
+
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file! Images Only, 2MB Per Limit';
+            }
+
+            this.currentFile = undefined;
+          },
+        });
+      }
+
+      this.selectedFiles = undefined;
+    }
+  }
+
+  confirmRemoveFile(file: any): void {
+    console.log(`FILE: ${file}`)
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to remove this file?`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+
+    snackBarRef.onAction().subscribe(() => {
+      this.removeFile(file);
+    });
+  }
+
+
+  removeFile(file: any) {
+    this.uploadService
+    .remove(this.regimentID, file)
+      .subscribe((response) => {
+        // // console.log(response);
+        this.snackBar.open("File removed", "Close", {
+          verticalPosition: "top",
+          duration: 3000,
+        });
+      });
+      this.fileInfos = this.uploadService.getFiles(this.regimentID);
+  }
+
+
+  fileInputChange(event: any) {
+    const selectedFile = event.target.files[0];
+  
+    if (selectedFile) {
+      if (selectedFile.type.startsWith('image/')) {
+        // It's an image file, you can proceed with handling it.
+        this.selectedFiles = event.target.files;
+        this.message = "";
+      } else {
+        // It's not an image file, display an error message and clear the file input.
+        this.message = 'Please select an image file only.';
+        this.clearFileInput();
+      }
+    }
+  }
+
+  clearFileInput() {
+    // Reset the file input element to clear the selected file.
+    const fileInput = this.elementRef.nativeElement.querySelector('#fileInput');
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+  
+  
+
   
 }
 

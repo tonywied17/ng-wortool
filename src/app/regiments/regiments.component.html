@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sat November 4th 2023 5:21:34 
+Last Modified: Tue November 7th 2023 3:15:40 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -33,7 +33,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 <div class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 
-	<div class="grid grid-cols-[auto_1fr_auto] gap-4 my-2 mb-8">
+	<div class="grid lg:grid-cols-[auto_1fr_auto] grid-cols-[1fr_2fr] gap-4 my-2 mb-8">
 
 		<div>
 			<div class="field-box">
@@ -61,7 +61,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 			</div>
 		</div>
 
-		<div>
+		<div class="lg:col-start-3 lg:row-start-1 lg:col-span-1 hidden lg:inline-block">
 			<button mat-stroked-button color="primary" class="!h-[46.5px] w-full !text-[#a09e94] !font-[500]"
 				style="border: 1px solid #7c7d72 !important;" (click)="toggleOverlay()"><i
 					class="fa-regular fa-circle-question mr-1"></i> Add Regiment</button>
@@ -93,17 +93,17 @@ Copyright (c) 2023 Tone Web Design, Molex
 						<div class="flex items-center rounded-t-lg h-full w-full"
 							style="background: linear-gradient(-25deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
 							<div class="flex-grow">
-								<div class="grid grid-cols-[auto_100px] grid-container">
+								<div class="grid lg:grid-cols-[auto_100px] grid-cols-[auto] grid-container">
 	
-									<div class="flex items-center justify-center">
-										<div class="text-slate-400 text-xl font-[500] text-center">
+									<div class="flex lg:items-center lg:justify-center pl-2 lg:pl-0">
+										<div class="text-slate-400 lg:text-xl font-[500] lg:text-center">
 											{{ regiment.regiment }}
-											<span class="block font-[500] p-1 text-center text-base">
+											<span class="block font-[500] lg:p-1 lg:text-center lg:text-base">
 	
 												<span *ngIf="regiment.side == 'CSA'"
-													class="text-[#838479]">Confederate Regiment</span>
+													class="text-[#838479]">Confederate</span>
 												<span *ngIf="regiment.side == 'USA'"
-													class="text-[#6488c5]">Union Regiment</span>
+													class="text-[#6488c5]">Union</span>
 	
 												<span class="pl-2" *ngIf="!regiment.memberCount; else memberCount">
 													<span *ngIf="regiment.side == 'CSA'">
@@ -141,7 +141,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<mat-divider></mat-divider>
 				<!--  -->
 				
-					<div class="grid grid-cols-[2fr_0.5fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
+					<div class="grid lg:grid-cols-[2fr_0.5fr] grid-cols-[2fr_1fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
 						
 						<div class="font-[300] hidden xl:inline-block p-3 overflow-hidden">
 							{{ ellipsisText(regiment.description, 320) }}

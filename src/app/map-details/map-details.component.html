@@ -8,11 +8,11 @@
 <div *ngIf="!loading && currentMap"
 	class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[2em] lg:mt-[3.5em]"
 	id="map-contained">
-	<div class="text-[#88887b] text-3xl mb-[1em]">
+	<div class="text-[#88887b] lg:text-3xl text-lg mb-[1em]">
 		<div class="grid grid-cols-1 lg:grid-cols-2">
 			<div class="col-start-1 col-span-1">
 				{{ currentMap.map }}
-				<span class="text-slate-200/80 text-lg px-4">
+				<span class="text-slate-200/80 lg:text-lg text-base px-4">
 					<br>
 					{{ currentMap.campaign }} Map
 				</span>
@@ -128,7 +128,7 @@
 
 
 				<mat-slide-toggle (change)="toggle($event)"
-					class="font-[200]"><div class="text-[#88887b] text-xl font-[500] inline-block ml-3 hover:opacity-80 transition-all duration-200 cursor-pointer"><i class="fa-brands fa-youtube"></i> Flyover Cam</div></mat-slide-toggle>
+					class="font-[200]"><div class="text-[#88887b] lg:text-xl text-base font-[500] inline-block ml-3 hover:opacity-80 transition-all duration-200 cursor-pointer"><i class="fa-brands fa-youtube"></i> Flyover Cam</div></mat-slide-toggle>
 			</div>
 
 

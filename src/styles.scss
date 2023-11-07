@@ -497,6 +497,7 @@ button {
 }
 
 .field-input {
+  box-sizing: border-box;
   font-family: 'Poppins', sans-serif !important;
   padding: 12px 36px 12px 48px;
   width: 100%;
@@ -840,7 +841,7 @@ html {
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 10:24:47 
+ * Last Modified: Tue November 7th 2023 3:13:31 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex

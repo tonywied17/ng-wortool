@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Mon November 6th 2023 8:50:56 
+Last Modified: Tue November 7th 2023 2:54:33 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -12,7 +12,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 <div *ngIf="isDataLoaded" class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
-    <div class="grid grid-cols-[auto_1fr] gap-7">
+    <div class="grid grid-cols-[auto_1fr] gap-2">
         <div class="place-self-center">
             <button (click)="goBack()"
             mat-button
@@ -24,7 +24,7 @@ Copyright (c) 2023 Tone Web Design, Molex
         </div>
 
         <div>
-            <h3 class="text-[#88887b] text-3xl tracking-tight mb-[1em]">{{regiment.regiment}}</h3>
+            <h3 class="text-[#88887b] lg:text-3xl text-center lg:text-left text-lg tracking-tight mb-[1em]">{{regiment.regiment}}</h3>
         </div>
     </div>
     
@@ -43,7 +43,7 @@ Copyright (c) 2023 Tone Web Design, Molex
         </div>
 
         <!-- Description -->
-        <div class="absolute bottom-[-70px] left-[180px] w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md swing-left min-h-[115px] text-neutral-100">
+        <div class="lg:text-base text-sm absolute bottom-[-70px] left-[180px] w-[50%] lg:w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md swing-left min-h-[115px] text-neutral-100">
             <span *ngIf="!regiment.description">No description provided.</span>{{regiment.description}}
         </div>
     </div>
@@ -56,8 +56,8 @@ Copyright (c) 2023 Tone Web Design, Molex
 
         
         <!-- Social Media Links -->
-        <div class="p-4 left-in">
-            <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500]">Social Media</h4>
+        <div class="lg:p-4 left-in">
+            <h4 class="text-[#7c7d72] mb-4 lg:text-2xl font-[500]">Social Media</h4>
             <mat-nav-list class="text-center">
               <a *ngIf="regiment.invite_link" [href]="regiment.invite_link" target="_blank" mat-list-item>
                 <span class="text-slate-400"><i class="fab fa-discord"></i> Discord</span>
@@ -72,7 +72,7 @@ Copyright (c) 2023 Tone Web Design, Molex
               </a> -->
             </mat-nav-list>
 
-            <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500] mt-4">Regiment Staff</h4>
+            <h4 class="text-[#7c7d72] mb-4 lg:text-2xl font-[500] mt-4">Regiment Staff</h4>
 
             <div *ngFor="let user of regimentUsers?.slice(0, 8)">
               <div *ngIf="this.regiment.ownerId.includes(user.discordId)">
@@ -135,7 +135,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
         
           
-    <mat-tab-group dynamicHeight class="mt-4">
+    <mat-tab-group dynamicHeight class="mt-4 mb-8">
       <mat-tab label="Schedule">
               <!-- Schedule Widget -->
         <div class="p-4 right-in">
@@ -192,7 +192,7 @@ Copyright (c) 2023 Tone Web Design, Molex
             </mat-tab>
             <mat-tab label="Media">  
               <!-- Media Widget -->
-              <div class="p-4 right-in col-span-2">
+              <div class="p-4 right-in col-span-2" *ngIf="fileInfos.length === 0">
                   <div class="mt-4">
                       <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
                           <div class="flex">
@@ -206,6 +206,55 @@ Copyright (c) 2023 Tone Web Design, Molex
                         </div>
                   </div>
               </div>
+
+              
+
+
+
+              <div *ngIf="fileInfos.length > 0">
+
+                <div class="pagination">
+                  <button (click)="changePage(currentPage - 1); $event.preventDefault()" [disabled]="currentPage === 1">Previous</button>
+                  <ng-container *ngFor="let page of getPagesArray(totalPages); let i = index">
+                    <button
+                      (click)="changePage(i + 1)"
+                      [class.active]="currentPage === i + 1"
+                    >
+                      {{ i + 1 }}
+                    </button>
+                  </ng-container>
+                  <button (click)="changePage(currentPage + 1); $event.preventDefault()" [disabled]="currentPage === totalPages">Next</button>
+                </div>
+
+                
+                <div class="masonry-grid lg:m-4">
+                  <div *ngFor="let file of getItemsForCurrentPage()" class="masonry-item" (click)="openImageModal(file.url)">
+                    <img [src]="file.url" class="masonry-image gal-item">
+                  </div>
+                </div>
+
+                <div class="pagination">
+                  <button (click)="changePage(currentPage - 1); $event.preventDefault()" [disabled]="currentPage === 1">Previous</button>
+                  <ng-container *ngFor="let page of getPagesArray(totalPages); let i = index">
+                    <button
+                      (click)="changePage(i + 1); $event.preventDefault()"
+                      [class.active]="currentPage === i + 1"
+                    >
+                      {{ i + 1 }}
+                    </button>
+                  </ng-container>
+                  <button (click)="changePage(currentPage + 1); $event.preventDefault()" [disabled]="currentPage === totalPages">Next</button>
+                </div>
+                
+                
+              </div>
+              
+              
+              
+              
+              
+              
+
             </mat-tab>
             <mat-tab label="Recaps">
               <!-- Recap Widget -->
