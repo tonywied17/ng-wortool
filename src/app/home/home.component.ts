@@ -4,12 +4,12 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue November 7th 2023 11:41:49 
+ * Last Modified: Wed November 8th 2023 3:38:19 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
-
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../_services/auth.service";
 import { TokenStorageService } from "../_services/token-storage.service";
@@ -24,7 +24,7 @@ import { SteamApiService } from "../_services/steam-api.service";
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: [PasswordMatchValidatorDirective],
+  providers: [PasswordMatchValidatorDirective, DatePipe],
 })
 export class HomeComponent implements OnInit {
   registerForm: any = {
@@ -66,6 +66,9 @@ export class HomeComponent implements OnInit {
 
   currentYear!: number;
   nextYear!: number;
+  formattedDate!: string;
+
+  columnLayout: string = "grid lg:grid-cols-[0.8fr_1.5fr_1fr] grid-cols-1 lg:gap-5";
 
   constructor(
     private authService: AuthService,
@@ -74,6 +77,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private regimentService: RegimentService,
     private cdRef: ChangeDetectorRef,
+    private datePipe: DatePipe,
     private steamApiService: SteamApiService
   ) {
     this.router.events.subscribe((event) => {
@@ -97,7 +101,11 @@ export class HomeComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+    this.formattedDate = this.datePipe.transform(new Date(), 'MM/d/yy h:mm a z', 'shortTime') as string;
+
     this.isLoggedIn = !!this.tokenStorage.getToken();
+
+
     this.currentUser = this.tokenStorage.getUser();
 
     if (!this.isLoggedIn) {
@@ -111,7 +119,6 @@ export class HomeComponent implements OnInit {
     if (this.isLoggedIn) {
       this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
         this.isLoggedIn = isLoggedIn;
-
         this.initializeComponent();
       });
     }
@@ -151,7 +158,10 @@ export class HomeComponent implements OnInit {
         (error) => {
           if (error.status === 403) {
             this.showUser = false;
+            
+            // 
           } else {
+            
             console.error("Error:", error);
           }
           this.loading = false;

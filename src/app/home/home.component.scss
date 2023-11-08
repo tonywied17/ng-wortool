@@ -78,3 +78,13 @@
 	background: linear-gradient(90deg, #99343491, #99343400);
 	font-family: 'Noto Sans', sans-serif !important;
 }
+
+.dash-news{
+	transition: all .5s ease;
+}
+
+.dash-news:hover{
+	opacity: 0.8;
+	transform: scale(1.02);
+	text-decoration: underline;
+}
