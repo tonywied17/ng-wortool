@@ -95,3 +95,16 @@
 	color: #88887b !important;
 	border-color: #88887b;
 }
+
+.dash-item {
+	color: rgb(212 212 212) !important;
+}
+.dash-sub-item {
+	color: rgb(163 163 163) !important;
+	font-size: 12px !important;
+	justify-content: left !important;
+	border-radius: unset !important;
+	padding: 4px 8px !important;
+	margin-left: 3.33em !important;
+	border-left: 1px dotted #88887b;
+}
