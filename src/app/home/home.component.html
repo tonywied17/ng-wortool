@@ -1,14 +1,12 @@
-<!--
-File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\home\home.component.html
+<!-- File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\home\home.component.html
 Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Tuesday August 8th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Mon November 6th 2023 4:53:55 
+Last Modified: Tue November 7th 2023 8:53:13 
 Modified By: Tony Wiedman
 -----
-Copyright (c) 2023 Tone Web Design, Molex
--->
+Copyright (c) 2023 Tone Web Design, Molex -->
 <div *ngIf="loading"
 	class="text-center text-xl opacity-75">
 	<i class="fas fa-spinner fa-pulse mr-2"></i>
@@ -18,78 +16,47 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-<div *ngIf="!loading"
-	class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
+<div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
 
 
+	<div class="grid lg:grid-cols-[0.8fr_1.5fr_1fr] grid-cols-1 lg:gap-5">
 
 
-	<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 row-span-full">
+		<!-- LEFT -->
+		<div class="lg:col-start-1 col-span-1 lg:row-start-1 lg:row-span-1">
 
-
-
-
-		<!-- Left Box -->
-		<div class="row-span-3 left-in">
-			<div class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-8 ring-1 ring-slate-900/5 shadow-xl w-full h-fit">
-				<h3 class="text-[#252525ce]  text-3xl tracking-tight mb-4 px-6">A War of Rights Tool</h3>
-				<p class="text-[#c4c4c4ce] text-lg  px-6">
+			<div class="border-l-4 border-l-[#626057] bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 rounded-lg py-4 ring-1 ring-slate-900/5 shadow-xl w-full h-fit">
+				<h3 class="text-[#252525ce] font-[400] text-2xl tracking-tight mb-2 px-6">A War of Rights Tool</h3>
+				<p class="text-[#c4c4c4ce] text-base font-[300] px-6">
 					An all-in-one utility tool for managing your War of Rights regiment.
 				</p>
 
+				<div class="rounded-sm my-4 shadow-lg brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[350px] h-[250px]"
+				style="background-image: url('{{randomScreenshot}}'); background-size: cover;"></div>
 
-
-
-				<div class="rounded-sm mb-3 mt-8 shadow-lg brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[350px] h-[250px]"
-					style="background-image: url('https://cdn.discordapp.com/attachments/684701534466080807/975267284094427166/20220219130936_1.jpg');background-size: cover;">
-				</div>
-
-
-
-
-				<p class="text-[#c4c4c4bb] text-sm px-4 font-[100] italic text-center mb-[-10px] pt-2">
-					<span class="not-italic">
-						Brought to you by the Pennsylvania Army Science Division
-					</span>
+				<p class="text-center px-4">
+					<a class="!text-[#c4c4c4bb] !text-[0.7rem] !font-[200] !min-h-fit !h-fit !py-1.5" href="https://www.paypal.com/paypalme/AnthonyWiedman" target="_blank" mat-flat-button><i class="fa-solid fa-hand-holding-dollar"></i> Donate to WoRTool</a>
 				</p>
 
-
-
-
 			</div>
+			
+
 		</div>
 
 
+		<!-- CENTER -->
+		<div class="lg:col-start-2 col-span-1">
 
 
-
-		<div class="lg:col-span-2 lg:row-span-2 place-self-center w-full h-full">
-
-
-
-
-			<!-- Logged In Menu -->
+			<!-- DASH -->
 			<div *ngIf="isLoggedIn"
-				class="rounded-lg px-6 py-6 w-full h-full !my-auto top-in"
-				style="padding: 2em 2em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
-
-
-
-
-				<h3 class="text-neutral-400 text-lg pb-3 tracking-tight mt-[42px]">
-					Access Your Dashboards
+				class="lg:p-6 p-2 w-full !my-auto top-in">
+				<h3 class="text-neutral-400 text-lg lg:pb-3 lg:pt-0 pt-3 tracking-tight">
+					Welcome back {{currentUser.username}}!<br><i class="font-[200] text-base">Access your dashboards below</i>
 				</h3>
-
-
-
 				<div class="p-[1em]">
 					<mat-list>
 						<mat-action-list>
-
-
-
-
-
 							<button *ngIf="showAdmin"
 								routerLink="/admin/1"
 								mat-list-item
@@ -97,14 +64,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<i class="fa-solid fa-shield-halved w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Admin Dashboard
 							</button>
-
-
-
 							<mat-divider *ngIf="showAdmin"></mat-divider>
-
-
-
-
 							<button *ngIf="showMod"
 								routerLink="/mod/1"
 								mat-list-item
@@ -112,15 +72,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<i class="fa-solid fa-tents w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Regiment Tool
 							</button>
-
-
-
-
-
 							<mat-divider></mat-divider>
-
-
-
 							<button *ngIf="showUser"
 								routerLink="/user/1"
 								mat-list-item
@@ -128,13 +80,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<i class="fa-solid fa-gear w-[25px] ml-[1em] mr-[0.5em]"></i>
 								User Settings
 							</button>
-
-
-
 							<mat-divider class="sm:!hidden inline-block"></mat-divider>
-
-
-
 							<button (click)="logout()"
 								class="sm:!hidden !inline-block !text-[#bf3636] !w-full !py-[0.7em] !pl-[1em] !rounded-none  !text-[1rem]"
 								style="font-family: 'Roboto' !important;"
@@ -142,28 +88,19 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<i class="fa-sharp fa-solid fa-arrow-right-from-bracket w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Logout
 							</button>
-
-
-
-
 						</mat-action-list>
 					</mat-list>
 				</div>
-
-
-
-
 			</div>
-			<!-- - -->
 
 
-
-
-			<!-- Register Box -->
+			<!-- REGISTER -->
 			<div *ngIf="registerTask && !loginTask && !isLoggedIn"
-				class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-fit !my-auto top-in"
+				class="h-fit top-in mb-4"
 				style="padding: 2em;">
-				<h3 class="text-white text-lg pb-3  tracking-tight">Sign-up Now!</h3>
+				<h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
+					Sign-up Today!<br><i class="font-[200] text-base">Create a new account</i>
+				</h3>
 				<div *ngIf="isSuccessful"
 					class="alert alert-success">
 					Your registration is successful! You may login below.
@@ -175,10 +112,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 					novalidate>
 					<div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
 						<div class="form-group sm:col-span-4">
-
-
-
-
 							<div class="field-box">
 								<input #email="ngModel"
 									[(ngModel)]="registerForm.email"
@@ -189,10 +122,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 									required>
 								<i class="fa-solid fa-envelope field-icon"></i>
 							</div>
-
-
-
-
 							<div *ngIf="email.errors && f.submitted"
 								class="alert-danger">
 								<div *ngIf="email.errors['required']">Email is required</div>
@@ -202,10 +131,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 							</div>
 						</div>
 						<div class="form-group sm:col-span-4">
-
-
-
-
 							<div class="field-box">
 								<input #username="ngModel"
 									[(ngModel)]="registerForm.username"
@@ -216,10 +141,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 									required>
 								<i class="fa-solid fa-user field-icon"></i>
 							</div>
-
-
-
-
 							<div *ngIf="username.errors && f.submitted"
 								class="alert-danger">
 								<div *ngIf="username.errors['required']">
@@ -244,7 +165,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 										type="password"
 										placeholder="Password..."
 										minlength="6">
-										<i class="fa-solid fa-key field-icon"></i>
+									<i class="fa-solid fa-key field-icon"></i>
 									<i class="fa-solid fa-lock field-icon"></i>
 								</div>
 								<div class="field-box">
@@ -256,17 +177,9 @@ Copyright (c) 2023 Tone Web Design, Molex
 										class="field-input my-[0.5em] !py-[1em]"
 										type="password"
 										placeholder="Confirm password...">
-
-
-
-
 									<i class="fa-solid fa-lock field-icon"></i>
 								</div>
 							</div>
-
-
-
-
 							<div *ngIf="f.submitted && (password.errors || passwordConfirm.errors)"
 								class="alert-danger">
 								<div *ngIf="password.errors?.['required']">
@@ -282,18 +195,11 @@ Copyright (c) 2023 Tone Web Design, Molex
 									Passwords do not match
 								</div>
 							</div>
-
-
-
-
 						</div>
-
-
-
-
 						<div class="form-group sm:col-span-1 sm:col-start-4">
 							<button mat-raised-button
-								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+							color="primary"
+								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl font-[300]">
 								Create!
 							</button>
 						</div>
@@ -306,16 +212,15 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</div>
 				</form>
 			</div>
-			<!--  -->
 
 
-
-
-			<!-- Login Box -->
+			<!-- LOGIN -->
 			<div *ngIf="!registerTask && loginTask && !isLoggedIn"
-				class="bg-slate-800/80 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full !my-auto top-in"
-				style="padding: 70px 2em;">
-				<h3 class="text-white text-lg pb-3  tracking-tight">Login Now!</h3>
+				class="rounded-lg lg:p-6 p-2 w-full top-in mb-4"
+				style="padding: 2em;">
+				<h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
+					Login Now!<br><i class="font-[200] text-base">For returning members</i>
+				</h3>
 				<form #f="ngForm"
 					*ngIf="!isLoggedIn"
 					(ngSubmit)="f.form.valid && onLogin()"
@@ -323,10 +228,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 					novalidate>
 					<div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
 						<div class="form-group sm:col-span-4">
-
-
-
-
 							<div class="field-box">
 								<input #username="ngModel"
 									[(ngModel)]="loginForm.username"
@@ -337,38 +238,16 @@ Copyright (c) 2023 Tone Web Design, Molex
 									required>
 								<i class="fa-solid fa-user field-icon"></i>
 							</div>
-
-
-
-
-
 							<div *ngIf="username.errors && f.submitted"
 								class="alert alert-danger"
 								role="alert">
 								Username
-                                is
-                                required!
+				is
+				required!
 							</div>
-
-
-
-
-
 						</div>
-
-
-
-
 						<!--  -->
-
-
-
-
 						<div class="form-group sm:col-span-4">
-
-
-
-
 							<div class="field-box">
 								<input #password="ngModel"
 									[(ngModel)]="loginForm.password"
@@ -379,12 +258,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 									required>
 								<i class="fa-solid fa-lock field-icon"></i>
 							</div>
-
-
-
-
-
-
 							<div *ngIf="password.errors && f.submitted"
 								class="alert alert-danger"
 								role="alert">
@@ -395,65 +268,115 @@ Copyright (c) 2023 Tone Web Design, Molex
 									Password must be at least 6 characters
 								</div>
 							</div>
-
-
-
-
-
 						</div>
-						<div class="form-group sm:col-span-1 sm:col-start-4">
-
-
-
-							<button mat-raised-button
-								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-								Login!
-							</button>
+						<div class="form-group sm:col-span-2 sm:col-start-3">
+							<div class="grid grid-cols-[1fr_auto] gap-2">
+								<div style="display: flex; justify-content: flex-end; align-items: center;">
+								<button
+								type="button"
+									mat-button
+									color="accent"
+									class="!text-sm font-[500] !mr-1 !min-h-[auto] !py-1">
+									Forgot Login
+									<i class="fa-regular fa-circle-question pl-1"></i>
+								</button>
+								</div>
+								<div>
+									<button mat-raised-button
+											color="primary"
+											class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl font-[300]">
+										Login
+									</button>
+								</div>
+							</div>
 						</div>
+						
 						<div *ngIf="f.submitted && isLoginFailed"
 							class="alert alert-danger"
 							role="alert">
 							Login failed:
-                            {{errorMessage}}
+			{{errorMessage}}
 						</div>
 					</div>
 				</form>
 			</div>
-			<!--  -->
 
-
-
-
+			<!-- PROMPTS N SHIT -->
+			<div *ngIf="!loginTask && registerTask && !isLoggedIn" class="scale-center">
+				<div class="lg:p-6 p-2">
+					<button (click)="loginBtn()"
+						mat-stroked-button
+						class="w-full !py-3 text-xl font-[400]">
+						Login to existing..
+					</button>
+				</div>
+			</div>
+	
+			<div *ngIf="loginTask && !registerTask && !isLoggedIn" class="scale-center">
+				<div class="lg:p-6 p-2">
+					<button (click)="registerBtn()"
+						mat-stroked-button
+						class="w-full !py-3 !text-xl font-[400]">
+						Sign Up!
+					</button>
+				</div>
+			</div>
 
 		</div>
 
 
+		<!-- RIGHT -->
+		<div class="lg:col-start-3 col-span-1 lg:row-start-1 lg:row-span-1">
+
+			<div class="p-6 ">
+			<!-- NEWS -->
+			<h3 class="text-[#88887b] font-[500] lg:text-3xl text-lg tracking-tight mb-2 px-1">
+				Recent News<br><i class="font-[200] text-base">Latest game updates & news!</i>
+			</h3>
+
+			<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto animate-load">
+				<span class="text-neutral-200 text-sm tracking-tight p-2 text-left inline-block w-full rounded-t-md">{{ article.title }}</span>
+				<div class="grid grid-cols-[auto_auto] gap-2 p-2">
+					<div class="cols-start-1 col-span-1 px-2 text-left">
+						<span class="text-sm opacity-40 font-[200]">
+							{{ formatUnixTimestamp(article.date) }} <span class="text-slate-300">by {{ article.author }}</span>
+						</span>
+					</div>
+					<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+						<button (click)="open(article.url , article.title, 1500, 868)"
+							mat-button
+							color="accent"
+							class="!text-sm font-[500] !mr-1 !min-h-[auto] !py-1">
+							Read More
+							<i class="fa-sharp fa-solid fa-arrow-up-right-from-square" style="margin-left:5px;"></i>
+						</button>
+					</div>
+				</div>
+				<mat-divider *ngIf="!isLast"></mat-divider>
+			</div>
+
+			</div>
+			
+			
+
+		</div>
 
 
-		<div *ngIf="isLoggedIn"
-			class="lg:col-span-2 lg:row-span-1 right-in">
+	</div>
+
+
+</div>
 
 
 
 
+		<div *ngIf="isLoggedIn" class="scale-center">
 			<div class="h-full text-right">
-				<!-- <button mat-stroked-button
-                   
-                    class="h-full"
-                    (click)="logout()">
-                    <i class="fa-solid fa-right-from-bracket !block pt-[8px] !text-xl"></i><span class="!text-sm">Logout</span>
-                </button> -->
-
-
-
-
 				<div class="font-[200] text-xs text-gray-400 p-[1em] !text-right">
 					<span class="pr-2 max-w-fi">
 						&copy; {{currentYear}} - {{nextYear}}
 					</span>
-					<span class="pr-2">
-						The Pennsylvania Army
-					</span>
+					<span class="pr-2">WoRTool.com</span>
 					<span class="pr-2 !text-gray-300 block">
 						<button (click)="openPortfolio()"
 							class="hover:brightness-125 active:transform active:translate-y-1 active:translate-x-1">
@@ -461,73 +384,5 @@ Copyright (c) 2023 Tone Web Design, Molex
 						</button>
 					</span>
 				</div>
-
-
-
-
-			</div>
-
-
-
-
-		</div>
-
-
-
-
-		<div *ngIf="!loginTask && registerTask && !isLoggedIn"
-			class="lg:col-span-2 lg:row-span-1 right-in">
-			<div class="bg-slate-800 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
-				<h3 class="text-white text-lg pb-3  tracking-tight">
-					Login to existing account...
-				</h3>
-
-
-
-
-
-				<button (click)="loginBtn()"
-					mat-raised-button
-					class="w-full !py-3 text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-					Login
-				</button>
-
-
-
-
 			</div>
 		</div>
-
-
-
-
-		<div *ngIf="loginTask && !registerTask && !isLoggedIn"
-			class="lg:col-span-2 lg:row-span-1 right-in">
-			<div class="bg-slate-800 rounded-lg px-6 py-6 ring-1 ring-slate-900/5 shadow-xl w-full h-full">
-				<h3 class="text-white text-lg pb-3  tracking-tight">
-					Register an account!
-				</h3>
-
-
-
-
-
-				<button (click)="registerBtn()"
-					mat-raised-button
-					class="w-full !py-3 !text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-					Sign Up!
-				</button>
-
-
-
-
-			</div>
-		</div>
-
-
-
-
-
-
-	</div>
-</div>

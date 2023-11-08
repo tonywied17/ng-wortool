@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue November 7th 2023 2:43:37 
+ * Last Modified: Tue November 7th 2023 5:45:58 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -92,10 +92,13 @@ export class RegimentInfoComponent implements OnInit {
 
   openImageModal(imageUrl: string) {
     const dialogRef = this.dialog.open(ImageModalComponent, {
-      data: { imageUrl },
+      data: {
+        imageUrl,
+        galleryImages: this.fileInfos // Pass the gallery images
+      },
       panelClass: 'image-modal-dialog',
     });
-
+  
     dialogRef.backdropClick().subscribe(() => dialogRef.close());
   }
   

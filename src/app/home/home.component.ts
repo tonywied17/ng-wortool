@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Tue November 7th 2023 11:41:49 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -18,6 +18,7 @@ import { SharedService } from "../_services/shared.service";
 import { RegimentService } from "../_services/regiment.service";
 import { PasswordMatchValidatorDirective } from "../password-match-validator.directive";
 import { ChangeDetectorRef } from "@angular/core";
+import { SteamApiService } from "../_services/steam-api.service";
 
 @Component({
   selector: "app-home",
@@ -50,6 +51,15 @@ export class HomeComponent implements OnInit {
   roles: string[] = [];
   currentUser: any;
   loading = true;
+  gameDetails: any;
+  screenshots: any;
+  randomScreenshot: string = "";
+  gameNews: any;
+  headerImage: any;
+  gameBackground: any;
+  articleLength: any;
+  latestAuthor: any;
+  latestDate: any;
 
   isOwner: boolean = false;
   modRoute?: string;
@@ -63,7 +73,8 @@ export class HomeComponent implements OnInit {
     private sharedService: SharedService,
     private router: Router,
     private regimentService: RegimentService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private steamApiService: SteamApiService
   ) {
     this.router.events.subscribe((event) => {
       const date = new Date();
@@ -112,6 +123,8 @@ export class HomeComponent implements OnInit {
    * @returns void
    */
   async initializeComponent(): Promise<void> {
+    this.getScreenshots();
+    this.getAppNews();
     this.isLoggedIn = !!this.tokenStorage.getToken();
     this.currentUser = this.tokenStorage.getUser();
     const userID = this.currentUser.id;
@@ -178,10 +191,11 @@ export class HomeComponent implements OnInit {
       );
     } else {
       this.loading = false;
+      
     }
 
     this.cdRef.detectChanges();
-
+    
     // console.log("init component ran");
   }
 
@@ -216,6 +230,8 @@ export class HomeComponent implements OnInit {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
         this.roles = data.roles; // Directly using the roles from the response
+        console.log(data)
+        this.currentUser.username = data.username;
 
         this.isLoginFailed = false;
         this.authService.isAuthenticated = true;
@@ -266,6 +282,42 @@ export class HomeComponent implements OnInit {
   }
 
   /**
+   * Get screenshots
+   * This function is used to get the screenshots for the game from steam api
+   * @returns - promise
+   */
+  async getScreenshots(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.steamApiService.getAppDetails().subscribe(
+        (data) => {
+          this.randomScreenshot = this.getRandomScreenshot(data.screenshots);
+          this.headerImage = data.header_image;
+          console.log(data)
+          resolve();
+        },
+        (error) => {
+          // handle error if needed
+          reject(error);
+        }
+      );
+    });
+  }
+
+  /**
+   * Get random screenshot
+   * This function is used to get a random screenshot from the screenshots array
+   * @param screenshots - screenshots array
+   * @returns - random screenshot url path
+   */
+  getRandomScreenshot(screenshots: any[]): string {
+    if (screenshots && screenshots.length > 0) {
+      const randomIndex = Math.floor(Math.random() * screenshots.length);
+      return screenshots[randomIndex].path_thumbnail;
+    }
+    return "";
+  }
+
+  /**
    * Login btn
    * This function is used to show the login form
    */
@@ -309,5 +361,71 @@ export class HomeComponent implements OnInit {
    */
   openPortfolio() {
     window.open("https://tonewebdesign.com/portfolio", "_blank");
+  }
+
+
+  /**
+   * Get app news
+   * This function is used to get the app news for the game from steam api
+   */
+  getAppNews(): void {
+    this.steamApiService.getAppNews().subscribe(
+      (data) => {
+        this.gameNews = data;
+        this.articleLength = this.gameNews.length;
+        this.latestAuthor = this.gameNews[0].author;
+        this.latestDate = this.formatUnixTimestamp(this.gameNews[0].date);
+      },
+      (error) => {
+        // // console.log(error);
+      }
+    );
+  }
+
+  /**
+   * Format unix timestamp
+   * This function is used to format the unix timestamp from steam api
+   * @param unixTimestamp - unix timestamp
+   * @returns - formatted date
+   */
+  formatUnixTimestamp(unixTimestamp: any): string {
+    const date = new Date(unixTimestamp * 1000);
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: undefined,
+      minute: undefined,
+      second: undefined,
+      timeZone: "UTC",
+    };
+
+    return date.toLocaleString(undefined, options);
+  }
+
+  /**
+   * Open in new popup window
+   * This function is used to open a new window
+   * @param url 
+   * @param title 
+   * @param w 
+   * @param h 
+   * @returns 
+   */
+  open(url: any, title: any, w: any, h: any) {
+    var left = screen.width / 2 - w / 2;
+    var top = screen.height / 2 - h / 2;
+    return window.open(
+      url,
+      title,
+      "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=" +
+        w +
+        ", height=" +
+        h +
+        ", top=" +
+        top +
+        ", left=" +
+        left
+    );
   }
 }
