@@ -19,25 +19,23 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 <div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
 
 
-	<div [ngClass]="isLoggedIn ? 'grid lg:grid-cols-[2fr_1fr] grid-cols-1 lg:gap-5' : 'grid lg:grid-cols-[0.8fr_1.5fr_1fr] grid-cols-1 lg:gap-5'">
+	<div [ngClass]="isLoggedIn ? 'grid lg:grid-cols-[2fr_1fr] grid-cols-1 lg:gap-5' : 'grid lg:grid-cols-[1fr_1.5fr_1.2fr] grid-cols-1 lg:gap-5'">
 
 
 		<!-- LEFT -->
 		<div class="lg:col-start-1 col-span-1 lg:row-start-1 lg:row-span-1">
 
 			<!-- AD -->
-			<div *ngIf="!isLoggedIn" class="ring-1 ring-[#88887b] ring-offset-2 ring-offset-[#101724] rounded-lg p-4 shadow-xl w-full h-fit">
-				<h3 class="text-[#88887b] font-[500] lg:text-3xl text-lg tracking-tight mb-2 px-1">A War of Rights Tool</h3>
-				<p class="text-[#c4c4c4ce] text-base font-[300] px-6">
+			<div *ngIf="!isLoggedIn" style="padding: 1.5em;" class="rounded-lg w-full h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-2 px-1">A War of Rights Tool</h3>
+				<p class="text-[#c4c4c4ce] text-base font-[300]">
 					An all-in-one utility tool for managing your War of Rights regiment.
 				</p>
 
 				<div class="rounded-lg my-4 shadow-lg brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[350px] h-[250px]"
 				style="background-image: url('{{randomScreenshot}}'); background-size: cover;"></div>
 
-				<p class="text-center px-4">
-					<a class="!text-[#c4c4c4bb] !text-[0.7rem] !font-[200] !min-h-fit !h-fit !py-1.5" href="https://www.paypal.com/paypalme/AnthonyWiedman" target="_blank" mat-stroked-button><i class="fa-solid fa-hand-holding-dollar"></i> Donate to WoRTool</a>
-				</p>
+
 
 		    </div>
 
@@ -45,59 +43,116 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 			<!-- DASH -->
 			<div *ngIf="isLoggedIn"
-			style="padding: 2em 2em; background: linear-gradient(180deg, #1e293b, #1e293b00);"
-				class="rounded-lg lg:p-6 p-2 w-full !my-auto top-in">
-				<div class="grid grid-cols-[auto_auto]">
+				class="lg:p-6 p-2 w-full !my-auto top-in row-start-1 row-span-1 rounded-lg w-full h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
+				<div class="grid lg:grid-cols-[auto_auto] lg:px-0 px-4">
 					<div>
-						<h3 class="text-neutral-400 text-lg lg:pb-3 lg:pt-0 pt-3 tracking-tight">
-							Welcome back {{currentUser.username}}!<br><i class="font-[200] text-base">Access your dashboards below</i>
+						<h3 class="text-neutral-400 text-lg lg:pb-3 lg:pt-0 pt-3 tracking-tight mb-2 lg:mb-0">
+							Welcome back <span class="font-[500] text-[#88887b] px-1">{{currentUser.username}}</span>!
 						</h3>
 					</div>
-					<div class="place-self-end flex items-start mb-auto font-[200] text-sm">
+					<div class="place-self-end flex items-start mb-auto font-[200] text-sm hidden lg:inline-block text-neutral-400">
 						{{formattedDate}}
 					</div>
 				</div>
 				
-				
-				<div class="p-[1em]">
+			<div class="lg:rounded-t-lg shadow-sm rounded-t-lg mt-2 brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[222px] h-[222px]"
+				style="background-image: url('{{randomScreenshot}}'); background-size: cover;background-position: center;">
+			</div>
+
+				<div class="lg:my-0 mb-5 rounded-b-lg shadow-2xl">
 					<mat-list>
 						<mat-action-list>
 							<button *ngIf="showAdmin"
 								routerLink="/admin/1"
 								mat-list-item
-								class="!py-[0.7em]">
+								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
 								<i class="fa-solid fa-shield-halved w-[25px] ml-[1em] mr-[0.5em]"></i>
 								Admin Dashboard
 							</button>
-							<mat-divider *ngIf="showAdmin"></mat-divider>
+	
+							<mat-divider *ngIf="showAdmin" class="lg:!hidden"></mat-divider>
+
 							<button *ngIf="showMod"
 								routerLink="/mod/1"
 								mat-list-item
-								class="!py-[0.7em]">
+								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
 								<i class="fa-solid fa-tents w-[25px] ml-[1em] mr-[0.5em]"></i>
-								Regiment Tool
+								Regiment Tools
 							</button>
-							<mat-divider></mat-divider>
+								<div class="hidden lg:block !bg-gradient-to-r from-[#4b4b4775] via-[#6b6a644b] to-transparent">
+									<button *ngIf="showMod"
+									routerLink="/mod/2"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									<i class="fa-brands fa-discord w-[25px]"></i>
+									Event Share
+									</button>
+
+									<button *ngIf="showMod"
+									routerLink="/mod/3"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									<i class="fa-brands fa-steam w-[25px]"></i>
+									Steam IDs
+									</button>
+
+								</div>
+							
+								<mat-divider class="lg:!hidden"></mat-divider>
+							
 							<button *ngIf="showUser"
 								routerLink="/user/1"
 								mat-list-item
-								class="!py-[0.7em]">
+								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
 								<i class="fa-solid fa-gear w-[25px] ml-[1em] mr-[0.5em]"></i>
 								User Settings
 							</button>
-							<mat-divider class="sm:!hidden inline-block"></mat-divider>
-							<button (click)="logout()"
-								class="sm:!hidden !inline-block !text-[#bf3636] !w-full !py-[0.7em] !pl-[1em] !rounded-none  !text-[1rem]"
-								style="font-family: 'Roboto' !important;"
-								mat-button>
-								<i class="fa-sharp fa-solid fa-arrow-right-from-bracket w-[25px] ml-[1em] mr-[0.5em]"></i>
-								Logout
+
+								<div class="hidden lg:block !bg-gradient-to-r from-[#44434075] via-[#6b6a644b] to-transparent !rounded-b-md">
+									<button *ngIf="showUser"
+									routerLink="/user/2"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									<i class="fa-solid fa-circle-nodes w-[25px]"></i>
+									Linked Accounts
+									</button>
+
+									<button *ngIf="showUser"
+									routerLink="/user/3"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									<i class="fa-regular fa-star w-[25px]"></i>
+									Manage Favorites
+									</button>
+
+								</div>
+
+								<mat-divider class="lg:!hidden"></mat-divider>
+
+								<button (click)="logout()"
+								class="sm:!hidden !inline-block !py-[0.7em] !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent !rounded-bl-md lg:!rounded-none"
+								mat-list-item>
+								<i class="fa-solid fa-arrow-right-from-bracket w-[25px] ml-[1em] mr-[0.5em] !text-[#fa7676]"></i>
+								<span class="text-[#fa7676]">Logout</span>
 							</button>
+	
 						</mat-action-list>
 					</mat-list>
 				</div>
 			</div>
-	
+
+
+			<!-- RECENT ACTIVITY -->
+			<div *ngIf="isLoggedIn"
+			style="background: linear-gradient(90deg, #1e293b, #1e293b00);"
+				class="rounded-lg h-fit lg:p-6 p-2 w-full top-in row-start-2 row-span-1 lg:mt-[40px] mt-4 hidden">
+
+				<h3 class="text-neutral-400 text-lg lg:pb-3 lg:pt-0 pt-3 tracking-tight">
+					Recent Community Activity<br><i class="font-[200] text-base">Recent media & posts</i>
+				</h3>
+				
+
+			</div>
 
 		</div>
 
@@ -113,7 +168,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 				<!-- <h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
 					Sign-up Today!<br><i class="font-[200] text-base">Create a new account</i>
 				</h3> -->
-				<h3 class="text-[#88887b] font-[500] lg:text-3xl text-lg tracking-tight mb-4 px-1">
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1">
 					Sign-up Today!<br><i class="font-[200] text-base">Create a new account..</i>
 				</h3>
 				<div *ngIf="isSuccessful"
@@ -214,7 +269,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 						<div class="form-group sm:col-span-1 sm:col-start-4">
 							<button mat-raised-button
 							color="primary"
-								class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl font-[300]">
+								class="w-full !py-2 !sm:py-[5px] !text-lg font-[300]">
 								Create!
 							</button>
 						</div>
@@ -236,7 +291,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 				<!-- <h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
 					Login Now!<br><i class="font-[200] text-base">For returning members</i>
 				</h3> -->
-				<h3 class="text-[#88887b] font-[500] lg:text-3xl text-lg tracking-tight mb-4 px-1">
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1">
 					Login Now!<br><i class="font-[200] text-base">For returning members..</i>
 				</h3>
 				<form #f="ngForm"
@@ -302,7 +357,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 								<div>
 									<button mat-raised-button
 											color="primary"
-											class="w-full !py-2 !sm:py-[5px] sm:text-lg text-xl font-[300]">
+											class="w-full !py-2 !sm:py-[5px] !text-lg !text-neutral-300 font-[300]">
 										Login
 									</button>
 								</div>
@@ -342,14 +397,14 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 
 			<!-- NEWS -->
-			<div *ngIf="isLoggedIn" class="p-6">
+			<div *ngIf="isLoggedIn" class="lg:p-6 p-2 rounded-lg lg:mt-0 mt-4" style="padding: 1.5em 2em;  background: linear-gradient(90deg, #1e293b, #1e293b00);">
 			
-				<h3 class="text-[#88887b] font-[500] lg:text-3xl text-lg tracking-tight mb-4 px-1">
-					Recent News<br><i class="font-[200] text-base">Latest game updates & news!</i>
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 ml-[-10px]">
+					Recent Game News<br><i class="font-[200] text-base">Latest War of Rights news &amp; updates!</i>
 				</h3>
 	
 				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto animate-load">
-					<a class="text-neutral-200 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
+					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
 					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
 						<div class="cols-start-1 col-span-1 px-2 text-left">
 							<span class="text-sm opacity-40 font-[200]">
@@ -379,14 +434,14 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 		<div class="lg:col-start-3 col-span-1 lg:row-start-1 lg:row-span-1">
 			
 			<!-- NEWS -->
-			<div *ngIf="!isLoggedIn" class="p-6 ">
+			<div *ngIf="!isLoggedIn" class="rounded-lg lg:mt-0 mt-4" style="padding: 1.5em 2em; background: linear-gradient(-90deg, #1e293b, #1e293b00);">
 			
-				<h3 class="text-[#88887b] font-[500] lg:text-3xl text-lg tracking-tight mb-4 px-1">
-					Recent News<br><i class="font-[200] text-base">Latest game updates & news!</i>
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 ml-[-10px]">
+					Recent Game News<br><i class="font-[200] text-base">Latest War of Rights news &amp; updates!</i>
 				</h3>
 	
 				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto animate-load">
-					<a class="text-neutral-200 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
+					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
 					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
 						<div class="cols-start-1 col-span-1 px-2 text-left">
 							<span class="text-sm opacity-40 font-[200]">
@@ -414,25 +469,29 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 	</div>
 
-
+	<div class="scale-center mt-4">
+		<div class="h-full text-right">
+			<div class="font-[200] text-xs text-gray-400 p-[1em] !text-right">
+				<span class="pr-2 max-w-fi">
+					&copy; {{currentYear}} - {{nextYear}}
+				</span>
+				<span class="pr-2">WoRTool.com</span>
+				<span class="pr-2 !text-gray-300 block">
+					<p class="text-right mt-2">
+						<a class="!min-h-fit !h-fit !py-1.5 donate-link" href="https://www.paypal.com/paypalme/AnthonyWiedman" target="_blank" mat-stroked-button><i class="fa-solid fa-hand-holding-dollar"></i> Donate to WoRTool</a>
+					</p>
+					<button (click)="openPortfolio()"
+						class="hover:brightness-125 active:transform active:translate-y-1 active:translate-x-1">
+						by PA-[PIB] QM. Molex
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	
 </div>
 
 
 
 
-		<div *ngIf="isLoggedIn" class="scale-center">
-			<div class="h-full text-right">
-				<div class="font-[200] text-xs text-gray-400 p-[1em] !text-right">
-					<span class="pr-2 max-w-fi">
-						&copy; {{currentYear}} - {{nextYear}}
-					</span>
-					<span class="pr-2">WoRTool.com</span>
-					<span class="pr-2 !text-gray-300 block">
-						<button (click)="openPortfolio()"
-							class="hover:brightness-125 active:transform active:translate-y-1 active:translate-x-1">
-							by molex
-						</button>
-					</span>
-				</div>
-			</div>
-		</div>
+		
