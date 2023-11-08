@@ -841,7 +841,7 @@ html {
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue November 7th 2023 4:45:58 
+ * Last Modified: Wed November 8th 2023 12:00:14 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -907,4 +907,9 @@ html {
 
 .fa-user{
   :before{content: '';}
+}
+
+
+.mdc-list-item__primary-text {
+	color: rgb(212 212 212) !important;
 }
