@@ -93,7 +93,6 @@
 	font-size: 0.8rem;
 	font-weight: 400;
 	color: #88887b !important;
-	border-color: #88887b;
 }
 
 .dash-item {
@@ -101,10 +100,14 @@
 }
 .dash-sub-item {
 	color: rgb(163 163 163) !important;
-	font-size: 12px !important;
+	font-size: 13px !important;
 	justify-content: left !important;
 	border-radius: unset !important;
 	padding: 4px 8px !important;
-	margin-left: 3.33em !important;
+	// margin-left: 3.33em !important;
 	border-left: 1px dotted #88887b;
+}
+
+.bottom-option {
+	border-bottom-left-radius: 10px !important;
 }
