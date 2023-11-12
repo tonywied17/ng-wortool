@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Tue November 7th 2023 5:45:44 
+Last Modified: Sun November 12th 2023 2:53:23 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -21,587 +21,585 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-<!-- <div *ngIf="!isOwner">
+	<!-- <div *ngIf="!isOwner">
 	<p>This is reserved for regiment owners.</p>
 </div> -->
 
-<div *ngIf="showMod || isOwner">
+	<div *ngIf="showMod || isOwner">
 
-	<div *ngIf="regimentData" class="max-w-full">
-		<!-- <h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2> -->
+		<div *ngIf="regimentData" class="max-w-full">
+			<!-- <h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2> -->
 
 
-		<mat-tab-group dynamicHeight>
-			<!-- Settings Tab -->
-			<mat-tab label="Settings">
-				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
-					Event Tool Settings
-				</h3>
-				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Select the Discord channel where you'd like to
-					share event server information using the event share tool.
-				</p>
+			<mat-tab-group dynamicHeight>
+				<!-- Settings Tab -->
+				<mat-tab label="Settings">
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+						Event Tool Settings
+					</h3>
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> Select the Discord channel where you'd like
+						to
+						share event server information using the event share tool.
+					</p>
 
-				<!-- Event Webhook Tool -->
-				<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
-					<div class="col-start-1 col-span-1">
-						<h3 class="text-slate-400 ml-1">Event Channel</h3>
-						<span *ngIf="regimentData.webhook_channel" [innerHTML]="regimentData.webhook_channel"
-							class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
-						</span>
-						<span *ngIf="!regimentData.webhook_channel"
-							class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
-							No event channel selected.
-						</span>
-					</div>
-					<!-- 	
+					<!-- Event Webhook Tool -->
+					<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
+						<div class="col-start-1 col-span-1">
+							<h3 class="text-slate-400 ml-1">Event Channel</h3>
+							<span *ngIf="regimentData.webhook_channel" [innerHTML]="regimentData.webhook_channel"
+								class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
+							</span>
+							<span *ngIf="!regimentData.webhook_channel"
+								class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
+								No event channel selected.
+							</span>
+						</div>
+						<!-- 	
 					<div class="sm:col-start-2 col-span-1">
 						<h3 class="text-slate-400">Webhook URL</h3>
 						<span [innerHTML]="regimentData.webhook" class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm truncate shadow-sm"></span>
 					</div>
 	 				-->
-					<div class="sm:col-start-3 sm:col-span-2 sm:place-self-end">
-						<select [disabled]="showMod && !isOwner" #channelSelect style=" padding-top: 11px;
+						<div class="sm:col-start-3 sm:col-span-2 sm:place-self-end">
+							<select [disabled]="showMod && !isOwner" #channelSelect style=" padding-top: 11px;
 							padding-bottom: 11px;
 							font-size: 15px;
-							border: 1px solid #7c7d72 !important;" 
-							matTooltipClass="form-tooltip"
-							matTooltipPosition="left"
-							[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Select the Discord channel where \'Event Share\' information will be posted.'"
-							class="field-input2 inline-block" id="channel-select">
-							<option value="0">Select a Channel</option>
-							<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
-								{{ channel.name }}
-							</option>
-						</select>
+							border: 1px solid #7c7d72 !important;" matTooltipClass="form-tooltip" matTooltipPosition="left"
+								[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Select the Discord channel where \'Event Share\' information will be posted.'"
+								class="field-input2 inline-block" id="channel-select">
+								<option value="0">Select a Channel</option>
+								<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
+									{{ channel.name }}
+								</option>
+							</select>
 
-						<button [disabled]="showMod && !isOwner" (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
-							class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1" color="primary">
-							Set Channel
-						</button>
+							<button [disabled]="showMod && !isOwner" (click)="updateTargetChannel(channelSelect.value)"
+								mat-stroked-button class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1"
+								color="primary">
+								Set Channel
+							</button>
+						</div>
 					</div>
-				</div>
 
-				<!-- Update Regiment Form -->
-				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
-					Profile Information for <span class="font-[900] p-1 m-1 text-base"><i class="fa-brands fa-discord"></i> {{regimentData.regiment}} </span>
-				</h3>
-				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Personalize your regiment's profile information.
-				</p>
-				
+					<!-- Update Regiment Form -->
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+						Profile Information for <span class="font-[900] p-1 m-1 text-base"><i
+								class="fa-brands fa-discord"></i> {{regimentData.regiment}} </span>
+					</h3>
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> Personalize your regiment's profile
+						information.
+					</p>
 
-				<div class="">
-					<form (ngSubmit)="updateRegiment()">
-						<div class="form-group p-2 m-2">
-							<div class="field-box">
-								<input [(ngModel)]="regiment" name="regiment" style="
+
+					<div class="">
+						<form (ngSubmit)="updateRegiment()">
+							<div class="form-group p-2 m-2">
+								<div class="field-box">
+									<input [(ngModel)]="regiment" name="regiment" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
               " class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Display Name...">
 
-							</div>
+								</div>
 
-							<div class="field-box">
-								<select [disabled]="showMod && !isOwner" [(ngModel)]="side" style="padding-top: 8px;
+								<div class="field-box">
+									<select [disabled]="showMod && !isOwner" [(ngModel)]="side" style="padding-top: 8px;
 								padding-bottom: 8px;
 								font-size: 15px;
-								border: 1px solid #7c7d72 !important;" 
-								matTooltipClass="form-tooltip"
-								matTooltipPosition="left"
-								[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Pick your side in the war...'"
-								class="field-input2 inline-block my-2" id="side-select" name="side">
-									<option value="regimentData.side" selected disabled>
-										{{ regimentData.side }}
-									</option>
-									<option value="USA">USA</option>
-									<option value="CSA">CSA</option>
-							</select>
-							
-								<i class="fa-solid fa-arrows-up-down field-icon"></i>
-							</div>
+								border: 1px solid #7c7d72 !important;" matTooltipClass="form-tooltip" matTooltipPosition="left"
+										[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Pick your side in the war...'"
+										class="field-input2 inline-block my-2" id="side-select" name="side">
+										<option value="regimentData.side" selected disabled>
+											{{ regimentData.side }}
+										</option>
+										<option value="USA">USA</option>
+										<option value="CSA">CSA</option>
+									</select>
 
-							<div class="field-box">
-								<input [(ngModel)]="guild_id" name="guild_id" style="
+									<i class="fa-solid fa-arrows-up-down field-icon"></i>
+								</div>
+
+								<div class="field-box">
+									<input [(ngModel)]="guild_id" name="guild_id" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              " 
-			  class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Discord ID...">
-							</div>
+              " class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Discord ID...">
+								</div>
 
-							<div class="field-box">
-								<input [(ngModel)]="guild_avatar" name="guild_avatar" style="
+								<div class="field-box">
+									<input [(ngModel)]="guild_avatar" name="guild_avatar" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
               " class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Avatar Url...">
-							</div>
+								</div>
 
-							<div class="field-box">
-								<input [disabled]="showMod && !isOwner" [(ngModel)]="invite_link" name="invite_link" style="
+								<div class="field-box">
+									<input [disabled]="showMod && !isOwner" [(ngModel)]="invite_link" name="invite_link"
+										style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              " 
-			  matTooltipClass="form-tooltip"
-			  matTooltipPosition="left"
-			  [matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Share a Discord invite link for your regiment.'"
-			  class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Invite Link...">
-								<i class="fa-brands fa-discord field-icon"></i>
-							</div>
+              " matTooltipClass="form-tooltip" matTooltipPosition="left"
+										[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Share a Discord invite link for your regiment.'"
+										class="field-input !font-[300] my-[0.5em]" type="text"
+										placeholder="Invite Link...">
+									<i class="fa-brands fa-discord field-icon"></i>
+								</div>
 
-							<div class="field-box">
-								<input [disabled]="showMod && !isOwner" [(ngModel)]="website" name="website" style="
+								<div class="field-box">
+									<input [disabled]="showMod && !isOwner" [(ngModel)]="website" name="website" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              " 
-			  matTooltipClass="form-tooltip"
-			  matTooltipPosition="left"
-			  [matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Add your regiment\'s website URL (if available).'"
-			  class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Website...">
-								<i class="fa-solid fa-globe field-icon"></i>
-							</div>
+              " matTooltipClass="form-tooltip" matTooltipPosition="left"
+										[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Add your regiment\'s website URL (if available).'"
+										class="field-input !font-[300] my-[0.5em]" type="text" placeholder="Website...">
+									<i class="fa-solid fa-globe field-icon"></i>
+								</div>
 
-							<div class="field-box">
-								<textarea [disabled]="showMod && !isOwner" [(ngModel)]="description" name="description" style="
+								<div class="field-box">
+									<textarea [disabled]="showMod && !isOwner" [(ngModel)]="description"
+										name="description" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              " 
-			  matTooltipClass="form-tooltip"
-			  matTooltipPosition="left"
-			  [matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Provide a brief summary of your regiment.'"
-			  class="field-input !font-[300] my-[0.5em] textarea" placeholder="Summary...">
+              " matTooltipClass="form-tooltip" matTooltipPosition="left"
+										[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Provide a brief summary of your regiment.'"
+										class="field-input !font-[300] my-[0.5em] textarea" placeholder="Summary...">
 						</textarea>
-								<i class="fa-solid fa-book field-icon"></i>
+									<i class="fa-solid fa-book field-icon"></i>
+								</div>
 							</div>
-						</div>
 
-						<button [disabled]="showMod && !isOwner" mat-raised-button type="submit"
-							class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-							Update Regiment
-						</button>
-					</form>
+							<button [disabled]="showMod && !isOwner" mat-raised-button type="submit"
+								class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+								Update Regiment
+							</button>
+						</form>
 
-				</div>
-				<!--  -->
-			</mat-tab>
-			<mat-tab label="Members">
+					</div>
+					<!--  -->
+				</mat-tab>
+				<mat-tab label="Members">
 
-				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
-					Manage Members &amp; Managers
-				</h3>
-				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your regiment. 
-				</p>
-				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> User's will have to re-login to WoRTool to access manager features.
-				</p>
-				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> If you would like to add more than one owner please direct message <span class="font-[500] not-italic m-0.5"><i class="fa-brands fa-discord"></i> tonywied17</span> on Discord.
-				</p>
-
-				<div class="mt-4">
-
-					<!-- Owner -->
-					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">
-						{{regimentData.regiment}} Owner
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+						Manage Members &amp; Managers
 					</h3>
-					
-					
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your
+						regiment.
+					</p>
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> User's will have to re-login to WoRTool to
+						access manager features.
+					</p>
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> If you would like to add more than one owner
+						please direct message <span class="font-[500] not-italic m-0.5"><i
+								class="fa-brands fa-discord"></i> tonywied17</span> on Discord.
+					</p>
 
-					<div *ngFor="let user of regimentUsers">
-						<div *ngIf="regimentData.ownerId.includes(user.discordId);">
-						  <div class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
-							<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-										  class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
-		  
-										  <ng-template #noAvatar>
-											  <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
-										  </ng-template>
-		  
-						  {{user.username}}
-		  
-						  <span class="font-[300] flex items-center ml-auto mr-2 bg-slate-700 p-1 rounded-md text-sm">
-							<i class="mb-[1px] fa-solid fa-crown text-amber-400 mx-1"></i> Owner
-						  </span>
-						
-						  </div>
-						</div>
+					<div class="mt-4">
 
-					  </div>
+						<!-- Owner -->
+						<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">
+							{{regimentData.regiment}} Owner
+						</h3>
 
 
 
+						<div *ngFor="let user of regimentUsers">
+							<div *ngIf="regimentData.ownerId.includes(user.discordId);">
+								<div class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
+									<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+										class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
+										(error)="user.avatar_url = null">
 
-					<!-- Managers -->
-					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Managers</h3>
-					
-					<div *ngFor="let user of regimentUsers">
-						<div *ngIf="(!regimentData.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');"
-							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
-							<div class="flex items-center">
-								
-								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-       								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
+									<ng-template #noAvatar>
+										<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
+									</ng-template>
 
-								<ng-template #noAvatar>
-									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
-								</ng-template>
-
-								<span class="text-lg font-[300]">
 									{{user.username}}
-								</span>
+
+									<span
+										class="font-[300] flex items-center ml-auto mr-2 bg-slate-700 p-1 rounded-md text-sm">
+										<i class="mb-[1px] fa-solid fa-crown text-amber-400 mx-1"></i> Owner
+									</span>
+
+								</div>
 							</div>
 
-							<button [disabled]="showMod && !isOwner" mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="warn"
-								(click)="confirmRemoveModerator(user.id)">
-								<i class="fa-solid fa-minus"></i> Manager
-							</button>
-						</div>
-						<div class="grid grid-cols-[auto_1fr]">
-
-						</div>
-					</div>
-
-
-
-					<!-- Members -->
-					<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Members</h3>
-
-					<div *ngFor="let user of regimentUsers">
-						<div *ngIf="(user.discordId != regimentData.ownerId) && !user.roles.includes('ROLE_MODERATOR');"
-							class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
-							<div class="flex items-center">
-								<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
-
-								<ng-template #noAvatar>
-									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
-								</ng-template>
-
-								<span class="text-lg font-[300]">
-									{{user.username}}
-								</span>
-							</div>
-
-							<button [disabled]="showMod && !isOwner" mat-button class="!mr-2 !h-fit !min-h-fit !py-1" color="primary"
-								(click)="confirmAddModerator(user.id)">
-								<i class="fa-solid fa-plus"></i> Manager
-							</button>
 						</div>
 
-						<div class="grid grid-cols-[auto_1fr]">
-
-						</div>
-					</div>
-
-					<p class="font-[300] m-2 ml-5" *ngIf="!hasMembers()">There are no members for this regiment.</p>
 
 
-				</div>
-			</mat-tab>
-			<mat-tab label="Schedule">
-				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
-					Manage Regimental Schedules
-				</h3>
-				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Publish and update your schedule for viewing on
-					regimental profiles.
-				</p>
 
+						<!-- Managers -->
+						<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Managers
+						</h3>
 
-				<div class="grid grid-cols-2 w-full">
-					<div>
+						<div *ngFor="let user of regimentUsers">
+							<div *ngIf="(!regimentData.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');"
+								class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+								<div class="flex items-center">
 
-					</div>
-					<div class="text-right">
-						<button *ngIf="!creatingSchedule" mat-stroked-button color="primary" (click)="createSchedule()"><i class="fa-solid fa-plus"></i> New Schedule</button>
-					</div>
-				</div>
-				
+									<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+										class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
+										(error)="user.avatar_url = null">
 
-				<mat-divider *ngIf="!creatingSchedule" class="!my-2"></mat-divider>
+									<ng-template #noAvatar>
+										<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
+									</ng-template>
 
-				<div *ngIf="scheduleCount <= 0">
-					<div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
-						<div class="flex">
-						  <div class="mr-2">
-							<i class="fas fa-exclamation-triangle"></i>
-						  </div>
-						  <div>
-							<p>No schedules found.</p>
-						  </div>
-						</div>
-					  </div>
-				</div>
+									<span class="text-lg font-[300]">
+										{{user.username}}
+									</span>
+								</div>
 
-				<!-- Choose a Schedule -->
-				<div *ngIf="!creatingSchedule" class="w-full grid lg:grid-cols-3">
-					<div *ngFor="let scheduleName of objectKeys(scheduleNames)" class="grid grid-rows-auto gap-4 p-4 m-2 bg-slate-900/80 rounded-sm shadow-md">
-					  <div class="row-start-1 row-span-1">
-						<h3 class="text-slate-300 text-base font-[600]"><i class="fa-solid fa-calendar-days"></i> {{scheduleName}}</h3>
-						<p class="font-[300] text-neutral-200">{{scheduleCounts[scheduleName]}} slots in schedule</p>
-					  </div>
-					  <div class="row-start-2 row-span-1 text-right">
-						<button mat-stroked-button (click)="selectSchedule(scheduleName)"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-					  </div>
-					</div>
-				  </div>
-				  
-				<mat-divider *ngIf="!creatingSchedule" class="!my-2"></mat-divider>
-				
-
-
-				<!-- Editing Schedule -->
-				<div *ngIf="editingSchedule">
-					<div *ngIf="selectedScheduleName">
-
-						
-
-
-						<div class="w-full grid lg:grid-cols-2 gap-4">
-							<div class="col-start-1 col-span-1">
-								<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]"><i class="fa-solid fa-pencil"></i> Editing {{selectedScheduleName}}</h3>
-
-								<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-									<i class="fa-regular fa-circle-question mr-1"></i> Add or remove schedule slots from your calendar.
-								</p>
-							</div>
-							
-
-							<div class="text-right place-self-end ">
-
-								<button mat-stroked-button color="primary" (click)="toggleTimeFormat()" class="!inline-block">
-									<i class="fa-solid fa-clock pr-1"></i> {{timeString}}
+								<button [disabled]="showMod && !isOwner" mat-button
+									class="!mr-2 !h-fit !min-h-fit !py-1" color="warn"
+									(click)="confirmRemoveModerator(user.id)">
+									<i class="fa-solid fa-minus"></i> Manager
 								</button>
+							</div>
+							<div class="grid grid-cols-[auto_1fr]">
 
-								<button *ngIf="editingSchedule" mat-flat-button (click)="cancelEdit()" class="!inline-block !ml-2" style="color: rgb(219, 213, 188) !important;"><i
-									class="fa-solid fa-pen-to-square"></i> Cancel</button>
 							</div>
 						</div>
-						
-
-						<div class="w-full grid grid-cols-7 gap-2 hidden lg:grid mt-4">
-							<ng-container *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; let i = index">
-							  <div class="col-start-{{i + 1}} col-span-1">
-								<div class="text-center bg-gray-500 p-2 rounded-sm shadow-md">{{ day }}</div> <!-- Header -->
-								<ng-container *ngFor="let schedule of filterSchedulesByDay(day)">
-									
-									<div class="grid grid-rows-[1fr_auto] my-2 p-4 w-full bg-slate-700 shadow-md rounded-sm text-base font-[200]">
-										<div style="overflow: hidden;">
-										  <h1 class="text-neutral-200 text-lg event-type font-[400]">{{ schedule.event_type }}</h1>
-										  {{ display12HourTime ? schedule.time12 : schedule.time24 }}
-										</div>
-										<div class="row-start-2 text-right">
-										  <button (click)="removeDay(schedule.id)" mat-button class="!min-h-fit !h-fit !w-fit !min-w-fit" color="warn">
-											<i class="fa-solid fa-trash-can !text-red-700"></i>
-										  </button>
-										</div>
-									  </div>
-									  
-									  
-									  
-								</ng-container>
-							  </div>
-							</ng-container>
-						  </div>
-						  
-						  <div class="lg:hidden mt-4">
-							<!-- List view for mobile -->
-							<ng-container *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
-							  <ng-container *ngIf="filterSchedulesByDay(day).length > 0">
-								<div>
-								  <div class="text-center bg-gray-400 p-2">{{ day }}</div> <!-- Header for mobile -->
-								  <ng-container *ngFor="let schedule of filterSchedulesByDay(day)">
-									<div class="m-2 p-2 bg-slate-700 shadow-md rounded-sm text-base">
-										<div style="overflow: hidden;">
-											<h1 class="text-neutral-200 text-lg event-type font-[400]">{{schedule.event_type}}</h1> {{ display12HourTime ? schedule.time12 : schedule.time24}}
-										</div>
-									  <div class="text-right">
-										<button (click)="removeDay(schedule.id)" mat-button class="!min-h-fit !h-fit !w-fit !min-w-fit !p-2 !mx-1" color="warn"><i class="fa-solid fa-trash-can !text-red-700"></i></button>
-									  </div>
-									</div>
-								  </ng-container>
-								</div>
-							  </ng-container>
-							</ng-container>
-						  </div>
-						  
-						  
-						  
-						
-	
-						
-	
-	
-						<h1 class="text-slate-300 ml-1 mt-4 text-xl font-[300]">Add a Time Slot</h1>
-	
-						<div class="lg:p-4">
-							<form (ngSubmit)="addDay()">
 
 
-								<div class="field-box my-2">
-									<select [(ngModel)]="scheduleForm.day"
-										name="day"
-										style="
-							padding-top: 11px;
-							padding-bottom: 11px;
-							font-size: 15px;
-							border: 1px solid #7c7d72 !important;" 
-										class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-										id="existing-select">
-										<option value
-											disabled
-											selected>
-											Calendar Day...
-										</option>
-										<option value="Monday">Monday</option>
-										<option value="Tuesday">Tuesday</option>
-										<option value="Wednesday">Wednesday</option>
-										<option value="Thursday">Thursday</option>
-										<option value="Friday">Friday</option>
-										<option value="Saturday">Saturday</option>
-										<option value="Sunday">Sunday</option>
-									</select>
-									<i class="fa-solid fa-calendar-day field-icon"></i>
-								</div>
-		
-		
-								<div class="field-box my-2">
-									<input [(ngModel)]="scheduleForm.time"
-										name="time"
-										style="
-							padding-top: 11px;
-							padding-bottom: 11px;
-							font-size: 15px;
-							border: 1px solid #7c7d72 !important;" 
-										class="field-input"
-										type="time">
-										<i class="fa-regular fa-clock field-icon"></i>
-								</div>
-	
-								<div class="field-box my-2">
-									<input [(ngModel)]="scheduleForm.event_type"
-										name="event_type"
-										style="
-							padding-top: 11px;
-							padding-bottom: 11px;
-							font-size: 15px;
-							border: 1px solid #7c7d72 !important;" 
-										class="field-input"
-										placeholder="Event Name..."
-										type="text">
-										<i class="fa-solid fa-spell-check field-icon"></i>
-								</div>
-		
-								<div class="text-right">
-									<button mat-stroked-button type="submit">Add Time Slot</button>
-								</div>
-								
 
-							</form>
+						<!-- Members -->
+						<h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{regimentData.regiment}} Members</h3>
+
+						<div *ngFor="let user of regimentUsers">
+							<div *ngIf="(user.discordId != regimentData.ownerId) && !user.roles.includes('ROLE_MODERATOR');"
+								class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+								<div class="flex items-center">
+									<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+										class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
+										(error)="user.avatar_url = null">
+
+									<ng-template #noAvatar>
+										<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
+									</ng-template>
+
+									<span class="text-lg font-[300]">
+										{{user.username}}
+									</span>
+								</div>
+
+								<button [disabled]="showMod && !isOwner" mat-button
+									class="!mr-2 !h-fit !min-h-fit !py-1" color="primary"
+									(click)="confirmAddModerator(user.id)">
+									<i class="fa-solid fa-plus"></i> Manager
+								</button>
+							</div>
+
+							<div class="grid grid-cols-[auto_1fr]">
+
+							</div>
 						</div>
-	
+
+						<p class="font-[300] m-2 ml-5" *ngIf="!hasMembers()">There are no members for this regiment.</p>
+
+
 					</div>
-				</div>
-				
+				</mat-tab>
+				<mat-tab label="Schedule">
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+						Manage Regimental Schedules
+					</h3>
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> Publish and update your schedule for viewing
+						on
+						regimental profiles.
+					</p>
 
 
-				<!-- Create New Schedule Form -->
-				<div *ngIf="creatingSchedule">
-					<form (ngSubmit)="createSchedule()">
+					<div class="grid grid-cols-2 w-full">
+						<div>
 
-						<div class="field-box my-2">
-							<input [(ngModel)]="scheduleForm.schedule_name"
-								name="schedule_name"
-								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
-								class="field-input"
-								placeholder="Schedule Name..."
-								type="text">
-								<i class="fa-solid fa-spell-check field-icon"></i>
 						</div>
-
-						<div class="field-box my-2">
-							<select [(ngModel)]="scheduleForm.day"
-								name="day"
-								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
-								class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-								id="existing-select">
-								<option value
-									disabled
-									selected>
-									Calendar Day...
-								</option>
-								<option value="Monday">Monday</option>
-								<option value="Tuesday">Tuesday</option>
-								<option value="Wednesday">Wednesday</option>
-								<option value="Thursday">Thursday</option>
-								<option value="Friday">Friday</option>
-								<option value="Saturday">Saturday</option>
-								<option value="Sunday">Sunday</option>
-							</select>
-							<i class="fa-solid fa-calendar-day field-icon"></i>
-						</div>
-
-
-						<div class="field-box my-2">
-							<input [(ngModel)]="scheduleForm.time"
-								name="time"
-								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
-								class="field-input"
-								type="time">
-								<i class="fa-regular fa-clock field-icon"></i>
-						</div>
-
-						<div class="field-box my-2">
-							<input [(ngModel)]="scheduleForm.event_type"
-								name="event_type"
-								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
-								class="field-input"
-								placeholder="Event Name..."
-								type="text">
-								<i class="fa-solid fa-spell-check field-icon"></i>
-						</div>
-
 						<div class="text-right">
-							<button mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
-								class="fa-solid fa-pen-to-square"></i> Cancel</button>
-							<button mat-stroked-button type="submit">Add Time Slot</button>
+							<button *ngIf="!creatingSchedule" mat-stroked-button color="primary"
+								(click)="createSchedule()"><i class="fa-solid fa-plus"></i> New Schedule</button>
 						</div>
-					</form>
-				</div>
-
-			</mat-tab>
-			<mat-tab label="Media">
+					</div>
 
 
-				<div class="bg-slate-900/80 rounded-md border-l-4 border-yellow-700 text-yellow-300 p-4 mb-4">
+					<mat-divider *ngIf="!creatingSchedule" class="!my-2"></mat-divider>
+
+					<div *ngIf="scheduleCount <= 0">
+						<div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+							<div class="flex">
+								<div class="mr-2">
+									<i class="fas fa-exclamation-triangle"></i>
+								</div>
+								<div>
+									<p>No schedules found.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Choose a Schedule -->
+					<div *ngIf="!creatingSchedule" class="w-full grid lg:grid-cols-3">
+						<div *ngFor="let scheduleName of objectKeys(scheduleNames)"
+							class="grid grid-rows-auto gap-4 p-4 m-2 bg-slate-900/80 rounded-sm shadow-md">
+							<div class="row-start-1 row-span-1">
+								<h3 class="text-slate-300 text-base font-[600]"><i
+										class="fa-solid fa-calendar-days"></i> {{scheduleName}}</h3>
+								<p class="font-[300] text-neutral-200">{{scheduleCounts[scheduleName]}} slots in
+									schedule</p>
+							</div>
+							<div class="row-start-2 row-span-1 text-right">
+								<button mat-stroked-button (click)="selectSchedule(scheduleName)"><i
+										class="fa-solid fa-pen-to-square"></i> Edit</button>
+							</div>
+						</div>
+					</div>
+
+					<mat-divider *ngIf="!creatingSchedule" class="!my-2"></mat-divider>
+
+
+
+					<!-- Editing Schedule -->
+					<div *ngIf="editingSchedule">
+						<div *ngIf="selectedScheduleName">
+
+
+
+
+							<div class="w-full grid lg:grid-cols-2 gap-4">
+								<div class="col-start-1 col-span-1">
+									<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]"><i
+											class="fa-solid fa-pencil"></i> Editing {{selectedScheduleName}}</h3>
+
+									<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+										<i class="fa-regular fa-circle-question mr-1"></i> Add or remove schedule slots
+										from your calendar.
+									</p>
+								</div>
+
+
+								<div class="text-right place-self-end ">
+
+									<button mat-stroked-button color="primary" (click)="toggleTimeFormat()"
+										class="!inline-block">
+										<i class="fa-solid fa-clock pr-1"></i> {{timeString}}
+									</button>
+
+									<button *ngIf="editingSchedule" mat-flat-button (click)="cancelEdit()"
+										class="!inline-block !ml-2" style="color: rgb(219, 213, 188) !important;"><i
+											class="fa-solid fa-pen-to-square"></i> Cancel</button>
+								</div>
+							</div>
+
+
+							<div class="w-full grid grid-cols-7 gap-2 hidden lg:grid mt-4">
+								<ng-container
+									*ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; let i = index">
+									<div class="col-start-{{i + 1}} col-span-1">
+										<div class="text-center bg-gray-500 p-2 rounded-sm shadow-md">{{ day }}</div>
+										<!-- Header -->
+										<ng-container *ngFor="let schedule of filterSchedulesByDay(day)">
+
+											<div
+												class="grid grid-rows-[1fr_auto] my-2 p-4 w-full bg-slate-700 shadow-md rounded-sm text-base font-[200]">
+												<div style="overflow: hidden;">
+													<h1 class="text-neutral-200 text-lg event-type font-[400]">{{
+														schedule.event_type }}</h1>
+													{{ display12HourTime ? schedule.time12 : schedule.time24 }}
+												</div>
+												<div class="row-start-2 text-right">
+													<button (click)="removeDay(schedule.id)" mat-button
+														class="!min-h-fit !h-fit !w-fit !min-w-fit" color="warn">
+														<i class="fa-solid fa-trash-can !text-red-700"></i>
+													</button>
+												</div>
+											</div>
+
+
+
+										</ng-container>
+									</div>
+								</ng-container>
+							</div>
+
+							<div class="lg:hidden mt-4">
+								<!-- List view for mobile -->
+								<ng-container
+									*ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
+									<ng-container *ngIf="filterSchedulesByDay(day).length > 0">
+										<div>
+											<div class="text-center bg-gray-400 p-2">{{ day }}</div>
+											<!-- Header for mobile -->
+											<ng-container *ngFor="let schedule of filterSchedulesByDay(day)">
+												<div class="m-2 p-2 bg-slate-700 shadow-md rounded-sm text-base">
+													<div style="overflow: hidden;">
+														<h1 class="text-neutral-200 text-lg event-type font-[400]">
+															{{schedule.event_type}}</h1> {{ display12HourTime ?
+														schedule.time12 : schedule.time24}}
+													</div>
+													<div class="text-right">
+														<button (click)="removeDay(schedule.id)" mat-button
+															class="!min-h-fit !h-fit !w-fit !min-w-fit !p-2 !mx-1"
+															color="warn"><i
+																class="fa-solid fa-trash-can !text-red-700"></i></button>
+													</div>
+												</div>
+											</ng-container>
+										</div>
+									</ng-container>
+								</ng-container>
+							</div>
+
+
+
+
+
+
+
+
+							<h1 class="text-slate-300 ml-1 mt-4 text-xl font-[300]">Add a Time Slot</h1>
+
+							<div class="lg:p-4">
+								<form (ngSubmit)="addDay()">
+
+
+									<div class="field-box my-2">
+										<select [(ngModel)]="scheduleForm.day" name="day" style="
+							padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;"
+											class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+											id="existing-select">
+											<option value disabled selected>
+												Calendar Day...
+											</option>
+											<option value="Monday">Monday</option>
+											<option value="Tuesday">Tuesday</option>
+											<option value="Wednesday">Wednesday</option>
+											<option value="Thursday">Thursday</option>
+											<option value="Friday">Friday</option>
+											<option value="Saturday">Saturday</option>
+											<option value="Sunday">Sunday</option>
+										</select>
+										<i class="fa-solid fa-calendar-day field-icon"></i>
+									</div>
+
+
+									<div class="field-box my-2">
+										<input [(ngModel)]="scheduleForm.time" name="time" style="
+							padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" class="field-input" type="time">
+										<i class="fa-regular fa-clock field-icon"></i>
+									</div>
+
+									<div class="field-box my-2">
+										<input [(ngModel)]="scheduleForm.event_type" name="event_type" style="
+							padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" class="field-input" placeholder="Event Name..." type="text">
+										<i class="fa-solid fa-spell-check field-icon"></i>
+									</div>
+
+									<div class="text-right">
+										<button mat-stroked-button type="submit">Add Time Slot</button>
+									</div>
+
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+
+
+
+					<!-- Create New Schedule Form -->
+					<div *ngIf="creatingSchedule">
+						<form (ngSubmit)="createSchedule()">
+
+							<div class="field-box my-2">
+								<input [(ngModel)]="scheduleForm.schedule_name" name="schedule_name" style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;" class="field-input" placeholder="Schedule Name..." type="text">
+								<i class="fa-solid fa-spell-check field-icon"></i>
+							</div>
+
+							<div class="field-box my-2">
+								<select [(ngModel)]="scheduleForm.day" name="day" style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;"
+									class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
+									id="existing-select">
+									<option value disabled selected>
+										Calendar Day...
+									</option>
+									<option value="Monday">Monday</option>
+									<option value="Tuesday">Tuesday</option>
+									<option value="Wednesday">Wednesday</option>
+									<option value="Thursday">Thursday</option>
+									<option value="Friday">Friday</option>
+									<option value="Saturday">Saturday</option>
+									<option value="Sunday">Sunday</option>
+								</select>
+								<i class="fa-solid fa-calendar-day field-icon"></i>
+							</div>
+
+
+							<div class="field-box my-2">
+								<input [(ngModel)]="scheduleForm.time" name="time" style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;" class="field-input" type="time">
+								<i class="fa-regular fa-clock field-icon"></i>
+							</div>
+
+							<div class="field-box my-2">
+								<input [(ngModel)]="scheduleForm.event_type" name="event_type" style="
+					padding-top: 11px;
+					padding-bottom: 11px;
+					font-size: 15px;
+					border: 1px solid #7c7d72 !important;" class="field-input" placeholder="Event Name..." type="text">
+								<i class="fa-solid fa-spell-check field-icon"></i>
+							</div>
+
+							<div class="text-right">
+								<button mat-stroked-button (click)="cancelEdit()" class="!inline-block"><i
+										class="fa-solid fa-pen-to-square"></i> Cancel</button>
+								<button mat-stroked-button type="submit">Add Time Slot</button>
+							</div>
+						</form>
+					</div>
+
+				</mat-tab>
+				<mat-tab label="Media">
+
+
+					<!-- <div class="bg-slate-900/80 rounded-md border-l-4 border-yellow-700 text-yellow-300 p-4 mb-4">
 					<div class="flex">
 					  <div class="mr-2">
 						<i class="fas fa-exclamation-triangle"></i>
@@ -610,75 +608,151 @@ Copyright (c) 2023 Tone Web Design, Molex
 						<p>This component is available for testing. Currently only images are supported. Thanks!</p>
 					  </div>
 					</div>
-				  </div>
+				  </div> -->
 
-				<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
-					Manage Shared Media
-				</h3>
-				<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-					<i class="fa-regular fa-circle-question mr-1"></i> Manage media on your regiment's WoRTool page.
-				</p>
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+						Cover Photo
+					</h3>
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> Change your regiment's profile cover photo.
+					</p>
 
-				
+					<div class="mb-[122.2px]">
 
-
-				  <div class="grid grid-cols-[1fr_2fr] gap-4 h-full">
-
-					<div>
-
-						<div *ngIf="message" class="alert alert-secondary" role="alert">
-							{{ message }}
+						<div *ngIf="messageCover" class="alert alert-secondary" role="alert">
+							{{ messageCover }}
 						</div>
 
-						<input #fileInput hidden="true" type="file" (change)="fileInputChange($event);selectFile($event)" accept="image/*">
+						<div class="my-2">
+							
 
-						<button style="margin-right: 0.5em;" mat-raised-button color="primary" (click)="fileInput.click();selectFile($event)">
-						  <mat-icon>add_to_photos</mat-icon>
-						  Choose Files
-						</button>
-					  
-						<button mat-raised-button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
-					  
-						<mat-progress-bar *ngIf="currentFile" style="margin:0.5em;" mode="determinate" value="{{ progress }}"></mat-progress-bar>
-					</div>
+							<div class="grid grid-cols-[1fr_auto]">
+								<div>
+									<input #coverInput hidden="true" type="file"
+									(change)="coverInputChange($event);selectCover($event)" accept="image/*">
 
-					<div>
+									<button style="margin-right: 0.5em;" mat-raised-button color="primary"
+										(click)="coverInput.click();selectCover($event)">
+										<mat-icon>add_to_photos</mat-icon>
+										Choose Cover...
+									</button>
+
+									<button mat-raised-button [disabled]="!selectedCover" (click)="uploadCover()">Upload</button>
+								</div>
+								<div class="justify-end">
+									<button mat-stroked-button color="primary"
+									(click)="removeCover(this.regimentData.cover_photo)">
+									<mat-icon>shuffle</mat-icon>
+									Use Random Screenshots
+								</button>
+								</div>
+							</div>
+							
 
 
-						<div *ngFor="let file of fileInfos | async">
-							<div class="bg-slate-900 grid grid-cols-[2fr_1fr] gap-2 p-1 rounded-sm shadow-sm my-2">
-							  <div style="display: flex; align-items: center;">
-								<img [src]="file.url" class="max-h-[50px] w-auto mr-2">
-								{{ file.name }}
-							  </div>
-						  
-							  <div style="display: flex; align-items: center; justify-content: flex-end;">
-								<a mat-button color="accent" href="{{ file.url }}" style="margin-right: 8px;">
-								  <i class="fa-solid fa-download pr-1"></i> Download
-								</a>
-								<a mat-button color="warn" (click)="confirmRemoveFile(file.name)">
-									<mat-icon>delete</mat-icon>
-								</a>								
-							  </div>
+							
+
+							
+							<mat-progress-bar *ngIf="currentCover" style="margin:0.5em;" mode="determinate"
+							value="{{ progressCover }}"></mat-progress-bar>
+						</div>
+						
+
+						<div id="cover-photo"
+							class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center slide-bottom"
+							[style.backgroundImage]="this.regimentData.cover_photo ? 'url(' + this.regimentData.cover_photo + ')' : 'url(' + randomScreenshot + ')'"
+							style="background-size: cover; background-position: center;">
+
+							<!-- Profile Picture Wrapper -->
+							<div class="blur-sm absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-md flex justify-center items-center scale-center"
+								style="padding:1px">
+								<img [src]="regimentData.guild_avatar"
+									class="w-[140px] h-[140px] shadow-md pointer-events-none brightness-90 rounded-md">
 							</div>
 
-						  </div>
-						  
+							<!-- Description -->
+							<div
+								class="lg:text-base blur-sm text-sm absolute bottom-[-70px] left-[180px] w-[50%] lg:w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md swing-left min-h-[115px] text-neutral-100">
+								<span *ngIf="!regimentData.description">No description
+									provided.</span>{{regimentData.description}}
+							</div>
+						</div>
 
 					</div>
-					
-									
-				  </div>
-
-			</mat-tab>
-		</mat-tab-group>
 
 
-		<div>
 
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+						Manage Media Gallery
+					</h3>
+					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+						<i class="fa-regular fa-circle-question mr-1"></i> Manage media on your regiment's WoRTool page.
+					</p>
+
+
+
+
+					<div class="h-full">
+
+						<div>
+
+							<div *ngIf="message" class="alert alert-secondary" role="alert">
+								{{ message }}
+							</div>
+
+							<input #fileInput hidden="true" type="file"
+								(change)="fileInputChange($event);selectFile($event)" accept="image/*">
+
+							<button style="margin-right: 0.5em;" mat-raised-button color="primary"
+								(click)="fileInput.click();selectFile($event)">
+								<mat-icon>add_to_photos</mat-icon>
+								Choose Image...
+							</button>
+
+							<button mat-raised-button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+
+							<mat-progress-bar *ngIf="currentFile" style="margin:0.5em;" mode="determinate"
+								value="{{ progress }}"></mat-progress-bar>
+						</div>
+
+						<div>
+
+
+							<div *ngFor="let file of fileInfos | async">
+
+								<div class="bg-slate-900 grid grid-cols-[2fr_1fr] gap-2 p-1 rounded-sm shadow-sm my-2">
+									<div style="display: flex; align-items: center;">
+										<img [src]="file.url" class="max-h-[50px] w-auto mr-2">
+										{{ file.name }}
+									</div>
+
+									<div style="display: flex; align-items: center; justify-content: flex-end;">
+										<a mat-button color="accent" href="{{ file.url }}" style="margin-right: 8px;">
+											<i class="fa-solid fa-download pr-1"></i> Download
+										</a>
+										<a mat-button color="warn" (click)="confirmRemoveFile(file.name)">
+											<mat-icon>delete</mat-icon>
+										</a>
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+
+
+					</div>
+
+				</mat-tab>
+			</mat-tab-group>
+
+
+			<div>
+
+			</div>
 		</div>
-	</div>
 
-</div>
+	</div>
 
 </div>

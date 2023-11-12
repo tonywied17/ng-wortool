@@ -32,8 +32,8 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 					An all-in-one utility tool for managing your War of Rights regiment.
 				</p>
 
-				<div class="rounded-lg my-4 shadow-lg brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[350px] h-[250px]"
-				style="background-image: url('{{randomScreenshot}}'); background-size: cover;"></div>
+				<div class="rounded-lg mt-4 shadow-lg brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[350px] h-[250px]"
+				style="background-image: url('{{randomScreenshot}}'); background-size: cover;background-position: center;"></div>
 
 
 
@@ -59,31 +59,34 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 				style="background-image: url('{{randomScreenshot}}'); background-size: cover;background-position: center;">
 			</div>
 
-				<div class="lg:my-0 mb-5 rounded-b-lg shadow-2xl">
+				<div class="lg:my-0 mb-5 rounded-b-lg shadow-2xl bg-[#6e6c6449]">
 					<mat-list>
 						<mat-action-list>
 							<button *ngIf="showAdmin"
 								routerLink="/admin/1"
 								mat-list-item
 								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
-								<i class="fa-solid fa-shield-halved w-[25px] ml-[1em] mr-[0.5em]"></i>
+								<i class="fa-solid fa-shield-halved w-[25px]"></i>
 								Admin Dashboard
 							</button>
 	
-							<mat-divider *ngIf="showAdmin" class="lg:!hidden"></mat-divider>
+							<mat-divider class="lg:!hidden" *ngIf="showAdmin"></mat-divider>
 
 							<button *ngIf="showMod"
 								routerLink="/mod/1"
 								mat-list-item
 								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
-								<i class="fa-solid fa-tents w-[25px] ml-[1em] mr-[0.5em]"></i>
+								<i class="fa-solid fa-tents w-[25px]"></i>
 								Regiment Tools
 							</button>
+
+							<mat-divider class="lg:!hidden" *ngIf="showMod"></mat-divider>
+
 								<div class="hidden lg:block !bg-gradient-to-r from-[#4b4b4775] via-[#6b6a644b] to-transparent">
 									<button *ngIf="showMod"
 									routerLink="/mod/2"
 									mat-button
-									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
 									<i class="fa-brands fa-discord w-[25px]"></i>
 									Event Share
 									</button>
@@ -91,28 +94,30 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 									<button *ngIf="showMod"
 									routerLink="/mod/3"
 									mat-button
-									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
 									<i class="fa-brands fa-steam w-[25px]"></i>
 									Steam IDs
 									</button>
 
 								</div>
 							
-								<mat-divider class="lg:!hidden"></mat-divider>
+								<mat-divider class="lg:!hidden" *ngIf="showMod"></mat-divider>
 							
 							<button *ngIf="showUser"
 								routerLink="/user/1"
 								mat-list-item
 								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
-								<i class="fa-solid fa-gear w-[25px] ml-[1em] mr-[0.5em]"></i>
+								<i class="fa-solid fa-gear w-[25px]"></i>
 								User Settings
 							</button>
+
+							<mat-divider class="lg:!hidden"></mat-divider>
 
 								<div class="hidden lg:block !bg-gradient-to-r from-[#44434075] via-[#6b6a644b] to-transparent !rounded-b-md">
 									<button *ngIf="showUser"
 									routerLink="/user/2"
 									mat-button
-									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
 									<i class="fa-solid fa-circle-nodes w-[25px]"></i>
 									Linked Accounts
 									</button>
@@ -120,7 +125,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 									<button *ngIf="showUser"
 									routerLink="/user/3"
 									mat-button
-									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-3.33em)]">
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)] bottom-option">
 									<i class="fa-regular fa-star w-[25px]"></i>
 									Manage Favorites
 									</button>
@@ -132,7 +137,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 								<button (click)="logout()"
 								class="sm:!hidden !inline-block !py-[0.7em] !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent !rounded-bl-md lg:!rounded-none"
 								mat-list-item>
-								<i class="fa-solid fa-arrow-right-from-bracket w-[25px] ml-[1em] mr-[0.5em] !text-[#fa7676]"></i>
+								<i class="fa-solid fa-arrow-right-from-bracket w-[25px] !text-[#fa7676]"></i>
 								<span class="text-[#fa7676]">Logout</span>
 							</button>
 	
@@ -269,7 +274,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 						<div class="form-group sm:col-span-1 sm:col-start-4">
 							<button mat-raised-button
 							color="primary"
-								class="w-full !py-2 !sm:py-[5px] !text-lg font-[300]">
+								class="w-full !py-2 !sm:py-[5px]">
 								Create!
 							</button>
 						</div>
@@ -357,7 +362,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 								<div>
 									<button mat-raised-button
 											color="primary"
-											class="w-full !py-2 !sm:py-[5px] !text-lg !text-neutral-300 font-[300]">
+											class="w-full !py-2 !sm:py-[5px] !text-neutral-300">
 										Login
 									</button>
 								</div>

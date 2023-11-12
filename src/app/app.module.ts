@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 8th 2023 3:33:19 
+ * Last Modified: Sun November 12th 2023 12:33:43 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -44,6 +44,7 @@ import { RegimentInfoComponent } from './regiments/regiment-info/regiment-info.c
 import { EventRecapsComponent } from './regiments/event-recaps/event-recaps.component';
 import { SteamIdsComponent } from './board-moderator/steam-ids/steam-ids.component';
 import { ImageModalComponent } from './regiments/image-modal/image-modal.component';
+import { MapImageComponent } from './map-image/map-image.component';
 
 /**
  * Routes for the application
@@ -94,6 +95,7 @@ const routes: Routes = [
     EventRecapsComponent,
     SteamIdsComponent,
     ImageModalComponent,
+    MapImageComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,8 +107,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      // enabled: !isDevMode(),
-      enabled: environment.production,
+      enabled: !isDevMode(),
+      // enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",

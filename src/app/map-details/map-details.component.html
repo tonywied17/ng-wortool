@@ -134,16 +134,9 @@
 
 
 			<img *ngIf="!CamMapBool"
-				(click)="
-          open(
-            'https://wortool.com/' + currentMap.image,
-            currentMap.map,
-            1500,
-            868
-          )
-        "
-				src="https://wortool.com/{{ currentMap.image }}"
-				class="fade-center transition-all active:!translate-y-2 active:translate-x-2 hover:cursor-pointer hover:brightness-[85%] brightness-75 sepia-[50%] lg:mr-auto lg:w-[80%] lg:h-auto block rounded-lg rounded-tl-none shadow-none duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
+     (click)="openMapImageModal('https://wortool.com/' + currentMap.image)"
+     src="https://wortool.com/{{ currentMap.image }}"
+     class="fade-center transition-all active:!translate-y-2 active:translate-x-2 hover:cursor-pointer hover:brightness-[85%] brightness-75 sepia-[50%] lg:mr-auto lg:w-[80%] lg:h-auto block rounded-lg rounded-tl-none shadow-none duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
 
 
 			<div *ngIf="CamMapBool"
