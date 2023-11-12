@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Tue November 7th 2023 5:44:16 
+Last Modified: Sun November 12th 2023 2:42:43 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -32,7 +32,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
     <div id="cover-photo"
      class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center slide-bottom"
-     [style.backgroundImage]="'url(' + randomScreenshot + ')'"
+     [style.backgroundImage]="regiment.cover_photo ? 'url(' + regiment.cover_photo + ')' : 'url(' + randomScreenshot + ')'"
      style="background-size: cover; background-position: center;">
 
         <!-- Profile Picture Wrapper -->

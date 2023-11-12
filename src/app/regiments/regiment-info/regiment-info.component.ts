@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue November 7th 2023 5:45:58 
+ * Last Modified: Sun November 12th 2023 12:55:40 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -175,6 +175,7 @@ getPagesArray(totalPages: number): number[] {
       );
     });
   }
+  
 
   /**
    * Get random screenshot
@@ -196,6 +197,7 @@ getPagesArray(totalPages: number): number[] {
    */
   async getRegiment(id: any): Promise<void> {
     this.regiment = await firstValueFrom(this.regimentService.getRegiment(id));
+    console.log(this.regiment)
   }
 
   /**

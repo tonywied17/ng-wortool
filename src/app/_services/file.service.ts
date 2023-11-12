@@ -24,11 +24,34 @@ export class FileService {
     return this.http.request(req);
   }
 
+
+  uploadCover(file: File, regimentId: any): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    formData.append('regimentId', regimentId);
+    
+    const req = new HttpRequest('POST', `${this.baseUrl}/regiments/${regimentId}/upload/cover`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.http.request(req);
+  }
+
   getFiles(regimentId: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/regiments/${regimentId}/files/`);
   }
 
+  getCover(regimentId: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/regiments/${regimentId}/files/cover`);
+  }
+
   remove(regimentId: any, file: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/regiments/${regimentId}/files/${file}`)
+  }
+
+  removeCover(regimentId: any, file: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/regiments/${regimentId}/files/cover/${file}`)
   }
 }
