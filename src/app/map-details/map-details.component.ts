@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun September 17th 2023 1:32:21 
+ * Last Modified: Sat November 11th 2023 7:27:41 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -36,6 +36,8 @@ import { AuthService } from "../_services/auth.service";
 import { FavoriteService } from "../_services/favorite.service";
 import { Location } from "@angular/common";
 import { ViewportScroller } from "@angular/common";
+import { MapImageComponent } from "../map-image/map-image.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-map-details",
@@ -80,7 +82,8 @@ export class MapDetailsComponent implements OnInit {
     private authService: AuthService,
     private favoriteService: FavoriteService,
     private location: Location,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    private dialog: MatDialog
   ) {}
 
   /**
@@ -402,5 +405,11 @@ export class MapDetailsComponent implements OnInit {
         ", left=" +
         left
     );
+  }
+
+  openMapImageModal(imageUrl: string): void {
+    this.dialog.open(MapImageComponent, {
+      data: { imageUrl },
+    });
   }
 }

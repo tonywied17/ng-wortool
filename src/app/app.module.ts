@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu November 9th 2023 11:53:35 
+ * Last Modified: Sat November 11th 2023 7:32:52 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -44,6 +44,7 @@ import { RegimentInfoComponent } from './regiments/regiment-info/regiment-info.c
 import { EventRecapsComponent } from './regiments/event-recaps/event-recaps.component';
 import { SteamIdsComponent } from './board-moderator/steam-ids/steam-ids.component';
 import { ImageModalComponent } from './regiments/image-modal/image-modal.component';
+import { MapImageComponent } from './map-image/map-image.component';
 
 /**
  * Routes for the application
@@ -94,6 +95,7 @@ const routes: Routes = [
     EventRecapsComponent,
     SteamIdsComponent,
     ImageModalComponent,
+    MapImageComponent,
   ],
   imports: [
     BrowserModule,
