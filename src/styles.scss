@@ -288,7 +288,7 @@ button {
   color: #fff !important;
   font-weight: 700 !important;
   transform: rotateX('angle') !important;
-  transition: all .3s ease;
+  transition: all .2s ease;
 }
 
 .active_btn_nco {
@@ -297,7 +297,7 @@ button {
   color: #fff !important;
   font-weight: 700 !important;
   transform: rotateX('angle') !important;
-  transition: all .3s ease;
+  transition: all .2s ease;
 }
 
 body::-webkit-scrollbar {
@@ -320,12 +320,12 @@ body::-webkit-scrollbar-thumb {
   font-family: 'Poppins', sans-serif;
   color: #7c7d72;
   font-weight: 300;
-  transition: all .3s ease;
+  transition: all .2s ease;
 }
 
 mat-checkbox {
   color: #7c7d72 !important;
-  transition: all .3s ease !important;
+  transition: all .2s ease !important;
 }
 
 mat-checkbox:hover {
@@ -349,7 +349,7 @@ button.mat-mdc-menu-item {
   // font-family: 'Poppins', sans-serif;
   color: #7c7d72 !important;
   font-weight: 300;
-  transition: all .3s ease;
+  transition: all .2s ease;
 }
 
 .mat-mdc-radio-button .mdc-form-field {
@@ -361,7 +361,7 @@ button.mat-mdc-menu-item {
 mat-radio-button {
   display: block !important;
   color: #7c7d72 !important;
-  transition: all .3s ease !important;
+  transition: all .2s ease !important;
 }
 
 .mdc-form-field>label {
@@ -507,7 +507,7 @@ button {
   background: transparent;
   color: #eeeeeed2 !important;
   outline: none;
-  transition: all .3s ease;
+  transition: all .2s ease;
 }
 
 .field-input:focus {
@@ -525,7 +525,7 @@ button {
   background: transparent;
   color: #eeeeeed2 !important;
   outline: none;
-  transition: all .3s ease;
+  transition: all .2s ease;
   font-weight: 300;
 }
 
@@ -537,7 +537,7 @@ button {
 ::placeholder {
   color: #fff;
   opacity: 0.7;
-  transition: all .3s ease;
+  transition: all .2s ease;
   font-family: 'Poppins', sans-serif !important;
 }
 
@@ -564,7 +564,7 @@ button {
   left: 1em;
   /* Adjusted left value */
   transform: translate(0, -50%);
-  transition: all .3s ease;
+  transition: all .2s ease;
   color: #7c7d72 !important;
 }
 
@@ -579,7 +579,7 @@ button {
   left: 0.7em;
   /* Adjusted left value */
   transform: translate(0, -50%);
-  transition: all .3s ease;
+  transition: all .2s ease;
   color: #7c7d72 !important;
 }
 
@@ -618,7 +618,9 @@ button {
   color: #7c7d72 !important;
   font-family: 'Roboto Slab', serif;
 }
-
+.mat-mdc-button>.mat-icon {
+  margin-right: 0 !important;
+}
 .mat-mdc-slide-toggle .mdc-form-field .mdc-switch {
   --mdc-switch-selected-focus-state-layer-color: #7c7d72;
   --mdc-switch-selected-handle-color: #7c7d72;
@@ -672,20 +674,20 @@ button {
 
 
 .left-in {
-  animation: left-in .3s ease 0s 1 normal forwards;
+  animation: left-in .2s ease 0s 1 normal forwards;
 }
 
 
 .top-in {
-  animation: top-in .3s ease 0s 1 normal forwards;
+  animation: top-in .2s ease 0s 1 normal forwards;
 }
 
 .bottom-in {
-  animation: bottom-in .3s ease 0s 1 normal forwards;
+  animation: bottom-in .2s ease 0s 1 normal forwards;
 }
 
 .right-in {
-  animation: right-in .3s ease 0s 1 normal forwards;
+  animation: right-in .2s ease 0s 1 normal forwards;
 }
 
 .fade-center {
@@ -693,7 +695,7 @@ button {
 }
 
 .scale-center {
-  animation: scale-center .3s ease 0s 1 normal forwards;
+  animation: scale-center .2s ease 0s 1 normal forwards;
 }
 
 
@@ -841,7 +843,7 @@ html {
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 8th 2023 11:20:12 
+ * Last Modified: Sun November 12th 2023 12:47:05 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -863,7 +865,7 @@ html {
 }
 
 .swing-left{
-  animation: swing-left 1s ease 0s 1 normal forwards;
+  animation: swing-left .420s ease 0s 1 normal forwards;
 }
 
 @keyframes swing-top {
@@ -897,7 +899,7 @@ html {
 }
 
 .slide-bottom{
-  animation: slide-bottom .3s ease 0s 1 normal forwards;
+  animation: slide-bottom .2s ease 0s 1 normal forwards;
 }
 
 .mat-mdc-tab-list {

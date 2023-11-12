@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun November 12th 2023 2:53:23 
+Last Modified: Sun November 12th 2023 1:03:31 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -31,7 +31,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 			<!-- <h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2> -->
 
 
-			<mat-tab-group dynamicHeight>
+			<mat-tab-group dynamicHeight #tabGroup animationDuration="0ms">
 				<!-- Settings Tab -->
 				<mat-tab label="Settings">
 					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
@@ -168,14 +168,28 @@ Copyright (c) 2023 Tone Web Design, Molex
 								</div>
 
 								<div class="field-box">
+									<input [disabled]="showMod && !isOwner" [(ngModel)]="youtube" name="youtube" style="
+                padding-top: 11px;
+                padding-bottom: 11px;
+                font-size: 15px;
+                border: 1px solid #7c7d72 !important;
+              " matTooltipClass="form-tooltip" matTooltipPosition="left"
+										[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Add your regiment\'s youtube URL (if available).'"
+										class="field-input !font-[300] my-[0.5em]" type="text" placeholder="youtube...">
+									<i class="fa-brands fa-youtube field-icon"></i>
+								</div>
+
+								<div class="field-box">
 									<textarea [disabled]="showMod && !isOwner" [(ngModel)]="description"
 										name="description" style="
                 padding-top: 11px;
                 padding-bottom: 11px;
                 font-size: 15px;
                 border: 1px solid #7c7d72 !important;
-              " matTooltipClass="form-tooltip" matTooltipPosition="left"
-										[matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Provide a brief summary of your regiment.'"
+              " 
+			  matTooltipClass="form-tooltip" 
+			  matTooltipPosition="left"			
+			  [matTooltip]="showMod && !isOwner ? 'Only Owners May Modify' : 'Provide a brief summary of your regiment.'"
 										class="field-input !font-[300] my-[0.5em] textarea" placeholder="Summary...">
 						</textarea>
 									<i class="fa-solid fa-book field-icon"></i>
@@ -659,12 +673,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 						
 
 						<div id="cover-photo"
-							class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center slide-bottom"
+							class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center"
 							[style.backgroundImage]="this.regimentData.cover_photo ? 'url(' + this.regimentData.cover_photo + ')' : 'url(' + randomScreenshot + ')'"
 							style="background-size: cover; background-position: center;">
 
 							<!-- Profile Picture Wrapper -->
-							<div class="blur-sm absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-md flex justify-center items-center scale-center"
+							<div class="blur-sm absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-md flex justify-center items-center"
 								style="padding:1px">
 								<img [src]="regimentData.guild_avatar"
 									class="w-[140px] h-[140px] shadow-md pointer-events-none brightness-90 rounded-md">
@@ -672,7 +686,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 							<!-- Description -->
 							<div
-								class="lg:text-base blur-sm text-sm absolute bottom-[-70px] left-[180px] w-[50%] lg:w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md swing-left min-h-[115px] text-neutral-100">
+								class="lg:text-base blur-sm text-sm absolute bottom-[-70px] left-[180px] w-[50%] lg:w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md min-h-[115px] text-neutral-100">
 								<span *ngIf="!regimentData.description">No description
 									provided.</span>{{regimentData.description}}
 							</div>
@@ -694,7 +708,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 					<div class="h-full">
 
-						<div>
 
 							<div *ngIf="message" class="alert alert-secondary" role="alert">
 								{{ message }}
@@ -713,33 +726,57 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 							<mat-progress-bar *ngIf="currentFile" style="margin:0.5em;" mode="determinate"
 								value="{{ progress }}"></mat-progress-bar>
-						</div>
-
-						<div>
 
 
-							<div *ngFor="let file of fileInfos | async">
-
-								<div class="bg-slate-900 grid grid-cols-[2fr_1fr] gap-2 p-1 rounded-sm shadow-sm my-2">
-									<div style="display: flex; align-items: center;">
-										<img [src]="file.url" class="max-h-[50px] w-auto mr-2">
-										{{ file.name }}
-									</div>
-
-									<div style="display: flex; align-items: center; justify-content: flex-end;">
-										<a mat-button color="accent" href="{{ file.url }}" style="margin-right: 8px;">
-											<i class="fa-solid fa-download pr-1"></i> Download
-										</a>
-										<a mat-button color="warn" (click)="confirmRemoveFile(file.name)">
+							<div class="mt-4">
+								<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+									<div *ngFor="let file of fileInfos | async" class="bg-slate-900/50 p-2 rounded-md shadow-xl">
+									  <!-- Media Icon -->
+									  <div class="flex items-center justify-center mb-2">
+										<img 
+										(click)="openImageModal(file.url)"
+										[src]="file.url" class="max-h-16 w-auto file-thumbnail">
+									  </div>
+									
+									  <!-- Filename -->
+									  <div class="text-white text-center font-[200] text-sm mb-2">{{ file.name }}</div>
+									
+									  <!-- Action Buttons -->
+									  <div class="flex justify-center">
+										<!-- Download Button -->
+										<div class="flex">
+										  <a 
+										  matTooltipClass="form-tooltip" 
+			  							  matTooltipPosition="below"			
+			  							  matTooltip="Download this file"
+										  mat-button color="accent" href="{{ file.url }}" class="text-white !min-h-fit !min-w-fit !h-fit !py-1.5">
+											<i class="fa-solid fa-download pr-1"></i>
+										  </a>
+										</div>
+									
+										<!-- Delete Button -->
+										<div class="flex">
+										  <button
+										  matTooltipClass="form-tooltip" 
+			  							  matTooltipPosition="below"			
+			  							  matTooltip="Delete this file"
+					
+										  mat-button color="warn" (click)="confirmRemoveFile(file.name)" class="!min-h-fit !min-w-fit !h-fit !py-1.5">
 											<mat-icon>delete</mat-icon>
-										</a>
+										  </button>
+										</div>
+									  </div>
 									</div>
-								</div>
-
+								  </div>
+								  
+								  
+								  
+								  
 							</div>
+							
 
 
-						</div>
+				
 
 
 					</div>

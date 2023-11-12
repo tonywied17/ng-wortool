@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat August 5th 2023 2:33:14 
+ * Last Modified: Sun November 12th 2023 11:56:07 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -74,7 +74,7 @@ export class RegimentService {
    * @param side - any - the side
    * @returns - Observable<any>
    */
-  updateRegiment(userId: any, regimentId: number, regiment: any, guild_id: any, guild_avatar: any, invite_link: any, website: any, description: any, side: any): Observable<any> {
+  updateRegiment(userId: any, regimentId: number, regiment: any, guild_id: any, guild_avatar: any, invite_link: any, website: any, youtube: any, description: any, side: any): Observable<any> {
     
     return this.http.put(API + regimentId + '/update', {
       userId,
@@ -83,6 +83,7 @@ export class RegimentService {
       guild_avatar,
       invite_link,
       website,
+      youtube,
       description,
       side,
     }, httpOptions);

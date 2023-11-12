@@ -4,13 +4,13 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 2:56:16 
+ * Last Modified: Sun November 12th 2023 12:59:39 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef, NgZone } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef, NgZone, ViewChild, OnDestroy, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { TokenStorageService } from "../../_services/token-storage.service";
 import { AuthService } from "../../_services/auth.service";
@@ -24,7 +24,12 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { FileService } from 'src/app/_services/file.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { TabSelectionService } from "src/app/_services/tab-selection.service";
 import { map } from 'rxjs/operators';
+import { Router, NavigationEnd } from '@angular/router';
+import { MatTabGroup } from '@angular/material/tabs';
+import { MapImageComponent } from "src/app/map-image/map-image.component"; 
+import { MatDialog } from "@angular/material/dialog";
 
 interface Schedule {
   id: number;
@@ -47,7 +52,9 @@ interface Schedule {
   styleUrls: ["./regiment-settings.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class RegimentSettingsComponent implements OnInit {
+export class RegimentSettingsComponent implements OnInit, OnDestroy {
+  @ViewChild("dialogTemplate")
+  _dialogTemplate!: TemplateRef<any>;
   content?: string;
   currentUser: any;
   isLoggedIn = false;
@@ -66,6 +73,7 @@ export class RegimentSettingsComponent implements OnInit {
   description: any;
   invite_link: any;
   website: any;
+  youtube: any;
   side: any;
 
   isOwner: boolean = false;
@@ -106,7 +114,7 @@ export class RegimentSettingsComponent implements OnInit {
   screenshots: any;
   randomScreenshot: string = "";
   gameDetails: any;
-  
+
   selectedCover?: FileList;
   currentCover?: File;
   progressCover = 0;
@@ -114,6 +122,10 @@ export class RegimentSettingsComponent implements OnInit {
 
   fileInfos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   coverInfos?: Observable<any>;
+
+  @ViewChild('tabGroup') tabGroup!: MatTabGroup;
+  private tabGroupSubscription: { unsubscribe: () => void } | null = null;
+
 
   constructor(
     private token: TokenStorageService,
@@ -128,8 +140,15 @@ export class RegimentSettingsComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private uploadService: FileService,
     private elementRef: ElementRef,
-    private ngZone: NgZone
-  ) {}
+    private ngZone: NgZone,
+    private tabSelectionService: TabSelectionService,
+    private dialog: MatDialog
+  ) {
+    this.tabGroupSubscription = this.tabSelectionService.selectedTabIndex$.subscribe((index) => {
+      console.log('Selected Index:', index);
+      this.tabGroup.selectedIndex = index;
+    });
+  }
 
   /**
    * @method ngOnInit
@@ -138,14 +157,14 @@ export class RegimentSettingsComponent implements OnInit {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
     const userID = this.currentUser.id;
-  
+
     if (this.isLoggedIn) {
       await this.authService
         .checkModeratorRole(userID, this.currentUser.regimentId)
         .toPromise()
         .then((response) => {
           this.showMod = response.access;
-  
+
           if (this.currentUser.regimentId) {
             this.regimentID = this.currentUser.regimentId;
             this.getRegiment().then(() => {
@@ -167,10 +186,7 @@ export class RegimentSettingsComponent implements OnInit {
           }
         });
     }
-  
     await this.getScreenshots();
-  
-  
     this.getSchedules();
     this.uploadService.getFiles(this.regimentID).subscribe(
       (files: any[]) => {
@@ -180,8 +196,22 @@ export class RegimentSettingsComponent implements OnInit {
         console.error("Error getting files:", error);
       }
     );
+
+    this.tabSelectionService.selectedTabIndex$.subscribe((index) => {
+      console.log('Selected Index:', index);
+      this.tabGroup.selectedIndex = index;
+    });
+
   }
-  
+
+  /**
+   * @method ngOnDestroy
+   */
+  ngOnDestroy() {
+    this.tabSelectionService.clearSelectedTabIndex();
+  }
+
+
 
   /**
    * @method getRegiment
@@ -207,6 +237,7 @@ export class RegimentSettingsComponent implements OnInit {
           this.description = this.regimentData.description;
           this.invite_link = this.regimentData.invite_link;
           this.website = this.regimentData.website;
+          this.youtube = this.regimentData.youtube;
 
           setTimeout(() => {
             const selectElement = document.getElementById(
@@ -333,6 +364,7 @@ export class RegimentSettingsComponent implements OnInit {
           this.guild_avatar,
           this.invite_link,
           this.website,
+          this.youtube,
           this.description,
           this.side
         )
@@ -592,14 +624,14 @@ export class RegimentSettingsComponent implements OnInit {
    * @param day - The day
    * @param time - The time
    */
-    async getSchedules(): Promise<void> {
+  async getSchedules(): Promise<void> {
     let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(this.currentUser.id, this.regimentID).toPromise();
     response = this.sortSchedules(response);
 
 
     this.scheduleCounts = {};
     this.scheduleCount = response.length;
-    
+
     response.forEach((schedule) => {
       const scheduleName = schedule.schedule_name || "null";
 
@@ -618,7 +650,7 @@ export class RegimentSettingsComponent implements OnInit {
         this.scheduleCounts[scheduleName]++;
       }
     });
-  
+
     // Check if the selected schedule still has any days after the removal
     if (this.lastDayRemoved && (!this.selectedScheduleName || !this.scheduleNames[this.selectedScheduleName] || this.scheduleNames[this.selectedScheduleName].length === 0)) {
       this.scheduleForm = { // Reset form
@@ -640,9 +672,9 @@ export class RegimentSettingsComponent implements OnInit {
     if (this.selectedScheduleName) {
       return this.scheduleNames[this.selectedScheduleName].filter(schedule => schedule.day === day);
     }
-    return []; 
+    return [];
   }
-  
+
   /**
    * @method createSchedule
    * @description Create the schedule
@@ -725,11 +757,11 @@ export class RegimentSettingsComponent implements OnInit {
   async removeDay(scheduleId: number): Promise<void> {
     const response = await this.regimentService.removeSchedule(this.currentUser.id, this.regimentID, scheduleId).toPromise();
     // console.log(response);
-  
+
     if (this.selectedScheduleName && this.scheduleNames[this.selectedScheduleName] && this.scheduleNames[this.selectedScheduleName].length === 1) {
       this.lastDayRemoved = true;
     }
-  
+
     this.scheduleNames = {};
     await this.getSchedules();
   }
@@ -804,6 +836,10 @@ export class RegimentSettingsComponent implements OnInit {
     };
   }
 
+  /**
+   * Check if regiment has members
+   * @returns boolean
+   */
   hasMembers(): boolean {
     if (this.regimentUsers) {
       return this.regimentUsers.some((user: { discordId: string; roles: string | string[]; }) => {
@@ -813,25 +849,34 @@ export class RegimentSettingsComponent implements OnInit {
     return false;
   }
 
-
+  /**
+   * Select regular media file input
+   * @param event 
+   */
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
 
+  /**
+   * Select cover file input
+   * @param event 
+   */
   selectCover(event: any): void {
     this.selectedCover = event.target.files;
   }
-  
-  
+
+  /**
+   * Upload regular media files
+   */
   upload(): void {
     this.progress = 0;
-  
+
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
-  
+
       if (file) {
         this.currentFile = file;
-  
+
         this.uploadService.upload(this.currentFile, this.regimentID).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
@@ -856,7 +901,7 @@ export class RegimentSettingsComponent implements OnInit {
           error: (err: any) => {
             console.log(err);
             this.progress = 0;
-  
+
             if (err.error && err.error.message) {
               this.snackBar.open(err.error.message, "Close", {
                 verticalPosition: "top",
@@ -868,17 +913,19 @@ export class RegimentSettingsComponent implements OnInit {
                 duration: 3000,
               });
             }
-  
+
             this.currentFile = undefined;
           },
         });
       }
-  
+
       this.selectedFiles = undefined;
     }
   }
 
-  
+  /**
+   * Upload Cover Photo
+   */
   uploadCover(): void {
     this.progressCover = 0;
 
@@ -900,7 +947,7 @@ export class RegimentSettingsComponent implements OnInit {
                 verticalPosition: "top",
                 duration: 3000,
               });
-        
+
             }
           },
           error: (err: any) => {
@@ -927,6 +974,10 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * Snackbar confirmation for regular media deletion
+   * @param file 
+   */
   confirmRemoveFile(file: any): void {
     const snackBarRef = this.snackBar.openFromComponent(
       ConfirmDeleteSnackbarComponent,
@@ -945,13 +996,17 @@ export class RegimentSettingsComponent implements OnInit {
     });
   }
 
+  /**
+   * Removes the file after confirmation
+   * @param file 
+   */
   removeFile(file: any) {
     this.uploadService.remove(this.regimentID, file).subscribe(
       () => {
         const currentFileInfos = this.fileInfos.value;
         const updatedFileInfos = currentFileInfos.filter((f) => f.name !== file.name);
         this.fileInfos.next(updatedFileInfos);
-  
+
         this.ngZone.run(() => {
           this.snackBar.open("File removed", "Close", {
             verticalPosition: "top",
@@ -967,8 +1022,8 @@ export class RegimentSettingsComponent implements OnInit {
             console.error("Error getting files:", error);
           }
         );
-  
-        
+
+
       },
       (error) => {
         // Handle error if needed
@@ -977,13 +1032,17 @@ export class RegimentSettingsComponent implements OnInit {
     );
   }
 
+  /**
+   * Remove Cover Photo
+   * @param fileUrl 
+   */
   removeCover(fileUrl: string) {
     const prefixToRemove = 'https://api.tonewebdesign.com/pa/regiments/9/files/cover/';
-  
+
     if (fileUrl.startsWith(prefixToRemove)) {
       const fileName = fileUrl.substring(prefixToRemove.length);
-  
-  
+
+
       this.uploadService.removeCover(this.regimentID, fileName).subscribe(
         () => {
           this.ngZone.run(() => {
@@ -992,7 +1051,7 @@ export class RegimentSettingsComponent implements OnInit {
               duration: 3000,
             });
           });
-  
+
           this.getRegiment();
 
         },
@@ -1005,9 +1064,13 @@ export class RegimentSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * Detect file input changes for regular media upload field
+   * @param event 
+   */
   fileInputChange(event: any) {
     const selectedFile = event.target.files[0];
-  
+
     if (selectedFile) {
       if (selectedFile.type.startsWith('image/')) {
         this.selectedFiles = event.target.files;
@@ -1021,7 +1084,7 @@ export class RegimentSettingsComponent implements OnInit {
 
   coverInputChange(event: any) {
     const selectedCover = event.target.files[0];
-  
+
     if (selectedCover) {
       if (selectedCover.type.startsWith('image/')) {
         this.selectedCover = event.target.files;
@@ -1039,7 +1102,7 @@ export class RegimentSettingsComponent implements OnInit {
       fileInput.value = '';
     }
   }
-  
+
   clearCoverInput() {
     const coverInput = this.elementRef.nativeElement.querySelector('#coverInput');
     if (coverInput) {
@@ -1068,7 +1131,7 @@ export class RegimentSettingsComponent implements OnInit {
       );
     });
   }
-  
+
   /**
    * Get random screenshot
    * This function is used to get a random screenshot from the screenshots array
@@ -1082,7 +1145,13 @@ export class RegimentSettingsComponent implements OnInit {
     }
     return "";
   }
-  
+
+  openImageModal(imageUrl: string): void {
+    this.dialog.open(MapImageComponent, {
+      data: { imageUrl },
+    });
+  }
+
 }
 
 

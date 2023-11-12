@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue November 7th 2023 4:45:45 
+ * Last Modified: Sun November 12th 2023 12:31:55 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -55,6 +55,9 @@
     font-family: 'Noto Sans', sans-serif;
   }
   
+  .mat-mdc-tab-body-wrapper {
+    padding: 0 !important;
+}
 
   .mat-expansion-panel {
     background: linear-gradient(-27deg, #1c2638, #1c26388c);
@@ -153,4 +156,72 @@
   }
   
 
-  
+  .edit-button {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #88887b !important;
+  }
+
+  .lds-ellipsis{
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ellipsis div{
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #88887b;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1){
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2){
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3){
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4){
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1{
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis3{
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(0);
+    }
+}
+
+@keyframes lds-ellipsis2{
+    0%{
+        transform: translate(0, 0);
+    }
+    100%{
+        transform: translate(24px, 0);
+    }
+}
