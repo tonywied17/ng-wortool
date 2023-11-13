@@ -4,7 +4,7 @@
  * Created Date: Saturday July 29th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Sun November 12th 2023 8:54:25 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -63,7 +63,7 @@ export class SteamIdsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     this.steamIdForm = this.formBuilder.group({
-      gameIdForm: ["", [Validators.required, Validators.pattern(/^.{17}$/)]],
+      gameIdForm: [""]
     });
 
     try {
@@ -310,24 +310,44 @@ export class SteamIdsComponent implements OnInit {
    */
   getSteamIdPreview() {
     const gameIdFormControl = this.steamIdForm.get('gameIdForm');
+  
     if (gameIdFormControl && gameIdFormControl.valid) {
       const steamId = gameIdFormControl.value;
-      this.steamApiService.getSteamId(steamId).subscribe(
-        (data) => {
   
-          if (data && data.response && data.response.players && data.response.players.length > 0) {
-            this.previewData = data.response.players[0];
-          } else {
-            // console.log('No data found in the response.');
-          }
-        },
-        (err) => {
-          console.error('Error occurred while fetching data:', err);
-        }
-      );
+      if (steamId.startsWith('https://steamcommunity.com/')) {
+        // alert(`Hey, that's a profile! (${steamId})`);
+  
+        this.steamApiService.getIdsFromProfile(steamId).subscribe({
+          next: (data) => {
+            const steamId64 = data.steamId64;
+            console.log(steamId64);
+  
+            this.getPlayerDataBySteamId64(steamId64);
+          },
+          error: (e) => console.error(e),
+        });
+      } else {
+        this.getPlayerDataBySteamId64(steamId);
+      }
     }
   }
-  
+
+  getPlayerDataBySteamId64(steamId64: string) {
+    this.steamApiService.getSteamId(steamId64).subscribe(
+      (data) => {
+        if (data && data.response && data.response.players && data.response.players.length > 0) {
+          this.previewData = data.response.players[0];
+        } else {
+          // Handled
+        }
+      },
+      (err) => {
+        console.error('Error occurred while fetching data:', err);
+      }
+    );
+  }
+
+
   /**
    * @method getExperienceValue
    * @description get the experience value for the stats array
