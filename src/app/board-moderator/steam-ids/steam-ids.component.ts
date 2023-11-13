@@ -4,7 +4,7 @@
  * Created Date: Saturday July 29th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 8:54:25 
+ * Last Modified: Sun November 12th 2023 9:40:26 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -45,6 +45,7 @@ export class SteamIdsComponent implements OnInit {
   currentPage = 1;
   paginatedSteamIds: any[] = [];
   allSteamIds: any[] = [];
+  steam64: any;
 
 
   constructor(
@@ -224,18 +225,12 @@ export class SteamIdsComponent implements OnInit {
    * @returns - the game id for the regiment
    */
   async setGameId(): Promise<void> {
-    const gameIdFormControl = this.steamIdForm.get('gameIdForm');
-    if (gameIdFormControl && gameIdFormControl.valid) {
-      const steamId = gameIdFormControl.value;
-      this.gameIdForm = steamId;
-    }
-    
     try {
       const userId = this.currentUser.id;
       const regimentId = this.currentUser.regimentId;
 
       const response: any = await firstValueFrom(
-        this.regimentService.setGameId(userId, regimentId, this.gameIdForm)
+        this.regimentService.setGameId(userId, regimentId, this.steam64)
       );
 
       if (response && response.message) {
@@ -313,7 +308,7 @@ export class SteamIdsComponent implements OnInit {
   
     if (gameIdFormControl && gameIdFormControl.valid) {
       const steamId = gameIdFormControl.value;
-  
+      this.steam64 = steamId
       if (steamId.startsWith('https://steamcommunity.com/')) {
         // alert(`Hey, that's a profile! (${steamId})`);
   
@@ -321,13 +316,15 @@ export class SteamIdsComponent implements OnInit {
           next: (data) => {
             const steamId64 = data.steamId64;
             console.log(steamId64);
-  
+            // gameIdFormControl.setValue(steamId64);
+            this.steam64 = steamId64
             this.getPlayerDataBySteamId64(steamId64);
           },
           error: (e) => console.error(e),
         });
       } else {
         this.getPlayerDataBySteamId64(steamId);
+        
       }
     }
   }
@@ -337,6 +334,8 @@ export class SteamIdsComponent implements OnInit {
       (data) => {
         if (data && data.response && data.response.players && data.response.players.length > 0) {
           this.previewData = data.response.players[0];
+          
+
         } else {
           // Handled
         }
