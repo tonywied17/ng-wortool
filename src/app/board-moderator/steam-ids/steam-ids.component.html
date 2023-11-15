@@ -15,30 +15,18 @@
             </button>
         </div>
 
-        <div
-        *ngIf="steamIdForm.get('gameIdForm')!.invalid && (steamIdForm.get('gameIdForm')!.dirty || steamIdForm.get('gameIdForm')!.touched)">
-        <div *ngIf="steamIdForm.get('gameIdForm')!.hasError('required')" class="alert-danger">
-            Steam ID is required.
-        </div>
-        <div *ngIf="steamIdForm.get('gameIdForm')!.hasError('pattern')" class="alert-danger">
-            Steam ID must be exactly 17 characters.
-        </div>
+        <div>
+
+
     </div>
         <div class="field-box">
 
             <form [formGroup]="steamIdForm" (ngSubmit)="setGameId()">
-                <!-- Display error messages for pattern and required validation -->
-               
-                <!-- Input field with validation -->
                 <input formControlName="gameIdForm" (input)="getSteamIdPreview()" matTooltipClass="form-tooltip"
-                    matTooltipPosition="left" matTooltip="Please enter the Steam ID of the user you wish to add." name="gameIdForm"
-                    class="field-input my-[0.5em]" type="text" placeholder="Steam ID..." pattern=".{17}" required />
+                    matTooltipPosition="left" matTooltip="Enter the Steam ID or Profile URL you want to add."
+                    name="gameIdForm"
+                    class="field-input my-[0.5em]" type="text" placeholder="Steam ID or Steam Profile URL..." required />
                     <i class="fa-brands fa-steam-symbol field-icon"></i>
-
-                
-
-
-
             </form>
 
 
@@ -118,7 +106,7 @@
 
                     <div class="grid grid-cols-2 rounded-t-lg" *ngIf="user.liveSteamData">
                         <div class="p-2 flex items-center">
-                            <span class="inline-block pl-2 font-[200] text-xl">
+                            <span class="inline-block pl-2 font-[200] lg:text-xl">
                                 <i class="fa-brands fa-steam-symbol"></i> {{user.liveSteamData.personaname}}
                             </span>
                         </div>
@@ -143,9 +131,8 @@
                             </div>
                             <div class="w-full text-right">
                                 <span class="text-neutral-200 font-[300] text-sm">Level
-                                    {{getLevelData(getExperienceValue(user.liveGameStats)).lvl + 1}}:
-                                    {{ roundNumber(getLevelData(getExperienceValue(user.liveGameStats)).xp) + " / " + getLevelData(getExperienceValue(user.liveGameStats)).xpRq }}
-                                    XP</span>
+                                    <!-- {{getLevelData(getExperienceValue(user.liveGameStats)).lvl + 1}}: -->
+                                    {{ roundNumber(getLevelData(getExperienceValue(user.liveGameStats)).xp) + " / " + getLevelData(getExperienceValue(user.liveGameStats)).xpRq }}XP</span>
                             </div>
 
 
@@ -184,7 +171,7 @@
                                     <ng-container *ngFor="let stat of user.liveGameStats">
                                         <p class="text-sm my-2" *ngIf="stat.name.startsWith('STAT_GAMES_PLAYED')">
                                             <span class="font-[200] pl-2 w-[40px] inline-block text-right">{{stat.value}}</span>
-                                            <b class="pl-1">{{getGameType(stat.name)}}</b>
+                                            <b class="ml-4">{{getGameType(stat.name)}}</b>
                                         </p>
                                     </ng-container>
                                 </div>
@@ -192,11 +179,11 @@
                                     <h4 class="text-lg text-slate-300">Misc Stats</h4>
                                     <p class="text-sm my-2" *ngIf="getStatValue(user.liveGameStats, 'STAT_FLAG_PICKUPS')">
                                         <b class="pl-1 w-[100px] inline-block text-left">Flag Pickups</b>
-                                        <span class="font-[200] pl-2 w-[80px] inline-block text-left">{{getStatValue(user.liveGameStats, 'STAT_FLAG_PICKUPS')}}</span>
+                                        <span class="font-[200] pl-2 w-[40px] inline-block text-left">{{getStatValue(user.liveGameStats, 'STAT_FLAG_PICKUPS')}}</span>
                                     </p>
                                     <p class="text-sm my-2" *ngIf="getStatValue(user.liveGameStats, 'STAT_LOYALTY_BONUS') != null">
                                         <b class="pl-1 w-[100px] inline-block text-left">Loyalty Bonus</b>
-                                        <span class="font-[200] pl-2 w-[80px] inline-block text-left">
+                                        <span class="font-[200] pl-2 w-[40px] inline-block text-left">
                                             <span *ngIf="getStatValue(user.liveGameStats, 'STAT_LOYALTY_BONUS') == 1">Redeemed</span>
                                             <span *ngIf="getStatValue(user.liveGameStats, 'STAT_LOYALTY_BONUS') == 0">Not Redeemed</span>
                                         </span>
@@ -223,13 +210,13 @@
                 <div
                     class="lg:col-start-3 lg:col-span-1 col-span-2 flex justify-end items-center mb-4 place-self-center lg:place-self-auto">
                     <span
-                        class="text-sm font-[400] bg-slate-700 rounded-l-md p-2.5 inline-block shadow-md">{{user.unbanCode}}</span>
-                    <button class="!inline-block !border-l-0 !rounded-l-none !max-h-[41px] !mb-[2px] !pb-[2px] lg:!mr-4"
+                        class="text-sm font-[300] bg-slate-700 rounded-sm p-2 inline-block shadow-md">{{user.unbanCode}}</span>
+                    <button class="!inline-block lg:!mr-4 !ml-1 !min-h-fit !p-2 !text-sm"
                         mat-stroked-button color="primary" (click)="openSnackBar(
                         user.nickname + '\'s unban code copied to clipboard.',
                         6000
                     );
-                    copyToClipboard(user.unbanCode)"><i class="fa-regular fa-copy"></i> Unban Code</button>
+                    copyToClipboard(user.unbanCode)"><i class="fa-regular fa-copy"></i> Copy</button>
                 </div>
 
 

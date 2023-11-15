@@ -4,14 +4,14 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:38:40 
+ * Last Modified: Sun November 12th 2023 8:49:57 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
 interface SteamApiResponse {
@@ -19,6 +19,10 @@ interface SteamApiResponse {
     data: any;
   };
 }
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 interface SteamApiResponse2 {
   appnews: {
@@ -83,5 +87,17 @@ export class SteamApiService {
   getSteamId(steamId: string): Observable<any> {
     const url = `https://api.tonewebdesign.com/pa/steamid/${steamId}`;
     return this.http.get(url);
+  }
+
+  /**
+   * Get user's steam id's from their user profile
+   * @param profileUrl 
+   * @returns 
+   */
+  getIdsFromProfile(profileUrl: string): Observable<any> {
+    const url = 'https://api.tonewebdesign.com/pa/getSteamId';
+    return this.http.post(url, {
+      profileUrl
+    }, httpOptions);
   }
 }

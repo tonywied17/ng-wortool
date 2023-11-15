@@ -128,13 +128,13 @@
 
 
 					<div style="border-left: dotted 1px #7c7d738f;"
-						class="p-[1em] grid lg:grid-cols-1 grid-cols-2 gap-[1em] !text-center">
+						class="p-2 grid lg:grid-cols-1 grid-cols-3 gap-2 !text-center border-x-[1px] lg:border-l-[1px] lg:border-r-0 border-dotted border-[#7c7d738f]">
 
 						<button *ngIf="showMod || isOwner" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Manage Regiment-Specific Settings."
-							class="!py-2 !pt-4 !text-neutral-400 !block !min-w-full">
-							<i class="fa-solid fa-users-gear !text-neutral-400 !block text-3xl !mx-auto"></i>
+							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-solid fa-users-gear !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
 							Regiment
 						</button>
 
@@ -142,23 +142,19 @@
 						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Submit event details for sharing on your designated Discord event share channel."
-							class="!py-2 !h-full !pt-4 !text-neutral-400 !block !min-w-full">
-							<i class="fa-brands fa-discord !text-neutral-400 !text-center !block text-3xl !mx-auto"></i>
+							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-brands fa-discord !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
 							Event Share
 						</button>
+
 
 						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/3" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Collect Steam IDs for Unbanning and Statistics Tracking."
-							class="!py-2 !h-full !pt-4 !text-neutral-400 !block !min-w-full">
-							<i class="fa-brands fa-steam !text-neutral-400 !text-center !block text-3xl !mx-auto"></i>
-							Steam IDs
+							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-brands fa-steam !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
+							Steam Users
 						</button>
-
-
-
-
-						
 
 
 
@@ -181,18 +177,18 @@
 
 
 
-				<div *ngIf="showPage1" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 fade-center">
+				<div *ngIf="showPage1" class="w-full rounded-lg lg:p-[3em] p-0 mx-auto bg-slate-800/80 fade-center">
 					<app-regiment-settings></app-regiment-settings>
 				</div>
 
 
 
-				<div *ngIf="showPage2" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 fade-center">
+				<div *ngIf="showPage2" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
 					
 					<app-server-info></app-server-info>
 				</div>
 
-				<div *ngIf="showPage3" class="w-full rounded-lg lg:p-[3em] p-3 mx-auto bg-slate-800/80 fade-center">
+				<div *ngIf="showPage3" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
 					
 					<app-steam-ids></app-steam-ids>
 				</div>

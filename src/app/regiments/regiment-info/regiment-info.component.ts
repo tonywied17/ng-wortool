@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 12:55:40 
+ * Last Modified: Sun November 12th 2023 12:03:58 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -12,6 +12,8 @@
 
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "src/app/_services/auth.service";
+import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { RegimentService } from "../../_services/regiment.service";
 import { SteamApiService } from "../../_services/steam-api.service";
 import { Location } from "@angular/common";
@@ -19,8 +21,8 @@ import { firstValueFrom, Observable } from "rxjs";
 import { FileService } from 'src/app/_services/file.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
-
-
+import { TabSelectionService } from "src/app/_services/tab-selection.service";
+import { Router } from '@angular/router';
 
 interface Schedule {
   id: number;
@@ -44,6 +46,9 @@ interface Schedule {
   styleUrls: ["./regiment-info.component.scss"],
 })
 export class RegimentInfoComponent implements OnInit {
+  currentUser: any;
+  isLoggedIn = false;
+
   regiment: any;
   regimentUsers: any;
   regimentID: any;
@@ -69,17 +74,23 @@ export class RegimentInfoComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 9;
 
+  showMod: boolean = false;
+
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
+    private authService: AuthService,
+    private token: TokenStorageService,
     private regimentService: RegimentService,
     private steamApiService: SteamApiService,
     private location: Location,
     private uploadService: FileService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private tabSelectionService: TabSelectionService
   ) {
     this.regiment = {};
   }
-  
+
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -98,11 +109,11 @@ export class RegimentInfoComponent implements OnInit {
       },
       panelClass: 'image-modal-dialog',
     });
-  
+
     dialogRef.backdropClick().subscribe(() => dialogRef.close());
   }
-  
-  
+
+
 
   /**
    * Get regiment and regiment users on init
@@ -113,11 +124,32 @@ export class RegimentInfoComponent implements OnInit {
       this.fetchRegimentUsers(),
       this.getScreenshots(),
       this.getSchedules(),
-      this.getFileInfos()
-      
+      this.getFileInfos(),
+      this.getAccess()
     ]);
-
+    console.log(this.showMod)
     this.isDataLoaded = true;
+  }
+
+  async getAccess() {
+    this.isLoggedIn = !!this.token.getToken();
+    this.currentUser = this.token.getUser();
+    const userID = this.currentUser.id;
+    let userRegimentId = this.currentUser.regimentId;
+
+    if (this.isLoggedIn) {
+      this.authService.checkModeratorRole(userID, this.currentUser.regimentId).subscribe(
+        (response: { access: boolean; }) => {
+          if (userRegimentId == this.regimentID) {
+            this.showMod = response.access;
+          }
+
+        },
+        () => {
+          this.showMod = false;
+        }
+      );
+    }
   }
 
   async getFileInfos() {
@@ -125,7 +157,7 @@ export class RegimentInfoComponent implements OnInit {
       .subscribe((data: any) => {
         this.fileInfos = data;
       }, (error) => {
-        
+
       });
   }
 
@@ -138,20 +170,25 @@ export class RegimentInfoComponent implements OnInit {
   get totalItems(): number {
     return this.fileInfos.length;
   }
-  
+
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }
 
-changePage(newPage: number): void {
-  if (newPage >= 1 && newPage <= this.totalPages) {
-    this.currentPage = newPage;
-  }
-}
 
-getPagesArray(totalPages: number): number[] {
-  return new Array(totalPages).fill(0).map((_, index) => index + 1);
-}
+  changePage(newPage: number): void {
+    if (newPage >= 1 && newPage <= this.totalPages) {
+      this.currentPage = newPage;
+    }
+  }
+
+  /**
+   * @param totalPages 
+   * @returns 
+   */
+  getPagesArray(totalPages: number): number[] {
+    return new Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
 
 
   /**
@@ -175,7 +212,7 @@ getPagesArray(totalPages: number): number[] {
       );
     });
   }
-  
+
 
   /**
    * Get random screenshot
@@ -231,7 +268,7 @@ getPagesArray(totalPages: number): number[] {
     //       console.log(user.username);
     //   }
     // });
-  
+
   }
 
   /**
@@ -245,11 +282,11 @@ getPagesArray(totalPages: number): number[] {
     window.open(url, "_blank");
   }
 
-   /**
-   * Go back
-   * This function is used to go back to the previous page
-   */
-   goBack(): void {
+  /**
+  * Go back
+  * This function is used to go back to the previous page
+  */
+  goBack(): void {
     this.location.back();
   }
 
@@ -259,26 +296,26 @@ getPagesArray(totalPages: number): number[] {
     return Object.keys(this.scheduleNames);
   }
 
-  
+
   async getSchedules(): Promise<void> {
     let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(0, this.regimentID).toPromise();
     response = this.sortSchedules(response);
-  
+
     this.scheduleCounts = {};
     this.scheduleCount = response.length;
-  
+
     response.forEach((schedule) => {
       const scheduleName = schedule.schedule_name || "null";
-  
+
       if (!this.scheduleNames[scheduleName]) {
         this.scheduleNames[scheduleName] = [];
       }
-  
+
       schedule.time24 = schedule.time;
       schedule.time12 = this.convertTo12Hour(schedule.time);
-  
+
       this.scheduleNames[scheduleName].push(schedule);
-  
+
       if (!this.scheduleCounts[scheduleName]) {
         this.scheduleCounts[scheduleName] = 1;
       } else {
@@ -286,18 +323,25 @@ getPagesArray(totalPages: number): number[] {
       }
     });
   }
-  
 
-
+  /**
+   * Filter schedules
+   * @param day 
+   * @param name 
+   * @returns 
+   */
   filterSchedulesByDayAndName(day: string, name: string): Schedule[] {
     if (this.scheduleNames[name]) {
       return this.scheduleNames[name].filter((schedule) => schedule.day === day);
     }
     return [];
   }
-  
 
-
+  /**
+   * @method toggleTimeFormat
+   * @description Toggle the time format
+   * @returns {void}
+   */
   toggleTimeFormat(): void {
     this.display12HourTime = !this.display12HourTime;
     if (this.display12HourTime) {
@@ -307,7 +351,12 @@ getPagesArray(totalPages: number): number[] {
     }
   }
 
-
+  /**
+   * @method convertTo12Hour
+   * @description Convert the time to 12 hour format
+   * @returns - The time in 12 hour format
+   * @param time24 - The time in 24 hour format
+   */
   convertTo12Hour(time24: string): string {
     let [hour, minute] = time24.split(":");
     let hours = parseInt(hour);
@@ -354,24 +403,44 @@ getPagesArray(totalPages: number): number[] {
     };
 
     return schedules.sort((a, b) => {
-      // Map days to their order in the week and then sort
       const dayA = dayOrder[a.day];
       const dayB = dayOrder[b.day];
 
       if (dayA < dayB) return -1;
       if (dayA > dayB) return 1;
 
-      // If days are equal, sort by time
       const timeA = this.getTimeInMinutes(a.time);
       const timeB = this.getTimeInMinutes(b.time);
 
       if (timeA < timeB) return -1;
       if (timeA > timeB) return 1;
-      
+
       return 0;
     });
 
-    
+
   }
+
+  selectInfoTab() {
+    this.tabSelectionService.setSelectedTabIndex(0);
+    this.router.navigate(['/mod/1']);
+  }
+
+  selectMembersTab() {
+    this.tabSelectionService.setSelectedTabIndex(1);
+    this.router.navigate(['/mod/1']);
+  }
+
+  selectScheduleTab() {
+    this.tabSelectionService.setSelectedTabIndex(2);
+    this.router.navigate(['/mod/1']);
+  }
+
+  selectMediaTab() {
+    this.tabSelectionService.setSelectedTabIndex(3);
+    this.router.navigate(['/mod/1']);
+  }
+
+
 
 }

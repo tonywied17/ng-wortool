@@ -5,8 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-map-image-modal',
   template: `
-    <div (click)="closeModal()" class="modal-overlay">
-      <img [src]="data.imageUrl" alt="Map Image" class="modal-image" (click)="stopPropagation($event)" />
+    <div (click)="closeModal()" class="modal-overlay cursor-pointer">
+      <img [src]="data.imageUrl" alt="Map Image" class="modal-image" />
     </div>
   `,
   styles: [`
@@ -25,6 +25,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     .modal-image {
       max-width: 90%;
       max-height: 90%;
+      transition: all ease .2s;
+    }
+
+    .modal-image:active {
+      transform: scale(0.95);
     }
   `],
 })
