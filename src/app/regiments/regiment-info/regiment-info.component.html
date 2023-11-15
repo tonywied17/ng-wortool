@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun November 12th 2023 12:34:08 
+Last Modified: Tue November 14th 2023 9:56:59 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -181,6 +181,10 @@ Copyright (c) 2023 Tone Web Design, Molex
           
     <mat-tab-group dynamicHeight class="mt-4 mb-8" animationDuration="222ms"> 
       <mat-tab label="Schedule">
+        <ng-template mat-tab-label>
+          <mat-icon class="!mr-2">calendar_month</mat-icon>
+          <span class="lg:!inline-block !hidden">Schedule</span>
+          </ng-template>
               <!-- Schedule Widget -->
         <div class="right-in">
           <!-- <h4 class="text-[#7c7d72] mb-4 text-2xl font-[500]">Schedule</h4> -->
@@ -241,6 +245,10 @@ Copyright (c) 2023 Tone Web Design, Molex
       <!--  -->
             </mat-tab>
             <mat-tab label="Media">  
+              <ng-template mat-tab-label>
+                <mat-icon class="!mr-2">perm_media</mat-icon>
+                <span class="lg:!inline-block !hidden">Media</span>
+                </ng-template>
               <!-- Media Widget -->
 
               <div class="w-full text-right mb-2 mt-3">
@@ -302,6 +310,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 
             </mat-tab>
             <mat-tab label="Recaps">
+              <ng-template mat-tab-label>
+                <mat-icon class="!mr-2">history</mat-icon>
+                <span class="lg:!inline-block !hidden">Recaps</span>
+                </ng-template>
               <!-- Recap Widget -->
               <div class="p-1 right-in col-span-2">
                 <div class="mt-4">

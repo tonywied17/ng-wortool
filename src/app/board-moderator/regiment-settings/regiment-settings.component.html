@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun November 12th 2023 1:03:31 
+Last Modified: Tue November 14th 2023 10:15:05 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -34,6 +34,11 @@ Copyright (c) 2023 Tone Web Design, Molex
 			<mat-tab-group dynamicHeight #tabGroup animationDuration="0ms">
 				<!-- Settings Tab -->
 				<mat-tab label="Settings">
+					<ng-template mat-tab-label>
+						<mat-icon class="!mr-1">settings</mat-icon>
+						<span class="lg:!inline-block !hidden">Settings</span>
+					  </ng-template>
+
 					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
 						Event Tool Settings
 					</h3>
@@ -44,7 +49,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</p>
 
 					<!-- Event Webhook Tool -->
-					<div class="p-2 m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
+					<div class="p-2 lg:m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
 						<div class="col-start-1 col-span-1">
 							<h3 class="text-slate-400 ml-1">Event Channel</h3>
 							<span *ngIf="regimentData.webhook_channel" [innerHTML]="regimentData.webhook_channel"
@@ -83,10 +88,15 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</div>
 
 					<!-- Update Regiment Form -->
-					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300] hidden lg:inline-block">
 						Profile Information for <span class="font-[900] p-1 m-1 text-base"><i
 								class="fa-brands fa-discord"></i> {{regimentData.regiment}} </span>
 					</h3>
+
+					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300] lg:hidden inline-block">
+						Profile Information
+					</h3>
+					
 					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
 						<i class="fa-regular fa-circle-question mr-1"></i> Personalize your regiment's profile
 						information.
@@ -95,7 +105,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 					<div class="">
 						<form (ngSubmit)="updateRegiment()">
-							<div class="form-group p-2 m-2">
+							<div class="form-group p-2 lg:m-2">
 								<div class="field-box">
 									<input [(ngModel)]="regiment" name="regiment" style="
                 padding-top: 11px;
@@ -206,6 +216,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 					<!--  -->
 				</mat-tab>
 				<mat-tab label="Members">
+					<ng-template mat-tab-label>
+						<mat-icon class="!mr-1">group</mat-icon>
+						<span class="lg:!inline-block !hidden">Members</span>
+					  </ng-template>
 
 					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
 						Manage Members &amp; Managers
@@ -235,7 +249,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 						<div *ngFor="let user of regimentUsers">
 							<div *ngIf="regimentData.ownerId.includes(user.discordId);">
-								<div class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center">
+								<div class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center text-base">
 									<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
 										class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
 										(error)="user.avatar_url = null">
@@ -265,7 +279,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 						<div *ngFor="let user of regimentUsers">
 							<div *ngIf="(!regimentData.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');"
-								class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+								class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
 								<div class="flex items-center">
 
 									<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
@@ -276,7 +290,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 										<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
 									</ng-template>
 
-									<span class="text-lg font-[300]">
+									<span class="font-[300] text-base">
 										{{user.username}}
 									</span>
 								</div>
@@ -299,7 +313,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 						<div *ngFor="let user of regimentUsers">
 							<div *ngIf="(user.discordId != regimentData.ownerId) && !user.roles.includes('ROLE_MODERATOR');"
-								class="bg-slate-900/80 rounded-lg my-2 mx-4 h-[45px] flex items-center justify-between">
+								class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
 								<div class="flex items-center">
 									<img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
 										class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
@@ -309,7 +323,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 										<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
 									</ng-template>
 
-									<span class="text-lg font-[300]">
+									<span class="font-[300] text-base">
 										{{user.username}}
 									</span>
 								</div>
@@ -332,6 +346,11 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</div>
 				</mat-tab>
 				<mat-tab label="Schedule">
+					<ng-template mat-tab-label>
+						<mat-icon class="!mr-1">calendar_month</mat-icon>
+						<span class="lg:!inline-block !hidden">Schedule</span>
+					  </ng-template>
+
 					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
 						Manage Regimental Schedules
 					</h3>
@@ -611,6 +630,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 				</mat-tab>
 				<mat-tab label="Media">
+					<ng-template mat-tab-label>
+						<mat-icon class="!mr-1">perm_media</mat-icon>
+						<span class="lg:!inline-block !hidden">Media</span>
+					  </ng-template>
 
 
 					<!-- <div class="bg-slate-900/80 rounded-md border-l-4 border-yellow-700 text-yellow-300 p-4 mb-4">
@@ -645,27 +668,31 @@ Copyright (c) 2023 Tone Web Design, Molex
 									<input #coverInput hidden="true" type="file"
 									(change)="coverInputChange($event);selectCover($event)" accept="image/*">
 
-									<button style="margin-right: 0.5em;" mat-raised-button color="primary"
+									<button mat-raised-button color="primary"
+									class="mr-[0.5em]"
 										(click)="coverInput.click();selectCover($event)">
 										<mat-icon>add_to_photos</mat-icon>
-										Choose Cover...
+										<span class="lg:inline-block hidden">
+											Choose Cover...
+										</span>
+										<span class="inline-block lg:hidden">
+											Choose...
+										</span>
 									</button>
 
 									<button mat-raised-button [disabled]="!selectedCover" (click)="uploadCover()">Upload</button>
 								</div>
 								<div class="justify-end">
 									<button mat-stroked-button color="primary"
-									(click)="removeCover(this.regimentData.cover_photo)">
-									<mat-icon>shuffle</mat-icon>
-									Use Random Screenshots
+									(click)="confirmRemoveCover(this.regimentData.cover_photo)">
+									<mat-icon class="!m-0 lg:!mr-1">shuffle</mat-icon>
+									<span class="lg:inline-block hidden">
+										Random Image
+									</span>
 								</button>
 								</div>
 							</div>
 							
-
-
-							
-
 							
 							<mat-progress-bar *ngIf="currentCover" style="margin:0.5em;" mode="determinate"
 							value="{{ progressCover }}"></mat-progress-bar>
@@ -719,7 +746,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<button style="margin-right: 0.5em;" mat-raised-button color="primary"
 								(click)="fileInput.click();selectFile($event)">
 								<mat-icon>add_to_photos</mat-icon>
-								Choose Image...
+								<span class="lg:inline-block hidden">
+									Choose Image...
+								</span>
+								<span class="inline-block lg:hidden">
+									Choose...
+								</span>
 							</button>
 
 							<button mat-raised-button [disabled]="!selectedFiles" (click)="upload()">Upload</button>

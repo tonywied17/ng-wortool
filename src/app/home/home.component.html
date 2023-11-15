@@ -69,6 +69,35 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 								<i class="fa-solid fa-shield-halved w-[25px]"></i>
 								Admin Dashboard
 							</button>
+
+							<mat-divider class="!hidden" *ngIf="showAdmin"></mat-divider>
+
+								<div class="hidden !bg-gradient-to-r from-[#4b4b4775] via-[#6b6a644b] to-transparent">
+									<button *ngIf="showAdmin"
+									routerLink="/admin/1"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-map-location-dot w-[25px]"></i>
+									Manage Maps
+									</button>
+
+									<button *ngIf="showAdmin"
+									routerLink="/admin/2"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-gun w-[25px]"></i>
+									Manage Weapons
+									</button>
+
+									<button *ngIf="showAdmin"
+									routerLink="/admin/3"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-tents w-[25px]"></i>
+									Manage Regiments
+									</button>
+
+								</div>
 	
 							<mat-divider class="lg:!hidden" *ngIf="showAdmin"></mat-divider>
 
@@ -96,7 +125,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 									mat-button
 									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
 									<i class="fa-brands fa-steam w-[25px]"></i>
-									Steam IDs
+									Steam Users
 									</button>
 
 								</div>

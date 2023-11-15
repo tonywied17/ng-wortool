@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 1:04:47 
+ * Last Modified: Tue November 14th 2023 9:31:28 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -157,4 +157,12 @@ label{
 
 .file-thumbnail:active{
   transform: scale(1.05);
+}
+
+
+
+@media (max-width: 900px) {
+  .mat-mdc-tab-body-wrapper {
+    padding: 5px !important;
+  }
 }

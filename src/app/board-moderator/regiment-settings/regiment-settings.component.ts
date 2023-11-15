@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 12:59:39 
+ * Last Modified: Tue November 14th 2023 10:09:49 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -1023,6 +1023,8 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
           }
         );
 
+        this.selectedFiles = undefined;
+
 
       },
       (error) => {
@@ -1030,6 +1032,28 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
         console.error("Error removing file:", error);
       }
     );
+  }
+
+  /**
+   * Snackbar confirmation for regular media deletion
+   * @param file 
+   */
+  confirmRemoveCover(fileUrl: string): void {
+    const snackBarRef = this.snackBar.openFromComponent(
+      ConfirmDeleteSnackbarComponent,
+      {
+        data: {
+          message: `Are you sure you want to use random screenshots as your cover? This will delete your current cover photo.`,
+        },
+        duration: 5000,
+        verticalPosition: "top",
+        panelClass: "confirm-delete-snackbar",
+      }
+    );
+
+    snackBarRef.onAction().subscribe(() => {
+      this.removeCover(fileUrl);
+    });
   }
 
   /**
@@ -1052,6 +1076,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
             });
           });
 
+          this.selectedCover = undefined;
           this.getRegiment();
 
         },
