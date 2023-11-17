@@ -23,7 +23,7 @@
     left: 0;
     width: 100%;
     overflow-y: scroll;
-    max-height: 50vh;
+    max-height: 40vh;
     display: block;
     // max-width: 300px;
   }
@@ -100,3 +100,12 @@
         transform: translate(24px, 0);
     }
 }
+
+.custom-select-container {
+    position: relative;
+  }
+  
+  .dropdown-container {
+    overflow-y: auto;
+  }
+  

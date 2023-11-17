@@ -20,11 +20,12 @@ export class SharedDataService {
   showMod:boolean = false;
   isOwner:boolean = false;
   showAdmin:boolean = false;
+  regimentSettingTabIndex: any;
 
   constructor(
     private regimentService: RegimentService,
     private discordService: DiscordService,
-    private token: TokenStorageService,
+    public token: TokenStorageService,
     private authService: AuthService
   ) {}
 

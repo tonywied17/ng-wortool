@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 12:03:58 
+ * Last Modified: Fri November 17th 2023 4:52:43 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -21,8 +21,8 @@ import { firstValueFrom, Observable } from "rxjs";
 import { FileService } from 'src/app/_services/file.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
-import { TabSelectionService } from "src/app/_services/tab-selection.service";
 import { Router } from '@angular/router';
+import { SharedDataService } from "src/app/_services/shared-data.service";
 
 interface Schedule {
   id: number;
@@ -86,7 +86,7 @@ export class RegimentInfoComponent implements OnInit {
     private location: Location,
     private uploadService: FileService,
     private dialog: MatDialog,
-    private tabSelectionService: TabSelectionService
+    public sharedDataService: SharedDataService
   ) {
     this.regiment = {};
   }
@@ -422,22 +422,26 @@ export class RegimentInfoComponent implements OnInit {
   }
 
   selectInfoTab() {
-    this.tabSelectionService.setSelectedTabIndex(0);
+    this.sharedDataService.regimentSettingTabIndex = 0
+    console.log(this.sharedDataService.regimentSettingTabIndex)
     this.router.navigate(['/mod/1']);
   }
 
   selectMembersTab() {
-    this.tabSelectionService.setSelectedTabIndex(1);
+    this.sharedDataService.regimentSettingTabIndex = 1
+    console.log(this.sharedDataService.regimentSettingTabIndex)
     this.router.navigate(['/mod/1']);
   }
 
   selectScheduleTab() {
-    this.tabSelectionService.setSelectedTabIndex(2);
+    this.sharedDataService.regimentSettingTabIndex = 2
+    console.log(this.sharedDataService.regimentSettingTabIndex)
     this.router.navigate(['/mod/1']);
   }
 
   selectMediaTab() {
-    this.tabSelectionService.setSelectedTabIndex(3);
+    this.sharedDataService.regimentSettingTabIndex = 3
+    console.log(this.sharedDataService.regimentSettingTabIndex)
     this.router.navigate(['/mod/1']);
   }
 

@@ -1,0 +1,166 @@
+<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+    Cover Photo
+</h3>
+<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+    <i class="fa-regular fa-circle-question mr-1"></i> Change your regiment's profile cover photo.
+</p>
+
+<div class="mb-[122.2px]">
+
+    <div *ngIf="messageCover" class="alert alert-secondary" role="alert">
+        {{ messageCover }}
+    </div>
+
+    <div class="my-2">
+        
+
+        <div class="grid grid-cols-[1fr_auto]">
+            <div>
+                <input #coverInput hidden="true" type="file"
+                (change)="coverInputChange($event);selectCover($event)" accept="image/*">
+
+                <button mat-raised-button color="primary"
+                class="mr-[0.5em]"
+                    (click)="coverInput.click();selectCover($event)">
+                    <mat-icon>add_to_photos</mat-icon>
+                    <span class="lg:inline-block hidden">
+                        Choose Cover...
+                    </span>
+                    <span class="inline-block lg:hidden">
+                        Choose...
+                    </span>
+                </button>
+
+                <button mat-raised-button [disabled]="!selectedCover" (click)="uploadCover()">Upload</button>
+            </div>
+            <div class="justify-end">
+                <button mat-stroked-button color="primary"
+                (click)="confirmRemoveCover(this.sharedDataService.regiment.cover_photo)">
+                <mat-icon class="!m-0 lg:!mr-1">shuffle</mat-icon>
+                <span class="lg:inline-block hidden">
+                    Random Image
+                </span>
+            </button>
+            </div>
+        </div>
+        
+        
+        <mat-progress-bar *ngIf="currentCover" style="margin:0.5em;" mode="determinate"
+        value="{{ progressCover }}"></mat-progress-bar>
+    </div>
+    
+
+    <div id="cover-photo"
+        class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center"
+        [ngStyle]="{'background-image': sharedDataService.regiment.cover_photo ? 'url(' + sharedDataService.regiment.cover_photo + ')' : 'url(' + randomScreenshot + ')',
+        'background-size': 'cover',
+        'background-position': 'center'}">
+
+        <!-- Profile Picture Wrapper -->
+        <div class="blur-sm absolute bottom-[-70px] left-4 w-[150px] h-[150px] border-2 border-[#7c7d72] rounded-md flex justify-center items-center"
+            style="padding:1px">
+            <img [src]="this.sharedDataService.regiment.guild_avatar"
+                class="w-[140px] h-[140px] shadow-md pointer-events-none brightness-90 rounded-md">
+        </div>
+
+        <!-- Description -->
+        <div
+            class="lg:text-base blur-sm text-sm absolute bottom-[-70px] left-[180px] w-[50%] lg:w-[60%] bg-slate-500 bg-opacity-80 p-4 rounded shadow-md min-h-[115px] text-neutral-100">
+            <span *ngIf="!this.sharedDataService.regiment.description">No description
+                provided.</span>{{this.sharedDataService.regiment.description}}
+        </div>
+    </div>
+
+</div>
+
+
+
+<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+    Manage Media Gallery
+</h3>
+<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+    <i class="fa-regular fa-circle-question mr-1"></i> Manage media on your regiment's WoRTool page.
+</p>
+
+
+
+
+<div class="h-full">
+
+
+        <div *ngIf="message" class="alert alert-secondary" role="alert">
+            {{ message }}
+        </div>
+
+        <input #fileInput hidden="true" type="file"
+            (change)="fileInputChange($event);selectFile($event)" accept="image/*">
+
+        <button style="margin-right: 0.5em;" mat-raised-button color="primary"
+            (click)="fileInput.click();selectFile($event)">
+            <mat-icon>add_to_photos</mat-icon>
+            <span class="lg:inline-block hidden">
+                Choose Image...
+            </span>
+            <span class="inline-block lg:hidden">
+                Choose...
+            </span>
+        </button>
+
+        <button mat-raised-button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+
+        <mat-progress-bar *ngIf="currentFile" style="margin:0.5em;" mode="determinate"
+            value="{{ progress }}"></mat-progress-bar>
+
+
+        <div class="mt-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <div *ngFor="let file of fileInfos | async" class="bg-slate-900/50 p-2 rounded-md shadow-xl">
+                  <!-- Media Icon -->
+                  <div class="flex items-center justify-center mb-2">
+                    <img 
+                    (click)="openImageModal(file.url)"
+                    [src]="file.url" class="max-h-16 w-auto file-thumbnail">
+                  </div>
+                
+                  <!-- Filename -->
+                  <div class="text-white text-center font-[200] text-sm mb-2">{{ file.name }}</div>
+                
+                  <!-- Action Buttons -->
+                  <div class="flex justify-center">
+                    <!-- Download Button -->
+                    <div class="flex">
+                      <a 
+                      matTooltipClass="form-tooltip" 
+                        matTooltipPosition="below"			
+                        matTooltip="Download this file"
+                      mat-button color="accent" href="{{ file.url }}" class="text-white !min-h-fit !min-w-fit !h-fit !py-1.5">
+                        <i class="fa-solid fa-download pr-1"></i>
+                      </a>
+                    </div>
+                
+                    <!-- Delete Button -->
+                    <div class="flex">
+                      <button
+                      matTooltipClass="form-tooltip" 
+                        matTooltipPosition="below"			
+                        matTooltip="Delete this file"
+
+                      mat-button color="warn" (click)="confirmRemoveFile(file.name)" class="!min-h-fit !min-w-fit !h-fit !py-1.5">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+              
+        </div>
+        
+
+
+
+
+
+</div>

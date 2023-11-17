@@ -1,93 +1,102 @@
 
-<h2 class="lg:text-2xl text-lg text-slate-400 pb-4 ml-2 lg:ml-0">Muster Roster</h2>
 
-<div class="grid grid-cols-[auto_1fr] gap-2">
 
-    <div>
-        <div class="custom-select-container">
-            <div class="custom-select">
-                <button class="select-button" (click)="toggleDropdown()" mat-flat-button color="primary">{{ selectedRole ? selectedRole.name : 'Select a role...' }}</button>
-        
-              <ul class="dropdown-list" *ngIf="isDropdownOpen">
-                <li>
-                    <div class="field-box">
-                        <input 
-                        class="field-input !font-[300] my-[0.5em]" 
-                        style="padding-top: 11px;padding-bottom: 11px;font-size: 15px;border: 1px solid #7c7d72 !important;"
-                        type="text" id="roleFilter" [(ngModel)]="roleFilter" placeholder="Type to filter..." (input)="updateFilteredRoles()">
-                        <i class="fa-solid fa-filter field-icon"></i>
-                    </div>
-                  
-                </li>
+    <mat-tab-group>
+      <mat-tab label="Mass Enlist by Roles"> 
+        <div class="grid grid-cols-[auto_1fr] gap-4 p-4">
 
-                <li *ngIf="filteredRoles.length <= 0">
-                    Fetching Roles...
-                </li>
-
-                <li *ngFor="let role of filteredRoles" (click)="selectRole(role)">
-                  {{ role.name }}
-                </li>
-              </ul>
+          <div>
+            <div class="custom-select-container">
+              <div class="custom-select">
+                <button class="select-button" (click)="toggleDropdown()" mat-flat-button color="primary">
+                  {{ selectedRole ? selectedRole.name : 'Select a role...' }}
+                </button>
+          
+                <div class="dropdown-container">
+                  <div class="field-box sticky top-0">
+                    <input class="field-input !font-[300] my-[0.5em]" 
+                          style="padding-top: 11px; padding-bottom: 11px; font-size: 15px; border: 1px solid #7c7d72 !important;"
+                          type="text" id="roleFilter" [(ngModel)]="roleFilter" placeholder="Type to filter..." (input)="updateFilteredRoles()">
+                    <i class="fa-solid fa-filter field-icon"></i>
+                  </div>
+          
+                  <ul class="dropdown-list">
+                    <li *ngIf="filteredRoles.length <= 0">
+                      Fetching Roles...
+                    </li>
+          
+                    <li *ngFor="let role of filteredRoles" (click)="selectRole(role)">
+                      {{ role.name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-    </div>
-
-    <div *ngIf="selectedRole && users.length === 0">
-        <div class="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-    </div>
-
-
-    <div *ngIf="selectedRole && users.length > 0">
-        <div class="grid grid-cols-[1fr_auto]">
-            <div>
-                <button (click)="toggleCheckAll()" mat-stroked-button color="primary" class="mr-1 !min-h-fit !text-base">{{selectAll ? 'Uncheck All' : 'Check All'}}</button>
-                <mat-checkbox [(ngModel)]="showNicknameOnly">Has Nickname</mat-checkbox>
+      
+  
+      <div *ngIf="selectedRole && users.length === 0">
+          <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
-            <div>
-                <button (click)="enlistUsers()" mat-stroked-button color="primary" class="!text-base">Enlist Users</button>
-            </div>
-        </div>
-        
-
-        <div *ngIf="filterUsers().length > 0; else noUsers" class="max-h-[50vh] overflow-y-scroll">
-          <h4 class="text-[#7c7d72] lg:text-2xl font-[500]">{{ filterUsers().length }} Users with this role</h4>
-          <div *ngFor="let user of filterUsers()" class="bg-slate-900/70 rounded-md m-2 p-2">
-
-            <label class="grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer">
-                <div>
-                  <mat-checkbox
-                    [checked]="selectedUserIds.includes(user.id)"
-                    (change)="updateSelectedUserIds(user.id, $event.checked)"
-                    [value]="user.id"
-                    class="hidden"
-                  ></mat-checkbox>
-                </div>
-                <div class="flex items-center">
-                  <img [src]="user.avatarURL" class="max-w-[50px] h-auto mr-2">
-                  <span>{{ user.nickname ? user.nickname : user.username }}</span>
-                </div>
-              </label>
-              
+      </div>
+  
+  
+      <div *ngIf="selectedRole && users.length > 0">
+          <div class="grid grid-cols-[1fr_auto]">
+              <div>
+                  <button (click)="toggleCheckAll()" mat-stroked-button color="primary" class="mr-1 !min-h-fit !text-base">{{selectAll ? 'Uncheck All' : 'Check All'}}</button>
+                  <mat-checkbox [(ngModel)]="showNicknameOnly">Has Nickname</mat-checkbox>
+                  <span class="text-[#7c7d72] text-base font-[500] ml-2">{{ filterUsers().length }} Users with this role</span>
+              </div>
+              <div>
+                  <button (click)="enlistUsers()" mat-stroked-button color="primary" class="!text-base">Enlist Users</button>
+              </div>
           </div>
           
-        </div>
+  
+          <div *ngIf="filterUsers().length > 0; else noUsers" class="max-h-[50vh] overflow-y-scroll">
+            
+            <div *ngFor="let user of filterUsers()" class="bg-slate-900/70 rounded-md m-2 p-2">
+  
+              <label class="grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer">
+                  <div>
+                    <mat-checkbox
+                      [checked]="selectedUserIds.includes(user.id)"
+                      (change)="updateSelectedUserIds(user.id, $event.checked)"
+                      [value]="user.id"
+                      class="hidden"
+                    ></mat-checkbox>
+                  </div>
+                  <div class="flex items-center">
+                    <img [src]="user.avatarURL" class="max-w-[50px] h-auto mr-2">
+                    <span>{{ user.nickname ? user.nickname : user.username }}</span>
+                  </div>
+                </label>
+                
+            </div>
+            
+          </div>
+  
 
-        <div class="w-full text-right mt-2">
-            <button (click)="enlistUsers()" mat-stroked-button color="primary" class="mr-1 !text-base">Enlist Users</button>
+         
+      
+          <ng-template #noUsers>
+            <p>No users to display.</p>
+          </ng-template>
         </div>
-       
-    
-        <ng-template #noUsers>
-          <p>No users to display.</p>
-        </ng-template>
-      </div>
-    
-</div>
+      
+  </div>
+  </mat-tab>
+  <mat-tab label="Enlist User"> 
+    Content 2 
+  </mat-tab>
+</mat-tab-group>
+
+
 
 
 

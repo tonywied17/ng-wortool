@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 17th 2023 2:17:33 
+ * Last Modified: Fri November 17th 2023 5:36:19 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -49,6 +49,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { MusterRosterComponent } from './board-moderator/muster-roster/muster-roster.component';
 import { EnlisterComponent } from './board-moderator/muster-roster/enlister/enlister.component';
 import { SharedDataService } from "./_services/shared-data.service";
+import { ScheduleComponent } from './board-moderator/regiment-settings/schedule/schedule.component';
+import { MembersComponent } from './board-moderator/regiment-settings/members/members.component';
+import { MediaComponent } from './board-moderator/regiment-settings/media/media.component';
 
 /**
  * Routes for the application
@@ -105,6 +108,9 @@ const routes: Routes = [
     ResetPasswordComponent,
     MusterRosterComponent,
     EnlisterComponent,
+    ScheduleComponent,
+    MembersComponent,
+    MediaComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,8 +122,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      enabled: !isDevMode(),
-      // enabled: environment.production,
+      // enabled: !isDevMode(),
+      enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",
