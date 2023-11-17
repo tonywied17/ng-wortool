@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Fri November 17th 2023 10:04:36 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -30,6 +30,7 @@ export class BoardModeratorComponent implements OnInit {
   showPage1 = false;
   showPage2 = false;
   showPage3 = false;
+  showPage4 = false
   loading = true;
   regimentData: any;
   regimentSelected = true;
@@ -100,12 +101,15 @@ export class BoardModeratorComponent implements OnInit {
     this.showPage1 = false;
     this.showPage2 = false;
     this.showPage3 = false;
+    this.showPage4 = false;
     if (page === "1") {
       this.showPage1 = true;
     } else if (page === "2") {
       this.showPage2 = true;
     } else if (page === "3") {
       this.showPage3 = true;
+    } else if (page === "4") {
+      this.showPage4 = true;
     }
   }
 

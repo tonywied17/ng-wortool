@@ -137,6 +137,7 @@
 							<i class="fa-solid fa-users-gear !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
 							Regiment
 						</button>
+						
 
 
 						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-button
@@ -154,6 +155,14 @@
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
 							<i class="fa-brands fa-steam !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
 							Steam Users
+						</button>
+
+						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/4" mat-button
+							matTooltipClass="form-tooltip" matTooltipPosition="right"
+							matTooltip="Keep track of events and drills attended by your regiment members."
+							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-solid fa-clipboard-user !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
+							Muster Roster
 						</button>
 
 
@@ -191,6 +200,11 @@
 				<div *ngIf="showPage3" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
 					
 					<app-steam-ids></app-steam-ids>
+				</div>
+
+				<div *ngIf="showPage4" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
+					
+					<app-muster-roster></app-muster-roster>
 				</div>
 
 
