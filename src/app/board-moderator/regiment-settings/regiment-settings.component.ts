@@ -4,32 +4,26 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue November 14th 2023 10:09:49 
+ * Last Modified: Fri November 17th 2023 3:41:16 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
 import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef, NgZone, ViewChild, OnDestroy, TemplateRef } from "@angular/core";
-import { ActivatedRoute, Params } from "@angular/router";
-import { TokenStorageService } from "../../_services/token-storage.service";
-import { AuthService } from "../../_services/auth.service";
-import { RegimentService } from "../../_services/regiment.service";
 import { DiscordService } from "src/app/_services/discord.service";
 import { SteamApiService } from "../../_services/steam-api.service";
 import { MatSnackBar, MatSnackBarDismiss } from "@angular/material/snack-bar";
 import { ConfirmDeleteSnackbarComponent } from "../../confirm-delete-snackbar/confirm-delete-snackbar.component";
-import { UserService } from "src/app/_services/user.service";
-import { MatDatepickerModule } from "@angular/material/datepicker";
 import { FileService } from 'src/app/_services/file.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { TabSelectionService } from "src/app/_services/tab-selection.service";
-import { map } from 'rxjs/operators';
-import { Router, NavigationEnd } from '@angular/router';
 import { MatTabGroup } from '@angular/material/tabs';
 import { MapImageComponent } from "src/app/map-image/map-image.component"; 
 import { MatDialog } from "@angular/material/dialog";
+import { SharedDataService } from "src/app/_services/shared-data.service";
+import { RegimentService } from "src/app/_services/regiment.service";
 
 interface Schedule {
   id: number;
@@ -56,28 +50,9 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
   @ViewChild("dialogTemplate")
   _dialogTemplate!: TemplateRef<any>;
   content?: string;
-  currentUser: any;
-  isLoggedIn = false;
-  showMod = false;
   isLoaded: boolean = false;
-  isModerator = false;
   roles: string[] = [];
-
-  regimentID: any;
-  regimentData: any;
   regimentSelected = true;
-
-  regiment: any;
-  guild_id: any;
-  guild_avatar: any;
-  description: any;
-  invite_link: any;
-  website: any;
-  youtube: any;
-  side: any;
-
-  isOwner: boolean = false;
-  isMod: boolean = false;
   regimentChannels: any;
   regimentUsers: any;
   discordRegimentUsers: any;
@@ -125,24 +100,21 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
 
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
   private tabGroupSubscription: { unsubscribe: () => void } | null = null;
-
+  isModerator: boolean = false;
+  currentUser: any;
+  token: any;
 
   constructor(
-    private token: TokenStorageService,
-    private authService: AuthService,
-    private regimentService: RegimentService,
     private discordService: DiscordService,
     private steamApiService: SteamApiService,
-    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private userService: UserService,
-    private matDatepicker: MatDatepickerModule,
-    private cd: ChangeDetectorRef,
     private uploadService: FileService,
     private elementRef: ElementRef,
     private ngZone: NgZone,
     private tabSelectionService: TabSelectionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private regimentService: RegimentService,
+    public sharedDataService: SharedDataService
   ) {
     this.tabGroupSubscription = this.tabSelectionService.selectedTabIndex$.subscribe((index) => {
       console.log('Selected Index:', index);
@@ -154,41 +126,20 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @method ngOnInit
    */
   async ngOnInit(): Promise<void> {
-    this.isLoggedIn = !!this.token.getToken();
-    this.currentUser = this.token.getUser();
-    const userID = this.currentUser.id;
 
-    if (this.isLoggedIn) {
-      await this.authService
-        .checkModeratorRole(userID, this.currentUser.regimentId)
-        .toPromise()
-        .then((response) => {
-          this.showMod = response.access;
+    this.sharedDataService.retrieveInitialData()
+    .then(async () => {
+      // Processed
+      this.isLoaded = true
+    })
+    .catch(error => {
+      console.error("Error initializing shared data:", error);
+    });
 
-          if (this.currentUser.regimentId) {
-            this.regimentID = this.currentUser.regimentId;
-            this.getRegiment().then(() => {
-              if (this.regimentData.ownerId.includes(this.currentUser.discordId)) {
-                this.isOwner = true;
-                this.isLoaded = true;
-              } else {
-                this.isOwner = false;
-                this.isLoaded = true;
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          if (error.status === 403) {
-            this.regimentSelected = false;
-          } else {
-            console.error("Error:", error);
-          }
-        });
-    }
     await this.getScreenshots();
     this.getSchedules();
-    this.uploadService.getFiles(this.regimentID).subscribe(
+    this.getRegiment();
+    this.uploadService.getFiles(this.sharedDataService.regimentId).subscribe(
       (files: any[]) => {
         this.fileInfos.next(files);
       },
@@ -202,6 +153,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
       this.tabGroup.selectedIndex = index;
     });
 
+    console.log(this.regimentUsers)
   }
 
   /**
@@ -219,42 +171,9 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @returns {Promise<void>}
    */
   async getRegiment(): Promise<void> {
-    try {
-      if (this.regimentID) {
-        const response = await this.regimentService
-          .getRegiment(this.regimentID)
-          .toPromise();
-
-        if (response) {
-          this.regimentData = response;
-          this.getRegimentChannels(this.regimentData.guild_id);
-          this.getRegimentUsers(this.regimentData.id);
-          this.regimentSelected = true;
-
-          this.regiment = this.regimentData.regiment;
-          this.guild_id = this.regimentData.guild_id;
-          this.guild_avatar = this.regimentData.guild_avatar;
-          this.description = this.regimentData.description;
-          this.invite_link = this.regimentData.invite_link;
-          this.website = this.regimentData.website;
-          this.youtube = this.regimentData.youtube;
-
-          setTimeout(() => {
-            const selectElement = document.getElementById(
-              "side-select"
-            ) as HTMLSelectElement;
-            selectElement.selectedIndex = 0;
-          }, 200);
-        } else {
-          throw new Error("Response is undefined");
-        }
-      } else {
-        this.regimentSelected = false;
-      }
-    } catch (error) {
-      console.error("Error fetching regiment data:", error);
-      this.regimentSelected = false;
-    }
+    await this.getRegimentChannels(this.sharedDataService.regiment.guild_id);
+    await this.getRegimentUsers(this.sharedDataService.regimentId);
+    this.regimentSelected = true;
   }
 
   /**
@@ -264,7 +183,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @param guildId - The Discord guild ID
    */
   async getRegimentChannels(guildId: string): Promise<void> {
-    if (this.regimentID) {
+    if (this.sharedDataService.regimentId) {
       await this.discordService
         .getGuildChannels(guildId)
         .toPromise()
@@ -280,14 +199,13 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @returns {Promise<void>}
    * @param guildId - The Discord guild ID
    */
-  async getRegimentUsers(guildId: string): Promise<void> {
-    if (this.regimentID) {
+  async getRegimentUsers(guildId: number): Promise<void> {
+    if (this.sharedDataService.regimentId) {
       await this.regimentService
         .getRegimentUsers(guildId)
         .toPromise()
         .then((response: any) => {
           this.regimentUsers = response;
-
           const promises = this.regimentUsers.map((user: any) => {
             if (user.avatar_url) {
               return Promise.resolve(user);
@@ -314,7 +232,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
     this.targetChannel = selectedValue;
 
     setTimeout(async () => {
-      await this.createWebhook(this.regimentData.guild_id, this.targetChannel);
+      await this.createWebhook(this.sharedDataService.regiment.guild_id, this.targetChannel);
     }, 300);
   }
 
@@ -354,19 +272,19 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @param side - The regiment side
    */
   async updateRegiment(): Promise<void> {
-    if (this.regimentID) {
+    if (this.sharedDataService.regimentId) {
       await this.regimentService
         .updateRegiment(
-          this.currentUser.id,
-          this.regimentID,
-          this.regiment,
-          this.guild_id,
-          this.guild_avatar,
-          this.invite_link,
-          this.website,
-          this.youtube,
-          this.description,
-          this.side
+          this.sharedDataService.currentUser.id,
+          this.sharedDataService.regimentId,
+          this.sharedDataService.regiment.regiment,
+          this.sharedDataService.regiment.guild_id,
+          this.sharedDataService.regiment.guild_avatar,
+          this.sharedDataService.regiment.invite_link,
+          this.sharedDataService.regiment.website,
+          this.sharedDataService.regiment.youtube,
+          this.sharedDataService.regiment.description,
+          this.sharedDataService.regiment.side
         )
         .toPromise()
         .then((response) => {
@@ -406,7 +324,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
         if (dismissedAction.dismissedByAction) {
           this.setModerator(userId);
         } else {
-          this.getRegimentUsers(this.regimentData.id);
+          this.getRegimentUsers(this.sharedDataService.regimentId);
         }
       });
   }
@@ -436,7 +354,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
         if (dismissedAction.dismissedByAction) {
           this.removeModerator(userId);
         } else {
-          this.getRegimentUsers(this.regimentData.id);
+          this.getRegimentUsers(this.sharedDataService.regimentId);
         }
       });
   }
@@ -449,7 +367,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    */
   setModerator(userId: any): void {
     this.regimentService
-      .setModerator(userId, this.currentUser.id)
+      .setModerator(userId, this.sharedDataService.currentUser.id)
       .toPromise()
       .then((response) => {
         const userIndex = this.regimentUsers.findIndex(
@@ -459,7 +377,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
           this.regimentUsers[userIndex].roles.push("ROLE_MODERATOR");
           this.isModerator = true;
           setTimeout(() => {
-            this.getRegimentUsers(this.regimentData.id);
+            this.getRegimentUsers(this.sharedDataService.regimentId);
           }, 300);
           this.snackBar.open(`User set as Regiment Manager`, "Close", {
             duration: 3000,
@@ -480,7 +398,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    */
   removeModerator(userId: any): void {
     this.regimentService
-      .removeModerator(userId, this.currentUser.id)
+      .removeModerator(userId, this.sharedDataService.currentUser.id)
       .toPromise()
       .then((response) => {
         // console.log(response);
@@ -499,7 +417,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
             verticalPosition: "top",
           });
           setTimeout(() => {
-            this.getRegimentUsers(this.regimentData.id);
+            this.getRegimentUsers(this.sharedDataService.regimentId);
           }, 300);
         }
       })
@@ -543,7 +461,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
       .removeUsersRegiment(userId)
       .toPromise()
       .then((response) => {
-        this.getRegimentUsers(this.regimentData.id);
+        this.getRegimentUsers(this.sharedDataService.regimentId);
         this.token.saveUser(response);
       })
       .catch((error) => {
@@ -618,14 +536,14 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @method getSchedules
    * @description Get the schedules
    * @returns {void}
-   * @param regimentID - The regiment ID
+   * @param this.sharedDataService.regimentId - The regiment ID
    * @param userID - The user ID
    * @param scheduleName - The schedule name
    * @param day - The day
    * @param time - The time
    */
   async getSchedules(): Promise<void> {
-    let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(this.currentUser.id, this.regimentID).toPromise();
+    let response: Schedule[] = await this.regimentService.getSchedulesByRegiment(this.sharedDataService.currentUser.id, this.sharedDataService.regimentId).toPromise();
     response = this.sortSchedules(response);
 
 
@@ -687,10 +605,10 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
 
     this.regimentService
       .createSchedule(
-        this.currentUser.id,
+        this.sharedDataService.currentUser.id,
         this.scheduleForm.schedule_name,
         this.scheduleForm.region,
-        this.regimentID,
+        this.sharedDataService.regimentId,
         this.scheduleForm.day,
         this.scheduleForm.time,
         this.scheduleForm.event_type,
@@ -731,10 +649,10 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
 
     this.regimentService
       .createSchedule(
-        this.currentUser.id,
+        this.sharedDataService.currentUser.id,
         this.selectedScheduleName, // replaced this.scheduleForm.schedule_name with this.selectedScheduleName
         this.scheduleForm.region,
-        this.regimentID,
+        this.sharedDataService.regimentId,
         this.scheduleForm.day,
         this.scheduleForm.time,
         this.scheduleForm.event_type,
@@ -755,7 +673,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @param scheduleId - The schedule ID
    */
   async removeDay(scheduleId: number): Promise<void> {
-    const response = await this.regimentService.removeSchedule(this.currentUser.id, this.regimentID, scheduleId).toPromise();
+    const response = await this.regimentService.removeSchedule(this.sharedDataService.currentUser.id, this.sharedDataService.regimentId, scheduleId).toPromise();
     // console.log(response);
 
     if (this.selectedScheduleName && this.scheduleNames[this.selectedScheduleName] && this.scheduleNames[this.selectedScheduleName].length === 1) {
@@ -843,7 +761,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
   hasMembers(): boolean {
     if (this.regimentUsers) {
       return this.regimentUsers.some((user: { discordId: string; roles: string | string[]; }) => {
-        return user.discordId !== this.regiment.ownerId && !user.roles.includes('ROLE_MODERATOR');
+        return user.discordId !== this.sharedDataService.regiment.ownerId && !user.roles.includes('ROLE_MODERATOR');
       });
     }
     return false;
@@ -877,7 +795,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
       if (file) {
         this.currentFile = file;
 
-        this.uploadService.upload(this.currentFile, this.regimentID).subscribe({
+        this.uploadService.upload(this.currentFile, this.sharedDataService.regimentId).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round((100 * event.loaded) / event.total);
@@ -888,7 +806,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
               });
               this.currentFile = undefined;
               // Update fileInfos using next method of BehaviorSubject
-              this.uploadService.getFiles(this.regimentID).subscribe(
+              this.uploadService.getFiles(this.sharedDataService.regimentId).subscribe(
                 (files: any[]) => {
                   this.fileInfos.next(files);
                 },
@@ -935,12 +853,19 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
       if (file) {
         this.currentCover = file;
 
-        this.uploadService.uploadCover(this.currentCover, this.regimentID).subscribe({
-          next: (event: any) => {
+        this.uploadService.uploadCover(this.currentCover, this.sharedDataService.regimentId).subscribe({
+          next: async (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progressCover = Math.round((100 * event.loaded) / event.total);
             } else if (event instanceof HttpResponse) {
-              this.coverInfos = this.uploadService.getCover(this.regimentID);
+              this.coverInfos = await firstValueFrom(this.uploadService.getCover(this.sharedDataService.regimentId));
+              if (Array.isArray(this.coverInfos) && this.coverInfos.length > 0) {
+                const coverUrl = this.coverInfos[0].url;
+                this.sharedDataService.regiment.cover_photo = coverUrl
+                console.log('Cover URL:', coverUrl);
+              } else {
+                console.error('Invalid coverInfos array or empty array.');
+              }
               this.getRegiment();
               this.currentCover = undefined;
               this.snackBar.open("Your cover photo has been updated.", "Close", {
@@ -1001,7 +926,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
    * @param file 
    */
   removeFile(file: any) {
-    this.uploadService.remove(this.regimentID, file).subscribe(
+    this.uploadService.remove(this.sharedDataService.regimentId, file).subscribe(
       () => {
         const currentFileInfos = this.fileInfos.value;
         const updatedFileInfos = currentFileInfos.filter((f) => f.name !== file.name);
@@ -1014,7 +939,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
           });
         });
 
-        this.uploadService.getFiles(this.regimentID).subscribe(
+        this.uploadService.getFiles(this.sharedDataService.regimentId).subscribe(
           (files: any[]) => {
             this.fileInfos.next(files);
           },
@@ -1067,7 +992,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
       const fileName = fileUrl.substring(prefixToRemove.length);
 
 
-      this.uploadService.removeCover(this.regimentID, fileName).subscribe(
+      this.uploadService.removeCover(this.sharedDataService.regimentId, fileName).subscribe(
         () => {
           this.ngZone.run(() => {
             this.snackBar.open('File removed', 'Close', {
@@ -1078,6 +1003,7 @@ export class RegimentSettingsComponent implements OnInit, OnDestroy {
 
           this.selectedCover = undefined;
           this.getRegiment();
+          this.sharedDataService.regiment.cover_photo = undefined;
 
         },
         (error) => {

@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:44:32 
+ * Last Modified: Fri November 17th 2023 2:43:40 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -16,9 +16,8 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
-import { TokenStorageService } from "../_services/token-storage.service";
-import { AuthService } from "../_services/auth.service";
 import { Location } from "@angular/common";
+import { SharedDataService } from "src/app/_services/shared-data.service";
 
 @Component({
   selector: "app-board-admin",
@@ -28,22 +27,15 @@ import { Location } from "@angular/common";
 })
 export class BoardAdminComponent implements OnInit {
   content?: string;
-  currentUser: any;
-  isLoggedIn = false;
-  showAdmin = false;
-  showUser = false;
-  showMod = false;
-
   showPage1 = false;
   showPage2 = false;
   showPage3 = false;
   loading = true;
 
   constructor(
-    private token: TokenStorageService,
-    private authService: AuthService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    public sharedDataService: SharedDataService
   ) {}
 
   /**
@@ -63,28 +55,20 @@ export class BoardAdminComponent implements OnInit {
       this.loadContent(page);
     });
 
-    this.isLoggedIn = !!this.token.getToken();
-    this.currentUser = this.token.getUser();
-    const userID = this.currentUser.id;
+    this.sharedDataService.retrieveInitialData()
+    .then(async () => {
+      // Processed
+      if(this.sharedDataService.showAdmin){
+        this.loading = false;
+      }else{
+        this.loading = true;
+      }
+    })
+    .catch(error => {
+      console.error("Error initializing shared data:", error);
+    });
 
-    if (this.isLoggedIn) {
-      this.authService.checkAdminRole(userID).subscribe(
-        (response) => {
-          this.showAdmin = response.access;
-          this.loading = false;
-        },
-        (error) => {
-          if (error.status === 403) {
-            this.showAdmin = false;
-          } else {
-            console.error("Error:", error);
-          }
-          this.loading = false;
-        }
-      );
-    } else {
-      this.loading = false;
-    }
+
   }
 
   /**

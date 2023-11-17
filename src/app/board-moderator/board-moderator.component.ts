@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 17th 2023 10:04:36 
+ * Last Modified: Fri November 17th 2023 3:21:19 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -12,10 +12,8 @@
 
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
-import { TokenStorageService } from "../_services/token-storage.service";
-import { AuthService } from "../_services/auth.service";
 import { Location } from "@angular/common";
-import { RegimentService } from "../_services/regiment.service";
+import { SharedDataService } from "src/app/_services/shared-data.service";
 
 @Component({
   selector: "app-board-moderator",
@@ -24,25 +22,17 @@ import { RegimentService } from "../_services/regiment.service";
 })
 export class BoardModeratorComponent implements OnInit {
   content?: string;
-  currentUser: any;
-  isLoggedIn = false;
-  showMod = false;
   showPage1 = false;
   showPage2 = false;
   showPage3 = false;
   showPage4 = false
   loading = true;
-  regimentData: any;
   regimentSelected = true;
 
-  isOwner = false;
-
   constructor(
-    private token: TokenStorageService,
-    private authService: AuthService,
     private route: ActivatedRoute,
     private location: Location,
-    private regimentService: RegimentService
+    public sharedDataService: SharedDataService
   ) {}
 
   /**
@@ -54,33 +44,18 @@ export class BoardModeratorComponent implements OnInit {
       this.loadContent(page);
     });
 
-    this.isLoggedIn = !!this.token.getToken();
-    this.currentUser = this.token.getUser();
-    const userID = this.currentUser.id;
-
-    if (this.isLoggedIn) {
-
-      this.authService.checkModeratorRole(userID, this.currentUser.regimentId).subscribe(
-        (response) => {
-          this.showMod = response.access;
-          this.getRegiment();
-
-          this.loading = false;
-        },
-        (error) => {
-          if (error.status === 403) {
-            this.showMod = false;
-          } else {
-            
-          }
-          this.loading = false;
-
-        }
-      );
-    } else {
-      this.loading = false;
-    }
-
+    this.sharedDataService.retrieveInitialData()
+    .then(async () => {
+      // Processed
+      if(this.sharedDataService.showMod){
+        this.loading = false;
+      }else{
+        this.loading = true;
+      }
+    })
+    .catch(error => {
+      console.error("Error initializing shared data:", error);
+    });
    
   }
 
@@ -113,30 +88,4 @@ export class BoardModeratorComponent implements OnInit {
     }
   }
 
-  /**
-   * Get regiment
-   * This function is used to get the regiment data
-   */
-  getRegiment() {
-    let regimentId = this.currentUser.regimentId;
-
-    if (regimentId) {
-      this.regimentService.getRegiment(regimentId).subscribe((response) => {
-        
-        this.regimentData = response;
-        this.regimentSelected = true;
-
-        // console.log(this.currentUser.discordId + ' - ' + this.regimentData.ownerId)
-        
-        if(this.regimentData.ownerId.includes(this.currentUser.discordId)) {
-          this.isOwner = true;
-        }else{
-          this.isOwner = false;
-        }
-
-      });
-    }else{
-      this.regimentSelected = false;
-    }
-  }
 }
