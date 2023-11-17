@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:15:38 
+ * Last Modified: Thu November 16th 2023 7:09:38 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -180,6 +180,25 @@ export class AuthService {
     const url = VET_API + 'admin';
     const body = { userId: userId };
     return this.http.post(url, body);
+  }
+  
+  /**
+   * Forgot Password (Send Email)
+   * @param email 
+   * @returns 
+   */
+  forgot(email: string): Observable<any> {
+    return this.http.post(AUTH_API + 'forgot', { email }, httpOptions);
+  }
+
+  /**
+   * Reset Password with token and new password
+   * @param token 
+   * @param newPassword 
+   * @returns 
+   */
+  reset(token: string, newPassword: string): Observable<any> {
+    return this.http.post(AUTH_API + `reset/${token}`, { newPassword }, httpOptions);
   }
   
 }
