@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Fri November 17th 2023 9:36:11 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -24,6 +24,13 @@ import { DiscordService } from "src/app/_services/discord.service";
   styleUrls: ["./server-info.component.scss"],
 })
 export class ServerInfoComponent implements OnInit {
+  skirmish:boolean = false;
+  picket:boolean = false;
+  pubStomp:boolean = false;
+  gameMode:string | undefined;
+  selectedGameMode: string | null = null;
+  ppRounds: string | undefined;
+  ppSide: string | undefined;
   sn!: string;
   pw!: string;
   skirm!: string;
@@ -247,9 +254,9 @@ export class ServerInfoComponent implements OnInit {
       ],
     };
 
-    if (!this.sn || !this.pw) {
+    if (!this.sn) {
       this.snackBar.open(
-        "Please fill in the required fields: server name and password",
+        "Please fill in the required fields: server name",
         "Close",
         {
           verticalPosition: "top",
@@ -265,6 +272,21 @@ export class ServerInfoComponent implements OnInit {
           name: "Password",
           value: `\`${this.pw}\``,
         });
+      }
+      const ppInfo = this.getPPInfo();
+      if (ppInfo) {
+        embed.embeds[0].fields.push({
+          name: `**Picket Patrol on Drill Camp**\n`,
+          value: ppInfo,
+        });
+        
+      }
+      if (this.pubStomp) {
+        embed.embeds[0].fields.push({
+          name: `**PUB Stomp**\n`,
+          value: "\`No Password\`",
+        });
+        
       }
       const firstRoundInfo = this.getFirstRoundInfo();
       if (firstRoundInfo) {
@@ -304,7 +326,7 @@ export class ServerInfoComponent implements OnInit {
   getFirstRoundInfo(): string {
     let info = "";
     if (this.skirm) {
-      info += `**Skirmish Area:** ${this.skirm}\n`;
+      info += `${this.selectedGameMode ? `${this.selectedGameMode} on` : 'Skirmish Area:'} ${this.skirm}\n`;
     }
     if (this.map1) {
       info += `**Map:** [${this.map1}](${this.getMapLink(this.map1)})\n`;
@@ -321,6 +343,17 @@ export class ServerInfoComponent implements OnInit {
     return info;
   }
 
+  getPPInfo(): string {
+    let info = "";
+    if(this.ppRounds) {
+      if(this.ppSide) {
+        info += `**Side:** ${this.ppSide}\n`;
+      }
+      info += `**Number of Rounds:** ${this.ppRounds}\n`;
+    }
+    return info;
+  }
+
   /**
    * @method getSecondRoundInfo
    * @description Get second round info
@@ -329,7 +362,7 @@ export class ServerInfoComponent implements OnInit {
   getSecondRoundInfo(): string {
     let info = "";
     if (this.skirm2) {
-      info += `**Skirmish Area:** ${this.skirm2}\n`;
+      info += `${this.selectedGameMode ? `${this.selectedGameMode} on` : 'Skirmish Area:'} ${this.skirm}\n`;
     }
     if (this.map2) {
       info += `**Map:** [${this.map2}](${this.getMapLink(this.map2)})\n`;
@@ -417,5 +450,50 @@ export class ServerInfoComponent implements OnInit {
     }
     this.isLoaded = true;
   }
+
+  enableParams(gameMode: any) {
+    this.resetValues(gameMode);
+    if (gameMode === 'Skirmish' || gameMode === 'Contention' || gameMode === 'Conquest') {
+      this.pubStomp = false;
+      this.skirmish = true;
+      this.picket = false;
+    } else if (gameMode === 'Picket Patrol') {
+      this.pubStomp = false;
+      this.skirmish = false;
+      this.picket = true;
+    } else if(gameMode === 'Pub Stomp'){
+      this.pubStomp = true;
+      this.skirmish = false;
+      this.picket = false
+    }else {
+      this.pubStomp = false;
+      this.skirmish = false;
+      this.picket = false;
+    }
+  
+    this.selectedGameMode = gameMode;
+  }
+  
+  resetValues(gameMode: any): void {
+    if(gameMode == 'Pub Stomp') {
+      this.pw = '';
+    }
+    this.gameMode = undefined;
+    this.selectedGameMode = null;
+    this.ppRounds = undefined;
+    this.ppSide = undefined;
+    this.skirm = '';
+    this.skirm2 = '';
+    this.map1 = '';
+    this.map2 = '';
+    this.r1side = '';
+    this.r1reg = '';
+    this.r1unit = '';
+    this.r2side = '';
+    this.r2reg = '';
+    this.r2unit = '';
+    this.extra = '';
+  }
+  
   
 }

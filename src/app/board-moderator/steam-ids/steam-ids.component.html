@@ -5,7 +5,7 @@
     <div></div>
 </div>
 
-
+<div *ngIf="addingSteam" class="overlay"></div>
 <div class="center-container z-50" *ngIf="addingSteam">
     <div class="centered-box">
 
@@ -42,9 +42,9 @@
                         class="h-auto w-[120px] rounded-md shadow-sm hover:shadow-md transition-all duration-200">
                 </div>
                 <div class="place-self-center">
-                    <p class="mb-2">Last Online <span class="font-[300]">{{convertTo12HourTime(previewData.lastlogoff)}}</span></p>
+                    <p class="mb-2 text-sm">Last Online <span class="font-[200]">{{convertTo12HourTime(previewData.lastlogoff)}}</span></p>
                     <button mat-stroked-button color="primary" (click)="openProfileUrl()">
-                        View Steam Profile
+                        <i class="fa-brands fa-steam"></i> Profile
                     </button>
                 </div>
             </div>
@@ -53,7 +53,7 @@
 
         <div class="w-full text-right">
             <button mat-raised-button color="primary" (click)="setGameId()" [disabled]="steamIdForm.invalid">
-                <i class="fa-solid fa-check"></i> Add User to Steam ID List
+                Add User <i class="fa-solid fa-plus"></i>
             </button>
         </div>
 
@@ -63,6 +63,10 @@
 
 
 <div *ngIf="isDataLoaded">
+	<h2 class="lg:text-2xl text-lg text-slate-400 pb-1 ml-2 lg:ml-0">Steam Stat Tracking</h2>
+    <p class="text-sm font-[200] italic text-neutral-300 mb-7 ml-4">
+        <i class="fa-regular fa-circle-question mr-1"></i> For tracking Steam game stats of friends and regiment members.
+    </p>
 
     <div>
         <div class="field-box">
@@ -77,14 +81,15 @@
     </div>
 
     <!-- Refresh and Add New Buttons -->
-    <div class="w-full text-right my-4">
-        <button class="text-lg" mat-button color="primary" (click)="getSteamIds()">
+    <div class="w-full my-4 flex justify-between">
+        <button mat-stroked-button color="primary" (click)="getSteamIds()">
             <i class="fa-solid fa-sync"></i> Refresh
         </button>
-        <button class="text-lg" mat-button color="primary" (click)="toggleAddingSteam()">
+        <button mat-stroked-button color="primary" (click)="toggleAddingSteam()">
             <span [innerHTML]="addString"></span>
         </button>
     </div>
+    
 
 
     <div *ngFor="let user of getPaginatedSteamIds()" class="my-4">
@@ -121,18 +126,18 @@
                         );
                         ">
 
-                            <h1 class="text-lg text-[#7c7d72]">
-                                Level {{ getLevelData(getExperienceValue(user.liveGameStats)).lvl }}
-                            </h1>
+                        <h1 class="text-lg text-[#7c7d72] flex items-center">
+                            Level {{ getLevelData(getExperienceValue(user.liveGameStats)).lvl }} 
+                            <span class="text-sm font-[900] text-blue-500 ml-auto pr-3">Level {{getLevelData(getExperienceValue(user.liveGameStats)).lvl + 1}} <i class="fa-solid fa-turn-up"></i></span>
+                        </h1>
                             <div class="progress-bar-container">
                                 <div class="progress-bar"
                                     [style.width]="getLevelData(getExperienceValue(user.liveGameStats)).progress + '%'">
                                 </div>
                             </div>
-                            <div class="w-full text-right">
-                                <span class="text-neutral-200 font-[300] text-sm">Level
-                                    <!-- {{getLevelData(getExperienceValue(user.liveGameStats)).lvl + 1}}: -->
-                                    {{ roundNumber(getLevelData(getExperienceValue(user.liveGameStats)).xp) + " / " + getLevelData(getExperienceValue(user.liveGameStats)).xpRq }}XP</span>
+                            <div class="w-full text-right pr-3">
+                                <span class="text-neutral-200 text-sm font-[200]">
+                                    {{ roundNumber(getLevelData(getExperienceValue(user.liveGameStats)).xp) + " / " + getLevelData(getExperienceValue(user.liveGameStats)).xpRq }} <sup>XP</sup></span>
                             </div>
 
 
