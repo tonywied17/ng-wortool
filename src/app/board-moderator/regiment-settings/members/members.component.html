@@ -1,0 +1,123 @@
+<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
+    Manage Members &amp; Managers
+</h3>
+<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+    <i class="fa-regular fa-circle-question mr-1"></i> Add or remove members and managers from your
+    regiment.
+</p>
+<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+    <i class="fa-regular fa-circle-question mr-1"></i> User's will have to re-login to WoRTool to
+    access manager features.
+</p>
+<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
+    <i class="fa-regular fa-circle-question mr-1"></i> If you would like to add more than one owner
+    please direct message <span class="font-[500] not-italic m-0.5"><i
+            class="fa-brands fa-discord"></i> tonywied17</span> on Discord.
+</p>
+
+<div class="mt-4">
+
+    <!-- Owner -->
+    <h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">
+        {{this.sharedDataService.regiment.regiment}} Owner
+    </h3>
+
+
+
+    <div *ngFor="let user of regimentUsers">
+        <div *ngIf="this.sharedDataService.regiment.ownerId.includes(user.discordId);">
+            <div class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center text-base">
+                <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+                    class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
+                    (error)="user.avatar_url = null">
+
+                <ng-template #noAvatar>
+                    <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
+                </ng-template>
+
+                {{user.username}}
+
+                <span
+                    class="font-[300] flex items-center ml-auto mr-2 bg-slate-700 p-1 rounded-md text-sm">
+                    <i class="mb-[1px] fa-solid fa-crown text-amber-400 mx-1"></i> Owner
+                </span>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- Managers -->
+    <h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{this.sharedDataService.regiment.regiment}} Managers
+    </h3>
+
+    <div *ngFor="let user of regimentUsers">
+        <div *ngIf="(!this.sharedDataService.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');"
+            class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
+            <div class="flex items-center">
+
+                <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+                    class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
+                    (error)="user.avatar_url = null">
+
+                <ng-template #noAvatar>
+                    <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
+                </ng-template>
+
+                <span class="font-[300] text-base">
+                    {{user.username}}
+                </span>
+            </div>
+
+            <button [disabled]="this.sharedDataService.showMod && !this.sharedDataService.isOwner" mat-button
+                class="!mr-2 !h-fit !min-h-fit !py-1" color="warn"
+                (click)="confirmRemoveModerator(user.id)">
+                <i class="fa-solid fa-minus"></i> Manager
+            </button>
+        </div>
+        <div class="grid grid-cols-[auto_1fr]">
+
+        </div>
+    </div>
+
+
+
+    <!-- Members -->
+    <h3 class="text-slate-300 ml-2 mt-6 text-base font-[300]">{{this.sharedDataService.regiment.regiment}} Members</h3>
+
+    <div *ngFor="let user of regimentUsers">
+        <div *ngIf="(user.discordId != this.sharedDataService.regiment.ownerId) && !user.roles.includes('ROLE_MODERATOR');"
+            class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
+            <div class="flex items-center">
+                <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
+                    class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
+                    (error)="user.avatar_url = null">
+
+                <ng-template #noAvatar>
+                    <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
+                </ng-template>
+
+                <span class="font-[300] text-base">
+                    {{user.username}}
+                </span>
+            </div>
+
+            <button [disabled]="this.sharedDataService.showMod && !this.sharedDataService.isOwner" mat-button
+                class="!mr-2 !h-fit !min-h-fit !py-1" color="primary"
+                (click)="confirmAddModerator(user.id)">
+                <i class="fa-solid fa-plus"></i> Manager
+            </button>
+        </div>
+
+        <div class="grid grid-cols-[auto_1fr]">
+
+        </div>
+    </div>
+
+    <p class="font-[300] m-2 ml-5" *ngIf="!hasMembers()">There are no members for this regiment.</p>
+
+
+</div>  

@@ -4,14 +4,14 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:24:16 
+ * Last Modified: Fri November 17th 2023 11:04:15 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -37,6 +37,18 @@ export class DiscordService {
   }
 
   /**
+   * Get all users by a role name
+   * @param guildId 
+   * @param roleName 
+   * @returns 
+   */
+  getUsersByRoles(guildId: string, roleName: string): Observable<any> {
+    let params = new HttpParams().set('roleName', roleName);
+    return this.http.get<any>(`${API}/guild/${guildId}/roles/users`, { params });
+  }
+  
+
+  /**
    * Get one user
    * This observable is used to get one discord user from the database
    * @param userId - string - the discord user id
@@ -55,11 +67,19 @@ export class DiscordService {
   getRegimentGuild(guildId: string): Observable<any> {
     return this.http.get<any>(`${API}/guild/${guildId}/get`);
   }
+  
+  /**
+   * Get all roles for a discord
+   * @param guildId 
+   * @returns 
+   */
+  getGuildRoles(guildId: string): Observable<any> {
+    return this.http.get<any>(`${API}/guild/${guildId}/roles`);
+  }
 
   /**
    * Get all guild channels
    * This observable is used to get the discord guild channels from the database
-   * TODO: Cache into session storage or find a more efficient way to do this. Querying is slow.
    * @param guildId - string - the discord guild id
    * @returns {Observable<any>}
    */

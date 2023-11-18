@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu November 16th 2023 7:01:13 
+ * Last Modified: Fri November 17th 2023 10:34:35 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -46,6 +46,12 @@ import { SteamIdsComponent } from './board-moderator/steam-ids/steam-ids.compone
 import { ImageModalComponent } from './regiments/image-modal/image-modal.component';
 import { MapImageComponent } from './map-image/map-image.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { MusterRosterComponent } from './board-moderator/muster-roster/muster-roster.component';
+import { EnlisterComponent } from './board-moderator/muster-roster/enlister/enlister.component';
+import { SharedDataService } from "./_services/shared-data.service";
+import { ScheduleComponent } from './board-moderator/regiment-settings/schedule/schedule.component';
+import { MembersComponent } from './board-moderator/regiment-settings/members/members.component';
+import { MediaComponent } from './board-moderator/regiment-settings/media/media.component';
 
 /**
  * Routes for the application
@@ -100,6 +106,11 @@ const routes: Routes = [
     ImageModalComponent,
     MapImageComponent,
     ResetPasswordComponent,
+    MusterRosterComponent,
+    EnlisterComponent,
+    ScheduleComponent,
+    MembersComponent,
+    MediaComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,7 +129,7 @@ const routes: Routes = [
       registrationStrategy: "registerWhenStable:30000",
     }),
   ],
-  providers: [authInterceptorProviders, VersionChecker],
+  providers: [authInterceptorProviders, VersionChecker, SharedDataService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

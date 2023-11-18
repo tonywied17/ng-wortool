@@ -1,11 +1,11 @@
-<div *ngIf="loading" class="text-center text-xl opacity-75">
+<div *ngIf="!isLoaded" class="text-center text-xl opacity-75">
 	<i class="fas fa-spinner fa-pulse mr-2"></i>
 	Verifying credentials...
 </div>
 
 
 
-<div *ngIf="!isLoggedIn" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
+<div *ngIf="!this.sharedDataService.isLoggedIn" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
 	<div class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
 		<div class="grid grid-cols-1 lg:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 lg:grid-rows-none">
 			<div class="row-start-2 lg:row-start-auto">
@@ -34,7 +34,7 @@
 </div>
 
 
-<div *ngIf="!regimentSelected && isLoggedIn" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
+<div *ngIf="!regimentSelected && this.sharedDataService.isLoggedIn" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[4em] mb-[5em]">
 	<div class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
 		<div class="grid grid-cols-1 lg:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 lg:grid-rows-none">
 			<div class="row-start-2 lg:row-start-auto">
@@ -68,7 +68,7 @@
 </div>
 
 
-<div *ngIf="!loading && regimentSelected" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[2em] mb-[5em]">
+<div *ngIf="isLoaded && regimentSelected" class="lg:w-[79.4vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[2em] mb-[5em]">
 
 	<div>
 		<button (click)="goBack()"
@@ -97,12 +97,12 @@
 					class="grid grid-cols-[auto_minmax(56px,_1fr)] gap-3 text-lg lg:!text-xl !text-neutral-300 ml-auto w-full">
 		
 					<div>
-						{{regimentData.regiment}}
+						{{this.sharedDataService.regiment.regiment}}
 						<span class="!text-base !font-[200] block">Regiment Tools</span>
 					</div>
 		
 					<div>
-						<img [src]="regimentData.guild_avatar"
+						<img [src]="this.sharedDataService.regiment.guild_avatar"
 							class="lg:!h-[46px] !w-auto !inline pointer-events-none mr-3 rounded-sm shadow-sm">
 					</div>
 		
@@ -113,7 +113,7 @@
 
 	
 
-	<div *ngIf="showMod">
+	<div *ngIf="this.sharedDataService.showMod">
 
 
 
@@ -130,16 +130,17 @@
 					<div style="border-left: dotted 1px #7c7d738f;"
 						class="p-2 grid lg:grid-cols-1 grid-cols-3 gap-2 !text-center border-x-[1px] lg:border-l-[1px] lg:border-r-0 border-dotted border-[#7c7d738f]">
 
-						<button *ngIf="showMod || isOwner" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
+						<button *ngIf="this.sharedDataService.showMod || this.sharedDataService.isOwner" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Manage Regiment-Specific Settings."
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
 							<i class="fa-solid fa-users-gear !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
 							Regiment
 						</button>
+						
 
 
-						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-button
+						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Submit event details for sharing on your designated Discord event share channel."
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
@@ -148,12 +149,20 @@
 						</button>
 
 
-						<button *ngIf="showMod" routerLinkActive="active_btn" routerLink="/mod/3" mat-button
+						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn" routerLink="/mod/3" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Collect Steam IDs for Unbanning and Statistics Tracking."
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
 							<i class="fa-brands fa-steam !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
-							Steam Users
+							Steam Stats
+						</button>
+
+						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn" routerLink="/mod/4" mat-button
+							matTooltipClass="form-tooltip" matTooltipPosition="right"
+							matTooltip="Keep track of events and drills attended by your regiment members."
+							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-solid fa-clipboard-user !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
+							Muster Roster
 						</button>
 
 
@@ -191,6 +200,11 @@
 				<div *ngIf="showPage3" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
 					
 					<app-steam-ids></app-steam-ids>
+				</div>
+
+				<div *ngIf="showPage4" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
+					
+					<app-muster-roster></app-muster-roster>
 				</div>
 
 

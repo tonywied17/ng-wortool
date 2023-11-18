@@ -63,10 +63,10 @@
 								matTooltip="Server Name"
 								name="sn"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 13.75px;
+								padding-bottom: 13.75px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input"
 								type="text"
 								placeholder="Server name...">
@@ -75,17 +75,17 @@
 					</div>
 	
 					<div>
-						<div class="field-box">
+						<div *ngIf="!pubStomp" class="field-box">
 							<input [(ngModel)]="pw"
 								matTooltipClass="form-tooltip"
 								matTooltipPosition="right"
 								matTooltip="Password"
 								name="pw"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 13.75px;
+								padding-bottom: 13.75px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input"
 								type="text"
 								placeholder="Password...">
@@ -95,8 +95,63 @@
 	
 				</div>
 			</div>
+
+			<div *ngIf="!skirmish || !picket" class="lg:col-span-2">
+				<h2 class="lg:text-xl text-slate-400 font-[300] my-[0]">Game Mode ({{selectedGameMode ? selectedGameMode : 'Optional'}})</h2>
+				<button mat-stroked-button class="m-2" (click)="enableParams('Skirmish')" [ngClass]="{'selected-button': selectedGameMode === 'Skirmish'}">Skirmish</button>
+				<button mat-stroked-button class="m-2" (click)="enableParams('Contention')" [ngClass]="{'selected-button': selectedGameMode === 'Contention'}">Contention</button>
+				<button mat-stroked-button class="m-2" (click)="enableParams('Conquest')" [ngClass]="{'selected-button': selectedGameMode === 'Conquest'}">Conquest</button>
+				<button mat-stroked-button class="m-2" (click)="enableParams('Picket Patrol')" [ngClass]="{'selected-button': selectedGameMode === 'Picket Patrol'}">Picket Patrol</button>
+				<button mat-stroked-button class="m-2" (click)="enableParams('Pub Stomp')" [ngClass]="{'selected-button': selectedGameMode === 'Pub Stomp'}">Pub Stomp</button>
+			  </div>
+			  
+			  <div *ngIf="picket" class="my-auto lg:col-span-2">
+				<div class="mb-5">
+					<div class="field-box">
+						<input [(ngModel)]="ppRounds"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="Number of PP Rounds"
+							name="ppRounds"
+							style="
+							padding-top: 13.75px;
+							padding-bottom: 13.75px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" 
+							class="field-input"
+							type="number"
+							placeholder="# of Rounds">
+							<i class="fa-solid fa-hashtag field-icon"></i>
+					</div>
+				</div>
+				<div>
+					<div class="field-box">
+						<select [(ngModel)]="ppSide"
+							matTooltipClass="form-tooltip"
+							matTooltipPosition="left"
+							matTooltip="Picket Patrol Side"
+							name="ppSide"
+							style="
+							padding-top: 11px;
+							padding-bottom: 11px;
+							font-size: 15px;
+							border: 1px solid #7c7d72 !important;" 
+							class="field-input"
+							id="map-select">
+							<option value="USA"
+								selected>
+								USA
+							</option>
+							<option value="CSA">CSA</option>
+						</select>
+						<i class="fa-solid fa-arrows-up-down field-icon focus:!transform-none"></i>
+					</div>
+				</div>
+					
+				
+			  </div>
 	
-			<div class="my-auto">
+			<div *ngIf="skirmish" class="my-auto">
 	
 				<div class="grid sm:grid-cols-2 gap-5 auto-rows-auto">
 	
@@ -111,10 +166,10 @@
 								matTooltip="First Round Skirmish Area"
 								name="skirm"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 11px;
+								padding-bottom: 11px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
 								id="existing-select">
 								<option value
@@ -139,10 +194,10 @@
 								matTooltip="First Round Map"
 								name="map1"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 11px;
+								padding-bottom: 11px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input"
 								id="map-select">
 								<option value
@@ -167,10 +222,10 @@
 								matTooltip="First Round Side"
 								name="r1side"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 11px;
+								padding-bottom: 11px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input"
 								id="map-select">
 								<option value="USA"
@@ -191,10 +246,10 @@
 								matTooltip="First Round Regiment"
 								name="r1reg"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 13.75px;
+								padding-bottom: 13.75px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input"
 								type="text"
 								placeholder="First round regiment...">
@@ -210,10 +265,10 @@
 								matTooltip="First Round Unit"
 								name="r1unit"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 11px;
+								padding-bottom: 11px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input"
 								placeholder="First round unit info...">
 							</textarea>
@@ -224,7 +279,7 @@
 			</div>
 	
 			<!-- Second Round -->
-			<div class="my-auto">
+			<div *ngIf="skirmish" class="my-auto">
 	
 				<div class="grid sm:grid-cols-2 gap-5">
 					<h2 class="lg:text-xl text-slate-400 font-[300] my-[0]">Second Round</h2>
@@ -238,10 +293,10 @@
 								matTooltip="Second Round Skirmish Area"
 								name="skirm2"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 11px;
+								padding-bottom: 11px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
 								id="existing-select">
 								<option value
@@ -266,10 +321,10 @@
 								matTooltip="Second Round Map"
 								name="map2"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
-					font-size: 15px;
-					border: 1px solid #7c7d72 !important;" 
+								padding-top: 11px;
+								padding-bottom: 11px;
+								font-size: 15px;
+								border: 1px solid #7c7d72 !important;" 
 								class="field-input"
 								id="map-select">
 								<option value
@@ -318,8 +373,8 @@
 								matTooltip="Second Round Regiment"
 								name="r2reg"
 								style="
-					padding-top: 11px;
-					padding-bottom: 11px;
+					padding-top: 13.75px;
+					padding-bottom: 13.75px;
 					font-size: 15px;
 					border: 1px solid #7c7d72 !important;" 
 								class="field-input"
@@ -380,14 +435,14 @@
 			<img src="assets/cannonbayo-color2.png"
 				class="ml-2 h-auto w-[50px] pointer-events-none">
 		</div>
-	
-		<button *ngIf="regimentData.guild_id != '681641606398607401'"
+
+		<div *ngIf="regimentData.guild_id != '681641606398607401'"
 			(click)="sendMessage()"
-			mat-raised-button
-			type="submit"
-			class="w-full !mt-[1em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
+			class="button fire mt-[1em]">
 			Share to {{targetChannel}}
-		</button>
+			<img src="assets/cannonbayo-color2.png"
+				class="ml-2 h-auto w-[50px] pointer-events-none">
+		</div>
 	
 	</div>
 	
