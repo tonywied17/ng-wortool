@@ -37,3 +37,41 @@
     Enlist Users
   </button>
 </div>
+
+<div>
+  <h2>Muster Users</h2>
+  <button (click)="getAllMusterUsers()">Get All Muster Users</button>
+  
+  <table *ngIf="musterUsers && musterUsers.length > 0">
+    <thead>
+      <tr>
+        <th>Nickname</th>
+        <th>Discord ID</th>
+        <th>Regiment ID</th>
+        <th>Events</th>
+        <th>Drills</th>
+        <th>Join Date</th>
+        <th>Last Muster</th>
+        <th>Order By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of musterUsers">
+        <td><input [(ngModel)]="user.nickname" /></td>
+        <td><input [(ngModel)]="user.discordId" /></td>
+        <td><input [(ngModel)]="user.regimentId" /></td>
+        <td><input [(ngModel)]="user.events" /></td>
+        <td><input [(ngModel)]="user.drills" /></td>
+        <td><input [(ngModel)]="user.join_date" /></td>
+        <td><input [(ngModel)]="user.last_muster" /></td>
+        <td><input [(ngModel)]="user.order_by" /></td>
+        <td>
+          <button (click)="updateMusterUser(user)">Update</button>
+          <button (click)="incrementEvents(user)">Increment Events</button>
+          <button (click)="incrementDrills(user)">Increment Drills</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
