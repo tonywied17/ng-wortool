@@ -92,7 +92,7 @@
     
 
 
-    <div *ngFor="let user of getPaginatedSteamIds()" class="my-4">
+    <div *ngFor="let user of getPaginatedSteamIds()" class="my-4 scale-center">
 
         <div class="rounded-lg w-full bg-slate-900/80 shadow-lg">
             <div class="grid lg:grid-cols-[120px_auto_auto] grid-cols[120px_auto]">
@@ -234,29 +234,16 @@
 
     </div>
 
-    <div class="w-full text-center">
+    <div class="pagination" *ngIf="totalPages() > 1">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <ng-container *ngFor="let page of getPagesArray(totalPages()); let i = index">
+          <button (click)="changePage(i + 1)" [class.active]="currentPage === i + 1">
+            {{ i + 1 }}
+          </button>
+        </ng-container>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages()">Next</button>
+      </div>
 
-        <button matTooltipClass="form-tooltip"
-            matTooltipPosition="above"
-            matTooltip="First Page" type="button" class="pagination-button" (click)="goToPage(1)" [disabled]="currentPage === 1"><i class="fa-solid fa-angles-left"></i></button>
-            
-        <button 
-            matTooltipClass="form-tooltip"
-            matTooltipPosition="above"
-            matTooltip="Previous Page" type="button" class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-angle-left"></i></button>
-    
-        <button type="button" class="pagination-button" (click)="goToPage(currentPage - 1)" [hidden]="currentPage === 1">{{ currentPage - 1 }}</button>
-        <button type="button" class="pagination-button" [disabled]="true">{{ currentPage }}</button>
-        <button type="button" class="pagination-button" (click)="goToPage(currentPage + 1)" [hidden]="currentPage === getTotalPages()">{{ currentPage + 1 }}</button>
-    
-        <button matTooltipClass="form-tooltip"
-            matTooltipPosition="above"
-            matTooltip="Next Page"  type="button" class="pagination-button" (click)="nextPage()" [disabled]="currentPage === getTotalPages()"><i class="fa-solid fa-angle-right"></i></button>
-
-        <button matTooltipClass="form-tooltip"
-            matTooltipPosition="above"
-            matTooltip="Last Page" type="button" class="pagination-button" (click)="goToPage(getTotalPages())" [disabled]="currentPage === getTotalPages()"><i class="fa-solid fa-angles-right"></i></button>
-    </div>
     
     
     

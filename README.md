@@ -10,48 +10,44 @@
 > View latest live build:
 [View Live](https://_.molex.cloud/git/ng-paapp2)
 
-## Public User Features
+# UPDATE 11-18-23
 
-### __Map Resource Tool Features__
+## __Community Resources__
+### Maps
 - In-Depth Map Filtering Categories (Search, Campaign, Artillery, Favorites, Attacker)
 - Saves live filter states and restores when you return to the map list after a route change or session exit.
 - Each Map has Map Images w/ marked artillery positions, fly over cameras, as well as infantry & artillery information.
-- Ability to share map details page to clipboard.
+### Weapons
+- View available weaponry in War of Rights including images, and information such as ammo, effective range, and tips
+### News
+- Keep up with latest news & developments from Campfire Games quickly from the tool with light pop out windows.
+- Keep track of steam store pricing/sales and recommended hardware specifics.
+### Server CVars (Planned)
+- An in detailed list and documentation of supported server and console variables for War of Rights
+### Guides (Planned)
+- Community guides are planned with the possibility of community publishing.
+- If you are intestersted in helping in this regard let me know!
 
-### __Additional Resources__
-- In-Game Weapons with range, ammo, etc.
-- War of Rights Steam API data such as patch notes, updates, screenshots, latest price, etc.
+## __Joined Users__
+- Sync your WoRTool account with Discord for additional features and help manage or rep your regiment on WoRTool
+- Personalized Maps - Favorites, Notes, Stratsketch quick links etc.
+- Join a Regiment - You can use your WoRTool account to join an integrated regiment under 'Linked Accounts'. 
+  - Once you join a regiment you will have the ability to be promoted to a manager in your regiment where you can access your own regiments tools such as the Event Share, Company Roster Tool, Steam Stats, Profile Data (media & schedules) etc.
 
-## Registered User Features:
 
-### __Maps__
-- Favorite Maps (Use as search filter).
-- Map notes, each map will have its own notepad for user notes.
-- StratSketch (Requires you to be logged into a basic StratSketch account).
+## __Regiment Integration (Discord, App Tools)__
+### In App
+- **Event Share Tool** - Submit event details for sharing on your designated Discord event share channel.
+- **Steam Stats** - Collect Steam IDs for Unbanning and Statistics Tracking.
+- **Company Roster Tool (almost done)** - Keep track of events and drills attended by your regiment/discord members using the Tool or Bot.
 
-### __User Settings__
-- Change Password
-- Change Avatar Url
-- Manage Map Favorites
-- Sync Discord Account (Under Development) This will allow users to join registered regiments and integrate/link them with their regiments discord/app data. 
-- Join Regiment (Under Development)
+### Discord Bot
+- **Upcoming Schedule** - See your Regiment's upcoming events for the next few days using the bot commands (`wor.schedule, wor.upcoming, wor.events`).
+- **Gallery/Media** - Discord admins can share image attachments directly to their regiments profile page by including a simple bot command (`wor.media, wor.pics, wor.g`) in the attachment comment.
+- **Setup Regiment** - Fully integrate your regiment's Discord server to the application by running the command `wor.setup usa, or wor.setup csa` depending on your affiliation.
 
-## Regiment Dashboard (Elevated Permissions)
+### [Regiment Profile Pages](https://wortool.com/regiments)
+- **Discord Integrated** - Synced with your discords channels, roles, and users!
+- **Media, Schedules, Social Media** - Represent your regiment by sharing media, schedules, staff hierarchy and direct links to your social media platforms!
 
-### __Regiment Tools__
-- Event Share Tool - Gather all details for an event (servername, password, skirmish area, maps, sides, regiment, etc.) and post them
-  in a chosen discord event channel set in the settings section of the regiment dashboard.
-- Data is currently synced a Discord Bot you have to invite to your discord for it can grab guild data such as channel names, roles, 
-  guild avatar, etc.
-- Ability to register a new regiment via an admin bot command and set that user as regiment owner, that user will then be able to add 
-  more regiment admins.
-
-### Coming Soon
-- Regiment & User Profiles - this should end up being pretty cool with discord integration being able to extract a user's discord roles such
-  as medals and accolades and display them on the profiles.
-
-> **Live Website Deploy**
-https://wortool.com
-
-> **Microsoft Store App Bundle**
-https://www.microsoft.com/store/productId/9NRLQV7M3FLN
+# [WoRTool.com](https://wortool.com/home)

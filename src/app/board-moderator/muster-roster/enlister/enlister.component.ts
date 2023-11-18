@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { DiscordService } from "src/app/_services/discord.service";
 import { SharedDataService } from "src/app/_services/shared-data.service";
+import { MusterUserService } from "src/app/_services/muster-user.service";
 
 interface Role {
   id: string;
@@ -21,6 +22,7 @@ export class EnlisterComponent implements OnInit {
   isDropdownOpen: boolean = false;
   selectedRole: Role | null = null;
   users: any[] = [];
+  musterUsers: any[] = [];
   showNicknameOnly: boolean = false;
   selectedUserIds: string[] = [];
   selectAll: boolean = true;
@@ -29,31 +31,27 @@ export class EnlisterComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private discordService: DiscordService,
-    public sharedDataService: SharedDataService
+    public sharedDataService: SharedDataService,
+    private musterUserService: MusterUserService
   ) {}
-
-  
-
 
   async ngOnInit(): Promise<void> {
     this.sharedDataService.retrieveInitialData()
-    .then(async () => {
-      await this.retrieveComponentData();
-    })
-    .catch(error => {
-      console.error("Error initializing shared data:", error);
-    });
-    
-    console.log(this.roles);
-    
+      .then(async () => {
+        await this.retrieveComponentData();
+      })
+      .catch(error => {
+        console.error("Error initializing shared data:", error);
+      });
   }
 
   async retrieveComponentData(): Promise<void> {
-    await Promise.all([this.getRoles(this.sharedDataService.guildId)]);
+    await Promise.all([
+      this.getRoles(this.sharedDataService.guildId),
+      this.getAllMusterUsers() 
+    ]);
     this.isDataLoaded = true;
   }
-
-
 
   async getRoles(regimentId: any): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -75,7 +73,10 @@ export class EnlisterComponent implements OnInit {
       this.discordService.getUsersByRoles(guildId, roleName).subscribe(
         (data: any) => {
           this.users = data;
-          console.log(data)
+          console.log('muster users: ' + this.musterUsers);
+  
+          this.users = this.users.filter(user => !this.musterUsers.some(musterUser => musterUser.discordId === user.id));
+  
           this.selectedUserIds = this.users.map(user => user.id);
           resolve();
         },
@@ -85,6 +86,16 @@ export class EnlisterComponent implements OnInit {
       );
     });
   }
+
+  getAllMusterUsers() {
+    this.musterUserService.getAll(this.sharedDataService.regimentId).subscribe(data => {
+      console.log(data);
+      this.musterUsers = data;
+
+      this.users = this.users.filter(user => !this.musterUsers.some(musterUser => musterUser.discordId === user.id));
+    });
+  }
+
 
   updateFilteredRoles(): void {
     this.filteredRoles = this.roles.filter(role =>
@@ -113,21 +124,42 @@ export class EnlisterComponent implements OnInit {
   }
 
   enlistUsers(): void {
+    const currentDate = new Date().toISOString().split('T')[0]; 
+  
     const enlistedUsers = this.users
       .filter((user) => this.selectedUserIds.includes(user.id))
-      .map((user) => ({ id: user.id, nickname: user.nickname || user.username }));
+      .map((user) => ({ 
+        discordId: user.id,
+        nickname: user.nickname || user.username,
+        regimentId: this.sharedDataService.regimentId,
+        events: 0,
+        drills: 0,
+        join_date: currentDate,
+        last_muster: currentDate,
+      }));
 
-      const count = enlistedUsers.length;
-
-      if (count > 0) {
-        this.snackBar.open(`Enlisted ${count} user${count > 1 ? 's' : ''}`, 'Dismiss', {
-          duration: 3000, 
-          verticalPosition: 'top',
-        });
-      }
-    console.log('Enlisted Users:', enlistedUsers);
-    
+      console.log(enlistedUsers)
+  
+    if (enlistedUsers.length > 0) {
+      this.musterUserService.create(enlistedUsers).subscribe(
+        (response) => {
+          console.log('Enlisted Users:', response.data);
+          this.snackBar.open(`Enlisted ${enlistedUsers.length} user${enlistedUsers.length > 1 ? 's' : ''}`, 'Dismiss', {
+            duration: 3000, 
+            verticalPosition: 'top',
+          });
+        },
+        (error) => {
+          console.error('Error enlisting users:', error);
+          this.snackBar.open('Error enlisting users. Please try again.', 'Dismiss', {
+            duration: 3000, 
+            verticalPosition: 'top',
+          });
+        }
+      );
+    }
   }
+  
 
   updateSelectedUserIds(userId: string, isChecked: boolean): void {
     if (isChecked) {
