@@ -4,7 +4,7 @@
  * Created Date: Saturday July 29th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 9:40:26 
+ * Last Modified: Sat November 18th 2023 12:51:57 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -41,9 +41,13 @@ export class SteamIdsComponent implements OnInit {
 
   isDataLoaded = false;
 
-  itemsPerPage = 3;
+ itemsPerPage = 3;
   currentPage = 1;
   paginatedSteamIds: any[] = [];
+  totalPages(): number {
+    return Math.ceil(this.steamIds.length / this.itemsPerPage);
+  }
+
   allSteamIds: any[] = [];
   steam64: any;
 
@@ -443,102 +447,6 @@ export class SteamIdsComponent implements OnInit {
     const end = start + this.itemsPerPage;
     return this.steamIds.slice(start, end);
   }
-
-  /**
-   * @method nextPage
-   * @description go to the next page of steam ids
-   * @returns - the next page of steam ids
-   */
-  nextPage() {
-    if (this.currentPage < this.getTotalPages()) {
-      this.currentPage++;
-      this.updatePaginatedSteamIds(); 
-    }
-  }
-  
-  /**
-   * @method previousPage
-   * @description go to the previous page of steam ids
-   * @returns - the previous page of steam ids
-   */
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updatePaginatedSteamIds(); 
-    }
-  }
-  
-  /**
-   * @method getTotalPages
-   * @description get the total number of pages
-   * @param steamIds - the steam ids to get the total number of pages for
-   * @param itemsPerPage - the number of items per page
-   * @param currentPage - the current page of the steam ids
-   * @param itemsPerPage - the number of items per page
-   * @returns - the total number of pages
-   */
-  getTotalPages() {
-    return Math.ceil(this.steamIds.length / this.itemsPerPage);
-  }
-  
-  /**
-   * @method goToPage
-   * @description go to the specified page
-   * @param steamIds - the steam ids to get the total number of pages for
-   * @param itemsPerPage - the number of items per page
-   * @param currentPage - the current page of the steam ids
-   * @param itemsPerPage - the number of items per page
-   * @returns - the total number of pages
-   */
-  goToPage(page: number) {
-    if (page < 1) {
-      page = 1;
-    } else if (page > this.getTotalPages()) {
-      page = this.getTotalPages();
-    }
-  
-    this.currentPage = page;
-    this.updatePaginatedSteamIds();
-  }
-  
-  /**
-   * @method shouldShowFirstEllipsis
-   * @description show the first ellipsis
-   * @deprecated - not used
-   */
-  shouldShowFirstEllipsis() {
-    return this.currentPage > 3 && this.getTotalPages() > 3;
-  }
-  
-  /**
-   * @method shouldShowLastEllipsis
-   * @description show the last ellipsis
-   * @deprecated - not used
-   */
-  shouldShowLastEllipsis() {
-    return this.getTotalPages() - this.currentPage > 2;
-  }
-  
-  /**
-   * @method getVisiblePages
-   * @description get the visible pages
-   * @returns - the visible pages
-   */
-  getVisiblePages() {
-    const pages = [];
-  
-    pages.push(this.currentPage);
-  
-    if (this.getTotalPages() > 1) {
-      if (this.currentPage < this.getTotalPages()) {
-        pages.push(this.currentPage + 1);
-      } else if (this.currentPage > 1) {
-        pages.unshift(this.currentPage - 1);
-      }
-    }
-  
-    return pages;
-  }
   
   /**
    * @method isCurrentPage
@@ -547,6 +455,51 @@ export class SteamIdsComponent implements OnInit {
    */
   isFormValid(): boolean {
     return this.steamIdForm.get("gameIdForm")?.valid || false;
+  }
+
+
+  /**
+   * @method previousPage
+   * @description navigate to the previous page
+   */
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePaginatedSteamIds();
+    }
+  }
+
+  /**
+   * @method nextPage
+   * @description navigate to the next page
+   */
+  nextPage(): void {
+    if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
+      this.updatePaginatedSteamIds();
+    }
+  }
+
+  /**
+   * @method getPagesArray
+   * @description generate an array of page numbers based on the total number of pages
+   * @param totalPages - the total number of pages
+   * @returns - an array of page numbers
+   */
+  getPagesArray(totalPages: number): number[] {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  /**
+   * @method changePage
+   * @description navigate to the specified page
+   * @param page - the page number to navigate to
+   */
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage = page;
+      this.updatePaginatedSteamIds();
+    }
   }
 
 }

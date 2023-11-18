@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon August 7th 2023 1:25:41 
+ * Last Modified: Sat November 18th 2023 1:10:25 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -65,7 +65,8 @@ export class RegimentsComponent implements OnInit {
       return searchTextMatch && sideMatch;
     });
     this.currentPage = 1; 
-    this.updatePaginatedRegiments(); 
+
+    this.paginateRegiments();
   }
   
   /**
@@ -77,7 +78,49 @@ export class RegimentsComponent implements OnInit {
       this.regiments = regiments;
       this.allRegiments = this.regiments.slice();
       this.isDataLoaded = true;
+      this.paginateRegiments();
     });
+  }
+
+  /**
+   * Paginate regiments based on current page and items per page
+   */
+  paginateRegiments() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedRegiments = this.regiments.slice(startIndex, endIndex);
+  }
+
+  /**
+   * Change the current page
+   * @param newPage - The new page number
+   */
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= this.totalPages()) {
+      this.currentPage = newPage;
+      this.paginateRegiments();
+    }
+  }
+
+  /**
+   * Go to the previous page
+   */
+  previousPage() {
+    this.changePage(this.currentPage - 1);
+  }
+
+  /**
+   * Go to the next page
+   */
+  nextPage() {
+    this.changePage(this.currentPage + 1);
+  }
+
+  /**
+   * Get the total number of pages
+   */
+  totalPages(): number {
+    return Math.ceil(this.regiments.length / this.itemsPerPage);
   }
 
   /**
@@ -123,87 +166,6 @@ export class RegimentsComponent implements OnInit {
     });
   }
 
-  /**
-   * @method getPaginatedSteamIds
-   * @description get the paginated steam ids
-   * @param steamIds - the steam ids to paginate
-   * @param currentPage - the current page of the steam ids
-   * @param itemsPerPage - the number of items per page
-   * @returns - the paginated steam ids
-   */
-  getPaginatedRegiments() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.regiments.slice(start, end); 
-  }
-  
-  /**
-   * @method nextPage
-   * @description go to the next page of steam ids
-   * @returns - the next page of steam ids
-   */
-  nextPage() {
-    if (this.currentPage < this.getTotalPages()) {
-      this.currentPage++;
-      this.updatePaginatedRegiments(); 
-    }
-  }
-  
-  /**
-   * @method previousPage
-   * @description go to the previous page of steam ids
-   * @returns - the previous page of steam ids
-   */
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updatePaginatedRegiments(); 
-    }
-  }
-  
-  /**
-   * @method getTotalPages
-   * @description get the total number of pages
-   * @param steamIds - the steam ids to get the total number of pages for
-   * @param itemsPerPage - the number of items per page
-   * @param currentPage - the current page of the steam ids
-   * @param itemsPerPage - the number of items per page
-   * @returns - the total number of pages
-   */
-  getTotalPages() {
-    return Math.ceil(this.regiments.length / this.itemsPerPage);
-  }
-  
-  /**
-   * @method goToPage
-   * @description go to the specified page
-   * @param steamIds - the steam ids to get the total number of pages for
-   * @param itemsPerPage - the number of items per page
-   * @param currentPage - the current page of the steam ids
-   * @param itemsPerPage - the number of items per page
-   * @returns - the total number of pages
-   */
-  goToPage(page: number) {
-    if (page < 1) {
-      page = 1;
-    } else if (page > this.getTotalPages()) {
-      page = this.getTotalPages();
-    }
-  
-    this.currentPage = page;
-    this.updatePaginatedRegiments();
-  }
-
-    /**
-   * @method updatePaginatedSteamIds
-   * @description update the paginated steam ids for the regiment
-   * @returns - the paginated steam ids for the regiment
-   */
-    updatePaginatedRegiments(): void {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      this.paginatedRegiments = this.regiments.slice(start, end);
-    }
 
     /**
      * @method toggleOverlay
@@ -253,5 +215,13 @@ export class RegimentsComponent implements OnInit {
       this.toggleOverlay();
     }
     
+    /**
+   * Get an array of page numbers for pagination
+   * @param totalPages - The total number of pages
+   * @returns An array of page numbers
+   */
+    getPagesArray(totalPages: number): number[] {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
     
 }

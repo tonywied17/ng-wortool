@@ -97,49 +97,42 @@
     opacity: 0.9;
   }
   
-  .pagination-button {
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .pagination button {
     background-color: #12192c;
-    color: white;
-    padding: 10px 20px;
-    margin: 5px;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 0 5px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all ease .2s;
   }
   
-  .pagination-button:hover {
+  .pagination button.active {
     background-color: #0c101d;
-    // filter: brightness(0.7)
   }
   
-  .pagination-button:disabled {
+  .pagination button:hover {
+    filter: brightness(1.5);
+  }
+  
+  .pagination button:active {
+    transform: scale(1.1);
+  }
+  
+  .pagination button:disabled {
     background-color: #646f85;
     color: #a1a7b3;
     cursor: not-allowed;
   }
   
-  /* Page numbers */
-  .page-number {
-    padding: 10px;
-    font-weight: bold;
-  }
-  
-  /* Container for page numbers, if you use them */
-  .page-numbers {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .page-numbers .pagination-button {
-    background-color: #12192c;
-    color: #e0e0e0;
-  }
-  
-  .page-numbers .pagination-button:hover {
-    background-color: #0c101d;
-    // filter: brightness(0.7)
-  }
 
 
   .alert-danger{
