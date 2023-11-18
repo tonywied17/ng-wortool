@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 8th 2023 3:38:19 
+ * Last Modified: Sat November 18th 2023 3:13:01 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit {
   articleLength: any;
   latestAuthor: any;
   latestDate: any;
+
+  forgotPass: boolean = false;
 
   isOwner: boolean = false;
   modRoute?: string;
@@ -334,6 +336,7 @@ export class HomeComponent implements OnInit {
   loginBtn(): void {
     this.loginTask = true;
     this.registerTask = false;
+    this.forgotPass = false;
   }
 
   /**
@@ -343,6 +346,7 @@ export class HomeComponent implements OnInit {
   registerBtn(): void {
     this.loginTask = false;
     this.registerTask = true;
+    this.forgotPass = false;
   }
 
   /**
@@ -437,5 +441,9 @@ export class HomeComponent implements OnInit {
         ", left=" +
         left
     );
+  }
+
+  forgot() {
+    this.forgotPass = true;
   }
 }
