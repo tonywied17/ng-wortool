@@ -160,11 +160,7 @@
 
 
                 <div class="field-box my-2">
-                    <select [(ngModel)]="scheduleForm.day" name="day" style="
-        padding-top: 11px;
-        padding-bottom: 11px;
-        font-size: 15px;
-        border: 1px solid #7c7d72 !important;"
+                    <select [(ngModel)]="scheduleForm.day" name="day"
                         class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
                         id="existing-select">
                         <option value disabled selected>
@@ -183,20 +179,12 @@
 
 
                 <div class="field-box my-2">
-                    <input [(ngModel)]="scheduleForm.time" name="time" style="
-        padding-top: 11px;
-        padding-bottom: 11px;
-        font-size: 15px;
-        border: 1px solid #7c7d72 !important;" class="field-input" type="time">
+                    <input [(ngModel)]="scheduleForm.time" name="time" class="field-input" type="time">
                     <i class="fa-regular fa-clock field-icon"></i>
                 </div>
 
                 <div class="field-box my-2">
-                    <input [(ngModel)]="scheduleForm.event_type" name="event_type" style="
-        padding-top: 11px;
-        padding-bottom: 11px;
-        font-size: 15px;
-        border: 1px solid #7c7d72 !important;" class="field-input" placeholder="Event Name..." type="text">
+                    <input [(ngModel)]="scheduleForm.event_type" name="event_type" class="field-input" placeholder="Event Name..." type="text">
                     <i class="fa-solid fa-spell-check field-icon"></i>
                 </div>
 
@@ -218,20 +206,12 @@
     <form (ngSubmit)="createSchedule()">
 
         <div class="field-box my-2">
-            <input [(ngModel)]="scheduleForm.schedule_name" name="schedule_name" style="
-padding-top: 11px;
-padding-bottom: 11px;
-font-size: 15px;
-border: 1px solid #7c7d72 !important;" class="field-input" placeholder="Schedule Name..." type="text">
+            <input [(ngModel)]="scheduleForm.schedule_name" name="schedule_name" class="field-input" placeholder="Schedule Name..." type="text">
             <i class="fa-solid fa-spell-check field-icon"></i>
         </div>
 
         <div class="field-box my-2">
-            <select [(ngModel)]="scheduleForm.day" name="day" style="
-padding-top: 11px;
-padding-bottom: 11px;
-font-size: 15px;
-border: 1px solid #7c7d72 !important;"
+            <select [(ngModel)]="scheduleForm.day" name="day"
                 class="field-input text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
                 id="existing-select">
                 <option value disabled selected>
@@ -250,20 +230,12 @@ border: 1px solid #7c7d72 !important;"
 
 
         <div class="field-box my-2">
-            <input [(ngModel)]="scheduleForm.time" name="time" style="
-padding-top: 11px;
-padding-bottom: 11px;
-font-size: 15px;
-border: 1px solid #7c7d72 !important;" class="field-input" type="time">
+            <input [(ngModel)]="scheduleForm.time" name="time" class="field-input" type="time">
             <i class="fa-regular fa-clock field-icon"></i>
         </div>
 
         <div class="field-box my-2">
-            <input [(ngModel)]="scheduleForm.event_type" name="event_type" style="
-padding-top: 11px;
-padding-bottom: 11px;
-font-size: 15px;
-border: 1px solid #7c7d72 !important;" class="field-input" placeholder="Event Name..." type="text">
+            <input [(ngModel)]="scheduleForm.event_type" name="event_type" class="field-input" placeholder="Event Name..." type="text">
             <i class="fa-solid fa-spell-check field-icon"></i>
         </div>
 
