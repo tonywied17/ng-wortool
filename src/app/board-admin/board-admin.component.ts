@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 17th 2023 2:43:40 
+ * Last Modified: Tue November 21st 2023 1:31:56 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -30,7 +30,7 @@ export class BoardAdminComponent implements OnInit {
   showPage1 = false;
   showPage2 = false;
   showPage3 = false;
-  loading = true;
+  isLoaded:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,20 +57,14 @@ export class BoardAdminComponent implements OnInit {
 
     this.sharedDataService.retrieveInitialData()
     .then(async () => {
+      this.isLoaded = true;
       // Processed
-      if(this.sharedDataService.showAdmin){
-        this.loading = false;
-      }else{
-        this.loading = true;
-      }
     })
     .catch(error => {
       console.error("Error initializing shared data:", error);
     });
-
-
+   
   }
-
   /**
    * Load content
    * This function is used to load the content

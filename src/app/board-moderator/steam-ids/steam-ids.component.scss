@@ -74,13 +74,24 @@
   .progress-bar {
     height: 100%;
     background-color: #7c7d72; 
+    transition: width 0.5s ease;
+  }
+
+  @keyframes progressBarAnimation {
+    from {
+        width: 0;
+    }
+  }
+
+  .animated-bar {
+    animation: progressBarAnimation 1s ease-out;
   }
 
   .center-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed; /* or absolute */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -161,3 +172,5 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 49; 
 }
+
+

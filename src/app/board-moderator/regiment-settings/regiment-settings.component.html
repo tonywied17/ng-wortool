@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Mon November 20th 2023 11:58:48 
+Last Modified: Tue November 21st 2023 2:17:48 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -26,23 +26,24 @@ Copyright (c) 2023 Tone Web Design, Molex
 			<!-- <h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2> -->
 
 
-			<div class="w-full m-2 mb-[2em] grid grid-cols-[auto_1fr]">
+			<div class="w-full mb-[3em] grid grid-cols-[auto_1fr]">
 
 				<div>
-					<img class="h-[85px] w-auto rounded-l-lg shadow-md pointer-events-none brightness-90 sepia-[22%]" [src]="this.sharedDataService.regiment.guild_avatar">
+					<img class="rounded-l-lg shadow-md pointer-events-none brightness-90 sepia-[22%]" [src]="this.sharedDataService.regiment.guild_avatar">
 				</div>
 			
-				<div class="flex flex-col justify-center items-center rounded-r-md shadow-lg"
-				style="background: linear-gradient(130deg,#263855e1,#1e293b00,#1e293b00,#1e293b00),linear-gradient(-25deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
+				<div *ngIf="this.sharedDataService.regiment.side == 'USA'" class="flex flex-col justify-center items-center rounded-r-md shadow-lg"
+				style="background: linear-gradient(130deg,#263855e1,#1e293b4b,#1e293b10,#1e293b05),linear-gradient(-25deg,#263855e1,#1e293b4b,#1e293b10,#1e293b05);">
 					<h1 class="font-[400] mb-[0] text-neutral-200 text-lg">{{this.sharedDataService.regiment.regiment}}</h1>
-
-					<span *ngIf="this.sharedDataService.regiment.side == 'CSA'"
-					class="text-[#838479] text-sm font-[300]">{{this.sharedDataService.regiment.side}} Regiment | {{this.sharedDataService.regiment.memberCount}} members</span>
-					<span *ngIf="this.sharedDataService.regiment.side == 'USA'"
-					class="text-[#6488c5] text-sm font-[300]">{{this.sharedDataService.regiment.side}} Regiment | {{this.sharedDataService.regiment.memberCount}} members</span>
-
+					<span class="text-[#6488c5] text-sm font-[300]">{{this.sharedDataService.regiment.side}} Regiment | {{this.sharedDataService.regiment.memberCount}} <i class="fa-brands fa-discord ml-1"></i> Members</span>
 				</div>
-			
+
+
+				<div *ngIf="this.sharedDataService.regiment.side == 'CSA'" class="flex flex-col justify-center items-center rounded-r-md shadow-lg"
+				style="background: linear-gradient(130deg,#8384798a,#8384794f,#83847900,#83847900),linear-gradient(-25deg,#8384798a,#8384794f,#83847900,#83847900);">
+					<h1 class="font-[400] mb-[0] text-neutral-300 text-lg">{{this.sharedDataService.regiment.regiment}}</h1>
+					<span class="text-[#838479] text-sm font-[300]">{{this.sharedDataService.regiment.side}} Regiment | {{this.sharedDataService.regiment.memberCount}} <i class="fa-brands fa-discord ml-1"></i> Members</span>
+				</div>
 			</div>
 			
 			

@@ -123,21 +123,23 @@
 
                         <h1 class="text-lg text-[#7c7d72] flex items-center">
                             Level {{ getLevelData(getExperienceValue(user.liveGameStats)).lvl }} 
-                            <span class="text-sm font-[900] text-blue-500 ml-auto pr-3">Level {{getLevelData(getExperienceValue(user.liveGameStats)).lvl + 1}} <i class="fa-solid fa-turn-up"></i></span>
+                            <span class="text-sm font-[900] text-blue-500 ml-auto pr-3" id="nextLevelLabel">
+                                Level {{ getLevelData(getExperienceValue(user.liveGameStats)).lvl + 1 }}
+                                <i class="fa-solid fa-turn-up"></i>
+                            </span>
                         </h1>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar"
-                                    [style.width]="getLevelData(getExperienceValue(user.liveGameStats)).progress + '%'">
-                                </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar animated-bar" id="xpProgressBar"
+                                [style.width]="getLevelData(getExperienceValue(user.liveGameStats)).progress + '%'">
                             </div>
-                            <div class="w-full text-right pr-3">
-                                <span class="text-neutral-200 text-sm font-[200]">
-                                    {{ roundNumber(getLevelData(getExperienceValue(user.liveGameStats)).xp) + " / " + getLevelData(getExperienceValue(user.liveGameStats)).xpRq }} <sup>XP</sup></span>
-                            </div>
-
-
-
-
+                        </div>
+                        <div class="w-full text-right pr-3">
+                            <span class="text-neutral-200 text-sm font-[200]" id="xpLabel">
+                                {{ roundNumber(getLevelData(getExperienceValue(user.liveGameStats)).xp) + " / " + getLevelData(getExperienceValue(user.liveGameStats)).xpRq }} 
+                                <sup>XP</sup>
+                            </span>
+                        </div>
+                        
                         </div>
                     </div>
 

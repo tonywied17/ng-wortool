@@ -1,5 +1,15 @@
+
+
 <div class="lg:w-[90vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] scroll-container mb-[4em]">
 
+	<div *ngIf="loading" class="text-center text-[#88887b] text-xl opacity-75">
+		<div class="lds-ellipsis">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
 
 	<div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-8">
 

@@ -1,9 +1,12 @@
-<div *ngIf="loading"
-	class="text-center text-xl opacity-75">
-	<i class="fas fa-spinner fa-pulse mr-2"></i>
-	Verifying credentials...
-</div>
 
+<div *ngIf="loading" class="text-center text-[#88887b] text-xl opacity-75">
+	<div class="lds-ellipsis">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</div>
 
 <div *ngIf="!loading && currentMap"
 	class="lg:w-[80vw] w-[100vw - 2em] m-auto mt-[2em] lg:mt-[3.5em]"
@@ -664,12 +667,7 @@
 				<div class="tab-content">
 					<div class="p-[1em]">
 						<div class="post-it">
-							<textarea #notesTextarea
-								placeholder="No notes found..">
-								{{
-                currentNotes
-              }}
-							</textarea>
+							<textarea #notesTextarea placeholder="No notes found..">{{currentNotes}}</textarea>
 							<div class="textarea-overlay">
 								<i class="fa-sharp fa-solid fa-up-right-and-down-left-from-center fa-rotate-90"></i>
 							</div>

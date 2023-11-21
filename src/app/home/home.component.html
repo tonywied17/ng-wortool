@@ -7,13 +7,15 @@ Last Modified: Tue November 7th 2023 8:53:13
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex -->
-<div *ngIf="loading"
-	class="text-center text-xl opacity-75">
-	<i class="fas fa-spinner fa-pulse mr-2"></i>
-	Verifying credentials...
+
+<div *ngIf="loading" class="text-center text-[#88887b] text-xl opacity-75">
+	<div class="lds-ellipsis">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
 </div>
-
-
 
 
 <div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">

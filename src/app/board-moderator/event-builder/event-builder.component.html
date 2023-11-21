@@ -3,14 +3,14 @@
 
   <h2 class="lg:text-2xl text-lg text-slate-400 pb-4 ml-2 lg:ml-0">Share Event Information</h2>
 
-  <div class="grid grid-cols-2">
+  <div class="grid lg:grid-cols-[1fr_auto]">
 
-    <div>
+    <div class="lg:row-start-1 row-start-2 row-span-1 lg:col-start-1 lg:col-span-1">
       <h3 class="text-slate-300 ml-1 mt-6 mb-3 lg:text-xl font-[300]">
         <i class="fa-solid fa-at"></i>Mention a Role
             </h3>
 
-            <div class="max-w-[222px] mb-6">
+            <div class="max-w-[222px] mb-2">
               <div class="custom-select-container">
                 <div class="custom-select">
                   <button class="select-button" (click)="toggleDropdown()" mat-stroked-button color="primary">
@@ -46,11 +46,11 @@
     </div>
 
 
-    <div>
+    <div class="lg:row-start-1 row-start-1 row-span-1 lg:col-start-2 lg:col-span-1">
 
-          <div class="text-right">
-            <h3 class="text-slate-300 ml-1 mt-6 mb-3 lg:text-xl font-[300]">
-              <i class="fa-solid fa-hashtag"></i>Channel
+          <div class="">
+            <h3 class="text-slate-300 ml-1 lg:mt-6 mb-3 lg:text-xl font-[300]">
+              <i class="fa-solid fa-hashtag"></i>Event Channel
             </h3>
                 <select #channelSelect class="event-field-input !w-fit !pl-2" id="channel-select" (change)="updateTargetChannel(channelSelect.value)">
                   <option value="0">{{this.sharedDataService.regiment.webhook_channel}}</option>
