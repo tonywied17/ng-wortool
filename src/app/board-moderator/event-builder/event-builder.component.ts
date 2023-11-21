@@ -4,6 +4,7 @@ import { MapService } from 'src/app/_services/map.service';
 import { DiscordService } from "src/app/_services/discord.service";
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { ConfirmDeleteSnackbarComponent } from "../../confirm-delete-snackbar/confirm-delete-snackbar.component";
 
 interface Role {
   id: string;
@@ -32,10 +33,16 @@ export class EventBuilderComponent implements OnInit {
   filteredRoles: any[] = [];
   roleFilter: string = '';
   isDropdownOpen: boolean = false;
+
+  editChannel: boolean = false;
   
   mapDetails:boolean = false;
   selectedGameModes: string[] = [];
 
+  regimentChannels: any;
+  targetChannel: any;
+  webhook: any;
+  
 
   constructor(
     private fb: FormBuilder,
@@ -66,6 +73,8 @@ export class EventBuilderComponent implements OnInit {
     .catch(error => {
       console.error("Error initializing shared data:", error);
     });
+
+    await this.getRegimentChannels(this.sharedDataService.regiment.guild_id);
     
   }
 
@@ -99,6 +108,10 @@ export class EventBuilderComponent implements OnInit {
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleChannelEdit() {
+    this.editChannel = !this.editChannel;
   }
 
   selectRole(role: Role): void {
@@ -375,6 +388,64 @@ thisMapDetails(): void {
 
 isSelectedGameMode(selectedMode: string, currentMode: string): boolean {
   return selectedMode === currentMode;
+}
+
+async getRegiment(): Promise<void> {
+  await this.getRegimentChannels(this.sharedDataService.regiment.guild_id);
+}
+
+async getRegimentChannels(guildId: string): Promise<void> {
+  if (this.sharedDataService.regimentId) {
+    await this.discordService
+      .getGuildChannels(guildId)
+      .toPromise()
+      .then((response: any) => {
+        this.regimentChannels = response.channels;
+      });
+  }
+}
+
+
+async updateTargetChannel(selectedValue: string): Promise<void> {
+  this.targetChannel = selectedValue;
+  const snackBarRef = this.snackBar.openFromComponent(
+    ConfirmDeleteSnackbarComponent,
+    {
+      data: {
+        message: `Are you sure you want to change your event channel?`,
+      },
+      duration: 5000,
+      verticalPosition: "top",
+      panelClass: "confirm-delete-snackbar",
+    }
+  );
+
+  snackBarRef.onAction().subscribe(async () => {
+    await this.createWebhook(this.sharedDataService.regiment.guild_id, this.targetChannel);
+  });
+}
+
+// async updateTargetChannel(selectedValue: string): Promise<void> {
+//   this.targetChannel = selectedValue;
+
+//   setTimeout(async () => {
+//     await this.createWebhook(this.sharedDataService.regiment.guild_id, this.targetChannel);
+//   }, 300);
+// }
+
+async createWebhook(guildId: string, channelId: string): Promise<void> {
+  await this.discordService
+    .createWebhook(guildId, channelId)
+    .toPromise()
+    .then((response: any) => {
+      this.webhook = response;
+      this.snackBar.open(
+        `$Webhook created for channel ${this.targetChannel}!`,
+        "Close",
+        { duration: 3000 }
+      );
+      // this.getRegiment();
+    });
 }
 
 }

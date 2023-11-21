@@ -3,44 +3,69 @@
 
   <h2 class="lg:text-2xl text-lg text-slate-400 pb-4 ml-2 lg:ml-0">Share Event Information</h2>
 
-    
-      <h3 class="text-slate-300 ml-1 mt-6 mb-3 lg:text-xl font-[300]">
-        @Mention a Role
-      </h3>
+  <div class="grid grid-cols-2">
 
-      <div class="max-w-[222px] mb-6">
-        <div class="custom-select-container">
-          <div class="custom-select">
-            <button class="select-button" (click)="toggleDropdown()" mat-stroked-button color="primary">
-              {{ selectedRole ? selectedRole.name : 'Select a role...' }}
-            </button>
-      
-            <div class="dropdown-container" *ngIf="isDropdownOpen">
-              <div class="field-box sticky top-0">
-                <input
-                  class="select-input !bg-slate-700"
-                  type="text"
-                  placeholder="Type to filter..."
-                  (input)="updateFilteredRoles()"
-                  name="roleFilter"
-                  [(ngModel)]="roleFilter"
-                />
-                <i class="fa-solid fa-filter field-icon"></i>
+    <div>
+      <h3 class="text-slate-300 ml-1 mt-6 mb-3 lg:text-xl font-[300]">
+        <i class="fa-solid fa-at"></i>Mention a Role
+            </h3>
+
+            <div class="max-w-[222px] mb-6">
+              <div class="custom-select-container">
+                <div class="custom-select">
+                  <button class="select-button" (click)="toggleDropdown()" mat-stroked-button color="primary">
+                    {{ selectedRole ? selectedRole.name : 'Select a role...' }}
+                  </button>
+            
+                  <div class="dropdown-container" *ngIf="isDropdownOpen">
+                    <div class="field-box sticky top-0">
+                      <input
+                        class="select-input !bg-slate-700"
+                        type="text"
+                        placeholder="Type to filter..."
+                        (input)="updateFilteredRoles()"
+                        name="roleFilter"
+                        [(ngModel)]="roleFilter"
+                      />
+                      <i class="fa-solid fa-filter field-icon"></i>
+                    </div>
+            
+                    <ul class="dropdown-list rounded-md shadow-sm !bg-slate-900">
+                      <li *ngIf="filteredRoles.length <= 0">
+                        Fetching Roles...
+                      </li>
+            
+                      <li *ngFor="let role of filteredRoles" (click)="selectRole(role)">
+                        {{ role.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-      
-              <ul class="dropdown-list rounded-md shadow-sm !bg-slate-900">
-                <li *ngIf="filteredRoles.length <= 0">
-                  Fetching Roles...
-                </li>
-      
-                <li *ngFor="let role of filteredRoles" (click)="selectRole(role)">
-                  {{ role.name }}
-                </li>
-              </ul>
             </div>
+    </div>
+
+
+    <div>
+
+          <div class="text-right">
+            <h3 class="text-slate-300 ml-1 mt-6 mb-3 lg:text-xl font-[300]">
+              <i class="fa-solid fa-hashtag"></i>Channel
+            </h3>
+                <select #channelSelect class="event-field-input !w-fit !pl-2" id="channel-select" (change)="updateTargetChannel(channelSelect.value)">
+                  <option value="0">{{this.sharedDataService.regiment.webhook_channel}}</option>
+                  <option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
+                    {{ channel.name }}
+                  </option>
+                </select>
           </div>
-        </div>
-      </div>
+  </div>
+
+        
+    
+  </div>
+    
+      
 
       <form [formGroup]="serverForm">
 
@@ -161,13 +186,13 @@
                 <div *ngIf="round.get('gameMode')?.value === 'Picket Patrol'">
 
                   <div class="field-box my-2">
-                    <label># of Rounds:</label>
-                    <input class="event-field-input !py-[7px]" id="numberOfRounds" formControlName="numberOfRounds" />
+                    <label class="label"># of Rounds:</label>
+                    <input class="event-field-input h-[44px]" id="numberOfRounds" formControlName="numberOfRounds" />
                     <i class="fa-solid fa-hashtag event-icon"></i>
                   </div>
                   
                   <div class="field-box my-2">
-                    <label>Side</label>
+                    <label class="label">Side</label>
                     <select class="event-field-input" id="side" formControlName="side">
                       <option *ngFor="let side of sides" [value]="side">{{ side }}</option>
                     </select>
