@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Fri November 17th 2023 4:30:04 
+Last Modified: Mon November 20th 2023 11:58:48 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -25,6 +25,28 @@ Copyright (c) 2023 Tone Web Design, Molex
 		<div *ngIf="this.sharedDataService.regiment" class="max-w-full">
 			<!-- <h2 class="text-2xl text-slate-400 pb-4 ml-2 lg:ml-0">Regimental Settings</h2> -->
 
+
+			<div class="w-full m-2 mb-[2em] grid grid-cols-[auto_1fr]">
+
+				<div>
+					<img class="h-[85px] w-auto rounded-l-lg shadow-md pointer-events-none brightness-90 sepia-[22%]" [src]="this.sharedDataService.regiment.guild_avatar">
+				</div>
+			
+				<div class="flex flex-col justify-center items-center rounded-r-md shadow-lg"
+				style="background: linear-gradient(130deg,#263855e1,#1e293b00,#1e293b00,#1e293b00),linear-gradient(-25deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);">
+					<h1 class="font-[400] mb-[0] text-neutral-200 text-lg">{{this.sharedDataService.regiment.regiment}}</h1>
+
+					<span *ngIf="this.sharedDataService.regiment.side == 'CSA'"
+					class="text-[#838479] text-sm font-[300]">{{this.sharedDataService.regiment.side}} Regiment | {{this.sharedDataService.regiment.memberCount}} members</span>
+					<span *ngIf="this.sharedDataService.regiment.side == 'USA'"
+					class="text-[#6488c5] text-sm font-[300]">{{this.sharedDataService.regiment.side}} Regiment | {{this.sharedDataService.regiment.memberCount}} members</span>
+
+				</div>
+			
+			</div>
+			
+			
+
 			<mat-tab-group dynamicHeight #tabGroup animationDuration="0ms">
 				<!-- Settings Tab -->
 				<mat-tab label="Settings">
@@ -33,71 +55,9 @@ Copyright (c) 2023 Tone Web Design, Molex
 						<span class="lg:!inline-block !hidden">Settings</span>
 					</ng-template>
 
-					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300]">
-						Event Tool Settings
-					</h3>
-					<p class="text-sm font-[200] italic text-neutral-300 mt-2 mb-3 ml-4">
-						<i class="fa-regular fa-circle-question mr-1"></i> Select the
-						Discord channel where you'd like to share event server information
-						using the event share tool.
-					</p>
-
-					<!-- Event Webhook Tool -->
-					<div class="p-2 lg:m-2 text-neutral-200 grid gap-4 sm:grid-cols-4 grid-cols-1">
-						<div class="col-start-1 col-span-1">
-							<h3 class="text-slate-400 ml-1">Event Channel</h3>
-							<span *ngIf="this.sharedDataService.regiment.webhook_channel"
-								[innerHTML]="this.sharedDataService.regiment.webhook_channel"
-								class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
-							</span>
-							<span *ngIf="!this.sharedDataService.regiment.webhook_channel"
-								class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm shadow-sm">
-								No event channel selected.
-							</span>
-						</div>
-						<!-- 	
-					<div class="sm:col-start-2 col-span-1">
-						<h3 class="text-slate-400">Webhook URL</h3>
-						<span [innerHTML]="this.sharedDataService.regiment.webhook" class="px-3 p-1 m-1 block bg-slate-700 text-neutral-100 rounded-sm truncate shadow-sm"></span>
-					</div>
-	 				-->
-						<div class="sm:col-start-3 sm:col-span-2 sm:place-self-end">
-							<select [disabled]="
-                  this.sharedDataService.showMod &&
-                  !this.sharedDataService.isOwner
-                " #channelSelect style="
-                  padding-top: 11px;
-                  padding-bottom: 11px;
-                  font-size: 15px;
-                  border: 1px solid #7c7d72 !important;
-                " matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
-                  this.sharedDataService.showMod &&
-                  !this.sharedDataService.isOwner
-                    ? 'Only Owners May Modify'
-                    : 'Select the Discord channel where \'Event Share\' information will be posted.'
-                " class="field-input2 inline-block" id="channel-select">
-								<option value="0">Select a Channel</option>
-								<option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
-									{{ channel.name }}
-								</option>
-							</select>
-
-							<button [disabled]="
-                  this.sharedDataService.showMod &&
-                  !this.sharedDataService.isOwner
-                " (click)="updateTargetChannel(channelSelect.value)" mat-stroked-button
-								class="ml-2 !w-[100px] !inline-block !py-[1.02em] !px-[0] !mb-1" color="primary">
-								Set Channel
-							</button>
-						</div>
-					</div>
-
 					<!-- Update Regiment Form -->
 					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300] hidden lg:inline-block">
-						Profile Information for
-						<span class="font-[900] p-1 m-1 text-base"><i class="fa-brands fa-discord"></i>
-							{{ this.sharedDataService.regiment.regiment }}
-						</span>
+						Regiment Information
 					</h3>
 
 					<h3 class="text-slate-300 ml-1 mt-6 text-xl font-[300] lg:hidden inline-block">
@@ -113,29 +73,21 @@ Copyright (c) 2023 Tone Web Design, Molex
 						<form (ngSubmit)="updateRegiment()">
 							<div class="form-group p-2 lg:m-2">
 								<div class="field-box">
-									<input [(ngModel)]="this.sharedDataService.regiment.regiment" name="regiment" style="
-                      padding-top: 11px;
-                      padding-bottom: 11px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Display Name..." />
+									<input [(ngModel)]="this.sharedDataService.regiment.regiment" name="regiment"
+									 class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Display Name..." />
 								</div>
 
 								<div class="field-box">
 									<select [disabled]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
-                    " [(ngModel)]="this.sharedDataService.regiment.side" style="
-                      padding-top: 8px;
-                      padding-bottom: 8px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
+                    " [(ngModel)]="this.sharedDataService.regiment.side"
+					 matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
                         ? 'Only Owners May Modify'
                         : 'Pick your side in the war...'
-                    " class="field-input2 inline-block my-2" id="side-select" name="side">
+                    " class="field-input inline-block my-2" id="side-select" name="side">
 										<option value="this.sharedDataService.regiment.side" selected disabled>
 											{{ this.sharedDataService.regiment.side }}
 										</option>
@@ -147,34 +99,22 @@ Copyright (c) 2023 Tone Web Design, Molex
 								</div>
 
 								<div class="field-box">
-									<input [(ngModel)]="this.sharedDataService.regiment.guild_id" name="guild_id" style="
-                      padding-top: 11px;
-                      padding-bottom: 11px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Discord ID..." />
+									<input [(ngModel)]="this.sharedDataService.regiment.guild_id" name="guild_id"
+									 class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Discord ID..." />
 								</div>
 
 								<div class="field-box">
 									<input [(ngModel)]="this.sharedDataService.regiment.guild_avatar"
-										name="guild_avatar" style="
-                      padding-top: 11px;
-                      padding-bottom: 11px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Avatar Url..." />
+										name="guild_avatar"
+										 class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Avatar Url..." />
 								</div>
 
 								<div class="field-box">
 									<input [disabled]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
-                    " [(ngModel)]="this.sharedDataService.regiment.invite_link" name="invite_link" style="
-                      padding-top: 11px;
-                      padding-bottom: 11px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
+                    " [(ngModel)]="this.sharedDataService.regiment.invite_link" name="invite_link"
+					 matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
                         ? 'Only Owners May Modify'
@@ -187,12 +127,8 @@ Copyright (c) 2023 Tone Web Design, Molex
 									<input [disabled]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
-                    " [(ngModel)]="this.sharedDataService.regiment.website" name="website" style="
-                      padding-top: 11px;
-                      padding-bottom: 11px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
+                    " [(ngModel)]="this.sharedDataService.regiment.website" name="website"
+					 matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
                         ? 'Only Owners May Modify'
@@ -205,12 +141,8 @@ Copyright (c) 2023 Tone Web Design, Molex
 									<input [disabled]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
-                    " [(ngModel)]="this.sharedDataService.regiment.youtube" name="youtube" style="
-                      padding-top: 11px;
-                      padding-bottom: 11px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
+                    " [(ngModel)]="this.sharedDataService.regiment.youtube" name="youtube"
+					 matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
                         ? 'Only Owners May Modify'
@@ -223,12 +155,8 @@ Copyright (c) 2023 Tone Web Design, Molex
 									<textarea [disabled]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
-                    " [(ngModel)]="this.sharedDataService.regiment.description" name="description" style="
-                      padding-top: 11px;
-                      padding-bottom: 11px;
-                      font-size: 15px;
-                      border: 1px solid #7c7d72 !important;
-                    " matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
+                    " [(ngModel)]="this.sharedDataService.regiment.description" name="description"
+					 matTooltipClass="form-tooltip" matTooltipPosition="left" [matTooltip]="
                       this.sharedDataService.showMod &&
                       !this.sharedDataService.isOwner
                         ? 'Only Owners May Modify'
@@ -239,13 +167,13 @@ Copyright (c) 2023 Tone Web Design, Molex
 								</div>
 							</div>
 
-							<button [disabled]="
-                  this.sharedDataService.showMod &&
-                  !this.sharedDataService.isOwner
-                " mat-raised-button type="submit"
-								class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-								Update Regiment
-							</button>
+							<div class="w-full text-right">
+								<button class="" color="primary" [disabled]=" this.sharedDataService.showMod && !this.sharedDataService.isOwner" mat-raised-button type="submit">
+									Update Regiment
+								</button>
+							</div>
+
+							
 						</form>
 					</div>
 					<!--  -->

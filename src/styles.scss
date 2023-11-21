@@ -499,19 +499,22 @@ button {
 .field-input {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif !important;
-  padding: 12px 36px 12px 48px;
+  padding: 10px 36px 10px 48px;
   width: 100%;
-  border: 1px solid #7c7d72 !important;
+  border: 1px solid #7c7d7271 !important;
   border-radius: 4px;
   // background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
-  background: transparent;
+  background-color: #1d2735;
   color: #eeeeeed2 !important;
   outline: none;
   transition: all .2s ease;
+  font-weight: 300;
+  font-size: 14px;
 }
 
 .field-input:focus {
   // transform: scale(1.01);
+  border: 1px solid #7c7d72d0 !important;
   filter: brightness(1.1)
 }
 
@@ -588,15 +591,15 @@ button {
   /* Adjusted left value */
 }
 
-.field-input:hover {
-  opacity: 0.7;
-}
+// .field-input:hover {
+//   opacity: 0.7;
+// }
 
-.field-input:focus {
-  opacity: 1;
-  // transform: scale(1.008);
-  filter: brightness(1.1);
-}
+// .field-input:focus {
+//   opacity: 1;
+//   // transform: scale(1.008);
+//   filter: brightness(1.1);
+// }
 
 
 .field-input::placeholder {

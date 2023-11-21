@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat November 18th 2023 12:43:55 
+ * Last Modified: Mon November 20th 2023 11:59:36 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -52,6 +52,7 @@ import { SharedDataService } from "./_services/shared-data.service";
 import { ScheduleComponent } from './board-moderator/regiment-settings/schedule/schedule.component';
 import { MembersComponent } from './board-moderator/regiment-settings/members/members.component';
 import { MediaComponent } from './board-moderator/regiment-settings/media/media.component';
+import { EventBuilderComponent } from './board-moderator/event-builder/event-builder.component';
 
 /**
  * Routes for the application
@@ -78,6 +79,7 @@ const routes: Routes = [
   { path: "recaps", component: EventRecapsComponent},
   { path: "reset", component: ResetPasswordComponent },
   { path: "reset/:token", component: ResetPasswordComponent },
+  { path: "event-build", component: EventBuilderComponent },
   { path: "", redirectTo: "/home", pathMatch: "full" },
 ];
 
@@ -111,6 +113,7 @@ const routes: Routes = [
     ScheduleComponent,
     MembersComponent,
     MediaComponent,
+    EventBuilderComponent,
   ],
   imports: [
     BrowserModule,
