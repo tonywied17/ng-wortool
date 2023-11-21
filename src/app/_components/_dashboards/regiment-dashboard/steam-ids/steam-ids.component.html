@@ -1,0 +1,250 @@
+<div *ngIf="!isDataLoaded" class="lds-ellipsis">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<div *ngIf="addingSteam" class="overlay"></div>
+<div class="center-container z-50" *ngIf="addingSteam">
+    <div class="centered-box">
+
+        <div class="w-full text-right">
+            <button class="text-lg" mat-button color="primary" (click)="toggleAddingSteam()">
+                <span [innerHTML]="addString"></span>
+            </button>
+        </div>
+
+        <div>
+
+
+    </div>
+        <div class="field-box">
+
+            <form [formGroup]="steamIdForm" (ngSubmit)="setGameId()">
+                <input formControlName="gameIdForm" (input)="getSteamIdPreview()" matTooltipClass="form-tooltip"
+                    matTooltipPosition="left" matTooltip="Enter the Steam ID or Profile URL you want to add."
+                    name="gameIdForm"
+                    class="field-input my-[0.5em]" type="text" placeholder="Steam ID or Steam Profile URL..." required />
+                    <i class="fa-brands fa-steam-symbol field-icon"></i>
+            </form>
+
+
+        </div>
+
+        <div *ngIf="previewData">
+            <div class="grid grid-cols-[150px_auto] w-fit p-2 my-3">
+                <div class="row-start-1 col-start-1 col-span-2">
+                    <p class="mb-1">{{previewData.personaname}}</p>
+                </div>
+                <div>
+                    <img [src]="previewData.avatarfull"
+                        class="h-auto w-[120px] rounded-md shadow-sm hover:shadow-md transition-all duration-200">
+                </div>
+                <div class="place-self-center">
+                    <p class="mb-2 text-sm">Last Online <span class="font-[200]">{{convertTo12HourTime(previewData.lastlogoff)}}</span></p>
+                    <button mat-stroked-button color="primary" (click)="openProfileUrl()">
+                        <i class="fa-brands fa-steam"></i> Profile
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="w-full text-right">
+            <button mat-raised-button color="primary" (click)="setGameId()" [disabled]="steamIdForm.invalid">
+                Add User <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div *ngIf="isDataLoaded">
+	<h2 class="lg:text-2xl text-lg text-slate-400 pb-1 ml-2 lg:ml-0">Steam Stat Tracking</h2>
+    <p class="text-sm font-[200] italic text-neutral-300 mb-7 ml-4">
+        <i class="fa-regular fa-circle-question mr-1"></i> For tracking Steam game stats of friends and regiment members.
+    </p>
+
+    <div>
+        <div class="field-box">
+            <input [(ngModel)]="searchText" (ngModelChange)="filterSteamIds()" type="text" class="field-input" placeholder="Filter by nickname, or steam id">
+            <i class="fa-solid fa-search field-icon"></i>
+        </div>
+    </div>
+
+    <!-- Refresh and Add New Buttons -->
+    <div class="w-full my-4 flex justify-between">
+        <button mat-stroked-button color="primary" (click)="getSteamIds()">
+            <i class="fa-solid fa-sync"></i> Refresh
+        </button>
+        <button mat-stroked-button color="primary" (click)="toggleAddingSteam()">
+            <span [innerHTML]="addString"></span>
+        </button>
+    </div>
+    
+
+
+    <div *ngFor="let user of getPaginatedSteamIds()" class="my-4 scale-center">
+
+        <div class="rounded-lg w-full bg-slate-900/80 shadow-lg">
+            <div class="grid lg:grid-cols-[120px_auto_auto] grid-cols[120px_auto]">
+
+                <!--  -->
+
+                <div class="row-start-1 col-start-1 lg:col-span-3 col-span-2 rounded-t-lg" style="
+                background: linear-gradient(
+                  130deg,
+                  #263855e1,
+                  #1e293b00,
+                  #1e293b00,
+                  #1e293b00
+                );
+              ">
+
+                    <div class="grid grid-cols-2 rounded-t-lg" *ngIf="user.liveSteamData">
+                        <div class="p-2 flex items-center">
+                            <span class="inline-block pl-2 font-[200] lg:text-xl">
+                                <i class="fa-brands fa-steam-symbol"></i> {{user.liveSteamData.personaname}}
+                            </span>
+                        </div>
+
+                        <div class="p-2 rounded-t-lg" style="
+                        background: linear-gradient(
+                        -25deg,
+                        #263855e1,
+                        #1e293b00,
+                        #1e293b00,
+                        #1e293b00
+                        );
+                        ">
+
+                        <h1 class="text-lg text-[#7c7d72] flex items-center">
+                            Level {{ getLevelData(getExperienceValue(user.liveGameStats)).lvl }} 
+                            <span class="text-sm font-[900] text-blue-500 ml-auto pr-3" id="nextLevelLabel">
+                                Level {{ getLevelData(getExperienceValue(user.liveGameStats)).lvl + 1 }}
+                                <i class="fa-solid fa-turn-up"></i>
+                            </span>
+                        </h1>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar animated-bar" id="xpProgressBar"
+                                [style.width]="getLevelData(getExperienceValue(user.liveGameStats)).progress + '%'">
+                            </div>
+                        </div>
+                        <div class="w-full text-right pr-3">
+                            <span class="text-neutral-200 text-sm font-[200]" id="xpLabel">
+                                {{ roundNumber(getLevelData(getExperienceValue(user.liveGameStats)).xp) + " / " + getLevelData(getExperienceValue(user.liveGameStats)).xpRq }} 
+                                <sup>XP</sup>
+                            </span>
+                        </div>
+                        
+                        </div>
+                    </div>
+
+
+                    <mat-divider></mat-divider>
+                </div>
+
+                <!--  -->
+                
+
+                <div class="lg:row-start-2 p-4 place-self-start lg:col-start-1 col-span-1" *ngIf="user.liveSteamData">
+                    <img [src]="user.liveSteamData.avatarfull"
+                        class="h-auto w-[120px]  rounded-md shadow-sm hover:shadow-md transition-all duration-200">
+                </div>
+
+                <div *ngIf="!user.liveSteamData" class="p-4 row-start-2 lg:col-start-1 col-span-1">
+                    <img src="https://wortool.com/assets/placeholder.png"
+                        class="h-auto w-[120px]  rounded-md shadow-sm hover:shadow-md transition-all duration-200">
+                </div>
+
+                <!--  -->
+
+                <div class="lg:col-start-2 col-span-1">
+
+                    <div>
+                        
+                        <div *ngIf="user.liveGameStats" class="font-[300]">
+                            <div class="grid lg:grid-cols-2 grid-cols-1 lg:w-fit p-4 gap-4">
+                                <div class="lg:place-self-start">
+                                    <h4 class="text-lg text-slate-300">Matches Played</h4>
+                                    <ng-container *ngFor="let stat of user.liveGameStats">
+                                        <p class="text-sm my-2" *ngIf="stat.name.startsWith('STAT_GAMES_PLAYED')">
+                                            <span class="font-[200] pl-2 w-[40px] inline-block text-right">{{stat.value}}</span>
+                                            <b class="ml-4">{{getGameType(stat.name)}}</b>
+                                        </p>
+                                    </ng-container>
+                                </div>
+                                <div class="lg:place-self-start">
+                                    <h4 class="text-lg text-slate-300">Misc Stats</h4>
+                                    <p class="text-sm my-2" *ngIf="getStatValue(user.liveGameStats, 'STAT_FLAG_PICKUPS')">
+                                        <b class="pl-1 w-[100px] inline-block text-left">Flag Pickups</b>
+                                        <span class="font-[200] pl-2 w-[40px] inline-block text-left">{{getStatValue(user.liveGameStats, 'STAT_FLAG_PICKUPS')}}</span>
+                                    </p>
+                                    <p class="text-sm my-2" *ngIf="getStatValue(user.liveGameStats, 'STAT_LOYALTY_BONUS') != null">
+                                        <b class="pl-1 w-[100px] inline-block text-left">Loyalty Bonus</b>
+                                        <span class="font-[200] pl-2 w-[40px] inline-block text-left">
+                                            <span *ngIf="getStatValue(user.liveGameStats, 'STAT_LOYALTY_BONUS') == 1">Redeemed</span>
+                                            <span *ngIf="getStatValue(user.liveGameStats, 'STAT_LOYALTY_BONUS') == 0">Not Redeemed</span>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+
+                        <div *ngIf="!user.liveGameStats" class="font-[300] place-self-center p-4">
+                            User has no game stats for War of Rights, or it can not be retrieved.
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+                <div
+                    class="lg:col-start-3 lg:col-span-1 col-span-2 flex justify-end items-center mb-4 place-self-center lg:place-self-auto">
+                    <span
+                        class="text-sm font-[300] bg-slate-700 rounded-sm p-2 inline-block shadow-md">{{user.unbanCode}}</span>
+                    <button class="!inline-block lg:!mr-4 !ml-1 !min-h-fit !p-2 !text-sm"
+                        mat-stroked-button color="primary" (click)="openSnackBar(
+                        user.nickname + '\'s unban code copied to clipboard.',
+                        6000
+                    );
+                    copyToClipboard(user.unbanCode)"><i class="fa-regular fa-copy"></i> Copy</button>
+                </div>
+
+
+
+                <!--  -->
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="pagination" *ngIf="totalPages() > 1">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <ng-container *ngFor="let page of getPagesArray(totalPages()); let i = index">
+          <button (click)="changePage(i + 1)" [class.active]="currentPage === i + 1">
+            {{ i + 1 }}
+          </button>
+        </ng-container>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages()">Next</button>
+      </div>
+
+    
+    
+    
+      
+
+
+</div>

@@ -1,0 +1,183 @@
+<div *ngIf="!isLoaded" class="text-center text-[#88887b] text-xl opacity-75">
+	<div class="lds-ellipsis">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</div>
+
+
+
+
+<div *ngIf="isLoaded"
+	class="lg:w-[69vw] w-[100vw - 2em] m-auto mt-[1em] lg:mt-[2em] mb-[5em]">
+
+
+
+	<div *ngIf="!sharedDataService.showAdmin && sharedDataService.isLoggedIn"
+		class="p-5 bg-[#1c2537] rounded-md"
+		style="border-left: 5px solid #a13c3c;">
+		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
+			<div class="row-start-2 sm:row-start-auto">
+				<button class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+					mat-button
+					routerLink="/home">
+					<i class="fa-solid fa-house mr-1.5"></i>
+					Home
+				</button>
+			</div>
+
+
+
+			<div class="row-start-1 sm:row-start-auto">
+				<h3 class="text-xl my-2">
+					You do not have access to this feature
+				</h3>
+				<p>
+					You do not have the necessary permissions to view this content.
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div *ngIf="!sharedDataService.isLoggedIn"
+		class="p-5 bg-[#1c2537] rounded-md"
+		style="border-left: 5px solid #a13c3c;">
+		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
+			<div class="row-start-2 sm:row-start-auto">
+				<button class="!my-4 bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]"
+					mat-button
+					routerLink="/home">
+					<i class="fa-solid fa-house mr-1.5"></i>
+					Home
+				</button>
+			</div>
+
+
+
+			<div class="row-start-1 sm:row-start-auto">
+				<h3 class="text-xl my-2">
+					Please login to continue
+				</h3>
+				<p>
+					You must be logged in to access this content.
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div *ngIf="sharedDataService.showAdmin">
+
+
+		<button (click)="goBack()"
+			color="primary"
+			mat-button
+			class="!mb-[1em]">
+			<i class="fa-sharp fa-solid fa-arrow-left"></i>
+			Back
+		</button>
+
+
+
+		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
+			<div class="col-span-1 bg-slate-800/80 rounded-lg shadow-md h-fit">
+				<div class>
+
+
+
+					<mat-list class="my-2">
+						<mat-action-list>
+							<button routerLinkActive="active_btn"
+								routerLink="/admin/1"
+								mat-list-item
+								class="py-2 !text-neutral-300 !h-[55px]">
+								<i class="fa-sharp fa-solid fa-map w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								Manage Maps
+							</button>
+
+
+
+
+							<mat-divider></mat-divider>
+
+
+
+
+							<button routerLinkActive="active_btn"
+								routerLink="/admin/2"
+								mat-list-item
+								class="py-2 !text-neutral-300 !h-[55px]">
+								<i class="fa-solid fa-gun w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								Manage Weapons
+							</button>
+
+
+
+
+							<mat-divider></mat-divider>
+
+
+
+
+							<button routerLinkActive="active_btn"
+								routerLink="/admin/3"
+								mat-list-item
+								class="py-2 !text-neutral-300 !h-[55px]">
+								<i class="fa-sharp fa-solid fa-person-military-rifle w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								Manage Regiments
+							</button>
+						</mat-action-list>
+
+
+
+
+					</mat-list>
+
+
+
+
+				</div>
+			</div>
+
+
+
+
+			<div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
+
+
+
+
+				<div *ngIf="showPage1"
+					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-slate-800/80 scale-center">
+					<h2 class="text-2xl  text-slate-400 py-4 ml-2 lg:ml-0">Edit Maps</h2>
+				</div>
+				<div *ngIf="showPage2"
+					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-slate-800/80 scale-center">
+					<h2 class="text-2xl  text-slate-400 py-4 ml-2 lg:ml-0">Manage Weapons</h2>
+					<app-manage-weapons></app-manage-weapons>
+				</div>
+				<div *ngIf="showPage3"
+					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-[1em] mx-auto bg-slate-800/80 scale-center">
+					<h2 class="text-2xl  text-slate-400 py-4 ml-2 lg:ml-0">Edit Regiments</h2>
+				</div>
+
+
+
+			</div>
+
+
+
+
+		</div>
+
+
+
+
+	</div>
+</div>

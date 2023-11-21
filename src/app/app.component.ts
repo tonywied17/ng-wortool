@@ -14,7 +14,7 @@ import { Component, OnInit } from "@angular/core";
 import { TokenStorageService } from "./_services/token-storage.service";
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Event as NavigationEvent} from '@angular/router';
 import { AuthService } from "./_services/auth.service";
-import { SharedService } from "./_services/shared.service";
+import { AuthInjectionServiceService } from "./_services/auth-injection-service.service";
 import { RegimentService } from "./_services/regiment.service";
 import { VersionChecker } from "./version-checker";
 import { RouteService } from "./_services/route-service.service";
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private sharedService: SharedService,
+    private sharedService: AuthInjectionServiceService,
     private tokenStorage: TokenStorageService,
     private versionChecker: VersionChecker,
     public routeService: RouteService,

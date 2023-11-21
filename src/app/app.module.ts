@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon November 20th 2023 11:59:36 
+ * Last Modified: Tue November 21st 2023 2:18:39 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -15,44 +15,42 @@ import { BrowserModule } from "@angular/platform-browser";
 import { MaterialModule } from "./material-module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HomeComponent } from "./home/home.component";
-import { RegimentsComponent } from "./regiments/regiments.component";
+import { HomeComponent } from "./_components/home/home.component";
+import { RegimentsComponent } from "./_components/_community/regiments/regiments.component";
 import { RouterModule, Routes } from "@angular/router";
-import { MapsComponent } from "./maps/maps.component";
+import { MapsComponent } from "./_components/_resources/maps/maps.component";
 import { HttpClientModule } from "@angular/common/http";
-import { WeaponsComponent } from "./weapons/weapons.component";
-import { MapDetailsComponent } from "./map-details/map-details.component";
-import { MusterComponent } from "./muster/muster.component";
+import { WeaponsComponent } from "./_components/_resources/weapons/weapons.component";
+import { MapDetailsComponent } from "./_components/_resources/maps/map-details/map-details.component";
 import { FormsModule } from "@angular/forms";
-import { BoardUserComponent } from "./board-user/board-user.component";
-import { BoardAdminComponent } from "./board-admin/board-admin.component";
-import { BoardModeratorComponent } from "./board-moderator/board-moderator.component";
+import { UserDashboardComponent } from "./_components/_dashboards/user-dashboard/user-dashboard.component";
+import { AdminDashboardComponent } from "./_components/_dashboards/admin-dashboard/admin-dashboard.component";
+import { RegimentDashboardComponent } from "./_components/_dashboards/regiment-dashboard/regiment-dashboard.component";
 import { authInterceptorProviders } from "./_helpers/auth.interceptor";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { ReactiveFormsModule } from "@angular/forms";
 import { PasswordMatchValidatorDirective } from "./password-match-validator.directive";
-import { ConfirmDeleteSnackbarComponent } from "./confirm-delete-snackbar/confirm-delete-snackbar.component";
-import { ManageWeaponsComponent } from "./board-admin/manage-weapons/manage-weapons.component";
-import { ServerInfoComponent } from "./board-moderator/server-info/server-info.component";
-import { GameInfoComponent } from "./game-info/game-info.component";
+import { ConfirmCancelSnackbarComponent } from "./_components/confirm-cancel-snackbar/confirm-cancel-snackbar.component";
+import { ManageWeaponsComponent } from "./_components/_dashboards/admin-dashboard/manage-weapons/manage-weapons.component";
+import { GameInfoComponent } from "./_components/_resources/game-info/game-info.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { VersionChecker } from "./version-checker";
 import { environment } from "src/environments/environment.prod";
-import { RegimentSettingsComponent } from './board-moderator/regiment-settings/regiment-settings.component';
-import { AddBotComponent } from './regiments/add-bot/add-bot.component';
-import { RegimentInfoComponent } from './regiments/regiment-info/regiment-info.component';
-import { EventRecapsComponent } from './regiments/event-recaps/event-recaps.component';
-import { SteamIdsComponent } from './board-moderator/steam-ids/steam-ids.component';
-import { ImageModalComponent } from './regiments/image-modal/image-modal.component';
-import { MapImageComponent } from './map-image/map-image.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { MusterRosterComponent } from './board-moderator/muster-roster/muster-roster.component';
-import { EnlisterComponent } from './board-moderator/muster-roster/enlister/enlister.component';
+import { RegimentSettingsComponent } from "./_components/_dashboards/regiment-dashboard/regiment-settings/regiment-settings.component";
+import { AddBotComponent } from "./_components/_community/regiments/add-bot/add-bot.component";
+import { RegimentInfoComponent } from "./_components/_community/regiments/regiment-info/regiment-info.component";
+import { EventRecapsComponent } from "./_components/_community/event-recaps/event-recaps.component";
+import { SteamIdsComponent } from "./_components/_dashboards/regiment-dashboard/steam-ids/steam-ids.component";
+import { ImageModalComponent } from "./_components/_community/regiments/image-modal/image-modal.component";
+import { MapImageModalComponent } from "./_components/_resources/maps/map-image-modal/map-image-modal.component";
+import { ResetPasswordComponent } from "./_components/home/reset-password/reset-password.component";
+import { MusterRosterComponent } from "./_components/_dashboards/regiment-dashboard/muster-roster/muster-roster.component";
+import { EnlisterComponent } from "./_components/_dashboards/regiment-dashboard/muster-roster/enlister/enlister.component";
 import { SharedDataService } from "./_services/shared-data.service";
-import { ScheduleComponent } from './board-moderator/regiment-settings/schedule/schedule.component';
-import { MembersComponent } from './board-moderator/regiment-settings/members/members.component';
-import { MediaComponent } from './board-moderator/regiment-settings/media/media.component';
-import { EventBuilderComponent } from './board-moderator/event-builder/event-builder.component';
+import { ScheduleComponent } from "./_components/_dashboards/regiment-dashboard/regiment-settings/schedule/schedule.component";
+import { MembersComponent } from "./_components/_dashboards/regiment-dashboard/regiment-settings/members/members.component";
+import { MediaComponent } from "./_components/_dashboards/regiment-dashboard/regiment-settings/media/media.component";
+import { EventBuilderComponent } from "./_components/_dashboards/regiment-dashboard/event-builder/event-builder.component";
 
 /**
  * Routes for the application
@@ -66,14 +64,13 @@ const routes: Routes = [
   { path: "maps/:id", component: MapDetailsComponent },
   { path: "weapons", component: WeaponsComponent },
   { path: "weapons/:weapon", component: WeaponsComponent },
-  { path: "muster", component: MusterComponent },
-  { path: "user", component: BoardUserComponent },
-  { path: "user/:page", component: BoardUserComponent },
-  { path: "mod", component: BoardModeratorComponent },
-  { path: "mod/:page", component: BoardModeratorComponent },
-  { path: "admin", component: BoardAdminComponent },
-  { path: "admin/:page", component: BoardAdminComponent },
-  { path: "admin/:page/:weapon", component: BoardAdminComponent },
+  { path: "user", component: UserDashboardComponent },
+  { path: "user/:page", component: UserDashboardComponent },
+  { path: "mod", component: RegimentDashboardComponent },
+  { path: "mod/:page", component: RegimentDashboardComponent },
+  { path: "admin", component: AdminDashboardComponent },
+  { path: "admin/:page", component: AdminDashboardComponent },
+  { path: "admin/:page/:weapon", component: AdminDashboardComponent },
   { path: "regiments/:id", component: RegimentInfoComponent },
   { path: "add-bot", component: AddBotComponent},
   { path: "recaps", component: EventRecapsComponent},
@@ -91,14 +88,12 @@ const routes: Routes = [
     MapsComponent,
     WeaponsComponent,
     MapDetailsComponent,
-    BoardUserComponent,
-    BoardModeratorComponent,
-    BoardAdminComponent,
-    MusterComponent,
+    UserDashboardComponent,
+    RegimentDashboardComponent,
+    AdminDashboardComponent,
     PasswordMatchValidatorDirective,
-    ConfirmDeleteSnackbarComponent,
+    ConfirmCancelSnackbarComponent,
     ManageWeaponsComponent,
-    ServerInfoComponent,
     GameInfoComponent,
     RegimentSettingsComponent,
     AddBotComponent,
@@ -106,7 +101,7 @@ const routes: Routes = [
     EventRecapsComponent,
     SteamIdsComponent,
     ImageModalComponent,
-    MapImageComponent,
+    MapImageModalComponent,
     ResetPasswordComponent,
     MusterRosterComponent,
     EnlisterComponent,
@@ -125,8 +120,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      // enabled: !isDevMode(),
-      enabled: environment.production,
+      enabled: !isDevMode(),
+      // enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",

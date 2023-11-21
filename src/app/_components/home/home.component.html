@@ -1,0 +1,584 @@
+<!-- File: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2\src\app\home\home.component.html
+Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
+Created Date: Tuesday August 8th 2023
+Author: Tony Wiedman
+-----
+Last Modified: Tue November 7th 2023 8:53:13 
+Modified By: Tony Wiedman
+-----
+Copyright (c) 2023 Tone Web Design, Molex -->
+
+<div *ngIf="loading" class="text-center text-[#88887b] text-xl opacity-75">
+	<div class="lds-ellipsis">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</div>
+
+
+<div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
+
+
+	<div [ngClass]="isLoggedIn ? 'grid lg:grid-cols-[2fr_1fr] grid-cols-1 lg:gap-5' : 'grid lg:grid-cols-[1fr_1.5fr_1.2fr] grid-cols-1 lg:gap-0'">
+
+
+		<!-- LEFT -->
+		<div class="lg:col-start-1 col-span-1 lg:row-start-1 lg:row-span-1">
+
+			<!-- AD -->
+			<div *ngIf="!isLoggedIn" style="padding: 1.5em;" class="rounded-tl-lg w-full h-fit bg-gradient-to-bl from-[#6b6a64d3] via-[#6b6a6498] to-transparent shadow-xl">
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-2 px-1">A War of Rights Tool</h3>
+				<p class="text-[#c4c4c4ce] text-base font-[300]">
+					An all-in-one utility tool for managing your War of Rights regiment.
+				</p>
+
+				<div class="rounded-lg mt-4 shadow-lg brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[350px] h-[250px]"
+				style="background-image: url('{{randomScreenshot}}'); background-size: cover;background-position: center;"></div>
+
+
+
+		    </div>
+
+			
+
+			<!-- DASH -->
+			<div *ngIf="isLoggedIn"
+				class="lg:p-6 p-2 w-full !my-auto top-in row-start-1 row-span-1 rounded-lg w-full h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
+				<div class="grid lg:grid-cols-[auto_auto] lg:px-0 px-4">
+					<div>
+						<h3 class="text-neutral-400 text-lg lg:pb-3 lg:pt-0 pt-3 tracking-tight mb-2 lg:mb-0">
+							Welcome back <span class="font-[500] text-[#88887b] px-1">{{currentUser.username}}</span>!
+						</h3>
+					</div>
+					<div class="place-self-end flex items-start mb-auto font-[200] text-sm hidden lg:inline-block text-neutral-400">
+						{{formattedDate}}
+					</div>
+				</div>
+				
+			<div class="lg:rounded-t-lg shadow-sm rounded-t-lg mt-2 brightness-[60%] sepia-[70%] blur-[0.5px] w-[100%] sm:h-[222px] h-[222px]"
+				style="background-image: url('{{randomScreenshot}}'); background-size: cover;background-position: center;">
+			</div>
+
+				<div class="lg:my-0 mb-5 rounded-b-lg shadow-2xl bg-[#6e6c6449]">
+					<mat-list>
+						<mat-action-list>
+							<button *ngIf="showAdmin"
+								routerLink="/admin/1"
+								mat-list-item
+								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
+								<i class="fa-solid fa-shield-halved w-[25px]"></i>
+								Admin Dashboard
+							</button>
+
+							<mat-divider class="!hidden" *ngIf="showAdmin"></mat-divider>
+
+								<div class="hidden !bg-gradient-to-r from-[#4b4b4775] via-[#6b6a644b] to-transparent">
+									<button *ngIf="showAdmin"
+									routerLink="/admin/1"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-map-location-dot w-[25px]"></i>
+									Manage Maps
+									</button>
+
+									<button *ngIf="showAdmin"
+									routerLink="/admin/2"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-gun w-[25px]"></i>
+									Manage Weapons
+									</button>
+
+									<button *ngIf="showAdmin"
+									routerLink="/admin/3"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-tents w-[25px]"></i>
+									Manage Regiments
+									</button>
+
+								</div>
+	
+							<mat-divider class="lg:!hidden" *ngIf="showAdmin"></mat-divider>
+
+							<button *ngIf="showMod"
+								routerLink="/mod/1"
+								mat-list-item
+								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
+								<i class="fa-solid fa-tents w-[25px]"></i>
+								Regiment Tools
+							</button>
+
+							<mat-divider class="lg:!hidden" *ngIf="showMod"></mat-divider>
+
+								<div class="hidden lg:block !bg-gradient-to-r from-[#4b4b4775] via-[#6b6a644b] to-transparent">
+									<button *ngIf="showMod"
+									routerLink="/mod/2"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-brands fa-discord w-[25px]"></i>
+									Event Share
+									</button>
+
+									<button *ngIf="showMod"
+									routerLink="/mod/3"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-brands fa-steam w-[25px]"></i>
+									Steam Stats
+									</button>
+
+								</div>
+							
+								<mat-divider class="lg:!hidden" *ngIf="showMod"></mat-divider>
+							
+							<button *ngIf="showUser"
+								routerLink="/user/1"
+								mat-list-item
+								class="!py-[0.7em] !bg-gradient-to-r from-[#8e8c8675] via-[#6b6a644b] to-transparent">
+								<i class="fa-solid fa-gear w-[25px]"></i>
+								User Settings
+							</button>
+
+							<mat-divider class="lg:!hidden"></mat-divider>
+
+								<div class="hidden lg:block !bg-gradient-to-r from-[#44434075] via-[#6b6a644b] to-transparent !rounded-b-md">
+									<button *ngIf="showUser"
+									routerLink="/user/2"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-circle-nodes w-[25px]"></i>
+									Linked Accounts
+									</button>
+
+									<button *ngIf="showUser"
+									routerLink="/user/3"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)] bottom-option">
+									<i class="fa-regular fa-star w-[25px]"></i>
+									Manage Favorites
+									</button>
+
+								</div>
+
+								<mat-divider class="lg:!hidden"></mat-divider>
+
+								<button (click)="logout()"
+								class="sm:!hidden !inline-block !py-[0.7em] !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent !rounded-bl-md lg:!rounded-none"
+								mat-list-item>
+								<i class="fa-solid fa-arrow-right-from-bracket w-[25px] !text-[#fa7676]"></i>
+								<span class="text-[#fa7676]">Logout</span>
+							</button>
+	
+						</mat-action-list>
+					</mat-list>
+				</div>
+			</div>
+
+
+			<!-- RECENT ACTIVITY -->
+			<div *ngIf="isLoggedIn"
+			style="background: linear-gradient(90deg, #1e293b, #1e293b00);"
+				class="rounded-lg h-fit lg:p-6 p-2 w-full top-in row-start-2 row-span-1 lg:mt-[40px] mt-4 hidden">
+
+				<h3 class="text-neutral-400 text-lg lg:pb-3 lg:pt-0 pt-3 tracking-tight">
+					Recent Community Activity<br><i class="font-[200] text-base">Recent media & posts</i>
+				</h3>
+				
+
+			</div>
+
+		</div>
+
+
+		<!-- CENTER -->
+		<div class="lg:col-start-2 col-span-1">
+
+
+			<!-- REGISTER -->
+			<div *ngIf="registerTask && !loginTask && !isLoggedIn && !forgotPass"
+				class="h-fit my-4 lg:mt-0"
+				style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
+				<!-- <h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
+					Sign-up Today!<br><i class="font-[200] text-base">Create a new account</i>
+				</h3> -->
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1 swing-left">
+					Sign-up Today!<br><i class="font-[200] text-base">Create a new account..</i>
+				</h3>
+				<div *ngIf="isSuccessful"
+					class="alert alert-success">
+					Your registration is successful! You may login below.
+				</div>
+				<form #f="ngForm"
+				class="scale-center"
+					*ngIf="!isSuccessful"
+					(ngSubmit)="f.form.valid && onRegister()"
+					name="form"
+					novalidate>
+					<div class="grid grid-cols-1 gap-2 sm:grid-cols-4">
+						<div class="form-group sm:col-span-4">
+							<div class="field-box">
+								<input #email="ngModel"
+									[(ngModel)]="registerForm.email"
+									name="email"
+									class="field-input !py-[1em]"
+									type="email"
+									placeholder="Your e-mail..."
+									required>
+								<i class="fa-solid fa-envelope field-icon"></i>
+							</div>
+							<div *ngIf="email.errors && f.submitted"
+								class="alert-danger">
+								<div *ngIf="email.errors['required']">Email is required</div>
+								<div *ngIf="email.errors['email']">
+									Email must be a valid email address
+								</div>
+							</div>
+						</div>
+						<div class="form-group sm:col-span-4">
+							<div class="field-box">
+								<input #username="ngModel"
+									[(ngModel)]="registerForm.username"
+									name="username"
+									class="field-input !py-[1em]"
+									type="text"
+									placeholder="Enter username..."
+									required>
+								<i class="fa-solid fa-user field-icon"></i>
+							</div>
+							<div *ngIf="username.errors && f.submitted"
+								class="alert-danger">
+								<div *ngIf="username.errors['required']">
+									Username is required
+								</div>
+								<div *ngIf="username.errors['minlength']">
+									Username must be at least 3 characters
+								</div>
+								<div *ngIf="username.errors['maxlength']">
+									Username must be at most 20 characters
+								</div>
+							</div>
+						</div>
+						<div class="form-group sm:col-span-4">
+							<div class="grid lg:grid-cols-2 lg:gap-2">
+								<div class="field-box">
+									<input #password="ngModel"
+										[(ngModel)]="registerForm.password"
+										[required]="true"
+										name="password"
+										class="field-input !py-[1em]"
+										type="password"
+										placeholder="Password..."
+										minlength="6">
+									<i class="fa-solid fa-key field-icon"></i>
+									<i class="fa-solid fa-lock field-icon"></i>
+								</div>
+								<div class="field-box">
+									<input #passwordConfirm="ngModel"
+										[(ngModel)]="registerForm.passwordConfirm"
+										[required]="true"
+										[appPasswordMatchValidator]="registerForm.password"
+										name="passwordConfirm"
+										class="field-input !py-[1em]"
+										type="password"
+										placeholder="Confirm...">
+									<i class="fa-solid fa-lock field-icon"></i>
+								</div>
+							</div>
+							<div *ngIf="f.submitted && (password.errors || passwordConfirm.errors)"
+								class="alert-danger">
+								<div *ngIf="password.errors?.['required']">
+									Password is required
+								</div>
+								<div *ngIf="password.errors && password.errors?.['minlength']">
+									Password must be at least 6 characters
+								</div>
+								<div *ngIf="passwordConfirm.errors?.['required']">
+									Confirmation password is required
+								</div>
+								<div *ngIf="passwordConfirm.errors && passwordConfirm.errors?.['passwordMismatch']">
+									Passwords do not match
+								</div>
+							</div>
+						</div>
+						<div class="form-group sm:col-span-1 sm:col-start-4 text-right">
+							<button mat-raised-button
+							color="primary"
+							class="!max-w-fit !py-2 !sm:py-[5px] !text-neutral-300">
+								Join Now
+								</button>
+						</div>
+						<div *ngIf="f.submitted && isSignUpFailed"
+							class="alert alert-warning">
+							Signup failed!
+							<br>
+							{{ errorMessage }}
+						</div>
+					</div>
+				</form>
+			</div>
+
+
+			<!-- LOGIN -->
+			<div *ngIf="!registerTask && loginTask && !isLoggedIn && !forgotPass"
+
+				class="lg:p-6 p-2 w-full my-4 lg:mt-0"
+				style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
+				<!-- <h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
+					Login Now!<br><i class="font-[200] text-base">For returning members</i>
+				</h3> -->
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1  swing-left">
+					Login Now!<br><i class="font-[200] text-base">For returning members..</i>
+				</h3>
+				<form #f="ngForm"
+				class="scale-center"
+					*ngIf="!isLoggedIn"
+					(ngSubmit)="f.form.valid && onLogin()"
+					name="form"
+					novalidate>
+					<div class="grid grid-cols-1 gap-2 sm:grid-cols-4">
+						<div class="form-group sm:col-span-4">
+							<div class="field-box">
+								<input #username="ngModel"
+									[(ngModel)]="loginForm.username"
+									name="username"
+									class="field-input !py-[1em]"
+									type="text"
+									placeholder="Enter username..."
+									required>
+								<i class="fa-solid fa-user field-icon"></i>
+							</div>
+							<div *ngIf="username.errors && f.submitted"
+								class="alert alert-danger"
+								role="alert">
+								Username is required!
+							</div>
+						</div>
+						<!--  -->
+						<div class="form-group sm:col-span-4">
+							<div class="field-box">
+								<input #password="ngModel"
+									[(ngModel)]="loginForm.password"
+									name="password"
+									class="field-input !py-[1em]"
+									type="password"
+									placeholder="Enter password..."
+									required>
+								<i class="fa-solid fa-lock field-icon"></i>
+							</div>
+							<div *ngIf="password.errors && f.submitted"
+								class="alert alert-danger"
+								role="alert">
+								<div *ngIf="password.errors['required']">
+									Password is required
+								</div>
+								<div *ngIf="password.errors['minlength']">
+									Password must be at least 6 characters
+								</div>
+							</div>
+						</div>
+						<div class="form-group sm:col-span-3 sm:col-start-2">
+							<div class="grid grid-cols-[1fr_auto] gap-2">
+								<div style="display: flex; justify-content: flex-end; align-items: center;">
+								<button
+								type="button"
+									mat-button
+									color="accent"
+									(click)="forgot()"
+									class="!text-sm font-[500] !mr-1 !min-h-[auto] !py-1">
+									Forgot Login
+									<i class="fa-regular fa-circle-question pl-1"></i>
+								</button>
+								</div>
+								<div>
+									<button mat-raised-button
+											color="primary"
+											class="w-full !py-2 !sm:py-[5px] !text-neutral-300">
+										Login
+									</button>
+								</div>
+							</div>
+						</div>
+						
+						<div *ngIf="f.submitted && isLoginFailed"
+							class="alert alert-danger"
+							role="alert">
+							Login failed:
+			{{errorMessage}}
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- PROMPTS N SHIT -->
+			<div *ngIf="forgotPass" class="lg:p-6 p-2 w-full my-4 lg:mt-0"
+			style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
+				<app-reset-password></app-reset-password>
+			</div>
+			
+			<div *ngIf="!loginTask && registerTask && !isLoggedIn && !forgotPass" class="">
+				<mat-divider class="!w-[222px] !mx-auto fade-center"></mat-divider>
+				<div class="lg:p-6 p-2 fade-center">
+					
+					<h3 class="text-[#88887b] ml-1 text-xl font-[300]">
+						Login Back In...
+					</h3>
+					
+					<p class="text-sm font-[300] italic text-[#88887b] mt-2 mb-3 ml-4">
+						Returning member? Log in to your account and pick up right where you left off, managing your regiment with ease.
+					</p>
+					<div class="text-right">
+						<button (click)="loginBtn()"
+							mat-stroked-button
+							class="!py-1 !text-base font-[400] !px-8">
+							Log In
+						</button>
+					</div>
+				</div>
+			</div>
+	
+			<div *ngIf="loginTask && !registerTask && !isLoggedIn && !forgotPass" class="">
+				<mat-divider class="!w-[222px] !mx-auto fade-center"></mat-divider>
+				<div class="lg:p-6 p-2 fade-center">
+
+					<h3 class="text-[#88887b] ml-1 text-xl font-[300]">
+						Create an Account
+					</h3>
+					
+					<p class="text-sm font-[300] italic text-[#88887b] mt-2 mb-3 ml-4">
+						Maximize your regiment's potential with our advanced tools. Sign up now for a seamless and efficient management experience.
+					</p>
+					
+					<div class="mt-4 text-right">
+						<button (click)="registerBtn()" mat-stroked-button class="!py-1 !text-base font-[400] !px-8">
+							Sign Up!
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="loginTask && !registerTask && !isLoggedIn && forgotPass" class="">
+				<mat-divider class="!w-[222px] !mx-auto fade-center"></mat-divider>
+				<div class="lg:p-6 p-2 fade-center">
+					
+					<h3 class="text-[#88887b] ml-1 text-xl font-[300]">
+						Login Back In...
+					</h3>
+					
+					<p class="text-sm font-[300] italic text-[#88887b] mt-2 mb-3 ml-4">
+						Returning member? Log in to your account and pick up right where you left off, managing your regiment with ease.
+					</p>
+					<div class="text-right">
+						<button (click)="loginBtn()"
+							mat-stroked-button
+							class="!py-1 !text-base font-[400] !px-8">
+							Log In
+						</button>
+					</div>
+				</div>
+			</div>
+
+			
+
+
+			<!-- NEWS -->
+			<div *ngIf="isLoggedIn" class="lg:p-6 p-2 rounded-lg lg:mt-0 mt-4 shadow-xl right-in" style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
+			
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 ml-[-10px]">
+					Recent Game News<br><i class="font-[200] text-base">Latest War of Rights news &amp; updates!</i>
+				</h3>
+	
+				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto">
+					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
+					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
+						<div class="cols-start-1 col-span-1 px-2 text-left">
+							<span class="text-sm opacity-40 font-[200]">
+								{{ formatUnixTimestamp(article.date) }} <span class="text-slate-300">by {{ article.author }}</span>
+							</span>
+						</div>
+						<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+							<button (click)="open(article.url , article.title, 1500, 868)"
+								mat-button
+								color="accent"
+								class="!text-sm font-[500] !mr-1 !min-h-[auto] !py-1">
+								Pop Out
+								<i class="fa-sharp fa-solid fa-arrow-up-right-from-square" style="margin-left:5px;"></i>
+							</button>
+						</div>
+					</div>
+					<mat-divider *ngIf="!isLast"></mat-divider>
+				</div>
+	
+			</div>
+	
+
+		</div>
+
+
+		<!-- RIGHT -->
+		<div class="lg:col-start-3 col-span-1 lg:row-start-1 lg:row-span-1">
+			
+			<!-- NEWS -->
+			<div *ngIf="!isLoggedIn" class="lg:mt-0 mt-4 shadow-xl" style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
+			
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 ml-[-10px]">
+					Recent Game News<br><i class="font-[200] text-base">Latest War of Rights news &amp; updates!</i>
+				</h3>
+	
+				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto">
+					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
+					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
+						<div class="cols-start-1 col-span-1 px-2 text-left">
+							<span class="text-sm opacity-40 font-[200]">
+								{{ formatUnixTimestamp(article.date) }} <span class="text-slate-300">by {{ article.author }}</span>
+							</span>
+						</div>
+						<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+							<button (click)="open(article.url , article.title, 1500, 868)"
+								mat-button
+								color="accent"
+								class="!text-sm font-[500] !mr-1 !min-h-[auto] !py-1">
+								Pop Out
+								<i class="fa-sharp fa-solid fa-arrow-up-right-from-square" style="margin-left:5px;"></i>
+							</button>
+						</div>
+					</div>
+					<mat-divider *ngIf="!isLast"></mat-divider>
+				</div>
+	
+			</div>
+		
+
+		</div>
+
+
+	</div>
+
+	<div class="scale-center mt-4">
+		<div class="h-full text-right">
+			<div class="font-[200] text-xs text-gray-400 p-[1em] !text-right">
+				<span class="pr-2 max-w-fi">
+					&copy; {{currentYear}} - {{nextYear}}
+				</span>
+				<span class="pr-2">WoRTool.com</span>
+				<span class="pr-2 !text-gray-300 block">
+					<p class="text-right mt-2">
+						<a class="!min-h-fit !h-fit !py-1.5 donate-link" href="https://www.paypal.com/paypalme/AnthonyWiedman" target="_blank" mat-stroked-button><i class="fa-solid fa-hand-holding-dollar"></i> Donate to WoRTool</a>
+					</p>
+					<button (click)="openPortfolio()"
+						class="hover:brightness-125 active:transform active:translate-y-1 active:translate-x-1">
+						by PA-[PIB] QM. Molex
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+
+
+
+		
