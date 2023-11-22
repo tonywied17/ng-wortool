@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 2:13:17 
+ * Last Modified: Wed November 22nd 2023 5:57:42 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -18,7 +18,7 @@ import { SharedService } from "./_services/shared-service.service";
 import { RegimentService } from "./_services/regiment.service";
 import { VersionChecker } from "./version-checker";
 import { RouteService } from "./_services/route-service.service";
-
+import { SharedDataService } from "./_services/shared-data.service";
 import { Location } from "@angular/common";
 
 @Component({
@@ -51,7 +51,8 @@ export class AppComponent implements OnInit {
     private versionChecker: VersionChecker,
     public routeService: RouteService,
     private location: Location,
-    private regimentService: RegimentService
+    private regimentService: RegimentService,
+    public sharedDataService: SharedDataService
   ) {
     this.versionChecker.listenForUpdates();
     this.authService.authenticationEvent.subscribe(() => {
@@ -80,24 +81,27 @@ export class AppComponent implements OnInit {
   /**
    * On init
    */
-  ngOnInit(): void {
-    this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
-        this.isLoggedIn = isLoggedIn;
-        if (isLoggedIn) {
-            this.setRoleProperties();
-        }
-    });
+  async ngOnInit(): Promise<void> {
 
-    this.initializeComponent();
+    this.sharedDataService.retrieveInitialData()
+    .then(async () => {
+      this.setRoleProperties()
+    })
+    .catch(error => {
+      console.error("Error initializing shared data:", error);
+    });
+    
+    await this.initializeComponent();
+    
 }
 
   private setRoleProperties(): void {
     const user = this.tokenStorage.getUser();
-    this.roles = user.roles;
+    this.roles = this.sharedDataService.currentUser.roles;
 
-    this.showAdmin = this.roles.includes("ROLE_ADMIN");
-    this.showMod = this.roles.includes("ROLE_MODERATOR");
-    this.showUser = this.isLoggedIn;
+    this.showAdmin = this.sharedDataService.showAdmin;
+    this.showMod = this.sharedDataService.showMod;
+    this.showUser = this.sharedDataService.showUser;
 }
 
   /**
@@ -106,24 +110,25 @@ export class AppComponent implements OnInit {
    */
   async initializeComponent(): Promise<void> {
     this.isLoggedIn = !!this.tokenStorage.getToken();
-    this.currentUser = this.tokenStorage.getUser();
-  
+    this.currentUser = this.sharedDataService.currentUser
+    this.roles = this.sharedDataService.currentUser.roles
+
     if (this.isLoggedIn) {
-      this.roles = this.tokenStorage.getUser().roles;
-      this.showAdmin = this.roles.includes("ROLE_ADMIN");
-      this.showMod = this.roles.includes("ROLE_MODERATOR");
+      this.roles = this.sharedDataService.currentUser.roles;
+      this.showAdmin = this.sharedDataService.showAdmin;
+      this.showMod = this.sharedDataService.showMod;
       this.showUser = true;
     }
   
     const response = await this.regimentService
-      .getRegiment(this.currentUser.regimentId)
+      .getRegiment(this.sharedDataService.currentUser.regimentId)
       .toPromise();
     // console.log(response);
   
     if (response.ownerId === null) {
       this.isOwner = false;
       this.modRoute = "/mod/2";
-    } else if (response.ownerId.includes(this.currentUser.discordId)) {
+    } else if (response.ownerId.includes(this.sharedDataService.regimentId)) {
       this.isOwner = true;
       this.modRoute = "/mod/1";
     } else {

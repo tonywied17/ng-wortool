@@ -1025,3 +1025,11 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #7c7d71 #292f37;
 }
+
+.mat-mdc-button-touch-target{
+  height: fit-content !important;
+}
+
+.mdc-list, .no-padding {
+  padding: 0 0 !important;
+}

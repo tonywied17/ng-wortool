@@ -4,21 +4,23 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 2:12:12 
+ * Last Modified: Wed November 22nd 2023 5:55:21 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from "@angular/core";
-import { AuthService } from 'src/app/_services/auth.service';
-import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { AuthService } from "src/app/_services/auth.service";
+import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { NavigationEnd, Router } from "@angular/router";
-import { SharedService } from 'src/app/_services/shared-service.service';
-import { RegimentService } from 'src/app/_services/regiment.service';
-import { PasswordMatchValidatorDirective } from 'src/app/password-match-validator.directive';
+import { AuthInjectionServiceService } from 'src/app/_services/auth-injection-service.service';
+import { RegimentService } from "src/app/_services/regiment.service";
+import { PasswordMatchValidatorDirective } from "src/app/password-match-validator.directive";
 import { ChangeDetectorRef } from "@angular/core";
-import { SteamApiService } from 'src/app/_services/steam-api.service';
+import { SteamApiService } from "src/app/_services/steam-api.service";
+import { SharedDataService } from 'src/app/_services/shared-data.service';
+import { SharedService } from 'src/app/_services/shared-service.service';
 
 @Component({
   selector: "app-home",
@@ -40,7 +42,7 @@ export class HomeComponent implements OnInit {
 
   isSuccessful = false;
   isSignUpFailed = false;
-  isLoggedIn = false;
+  // isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = "";
   registerTask = false;
@@ -49,7 +51,7 @@ export class HomeComponent implements OnInit {
   showUser = false;
   showMod = false;
   roles: string[] = [];
-  currentUser: any;
+  // currentUser: any;
   loading = true;
   gameDetails: any;
   screenshots: any;
@@ -60,6 +62,8 @@ export class HomeComponent implements OnInit {
   articleLength: any;
   latestAuthor: any;
   latestDate: any;
+
+  forgotPass: boolean = false;
 
   isOwner: boolean = false;
   modRoute?: string;
@@ -78,7 +82,8 @@ export class HomeComponent implements OnInit {
     private regimentService: RegimentService,
     private cdRef: ChangeDetectorRef,
     private datePipe: DatePipe,
-    private steamApiService: SteamApiService
+    private steamApiService: SteamApiService,
+    public sharedDataService: SharedDataService
   ) {
     this.router.events.subscribe((event) => {
       const date = new Date();
@@ -103,12 +108,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.formattedDate = this.datePipe.transform(new Date(), 'MM/d/yy h:mm a z', 'shortTime') as string;
 
-    this.isLoggedIn = !!this.tokenStorage.getToken();
+    this.sharedDataService.isLoggedIn = !!this.tokenStorage.getToken();
 
+    this.sharedDataService.currentUser = this.tokenStorage.getUser();
 
-    this.currentUser = this.tokenStorage.getUser();
-
-    if (!this.isLoggedIn) {
+    if (!this.sharedDataService.isLoggedIn) {
       this.initializeComponent();
     }
 
@@ -116,9 +120,9 @@ export class HomeComponent implements OnInit {
       this.initializeComponent();
     });
 
-    if (this.isLoggedIn) {
+    if (this.sharedDataService.isLoggedIn) {
       this.sharedService.isLoggedIn$.subscribe((isLoggedIn) => {
-        this.isLoggedIn = isLoggedIn;
+        this.sharedDataService.isLoggedIn = isLoggedIn;
         this.initializeComponent();
       });
     }
@@ -132,15 +136,15 @@ export class HomeComponent implements OnInit {
   async initializeComponent(): Promise<void> {
     this.getScreenshots();
     this.getAppNews();
-    this.isLoggedIn = !!this.tokenStorage.getToken();
-    this.currentUser = this.tokenStorage.getUser();
-    const userID = this.currentUser.id;
+    this.sharedDataService.isLoggedIn = !!this.tokenStorage.getToken();
+    this.sharedDataService.currentUser = this.tokenStorage.getUser();
+    const userID = this.sharedDataService.currentUser.id;
 
-    if (this.isLoggedIn && this.currentUser) {
+    if (this.sharedDataService.isLoggedIn && this.sharedDataService.currentUser) {
       try {
-        const response = await this.regimentService.getRegiment(this.currentUser.regimentId).toPromise();
+        const response = await this.regimentService.getRegiment(this.sharedDataService.currentUser.regimentId).toPromise();
         if (response.ownerId !== null) {
-          this.isOwner = response.ownerId.includes(this.currentUser.discordId);
+          this.isOwner = response.ownerId.includes(this.sharedDataService.currentUser.discordId);
         } else {
           this.isOwner = false;
         }
@@ -169,7 +173,7 @@ export class HomeComponent implements OnInit {
       );
 
       this.authService
-        .checkModeratorRole(userID, this.currentUser.regimentId)
+        .checkModeratorRole(userID, this.sharedDataService.currentUser.regimentId)
         .subscribe(
           (response) => {
             this.showMod = response.access;
@@ -239,9 +243,9 @@ export class HomeComponent implements OnInit {
       next: async (data) => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
-        this.roles = data.roles; // Directly using the roles from the response
-        console.log(data)
-        this.currentUser.username = data.username;
+        this.roles = data.roles;
+        // this.sharedDataService.currentUser = data;
+        this.sharedDataService.currentUser = data;
 
         this.isLoginFailed = false;
         this.authService.isAuthenticated = true;
@@ -259,12 +263,20 @@ export class HomeComponent implements OnInit {
           this.roles.includes("ROLE_MODERATOR") ? "true" : "false"
         );
 
-        this.isLoggedIn = this.authService.isAuthenticated;
+        this.sharedDataService.isLoggedIn = this.authService.isAuthenticated;
         this.showUser = this.authService.isAuthenticated;
         this.showAdmin = this.authService.isAdministrator;
         this.showMod = this.authService.isModerator;
 
         this.authService.authenticationEvent.next();
+
+        this.sharedDataService.retrieveInitialData()
+        .then(async () => {
+      // Processed
+        })
+        .catch(error => {
+          console.error("Error initializing shared data:", error);
+        });
 
         // Check if data exists and contains regimentId
         if (data && data.regimentId) {
@@ -334,6 +346,7 @@ export class HomeComponent implements OnInit {
   loginBtn(): void {
     this.loginTask = true;
     this.registerTask = false;
+    this.forgotPass = false;
   }
 
   /**
@@ -343,6 +356,7 @@ export class HomeComponent implements OnInit {
   registerBtn(): void {
     this.loginTask = false;
     this.registerTask = true;
+    this.forgotPass = false;
   }
 
   /**
@@ -355,7 +369,7 @@ export class HomeComponent implements OnInit {
     localStorage.setItem("isAuthenticated", "false");
     localStorage.setItem("isAdmin", "false");
     localStorage.setItem("isModerator", "false");
-    this.isLoggedIn = this.authService.isAuthenticated;
+    this.sharedDataService.isLoggedIn = this.authService.isAuthenticated;
     this.showMod = this.authService.isModerator;
     this.showAdmin = this.authService.isAdministrator;
     this.showUser = this.authService.isAuthenticated;
@@ -437,5 +451,9 @@ export class HomeComponent implements OnInit {
         ", left=" +
         left
     );
+  }
+
+  forgot() {
+    this.forgotPass = true;
   }
 }
