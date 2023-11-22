@@ -21,11 +21,11 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { firstValueFrom } from "rxjs";
 
 @Component({
-  selector: "app-steam-ids",
-  templateUrl: "./steam-ids.component.html",
-  styleUrls: ["./steam-ids.component.scss"],
+  selector: 'app-steam-stats',
+  templateUrl: './steam-stats.component.html',
+  styleUrls: ['./steam-stats.component.scss'],
 })
-export class SteamIdsComponent implements OnInit {
+export class SteamStatsComponent implements OnInit {
   steamIdForm!: FormGroup;
   isLoggedIn = false;
   currentUser: any;
