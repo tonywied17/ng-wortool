@@ -1,77 +1,104 @@
 
 <h2 class="lg:text-2xl text-lg text-slate-400 pb-4 ml-2 lg:ml-0">Muster Roster</h2>
 
-<div class="grid grid-cols-[auto_1fr] gap-4 my-4">
+<div class="bg-yellow-200 border-l-4 border-yellow-500 text-yellow-700 my-6 p-3 rounded-md shadow-md opacity-80 brightness-90" role="alert">
+  <p class="font-bold">Warning:</p>
+  <p>This component is under development and not fully operational. We apologize for any inconvenience.</p>
+</div>
+
+
+<div class="grid grid-cols-[1fr_auto]">
+
   <div>
-    <p>User: {{ sharedDataService.currentUser.username }}!</p>
-    <p>Regiment: {{ sharedDataService.regiment.regiment }}</p>
-    <p>Guild ID: {{ sharedDataService.guildId }}</p>  
-    <p>isModerator: {{sharedDataService.showMod}}</p>
-    <p>isOwner: {{sharedDataService.isOwner}}</p>
+    <button mat-stroked-button (click)="getAllMusterUsers()">Refresh</button>
   </div>
   <div>
-    <div class="bg-slate-900/80 rounded-md border-l-4 border-yellow-700 text-yellow-300 p-4 mb-4">
-      <div class="flex">
-        <div class="mr-2">
-          <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <div>
-          <p>
-            This component is under development.
-          </p>
-        </div>
-      </div>
+    <button mat-stroked-button color="primary" (click)="enlistUsers()">
+      Enlist Users
+    </button>
+  </div>
+</div>
+
+
+<div *ngIf="enlister" class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50" (click)="closeEnlister()">
+  <div class="w-full max-w-[1200px] mx-auto popup-modal p-2" (click)="stopPropagation($event)">
+    <div class="w-full text-right">
+      <button mat-stroked-button color="primary" (click)="closeEnlister()">Close</button>
     </div>
+    <app-enlister></app-enlister>
   </div>
 </div>
 
 
-
-
-<div *ngIf="enlister">
-  <app-enlister></app-enlister>
-</div>
 
 <div *ngIf="!enlister">
-  <button mat-flat-button color="primary" (click)="enlistUsers()">
-    Enlist Users
-  </button>
+  
 </div>
 
 <div>
-  <h2>Muster Users</h2>
-  <button (click)="getAllMusterUsers()">Get All Muster Users</button>
-  
-  <table *ngIf="musterUsers && musterUsers.length > 0">
-    <thead>
-      <tr>
-        <th>Nickname</th>
-        <th>Discord ID</th>
-        <th>Regiment ID</th>
-        <th>Events</th>
-        <th>Drills</th>
-        <th>Join Date</th>
-        <th>Last Muster</th>
-        <th>Order By</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of musterUsers">
-        <td><input [(ngModel)]="user.nickname" /></td>
-        <td><input [(ngModel)]="user.discordId" /></td>
-        <td><input [(ngModel)]="user.regimentId" /></td>
-        <td><input [(ngModel)]="user.events" /></td>
-        <td><input [(ngModel)]="user.drills" /></td>
-        <td><input [(ngModel)]="user.join_date" /></td>
-        <td><input [(ngModel)]="user.last_muster" /></td>
-        <td><input [(ngModel)]="user.order_by" /></td>
-        <td>
-          <button (click)="updateMusterUser(user)">Update</button>
-          <button (click)="incrementEvents(user)">Increment Events</button>
-          <button (click)="incrementDrills(user)">Increment Drills</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+
+<div *ngIf="musterUsers && musterUsers.length > 0" class="text-neutral-300 text-base font-[300] grid lg:grid-cols-2 gap-4 mt-4">
+
+  <div class="" *ngFor="let user of musterUsers">
+
+    <div class="grid lg:grid-cols-2">
+      <div class="rounded-t-md shadow-lg lg:col-start-1 col-span-2 px-2 text-lg font-[400]" style="background:linear-gradient(90deg, #7c7d72a2, #7c7d7200);">
+        <i class="fa-brands fa-discord pr-1"></i>{{user.nickname}}
+      </div>
+
+      <mat-divider class="col-span-2"></mat-divider>
+
+      <div class="p-2 col-span-1">
+        <div *ngIf="!user.isEditing">
+          <p><span class="font-[500] text-slate-500">{{user.events}}</span> Events</p>
+          <p><span class="font-[500] text-slate-500">{{user.drills}}</span> Drills</p>
+        </div>
+        <div *ngIf="user.isEditing">
+          <p>
+            <label>Events</label>
+            <input class="field-input !px-1 !py-0.5" [(ngModel)]="user.events" />
+          </p>
+          <p>
+            <label>Drills</label>
+            <input class="field-input !px-1 !py-0.5" [(ngModel)]="user.drills" />
+          </p>
+        </div>
+      </div>
+
+      <div class="p-2 text-right">
+        <div *ngIf="!user.isEditing">
+          <p>Enlisted On <span class="font-[500] text-slate-500 block lg:inline">{{user.join_date}}</span></p>
+          <p>Last Muster <span class="font-[500] text-slate-500 block lg:inline">{{user.last_muster}}</span></p>
+        </div>
+        <div *ngIf="user.isEditing">
+          <p>
+            <label>Enlisted On</label>
+            <input class="field-input !px-1 !py-0.5" [(ngModel)]="user.join_date" />
+          </p>
+          <p>
+            <label>Last Muster</label>
+            <input class="field-input !px-1 !py-0.5" [(ngModel)]="user.last_muster" />
+          </p>
+        </div>
+      </div>
+
+      <mat-divider class="col-span-2"></mat-divider>
+      
+      <div>
+        <button mat-button class="!min-h-fit !min-w-fit p-1 m-1"(click)="toggleEdit(user)" color="primary"><i class="fa-solid fa-user-pen"></i> Edit</button>
+      </div>
+      <div class="text-right">
+        <button mat-button class="!min-h-fit !min-w-fit p-1 m-1" (click)="incrementDrills(user)" color="primary"><i class="fa-solid fa-plus"></i> Drill</button>
+        <button mat-button class="!min-h-fit !min-w-fit p-1 m-1" (click)="incrementEvents(user)" color="primary"><i class="fa-solid fa-plus"></i> Event</button>
+        <button *ngIf="user.isEditing" mat-flat-button color="primary" class="!min-h-fit !min-w-fit p-1 m-1" (click)="updateMusterUser(user)" color="primary">Update</button>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>
+
 </div>

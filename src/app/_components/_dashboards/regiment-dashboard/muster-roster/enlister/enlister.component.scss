@@ -22,8 +22,9 @@
     top: 100%;
     left: 0;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 40vh;
+    min-height: 40vh;
     display: block;
     // max-width: 300px;
   }

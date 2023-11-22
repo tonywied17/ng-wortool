@@ -1,7 +1,5 @@
 @use '@angular/material'as mat;
 
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap');
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
@@ -317,7 +315,7 @@ body::-webkit-scrollbar-thumb {
 .mat-mdc-checkbox-label {
   // font-family: 'Roboto Slab', serif;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   color: #7c7d72;
   font-weight: 300;
   transition: all .2s ease;
@@ -340,13 +338,13 @@ mat-checkbox:hover {
 
 button.mat-mdc-menu-item {
   font-family: 'Roboto Slab', serif;
-  // font-family: 'Poppins', sans-serif !important;
+  // font-family: 'Noto Sans', sans-serif !important;;
 }
 
 .mat-mdc-radio-label {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  // font-family: 'Poppins', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
+  // font-family: 'Noto Sans', sans-serif;
   color: #7c7d72 !important;
   font-weight: 300;
   transition: all .2s ease;
@@ -354,7 +352,7 @@ button.mat-mdc-menu-item {
 
 .mat-mdc-radio-button .mdc-form-field {
   color: #7c7d72 !important;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
   font-size: 16px !important;
 }
 
@@ -365,7 +363,7 @@ mat-radio-button {
 }
 
 .mdc-form-field>label {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
 }
 
 
@@ -464,12 +462,12 @@ button {
 }
 
 .mat-mdc-checkbox .mdc-form-field {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
   font-size: 16px !important;
 }
 
 .settings .mat-mdc-checkbox .mdc-form-field {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
   font-size: 14px !important;
 }
 
@@ -498,7 +496,7 @@ button {
 
 .field-input {
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
   padding: 10px 36px 10px 48px;
   width: 100%;
   border: 1px solid #7c7d7271 !important;
@@ -508,7 +506,7 @@ button {
   color: #eeeeeed2 !important;
   outline: none;
   transition: all .2s ease;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 14px;
 }
 
@@ -519,7 +517,7 @@ button {
 }
 
 .field-input2 {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
   padding: 12px 36px 12px 69px;
   width: 100%;
   border: 2px solid #7c7d72 !important;
@@ -541,11 +539,11 @@ button {
   color: #fff;
   opacity: 0.7;
   transition: all .2s ease;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
 }
 
 .mat-mdc-form-field {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Noto Sans', sans-serif !important;;
   font-size: 0.875rem !important;
 }
 
@@ -607,7 +605,7 @@ button {
 }
 
 .setting-button {
-  // font-family: 'Poppins', sans-serif !important;
+  // font-family: 'Noto Sans', sans-serif !important;;
   font-weight: 600 !important;
   font-size: 1rem;
 }

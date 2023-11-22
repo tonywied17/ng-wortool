@@ -1,16 +1,16 @@
 
 
 
-    <mat-tab-group>
+    <mat-tab-group dynamicHeight="">
       <mat-tab label="Mass Enlist by Roles"> 
         <div class="grid grid-cols-[auto_1fr] gap-4 p-4">
 
           <div>
             <div class="custom-select-container">
               <div class="custom-select">
-                <button class="select-button" (click)="toggleDropdown()" mat-flat-button color="primary">
+                <!-- <button class="select-button" (click)="toggleDropdown()" mat-flat-button color="primary">
                   {{ selectedRole ? selectedRole.name : 'Select a role...' }}
-                </button>
+                </button> -->
           
                 <div class="dropdown-container">
                   <div class="field-box sticky top-0">
@@ -25,7 +25,7 @@
                       Fetching Roles...
                     </li>
           
-                    <li *ngFor="let role of filteredRoles" (click)="selectRole(role)">
+                    <li *ngFor="let role of filteredRoles" (click)="selectRole(role)" class="bg-slate-800 p-1 rounded-sm my-1 font-[300]">
                       {{ role.name }}
                     </li>
                   </ul>
@@ -50,17 +50,17 @@
               <div>
                   <button (click)="toggleCheckAll()" mat-stroked-button color="primary" class="mr-1 !min-h-fit !text-base">{{selectAll ? 'Uncheck All' : 'Check All'}}</button>
                   <mat-checkbox [(ngModel)]="showNicknameOnly">Has Nickname</mat-checkbox>
-                  <span class="text-[#7c7d72] text-base font-[500] ml-2">{{ filterUsers().length }} Users with this role</span>
+                  <!-- <span class="text-[#7c7d72] text-base font-[500] ml-2">{{ filterUsers().length }} Users with this role</span> -->
               </div>
               <div>
-                  <button (click)="enlistUsers()" mat-stroked-button color="primary" class="!text-base">Enlist Users</button>
+                  <button (click)="enlistUsers()" mat-flat-button color="primary" class="!text-base !min-h-fit !my-1 !font-[400] !text-neutral-200">Add to Roster</button>
               </div>
           </div>
           
   
           <div *ngIf="filterUsers().length > 0; else noUsers" class="max-h-[50vh] overflow-y-scroll">
             
-            <div *ngFor="let user of filterUsers()" class="bg-slate-900/70 rounded-md m-2 p-2">
+            <div *ngFor="let user of filterUsers()" class="bg-slate-800 rounded-md m-1 p-2">
   
               <label class="grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer">
                   <div>
@@ -91,8 +91,14 @@
       
   </div>
   </mat-tab>
-  <mat-tab label="Enlist User"> 
-    Content 2 
+  <mat-tab label="Enlist Single User"> 
+
+
+      <div class="min-h-[222px]">
+          Not yet implemented. This entire component is under development!
+      </div>
+    
+    
   </mat-tab>
 </mat-tab-group>
 

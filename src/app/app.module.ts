@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue November 21st 2023 2:18:39 
+ * Last Modified: Tue November 21st 2023 11:16:34 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -40,7 +40,7 @@ import { RegimentSettingsComponent } from "./_components/_dashboards/regiment-da
 import { AddBotComponent } from "./_components/_community/regiments/add-bot/add-bot.component";
 import { RegimentInfoComponent } from "./_components/_community/regiments/regiment-info/regiment-info.component";
 import { EventRecapsComponent } from "./_components/_community/event-recaps/event-recaps.component";
-import { SteamIdsComponent } from "./_components/_dashboards/regiment-dashboard/steam-ids/steam-ids.component";
+import { SteamStatsComponent } from "./_components/_dashboards/regiment-dashboard/steam-stats/steam-stats.component";
 import { ImageModalComponent } from "./_components/_community/regiments/image-modal/image-modal.component";
 import { MapImageModalComponent } from "./_components/_resources/maps/map-image-modal/map-image-modal.component";
 import { ResetPasswordComponent } from "./_components/home/reset-password/reset-password.component";
@@ -99,7 +99,7 @@ const routes: Routes = [
     AddBotComponent,
     RegimentInfoComponent,
     EventRecapsComponent,
-    SteamIdsComponent,
+    SteamStatsComponent,
     ImageModalComponent,
     MapImageModalComponent,
     ResetPasswordComponent,
@@ -120,8 +120,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      enabled: !isDevMode(),
-      // enabled: environment.production,
+      // enabled: !isDevMode(),
+      enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",

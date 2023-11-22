@@ -124,11 +124,10 @@ export class EnlisterComponent implements OnInit {
   }
 
   enlistUsers(): void {
-    const currentDate = new Date().toISOString().split('T')[0]; 
-  
+    const currentDate = new Date().toISOString().split('T')[0];
     const enlistedUsers = this.users
       .filter((user) => this.selectedUserIds.includes(user.id))
-      .map((user) => ({ 
+      .map((user) => ({
         discordId: user.id,
         nickname: user.nickname || user.username,
         regimentId: this.sharedDataService.regimentId,
@@ -137,28 +136,30 @@ export class EnlisterComponent implements OnInit {
         join_date: currentDate,
         last_muster: currentDate,
       }));
-
-      console.log(enlistedUsers)
   
     if (enlistedUsers.length > 0) {
       this.musterUserService.create(enlistedUsers).subscribe(
         (response) => {
           console.log('Enlisted Users:', response.data);
+  
+          this.users = this.users.filter((user) => !this.selectedUserIds.includes(user.id));
+  
           this.snackBar.open(`Enlisted ${enlistedUsers.length} user${enlistedUsers.length > 1 ? 's' : ''}`, 'Dismiss', {
-            duration: 3000, 
+            duration: 3000,
             verticalPosition: 'top',
           });
         },
         (error) => {
           console.error('Error enlisting users:', error);
           this.snackBar.open('Error enlisting users. Please try again.', 'Dismiss', {
-            duration: 3000, 
+            duration: 3000,
             verticalPosition: 'top',
           });
         }
       );
     }
   }
+  
   
 
   updateSelectedUserIds(userId: string, isChecked: boolean): void {

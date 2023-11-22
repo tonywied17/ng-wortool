@@ -4,143 +4,77 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Tue November 14th 2023 9:57:48 
+Last Modified: Tue November 21st 2023 8:48:39 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
 -->
 
-<nav class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-lg w-full top-0 left-0 right-0 sm:h-auto sm:py-[5px] sm:min-h-0 z-10"
+<!-- class="bg-gradient-to-r from-[#88887bd3] via-[#88887b98] to-[#88887b41]" -->
+<nav 
+class="bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-xl w-full top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10 sm:py-1"
 	style="position: sticky; top: 0;">
 	<div class="mx-auto pr-2 sm:pr-6 lg:pr-8">
 		<div class="relative flex h-14 items-center justify-between">
 			<div class="absolute sm:hidden">
 				<!-- Mobile menu button -->
-
-
-
-
-
-
-
-
-
-				<button (click)="toggle();scroll()"
-					type="button"
+				<button (click)="toggle();scroll()" type="button"
 					class="!mt-auto inline-flex items-center justify-center rounded-md p-2 text-[#bbbbb1] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#88887b]"
-					aria-controls="mobile-menu"
-					aria-expanded="false">
+					aria-controls="mobile-menu" aria-expanded="false">
 					<span class="sr-only">Open main menu</span>
 
-
-
-
-
-
-
-
-
-					<svg class="block h-6 w-6"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true">
-						<path stroke-linecap="round"
-							stroke-linejoin="round"
+					<svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+						stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round"
 							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
 					</svg>
 
-
-
-
-
-
-
-
-
-					<svg class="hidden h-6 w-6"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true">
-						<path stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M6 18L18 6M6 6l12 12"></path>
+					<svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+						stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
 					</svg>
-
-
-
-
-
-
-
-
 
 				</button>
 			</div>
-			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+			<div class="flex flex-1 items-center justify-center sm:items-center sm:justify-start">
 				<div class="flex flex-shrink-0 items-center">
 
-
-
-
-
-
-					<button [ngClass]="{'hidden': !(routeService.showButton$ | async)}"
-						(click)="goBack()"
-						mat-button
-						class="!text-[#111827]/80 mx-2 !hidden sm:!block">
+					<button [ngClass]="{'hidden': !(routeService.showButton$ | async)}" (click)="goBack()" mat-button
+						class="!text-[#141b29]/80 mx-2 !hidden sm:!block">
 						<i class="fa-solid fa-angle-left"></i>
 					</button>
 
-
-
-
+					<div routerLink="/home" class="logo-div">
+						<span class="logo-span">W</span>
+						<span class="logo-span">T</span>
+						<span class="logo-span">.</span>
+					  </div>
 					
-					<img class="block h-8 w-auto pointer-events-none"
-						src="https://paarmy.com/assets/pa.png"
-						alt="The Pennsylvania Army">
+					
+
+					<!-- <img class="block h-8 w-auto pointer-events-none" src="https://paarmy.com/assets/pa.png"
+						alt="The Pennsylvania Army"> -->
 
 				</div>
 
-
-
-
-
-
-
-
-
-				<div class="hidden sm:ml-6 sm:block">
+				<div class="hidden sm:ml-10 sm:block">
 					<div class="flex space-x-4">
 						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-						<button *ngIf="!isLoggedIn"
-							[routerLink]="['/home']"
-							[routerLinkActiveOptions]="{exact: true}"
-							mat-button
-							routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+						<button *ngIf="!isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
+							mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Home
 						</button>
-						<button *ngIf="isLoggedIn"
-							[routerLink]="['/home']"
-							[routerLinkActiveOptions]="{exact: true}"
-							mat-button
-							routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+						<button *ngIf="isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
+							mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							<span>Dashboard</span>
 							<!-- <span *ngIf="showMod || showAdmin">s</span> -->
 						</button>
 
-
-
 						<!-- <button [routerLink]="['/maps']"
 							mat-button
-							routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+							routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Maps
 						</button> -->
@@ -148,62 +82,44 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 						<!-- <button [matMenuTriggerFor]="resources"
 							mat-button
-							routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+							routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Resources
 							<i class="fa-solid fa-caret-down"></i>
 						</button> -->
 
 
-
-
 						<ng-template #notActive>
-							<button [matMenuTriggerFor]="resources"
-								mat-button
+							<button [matMenuTriggerFor]="resources" mat-button
 								class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 								Resources
 								<i class="fa-solid fa-caret-down"></i>
 							</button>
 						</ng-template>
 
-
-
-
-
-						<button *ngIf="currentRoute == '/game-info' || currentRoute == '/weapons' || currentRoute == '/maps'; else notActive"
-							[matMenuTriggerFor]="resources"
-							mat-button
-							class="navitem !bg-[#111827]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						<button
+							*ngIf="currentRoute == '/game-info' || currentRoute == '/weapons' || currentRoute == '/maps'; else notActive"
+							[matMenuTriggerFor]="resources" mat-button
+							class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Resources
 							<i class="fa-sharp fa-solid fa-caret-down"></i>
 						</button>
 
-
-
-
-
-						<mat-menu #resources="matMenu"
-							xPosition="after"
+						<mat-menu #resources="matMenu" xPosition="after"
 							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
-							<button routerLink="/maps"
-								class="ml-2 select-none"
-								mat-menu-item>
+							<button routerLink="/maps" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
 									Maps
 								</span>
 							</button>
-							<button routerLink="/weapons"
-								class="ml-2 select-none"
-								mat-menu-item>
+							<button routerLink="/weapons" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-solid fa-person-rifle mr-1.5"></i> -->
 									Weapons
 								</span>
 							</button>
-							<button routerLink="/game-info"
-								class="ml-2 select-none"
-								mat-menu-item>
+							<button routerLink="/game-info" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
 									News
@@ -211,138 +127,58 @@ Copyright (c) 2023 Tone Web Design, Molex
 							</button>
 						</mat-menu>
 
-
 						<ng-template #notActive2>
-							<button [matMenuTriggerFor]="regiments"
-								mat-button
+							<button [matMenuTriggerFor]="regiments" mat-button
 								class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 								Community
 								<i class="fa-solid fa-caret-down"></i>
 							</button>
 						</ng-template>
 
-
-
 						<button *ngIf="currentRoute == '/regiments' || currentRoute == '/recaps'; else notActive2"
-							[matMenuTriggerFor]="regiments"
-							mat-button
-							class="navitem !bg-[#111827]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							[matMenuTriggerFor]="regiments" mat-button
+							class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Community
 							<i class="fa-sharp fa-solid fa-caret-down"></i>
 						</button>
 
-
-
-						<mat-menu #regiments="matMenu"
-							xPosition="after"
+						<mat-menu #regiments="matMenu" xPosition="after"
 							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
-							<button routerLink="/regiments"
-								class="ml-2 select-none"
-								mat-menu-item>
+							<button routerLink="/regiments" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-solid fa-person-rifle mr-1.5"></i> -->
 									Regiments
 								</span>
 							</button>
-							<button routerLink="/recaps"
-								class="ml-2 select-none"
-								mat-menu-item>
+							<button routerLink="/recaps" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
 									Event Recaps
 								</span>
 							</button>
 						</mat-menu>
-
-
-
-
 					</div>
-
-
-
-
-
-
-
-
-
 				</div>
 			</div>
-
-
-
-
-
-
-
-
-
 			<div *ngIf="isLoggedIn"
 				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
-
-
-
-
-
-
-
-
 				<button [matMenuTriggerFor]="beforeMenu"
-					class="!bg-[#646258] !text-[#a09e94] !hidden sm:!block font-[900]"
-					mat-raised-button>
+					class="!bg-[#646258] !text-[#a09e94] !hidden sm:!block font-[900]" mat-raised-button>
 					<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
 					{{currentUser.username}}
 					<i class="fa-solid fa-caret-down"></i>
 				</button>
-
-
-
-
-
-
-
-
-				<mat-menu #beforeMenu="matMenu"
-					xPosition="before"
+				<mat-menu #beforeMenu="matMenu" xPosition="before"
 					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-1">
-
-
-
-
-
-
-
-
 					<mat-list class="!px-[0]">
-
-
-
-
-
-
-
-
-
-						<div *ngIf="showMod || showAdmin"
-							class="!px-[0]">
-							<button routerLink="/mod/1"
-								class="text-[0.8rem] ml-2 select-none"
-								mat-menu-item>
+						<div *ngIf="showMod || showAdmin" class="!px-[0]">
+							<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
 								<span class="!text-neutral-400 font-[500]">
 									<i class="fa-solid fa-tents mr-1.5"></i>
 									Regiment Tool
 								</span>
 							</button>
 						</div>
-
-
-
-
-
-
-
 						<!-- <div *ngIf="showUser">
 							<button routerLink="/user/3"
 								class="text-[0.8rem] ml-2 select-none"
@@ -353,18 +189,9 @@ Copyright (c) 2023 Tone Web Design, Molex
 								</span>
 							</button>
 						</div> -->
-
-
-
-
-
-
-
 						<mat-divider *ngIf="showMod || showAdmin || showUser"></mat-divider>
 						<div>
-							<button *ngIf="isLoggedIn"
-								routerLink="/user/1"
-								mat-menu-item
+							<button *ngIf="isLoggedIn" routerLink="/user/1" mat-menu-item
 								class="text-[0.8rem] ml-2 select-none">
 								<span class="!text-neutral-400 font-[500]">
 									<i class="fa-solid fa-gear mr-1.5"></i>
@@ -374,107 +201,54 @@ Copyright (c) 2023 Tone Web Design, Molex
 						</div>
 					</mat-list>
 				</mat-menu>
-
-
-
-
-
-
-
-
-
 			</div>
-
-
-
-
-
-
-
-
-
 			<div *ngIf="isLoggedIn">
-				<button (click)="logout()"
-					mat-raised-button
+				<button (click)="logout()" mat-raised-button
 					class="!bg-[#7a3535] !text-[#a09e94] !hidden sm:!block !ml-2 font-[900]">
 					<i class="fa-sharp fa-solid fa-door-closed pr-2"></i>
 					Logout
 				</button>
 			</div>
 
-
-
-
-
 		</div>
 	</div>
 
 
-
-
-
-
-
-
-
 	<!-- Mobile menu, show/hide based on menu state. -->
-	<div *ngIf="menuOpen"
-		class="sm:hidden h-fit py-[1em] animate-top sm:animate-none mx-auto !m-3"
-		id="mobile-menu">
-
-
-
-
-
-
-
-
-
+	<div *ngIf="menuOpen" class="sm:hidden h-fit py-[1em] animate-top sm:animate-none mx-auto !m-3" id="mobile-menu">
 		<div class="bg-[#8b8d83]/80 rounded-md drop-shadow-lg !mx-auto !p-3">
 			<mat-list class="!mx-auto">
 				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button *ngIf="!isLoggedIn"
-						[routerLink]="['/home']"
-						(click)="toggle()"
-						mat-button
-						routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+					<button *ngIf="!isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						Home
 					</button>
-					<button *ngIf="isLoggedIn"
-						[routerLink]="['/home']"
-						(click)="toggle()"
-						mat-button
-						routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+					<button *ngIf="isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						<span>Dashboard</span>
 						<!-- <span *ngIf="showMod || showAdmin">s</span> -->
 					</button>
 				</mat-list-item>
 				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button [routerLink]="['/maps']"
-						(click)="toggle()"
-						mat-button
-						routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+					<button [routerLink]="['/maps']" (click)="toggle()" mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						Maps
 					</button>
 				</mat-list-item>
 				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button [routerLink]="['/regiments']"
-						(click)="toggle()"
-						mat-button
-						routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+					<button [routerLink]="['/regiments']" (click)="toggle()" mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						Regiments
 					</button>
 				</mat-list-item>
 
 				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button [routerLink]="['/game-info']"
-						(click)="toggle()"
-						mat-button
-						routerLinkActive="!bg-[#111827]/80 !text-[#a09e94]"
+					<button [routerLink]="['/game-info']" (click)="toggle()" mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						WoR Hub
 					</button>
@@ -482,27 +256,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 			</mat-list>
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
 </nav>
-
-
-
-
-
-
-
-
-
 <div class="sm:w-full mx-auto my-2 sm:my-0 sm:mt-10 relative lg:px-5 px-2 h-[calc(100% - 200px)] main-container">
 	<router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
