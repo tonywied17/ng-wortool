@@ -59,6 +59,11 @@ export class EnlisterComponent implements OnInit {
         (data: any) => {
           this.roles = data;
           this.filteredRoles = [...this.roles];
+          this.filteredRoles.sort((a, b) => {
+            const nameA = a.name.toLowerCase();
+            const nameB = b.name.toLowerCase();
+            return nameA.localeCompare(nameB);
+          });
           resolve();
         },
         (error: any) => {

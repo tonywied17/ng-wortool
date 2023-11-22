@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat November 18th 2023 1:10:25 
+ * Last Modified: Wed November 22nd 2023 11:20:34 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -34,6 +34,7 @@ export class RegimentsComponent implements OnInit {
   paginatedRegiments: any[] = [];
   allRegiments: any[] = [];
 
+
   constructor(
     private regimentService: RegimentService,
     private snackBar: MatSnackBar,
@@ -46,16 +47,18 @@ export class RegimentsComponent implements OnInit {
   /**
    * Initialize the component
    */
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.currentRoute = this.router.url;
-    this.getRegiments();
+    await this.getRegiments();
+
+    
   }
 
   /**
    * Filter regiments by the search text, or side
    * @returns void
    */
-  filterRegiments() {
+  async filterRegiments() {
     this.regiments = this.allRegiments.filter((regiment: any) => {
       const searchTextMatch =
         !this.searchText ||
@@ -66,29 +69,30 @@ export class RegimentsComponent implements OnInit {
     });
     this.currentPage = 1; 
 
-    this.paginateRegiments();
+    await this.paginateRegiments();
   }
   
   /**
    * Get all regiments and their users
    * This function will get all regiments and then fetch the users for each regiment
    */
-  getRegiments() {
-    this.regimentService.getRegiments().subscribe((regiments) => {
+  async getRegiments() {
+    this.regimentService.getRegiments().subscribe(async (regiments) => {
       this.regiments = regiments;
       this.allRegiments = this.regiments.slice();
       this.isDataLoaded = true;
-      this.paginateRegiments();
+      await this.paginateRegiments();
     });
   }
 
   /**
    * Paginate regiments based on current page and items per page
    */
-  paginateRegiments() {
+  async paginateRegiments() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedRegiments = this.regiments.slice(startIndex, endIndex);
+    
   }
 
   /**

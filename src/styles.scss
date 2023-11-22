@@ -1007,3 +1007,21 @@ html {
   white-space: nowrap;
   max-width: 150px;
 }
+
+::-webkit-scrollbar {
+  width: 8px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #7c7d71; 
+}
+
+::-webkit-scrollbar-track {
+  background-color: #292f37; 
+}
+
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #7c7d71 #292f37;
+}

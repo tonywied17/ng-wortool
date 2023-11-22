@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Tue November 21st 2023 8:48:39 
+Last Modified: Wed November 22nd 2023 2:27:22 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -164,9 +164,17 @@ class="bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-x
 				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 				<button [matMenuTriggerFor]="beforeMenu"
 					class="!bg-[#646258] !text-[#a09e94] !hidden sm:!block font-[900]" mat-raised-button>
-					<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
-					{{currentUser.username}}
-					<i class="fa-solid fa-caret-down"></i>
+					<div>
+					<img *ngIf="currentUser.avatar_url; else noAvatar" (error)="currentUser.avatar_url = null"
+						[src]="currentUser.avatar_url" 
+						class="h-[24px] w-[24px] rounded-full !inline-block pointer-events-none ml-[-5px] mr-[7px]">{{currentUser.username}} 
+						
+						<ng-template #noAvatar>
+							<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
+						</ng-template>
+						
+						<i class="fa-solid fa-caret-down"></i></div>
+
 				</button>
 				<mat-menu #beforeMenu="matMenu" xPosition="before"
 					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-1">

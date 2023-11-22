@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { MapService } from 'src/app/_services/map.service'; 
 import { DiscordService } from "src/app/_services/discord.service";
@@ -18,6 +18,7 @@ interface Role {
   styleUrls: ['./event-builder.component.scss']
 })
 export class EventBuilderComponent implements OnInit {
+  @ViewChild('roleFilterInput') roleFilterInput!: ElementRef;
   serverForm!: FormGroup;
   gameModes = ['Skirmish', 'Contention', 'Conquest', 'Picket Patrol', 'Pub Stomp'];
   skirmishAreas = ['Antietam', 'Harpers Ferry', 'South Mountain', 'Drill Camp'];
@@ -50,7 +51,18 @@ export class EventBuilderComponent implements OnInit {
     private mapService: MapService,
     public sharedDataService: SharedDataService,
     private snackBar: MatSnackBar,
+    private el: ElementRef, private renderer: Renderer2
   ) {}
+
+  @ViewChild('dropdownContainer') dropdownContainer!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const isClickedInside = this.dropdownContainer.nativeElement.contains(event.target);
+    if (!isClickedInside) {
+      this.isDropdownOpen = false;
+    }
+  }
 
   async ngOnInit(): Promise<void> {
     
@@ -89,25 +101,40 @@ export class EventBuilderComponent implements OnInit {
       const data: any = await this.discordService.getGuildRoles(regimentId).toPromise();
       this.roles = data;
       this.filteredRoles = [...this.roles];
+
+      this.filteredRoles.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
+
   updateFilteredRoles(): void {
-
-    console.log('changed' + this.roleFilter)
-
-    if (this.roleFilter) {
-      const filterValue = this.roleFilter.toLowerCase();
+    const filterValue = this.roleFilter.toLowerCase();
+    
+    if (filterValue.trim() !== '') {
       this.filteredRoles = this.roles.filter(role =>
         role.name.toLowerCase().includes(filterValue)
       );
+    } else {
+      this.filteredRoles = [...this.roles];
     }
   }
-
-  toggleDropdown(): void {
+  
+  toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+
+    setTimeout(() => {
+      const element = this.el.nativeElement.querySelector('#roleFilterInput');
+
+      if (element) {
+        this.renderer.selectRootElement(element).focus();
+      }
+    }, 100);
   }
 
   toggleChannelEdit() {
@@ -287,11 +314,9 @@ export class EventBuilderComponent implements OnInit {
         });
       }
   
-      // Iterate through rounds and add relevant information to embed
       this.serverData.rounds.forEach((round: any, index: number) => {
         const roundDetails = [];
       
-        // Check each field and append to roundDetails if it has a value
         if (round.skirmishArea && round.gameMode) {
           roundDetails.push(`**${round.gameMode}** on **${round.skirmishArea}**`);
         }
@@ -317,7 +342,6 @@ export class EventBuilderComponent implements OnInit {
           roundDetails.push(`Number of Rounds: ${round.numberOfRounds}`);
         }
       
-        // If there are details, add them as a field in the embed
         if (roundDetails.length > 0) {
           embed.embeds[0].fields.push({
             name: `__Round ${index + 1}__`,
@@ -425,13 +449,6 @@ async updateTargetChannel(selectedValue: string): Promise<void> {
   });
 }
 
-// async updateTargetChannel(selectedValue: string): Promise<void> {
-//   this.targetChannel = selectedValue;
-
-//   setTimeout(async () => {
-//     await this.createWebhook(this.sharedDataService.regiment.guild_id, this.targetChannel);
-//   }, 300);
-// }
 
 async createWebhook(guildId: string, channelId: string): Promise<void> {
   await this.discordService

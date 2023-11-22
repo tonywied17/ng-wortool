@@ -4,21 +4,21 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat November 18th 2023 3:13:01 
+ * Last Modified: Wed November 22nd 2023 2:12:12 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from "@angular/core";
-import { AuthService } from "src/app/_services/auth.service";
-import { TokenStorageService } from "src/app/_services/token-storage.service";
+import { AuthService } from 'src/app/_services/auth.service';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
 import { NavigationEnd, Router } from "@angular/router";
-import { AuthInjectionServiceService } from 'src/app/_services/auth-injection-service.service';
-import { RegimentService } from "src/app/_services/regiment.service";
-import { PasswordMatchValidatorDirective } from "src/app/password-match-validator.directive";
+import { SharedService } from 'src/app/_services/shared-service.service';
+import { RegimentService } from 'src/app/_services/regiment.service';
+import { PasswordMatchValidatorDirective } from 'src/app/password-match-validator.directive';
 import { ChangeDetectorRef } from "@angular/core";
-import { SteamApiService } from "src/app/_services/steam-api.service";
+import { SteamApiService } from 'src/app/_services/steam-api.service';
 
 @Component({
   selector: "app-home",
@@ -61,8 +61,6 @@ export class HomeComponent implements OnInit {
   latestAuthor: any;
   latestDate: any;
 
-  forgotPass: boolean = false;
-
   isOwner: boolean = false;
   modRoute?: string;
 
@@ -75,7 +73,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
-    private sharedService: AuthInjectionServiceService,
+    private sharedService: SharedService,
     private router: Router,
     private regimentService: RegimentService,
     private cdRef: ChangeDetectorRef,
@@ -336,7 +334,6 @@ export class HomeComponent implements OnInit {
   loginBtn(): void {
     this.loginTask = true;
     this.registerTask = false;
-    this.forgotPass = false;
   }
 
   /**
@@ -346,7 +343,6 @@ export class HomeComponent implements OnInit {
   registerBtn(): void {
     this.loginTask = false;
     this.registerTask = true;
-    this.forgotPass = false;
   }
 
   /**
@@ -441,9 +437,5 @@ export class HomeComponent implements OnInit {
         ", left=" +
         left
     );
-  }
-
-  forgot() {
-    this.forgotPass = true;
   }
 }

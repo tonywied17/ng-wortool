@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Wed November 22nd 2023 2:13:17 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -14,7 +14,7 @@ import { Component, OnInit } from "@angular/core";
 import { TokenStorageService } from "./_services/token-storage.service";
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Event as NavigationEvent} from '@angular/router';
 import { AuthService } from "./_services/auth.service";
-import { AuthInjectionServiceService } from "./_services/auth-injection-service.service";
+import { SharedService } from "./_services/shared-service.service";
 import { RegimentService } from "./_services/regiment.service";
 import { VersionChecker } from "./version-checker";
 import { RouteService } from "./_services/route-service.service";
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private sharedService: AuthInjectionServiceService,
+    private sharedService: SharedService,
     private tokenStorage: TokenStorageService,
     private versionChecker: VersionChecker,
     public routeService: RouteService,

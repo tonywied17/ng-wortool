@@ -1,3 +1,13 @@
+<div *ngIf="!isDataLoaded" class="text-center">
+	<div class="lds-ellipsis">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</div>
+
+
 <div *ngIf="isDataLoaded"
 	class="lg:w-[72vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em]">
 

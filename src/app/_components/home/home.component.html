@@ -7,8 +7,7 @@ Last Modified: Tue November 7th 2023 8:53:13
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex -->
-
-<div *ngIf="loading" class="text-center text-[#88887b] text-xl opacity-75">
+<div *ngIf="loading" class="text-center">
 	<div class="lds-ellipsis">
 		<div></div>
 		<div></div>
@@ -18,17 +17,18 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 </div>
 
 
+
 <div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
 
 
-	<div [ngClass]="isLoggedIn ? 'grid lg:grid-cols-[2fr_1fr] grid-cols-1 lg:gap-5' : 'grid lg:grid-cols-[1fr_1.5fr_1.2fr] grid-cols-1 lg:gap-0'">
+	<div [ngClass]="isLoggedIn ? 'grid lg:grid-cols-[2fr_1fr] grid-cols-1 lg:gap-5' : 'grid lg:grid-cols-[1fr_1.5fr_1.2fr] grid-cols-1 lg:gap-5'">
 
 
 		<!-- LEFT -->
 		<div class="lg:col-start-1 col-span-1 lg:row-start-1 lg:row-span-1">
 
 			<!-- AD -->
-			<div *ngIf="!isLoggedIn" style="padding: 1.5em;" class="rounded-tl-lg w-full h-fit bg-gradient-to-bl from-[#6b6a64d3] via-[#6b6a6498] to-transparent shadow-xl">
+			<div *ngIf="!isLoggedIn" style="padding: 1.5em;" class="rounded-lg w-full h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
 				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-2 px-1">A War of Rights Tool</h3>
 				<p class="text-[#c4c4c4ce] text-base font-[300]">
 					An all-in-one utility tool for managing your War of Rights regiment.
@@ -198,13 +198,13 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 
 			<!-- REGISTER -->
-			<div *ngIf="registerTask && !loginTask && !isLoggedIn && !forgotPass"
-				class="h-fit my-4 lg:mt-0"
+			<div *ngIf="registerTask && !loginTask && !isLoggedIn"
+				class="rounded-lg h-fit top-in my-4 lg:mt-0"
 				style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
 				<!-- <h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
 					Sign-up Today!<br><i class="font-[200] text-base">Create a new account</i>
 				</h3> -->
-				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1 swing-left">
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1">
 					Sign-up Today!<br><i class="font-[200] text-base">Create a new account..</i>
 				</h3>
 				<div *ngIf="isSuccessful"
@@ -212,7 +212,6 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 					Your registration is successful! You may login below.
 				</div>
 				<form #f="ngForm"
-				class="scale-center"
 					*ngIf="!isSuccessful"
 					(ngSubmit)="f.form.valid && onRegister()"
 					name="form"
@@ -303,12 +302,12 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 								</div>
 							</div>
 						</div>
-						<div class="form-group sm:col-span-1 sm:col-start-4 text-right">
+						<div class="form-group sm:col-span-1 sm:col-start-4">
 							<button mat-raised-button
 							color="primary"
-							class="!max-w-fit !py-2 !sm:py-[5px] !text-neutral-300">
-								Join Now
-								</button>
+								class="w-full !py-2 !sm:py-[5px]">
+								Create!
+							</button>
 						</div>
 						<div *ngIf="f.submitted && isSignUpFailed"
 							class="alert alert-warning">
@@ -322,18 +321,16 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 
 			<!-- LOGIN -->
-			<div *ngIf="!registerTask && loginTask && !isLoggedIn && !forgotPass"
-
-				class="lg:p-6 p-2 w-full my-4 lg:mt-0"
+			<div *ngIf="!registerTask && loginTask && !isLoggedIn"
+				class="rounded-lg lg:p-6 p-2 w-full top-in my-4 lg:mt-0"
 				style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
 				<!-- <h3 class="text-neutral-400 text-lg pb-3 tracking-tight">
 					Login Now!<br><i class="font-[200] text-base">For returning members</i>
 				</h3> -->
-				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1  swing-left">
+				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 px-1">
 					Login Now!<br><i class="font-[200] text-base">For returning members..</i>
 				</h3>
 				<form #f="ngForm"
-				class="scale-center"
 					*ngIf="!isLoggedIn"
 					(ngSubmit)="f.form.valid && onLogin()"
 					name="form"
@@ -353,7 +350,9 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 							<div *ngIf="username.errors && f.submitted"
 								class="alert alert-danger"
 								role="alert">
-								Username is required!
+								Username
+				is
+				required!
 							</div>
 						</div>
 						<!--  -->
@@ -386,7 +385,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 								type="button"
 									mat-button
 									color="accent"
-									(click)="forgot()"
+									routerLink="/reset"
 									class="!text-sm font-[500] !mr-1 !min-h-[auto] !py-1">
 									Forgot Login
 									<i class="fa-regular fa-circle-question pl-1"></i>
@@ -413,84 +412,35 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 			</div>
 
 			<!-- PROMPTS N SHIT -->
-			<div *ngIf="forgotPass" class="lg:p-6 p-2 w-full my-4 lg:mt-0"
-			style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
-				<app-reset-password></app-reset-password>
-			</div>
-			
-			<div *ngIf="!loginTask && registerTask && !isLoggedIn && !forgotPass" class="">
-				<mat-divider class="!w-[222px] !mx-auto fade-center"></mat-divider>
-				<div class="lg:p-6 p-2 fade-center">
-					
-					<h3 class="text-[#88887b] ml-1 text-xl font-[300]">
-						Login Back In...
-					</h3>
-					
-					<p class="text-sm font-[300] italic text-[#88887b] mt-2 mb-3 ml-4">
-						Returning member? Log in to your account and pick up right where you left off, managing your regiment with ease.
-					</p>
-					<div class="text-right">
-						<button (click)="loginBtn()"
-							mat-stroked-button
-							class="!py-1 !text-base font-[400] !px-8">
-							Log In
-						</button>
-					</div>
+			<div *ngIf="!loginTask && registerTask && !isLoggedIn" class="scale-center">
+				<div class="lg:p-6 p-2">
+					<button (click)="loginBtn()"
+						mat-stroked-button
+						class="w-full !py-3 text-xl font-[400]">
+						Login to existing..
+					</button>
 				</div>
 			</div>
 	
-			<div *ngIf="loginTask && !registerTask && !isLoggedIn && !forgotPass" class="">
-				<mat-divider class="!w-[222px] !mx-auto fade-center"></mat-divider>
-				<div class="lg:p-6 p-2 fade-center">
-
-					<h3 class="text-[#88887b] ml-1 text-xl font-[300]">
-						Create an Account
-					</h3>
-					
-					<p class="text-sm font-[300] italic text-[#88887b] mt-2 mb-3 ml-4">
-						Maximize your regiment's potential with our advanced tools. Sign up now for a seamless and efficient management experience.
-					</p>
-					
-					<div class="mt-4 text-right">
-						<button (click)="registerBtn()" mat-stroked-button class="!py-1 !text-base font-[400] !px-8">
-							Sign Up!
-						</button>
-					</div>
+			<div *ngIf="loginTask && !registerTask && !isLoggedIn" class="scale-center">
+				<div class="lg:p-6 p-2">
+					<button (click)="registerBtn()"
+						mat-stroked-button
+						class="w-full !py-3 !text-xl font-[400]">
+						Sign Up!
+					</button>
 				</div>
 			</div>
-
-			<div *ngIf="loginTask && !registerTask && !isLoggedIn && forgotPass" class="">
-				<mat-divider class="!w-[222px] !mx-auto fade-center"></mat-divider>
-				<div class="lg:p-6 p-2 fade-center">
-					
-					<h3 class="text-[#88887b] ml-1 text-xl font-[300]">
-						Login Back In...
-					</h3>
-					
-					<p class="text-sm font-[300] italic text-[#88887b] mt-2 mb-3 ml-4">
-						Returning member? Log in to your account and pick up right where you left off, managing your regiment with ease.
-					</p>
-					<div class="text-right">
-						<button (click)="loginBtn()"
-							mat-stroked-button
-							class="!py-1 !text-base font-[400] !px-8">
-							Log In
-						</button>
-					</div>
-				</div>
-			</div>
-
-			
 
 
 			<!-- NEWS -->
-			<div *ngIf="isLoggedIn" class="lg:p-6 p-2 rounded-lg lg:mt-0 mt-4 shadow-xl right-in" style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
+			<div *ngIf="isLoggedIn" class="lg:p-6 p-2 rounded-lg lg:mt-0 mt-4" style="padding: 1.5em 2em;  background: linear-gradient(90deg, #1e293b, #1e293b00);">
 			
 				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 ml-[-10px]">
 					Recent Game News<br><i class="font-[200] text-base">Latest War of Rights news &amp; updates!</i>
 				</h3>
 	
-				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto">
+				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto animate-load">
 					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
 					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
 						<div class="cols-start-1 col-span-1 px-2 text-left">
@@ -521,13 +471,13 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 		<div class="lg:col-start-3 col-span-1 lg:row-start-1 lg:row-span-1">
 			
 			<!-- NEWS -->
-			<div *ngIf="!isLoggedIn" class="lg:mt-0 mt-4 shadow-xl" style="padding: 1.5em; background: linear-gradient(180deg, #1e293b, #1e293b00);">
+			<div *ngIf="!isLoggedIn" class="rounded-lg lg:mt-0 mt-4" style="padding: 1.5em 2em; background: linear-gradient(-90deg, #1e293b, #1e293b00);">
 			
 				<h3 class="text-[#88887b] font-[500] lg:text-2xl text-lg tracking-tight mb-4 ml-[-10px]">
 					Recent Game News<br><i class="font-[200] text-base">Latest War of Rights news &amp; updates!</i>
 				</h3>
 	
-				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto">
+				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto animate-load">
 					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
 					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
 						<div class="cols-start-1 col-span-1 px-2 text-left">

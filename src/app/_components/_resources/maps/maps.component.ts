@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue August 1st 2023 12:08:47 
+ * Last Modified: Wed November 22nd 2023 11:27:54 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -67,27 +67,23 @@ export class MapsComponent implements OnInit {
     private favoriteService: FavoriteService
   ) {}
 
-  ngOnInit(): void {
-    this.loading = true;
+  async ngOnInit(): Promise<void> {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
 
-    this.retrieveFilterState();
+    await this.retrieveFilterState();
 
-    this.getMaps();
-    this.getFavorites();
-
-    setTimeout(() => {
-      this.loading = false;
-      this.filterMaps();
-    }, 120);
+    await this.getMaps();
+    await this.getFavorites();
+    await this.filterMaps();
+    
   }
 
   /**
    * Retrieve filter state
    * This function is used to retrieve the filter state from local storage
    */
-  retrieveFilterState(): void {
+  async retrieveFilterState(): Promise<void> {
     const savedFilterState = localStorage.getItem("filterState");
     if (savedFilterState) {
       const filterState = JSON.parse(savedFilterState);
@@ -101,7 +97,7 @@ export class MapsComponent implements OnInit {
       this.selectedFavorite = filterState.selectedFavorite;
       this.showFavoritesOnly = filterState.showFavoritesOnly;
 
-      this.filterMaps();
+      await this.filterMaps();
     }
   }
 
@@ -109,7 +105,7 @@ export class MapsComponent implements OnInit {
    * Save filter state
    * This function is used to save the filter state to local storage
    */
-  saveFilterState(): void {
+  async saveFilterState(): Promise<void> {
     const filterState = {
       selectedCampaigns: this.selectedCampaigns,
       selectedAttacker: this.selectedAttacker,
@@ -148,12 +144,14 @@ export class MapsComponent implements OnInit {
    * Get maps
    * This function is used to get all maps
    */
-  getMaps(): void {
+  async getMaps(): Promise<void> {
     this.mapService.getAll().subscribe({
-      next: (data) => {
+      next: async (data) => {
         this.map = data;
         this.originalMap = data;
-        this.uniqueCampaigns = this.getUniqueCampaigns(data);
+        this.uniqueCampaigns = await this.getUniqueCampaigns(data);
+
+        this.loading = false;
       },
       error: (e) => console.error(e),
     });
@@ -165,7 +163,7 @@ export class MapsComponent implements OnInit {
    * @param data - data
    * @returns - unique campaigns
    */
-  private getUniqueCampaigns(data: Map[]): string[] {
+  private async getUniqueCampaigns(data: Map[]): Promise<string[]> {
     const excludedCampaigns = ["Picket Patrol", "Drill Camp"];
     const campaigns = data
       .map((map) => map.campaign)
@@ -177,7 +175,7 @@ export class MapsComponent implements OnInit {
    * Toggle favorite
    * This function is used to filter map data by a user's favorites
    */
-  filterMaps(): void {
+  async filterMaps(): Promise<void> {
     let filteredMap: Map[] = this.originalMap || [];
 
     if (this.showFavoritesOnly) {
@@ -220,7 +218,7 @@ export class MapsComponent implements OnInit {
 
     this.map = filteredMap;
 
-    this.saveFilterState();
+    await this.saveFilterState();
   }
 
   /**
@@ -228,7 +226,7 @@ export class MapsComponent implements OnInit {
    * This function is used to get all favorites for a user
    * @returns - favorites
    */
-  private getFavorites(): void {
+  private async getFavorites(): Promise<void> {
     const userID = this.currentUser.id;
 
     if (userID === undefined) return;

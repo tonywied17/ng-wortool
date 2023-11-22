@@ -1,3 +1,12 @@
+<div *ngIf="!contentLoaded" class="text-center">
+	<div class="lds-ellipsis">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</div>
+
 <div *ngIf="contentLoaded"
 	class="lg:w-[76vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
 	<h3 class="text-[#88887b] text-3xl tracking-tight mb-4">Weapons</h3>

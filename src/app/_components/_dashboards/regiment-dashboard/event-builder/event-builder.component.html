@@ -10,23 +10,26 @@
         <i class="fa-solid fa-at"></i>Mention a Role
             </h3>
 
-            <div class="max-w-[222px] mb-2">
-              <div class="custom-select-container">
+            <div class="mb-2 w-fit">
+              <div class="custom-select-container" #dropdownContainer>
                 <div class="custom-select">
-                  <button class="select-button" (click)="toggleDropdown()" mat-stroked-button color="primary">
+                  <button class="select-button !min-w-[222px]" (click)="toggleDropdown()" mat-stroked-button color="primary">
                     {{ selectedRole ? selectedRole.name : 'Select a role...' }}
                   </button>
             
                   <div class="dropdown-container" *ngIf="isDropdownOpen">
                     <div class="field-box sticky top-0">
                       <input
-                        class="select-input !bg-slate-700"
-                        type="text"
-                        placeholder="Type to filter..."
-                        (input)="updateFilteredRoles()"
-                        name="roleFilter"
-                        [(ngModel)]="roleFilter"
-                      />
+                      #roleFilterInput
+                      id="roleFilter"
+                      class="select-input !bg-slate-900/80 rounded-md my-1 shadow-lg"
+                      type="text"
+                      placeholder="Type to filter..."
+                      (input)="updateFilteredRoles()"
+                      name="roleFilter"
+                      [(ngModel)]="roleFilter"
+                      (ngModelChange)="updateFilteredRoles()"
+                    />
                       <i class="fa-solid fa-filter field-icon"></i>
                     </div>
             
