@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed November 22nd 2023 6:07:07 
+Last Modified: Wed November 22nd 2023 7:04:38 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -159,12 +159,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</div>
 				</div>
 			</div>
-<!--
+
 			<div *ngIf="this.sharedDataService.isLoggedIn && this.sharedDataService.regimentId"
 				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto">
 
 				<div (click)="regTrigger.openMenu()"
-					class="mr-2 flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-0.5 px-1 rounded-sm shadow-inner transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
+					class="flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-0.5 px-1 rounded-sm shadow-inner transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
 
 					<div class="text-center">
 						<img *ngIf="this.sharedDataService.regiment.guild_avatar; else noAvatar" (error)="this.sharedDataService.regiment.guild_avatar = null"
@@ -175,8 +175,8 @@ Copyright (c) 2023 Tone Web Design, Molex
 					<div>
 						<button #regButton #regTrigger="matMenuTrigger" [matMenuTriggerFor]="regMenu"
 							class="font-[400] !text-sm !min-w-fit !min-h-fit !p-0 border-0 outline-none !text-[#c5c7ba]">
-		
-								{{this.sharedDataService.regiment.regiment}}
+								My Regiment
+								<!-- {{this.sharedDataService.regiment.regiment}} -->
 								<ng-template #noAvatar>
 									<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
 								</ng-template>
@@ -188,13 +188,44 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 				<mat-menu #regMenu="matMenu" xPosition="before" [yPosition]="'below'"
-					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-1 !py-0">
+					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-[8px] !mr-[-5px] !py-0">
 					<mat-list class="no-padding">
 						<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin" class="!px-[0]">
+							<button routerLink="/mod/2" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+								<span class="!text-neutral-400 font-[500]">
+									<i class="fa-brands fa-discord mr-1.5 w-[25px]"></i>
+									Event Share
+								</span>
+							</button>
+							<button routerLink="/mod/3" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+								<span class="!text-neutral-400 font-[500]">
+									<i class="fa-brands fa-steam mr-1.5 w-[25px]"></i>
+									Steam Stats
+								</span>
+							</button>
+							<button routerLink="/mod/4" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+								<span class="!text-neutral-400 font-[500]">
+									<i class="fa-solid fa-clipboard-user mr-1.5 w-[25px]"></i>
+									Muster Roster
+								</span>
+							</button>
+							<mat-divider></mat-divider>
 							<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
 								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-solid fa-tents mr-1.5"></i>
-									Regiment Tool
+									<i class="fa-solid fa-users-gear mr-1.5 w-[25px]"></i>
+									Manage
+								</span>
+							</button>
+							<button routerLink="/regiments/{{this.sharedDataService.regimentId}}" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+								<span class="!text-neutral-400 font-[500]">
+									<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic" class="truncate">
+										<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Regiment Page 
+										<!-- {{this.sharedDataService.regiment.regiment}} -->
+									</div>
+									
+									<ng-template #noRegPic>
+										<i class="fa-solid fa-tents w-[25px] mr-1.5"></i>Profile Page
+									</ng-template>
 								</span>
 							</button>
 						</div>
@@ -202,7 +233,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 				</mat-menu>
 				
 			</div>
---->
+
 			<div *ngIf="this.sharedDataService.isLoggedIn"
 				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
@@ -233,6 +264,8 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<mat-menu #userMenu="matMenu" xPosition="before" [yPosition]="'below'"
 					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-[8px] !mr-[-5px] !py-0">
 					<mat-list class="no-padding">
+
+						<!---
 						<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin" class="!px-[0]">
 							<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
 								<span class="!text-neutral-400 font-[500]">
@@ -248,8 +281,22 @@ Copyright (c) 2023 Tone Web Design, Molex
 								</span>
 							</button>
 						</div>
-
+						-->
 						<div>
+							<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/3" mat-menu-item
+								class="text-[0.8rem] ml-2 select-none">
+								<span class="!text-neutral-400 font-[500]">
+									<i class="fa-solid fa-star w-[25px] mr-1.5"></i>
+									Favorite Maps
+								</span>
+							</button>
+							<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/2" mat-menu-item
+								class="text-[0.8rem] ml-2 select-none">
+								<span class="!text-neutral-400 font-[500]">
+									<i class="fa-solid fa-circle-nodes w-[25px] mr-1.5"></i>
+									Linked Accounts
+								</span>
+							</button>
 							<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/1" mat-menu-item
 								class="text-[0.8rem] ml-2 select-none">
 								<span class="!text-neutral-400 font-[500]">
