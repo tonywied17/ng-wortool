@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed November 22nd 2023 7:04:38 
+Last Modified: Wed November 22nd 2023 9:16:49 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -161,10 +161,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 			</div>
 
 			<div *ngIf="this.sharedDataService.isLoggedIn && this.sharedDataService.regimentId"
-				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto">
+				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto mr-5">
 
 				<div (click)="regTrigger.openMenu()"
-					class="flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-0.5 px-1 rounded-sm shadow-inner transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
+					class="flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
 
 					<div class="text-center">
 						<img *ngIf="this.sharedDataService.regiment.guild_avatar; else noAvatar" (error)="this.sharedDataService.regiment.guild_avatar = null"
@@ -219,12 +219,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<button routerLink="/regiments/{{this.sharedDataService.regimentId}}" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
 								<span class="!text-neutral-400 font-[500]">
 									<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic" class="truncate">
-										<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Regiment Page 
+										<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Public Page 
 										<!-- {{this.sharedDataService.regiment.regiment}} -->
 									</div>
 									
 									<ng-template #noRegPic>
-										<i class="fa-solid fa-tents w-[25px] mr-1.5"></i>Profile Page
+										<i class="fa-solid fa-tents w-[25px] mr-1.5"></i> Public Page
 									</ng-template>
 								</span>
 							</button>
@@ -235,10 +235,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 			</div>
 
 			<div *ngIf="this.sharedDataService.isLoggedIn"
-				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto">
 
 				<div (click)="menuTrigger.openMenu()"
-					class="mr-2 flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-0.5 px-1 rounded-sm shadow-inner transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
+					class="mr-2 flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
 
 					<div class="text-center">
 						<img *ngIf="currentUser.avatar_url; else noAvatar" (error)="currentUser.avatar_url = null"
@@ -318,12 +318,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 					</mat-list>
 				</mat-menu>
 			</div>
-			<div *ngIf="this.sharedDataService.isLoggedIn">
+			<!-- <div *ngIf="this.sharedDataService.isLoggedIn">
 				<button (click)="logout()" mat-button
-					class="!hidden sm:!block !ml-2 font-[500] !text-[#fa7676] !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent !min-w-fit !h-full">
+					class="!hidden sm:!block font-[500] !text-[#fa7676] !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent !min-w-fit !h-full" style="border-left:1px solid #fa7676;">
 					<i class="fa-solid fa-arrow-right-from-bracket w-[25px] !text-[#fa7676]"></i>
 				</button>
-			</div>
+			</div> -->
 
 		</div>
 	</div>

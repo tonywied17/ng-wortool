@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 5:57:42 
+ * Last Modified: Wed November 22nd 2023 9:24:20 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -172,10 +172,20 @@ export class AppComponent implements OnInit {
     localStorage.setItem("isAuthenticated", "false");
     localStorage.setItem("isAdmin", "false");
     localStorage.setItem("isModerator", "false");
+
     this.isLoggedIn = this.authService.isAuthenticated;
     this.showMod = this.authService.isModerator;
     this.showAdmin = this.authService.isAdministrator;
     this.showUser = this.authService.isAuthenticated;
+
+    this.sharedDataService.isLoggedIn = false;
+    this.sharedDataService.showMod = false;
+    this.sharedDataService.showAdmin = false;
+    this.sharedDataService.showUser = false;
+    this.sharedDataService.regiment = null;
+    this.sharedDataService.regimentId = NaN;
+    this.sharedDataService.currentUser = null;
+
     this.sharedService.triggerLogoutEvent();
     this.router.navigate(["/home"]);
   }

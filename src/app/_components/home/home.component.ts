@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 5:55:21 
+ * Last Modified: Wed November 22nd 2023 9:24:34 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -375,6 +375,14 @@ export class HomeComponent implements OnInit {
     this.showUser = this.authService.isAuthenticated;
     this.sharedService.triggerLogoutEvent();
     this.sharedService.setIsLoggedIn(false);
+
+    this.sharedDataService.isLoggedIn = false;
+    this.sharedDataService.showMod = false;
+    this.sharedDataService.showAdmin = false;
+    this.sharedDataService.showUser = false;
+    this.sharedDataService.regiment = null;
+    this.sharedDataService.regimentId = NaN;
+    this.sharedDataService.currentUser = null;
 
     this.router.navigate(["/home"]);
   }
