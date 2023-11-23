@@ -4,56 +4,71 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 2:32:49 
+ * Last Modified: Thu November 23rd 2023 2:10:01 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-.navitem{
-    transition: all 0.1s ease-in-out;
+.navitem {
+  transition: all 0.1s ease-in-out;
 }
 
-.navitem:active{
-    transition: 0.1s !important;
-    transform: scale3d(1.10, 0.95, 1);
+.navitem:active {
+  transition: 0.1s !important;
+  transform: scale3d(1.10, 0.95, 1);
 }
 
 .navitem-active {
-    color: #a09e94 !important;
-;
+  color: #a09e94 !important;
+  ;
 }
 
-.mat-mdc-list-base{
-    padding-top: 1px !important;
+.mat-mdc-list-base {
+  padding-top: 1px !important;
 }
 
 
 button.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
-  
+  opacity: 0;
+  pointer-events: none;
+}
+
 
 
 .screw {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background: radial-gradient(circle at center, #FFFFFF 25%, #666666 50%, #333333 75%, #000000 100%);
-    border-radius: 50%;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: radial-gradient(circle at center, #FFFFFF 25%, #666666 50%, #333333 75%, #000000 100%);
+  border-radius: 50%;
 }
 
-.top-left { top: 2px; left: 2px; }
-.top-right { top: 2px; right: 2px; }
-.bottom-left { bottom: 2px; left: 2px; }
-.bottom-right { bottom: 2px; right: 2px; }
+.top-left {
+  top: 2px;
+  left: 2px;
+}
+
+.top-right {
+  top: 2px;
+  right: 2px;
+}
+
+.bottom-left {
+  bottom: 2px;
+  left: 2px;
+}
+
+.bottom-right {
+  bottom: 2px;
+  right: 2px;
+}
 
 
-  .logo-div:active {
-    transform: translateY(-5px);
-  }
-  
+.logo-div:active {
+  transform: translateY(-5px);
+}
+
 
 //   .logo::before {
 //     content: "WT";
@@ -61,11 +76,11 @@ button.hidden {
 //     border-radius: 0 6px;
 //     transition: 0.5s ease-in-out;
 //   }
-  
-  .logo-div {
-    transition: 0.2s ease-in-out all;
-  }
-  
+
+.logo-div {
+  transition: 0.2s ease-in-out all;
+}
+
 //   .logo:hover::before {
 //     content: "WoRTool";
 //     background-color: #141b29e1;
@@ -73,60 +88,114 @@ button.hidden {
 //     transition: 0.5s ease-in-out;
 //   }
 
-.logo-div{
-    padding: 0 8px;
-    color: rgb(20 27 41 / 0.8);
-    border-radius: 0 6px;
-    font-size: 1.7rem;
-    text-align: center;
-    font-weight: 900;
-    cursor: pointer;
-    font-style: italic;
-    transition: all ease .2s;
+.logo-div {
+  padding: 0 8px;
+  color: rgb(20 27 41 / 0.8);
+  border-radius: 0 10px;
+  font-size: 1.7rem;
+  text-align: center;
+  font-weight: 900;
+  cursor: pointer;
+  font-style: italic;
+  transition: all ease .3s;
 }
 
-.logo-div:hover{
-  background-color: rgb(20 27 41 / 0.8);
-  color: #88887b;
-}
-  .logo-span {
-    display: inline-block;
-    
+@media (max-width: 900px) {
+  .logo-div {
+    padding: 0 8px;
+    font-size: 1.5rem;
   }
-  .logo-span:after {
-    width: 0px;
-    overflow: hidden;
-    display: inline-block;
-    vertical-align: middle;
-    transition: .2s linear;
-  }
-  .logo-span:nth-child(1):after {
-    content: 'or ';
-    margin-top: -4px;
-  }
-  .logo-span:nth-child(2):after {
-    content: 'ool ';
-    margin-top: -4px;
-  }
+
   .logo-span:nth-child(3):after {
     content: 'com';
     margin-top: -4px;
   }
-  .logo-div:hover span:nth-child(1):after {
-    width: 31px;
-    margin-left:-1px;
-  }
-  .logo-div:hover span:nth-child(2):after {
-    width: 45px;
-    margin-left:-1px;
-  }
+
   .logo-div:hover span:nth-child(3):after {
     width: 57px;
-    margin-left:-1px;
+    margin-left: -1px;
   }
+}
 
-  .user-info-container {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
+.logo-div:hover {
+  background: linear-gradient(145deg, #141b29cc, #141b29cc, #141b2934, #141b299f), linear-gradient(-145deg, #141b29e1, #141b2954, #141b29cc, #141b29cc) !important;
+  color: #88887b;
+}
+
+.logo-span {
+  display: inline-block;
+
+}
+
+.logo-span:after {
+  width: 0px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  transition: .2s linear;
+}
+
+.logo-span:nth-child(1):after {
+  content: 'or ';
+  margin-top: -4px;
+}
+
+.logo-span:nth-child(2):after {
+  content: 'ool ';
+  margin-top: -4px;
+}
+
+
+@media (min-width: 900px) {
+  .logo-span:nth-child(3):after {
+    content: "";
+    display: inline-block;
+    width: 70px;
+    height: 27px;
+    background-image: url('https://molex.cloud/files/2023/June/23/_tG3/cannonbayo-color.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: 2px;
+    margin-left: 5px;
   }
+  
+}
+
+.logo-div:hover span:nth-child(1):after {
+  width: 31px;
+  margin-left: -1px;
+}
+
+.logo-div:hover span:nth-child(2):after {
+  width: 45px;
+  margin-left: -1px;
+}
+
+
+.user-info-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+#worNav {
+  transition: height 0.3s ease;
+  /* Adjust the duration and timing function as needed */
+  overflow: hidden;
+  /* Ensures that content beyond the specified height is hidden */
+}
+
+/* Define the initial and final states for the height */
+#worNav.auto-height {
+  height: auto;
+}
+
+#worNav.fixed-height {
+  height: 50px;
+  /* Set the desired fixed height */
+}
+
+.active-link {
+  background: linear-gradient(145deg, #131c2be1, #131c2b4b, #131c2b1f, #131c2b21), linear-gradient(-145deg, #131c2be1, #131c2b4b, #131c2b1f, #131c2b21) !important;
+  border: 1px solid #131c2b10;
+}

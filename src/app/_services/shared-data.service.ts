@@ -39,19 +39,11 @@ export class SharedDataService {
       this.userId = this.currentUser.id;
   
       if (this.isLoggedIn) {
-        await this.authService
-          .checkModeratorRole(this.userId, this.currentUser.regimentId)
-          .toPromise()
-          .then(async (response) => {
             if (this.currentUser.regimentId) {
               this.regimentId = this.currentUser.regimentId;
               await this.getAccess();
               await this.getRegiment(this.regimentId);
             }
-          })
-          .catch((error) => {
-            console.error("Error:", error);        
-          });
       }
   }
 
@@ -74,6 +66,22 @@ export class SharedDataService {
     let userRegimentId = this.currentUser.regimentId;
 
     if (this.isLoggedIn) {
+
+      this.authService.checkUserRole(userID).subscribe(
+        (response) => {
+          this.showUser = response.access;
+        },
+        (error) => {
+          if (error.status === 403) {
+            this.showUser = false;
+            
+            // 
+          } else {
+            
+            console.error("Error:", error);
+          }
+        }
+      );
 
       this.authService.checkModeratorRole(userID, this.currentUser.regimentId).subscribe(
         (response: { access: boolean; }) => {

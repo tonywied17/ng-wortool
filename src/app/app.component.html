@@ -4,34 +4,26 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed November 22nd 2023 9:16:49 
+Last Modified: Thu November 23rd 2023 2:09:38 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
 -->
 
 <!-- class="bg-gradient-to-r from-[#88887bd3] via-[#88887b98] to-[#88887b41]" -->
-<nav class="bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-xl w-full top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10 sm:py-1"
+
+<div *ngIf="isLoaded">
+	<nav id="worNav" class="bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-xl w-full top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10 sm:py-1 py-2"
 	style="position: sticky; top: 0;">
 	<div class="mx-auto pr-4">
 		<div class="relative flex h-14 items-center justify-between">
 			<div class="absolute sm:hidden">
 				<!-- Mobile menu button -->
 				<button (click)="toggle();scroll()" type="button"
-					class="!mt-auto inline-flex items-center justify-center rounded-md p-2 text-[#bbbbb1] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#88887b]"
+					class="!ml-2 !mt-auto inline-flex items-center justify-center rounded-md p-2 text-[#141c2a] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#141c2a88]"
 					aria-controls="mobile-menu" aria-expanded="false">
-					<span class="sr-only">Open main menu</span>
-
-					<svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-						stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-						<path stroke-linecap="round" stroke-linejoin="round"
-							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-					</svg>
-
-					<svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-						stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-					</svg>
+					
+					<mat-icon>menu</mat-icon>
 
 				</button>
 			</div>
@@ -43,11 +35,15 @@ Copyright (c) 2023 Tone Web Design, Molex
 						<i class="fa-solid fa-angle-left"></i>
 					</button>
 
-					<div routerLink="/home" class="logo-div">
-						<span class="logo-span">W</span>
-						<span class="logo-span">T</span>
-						<span class="logo-span">.</span>
+					<div class="left-in mr-[-22.2px]">
+						<div routerLink="/home" class="logo-div">
+							<span class="logo-span">W</span>
+							<span class="logo-span">T</span>
+							<span class="logo-span">.</span>
+							<span class="logo-span"></span>
+						</div>
 					</div>
+					
 
 
 
@@ -161,12 +157,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 			</div>
 
 			<div *ngIf="this.sharedDataService.isLoggedIn && this.sharedDataService.regimentId"
-				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto mr-5">
+				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto mr-5 top-in">
 
 				<div (click)="regTrigger.openMenu()"
 					class="flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
 
-					<div class="text-center">
+					<div class="text-center" *ngIf="this.sharedDataService.regiment">
 						<img *ngIf="this.sharedDataService.regiment.guild_avatar; else noAvatar" (error)="this.sharedDataService.regiment.guild_avatar = null"
 							[src]="this.sharedDataService.regiment.guild_avatar"
 							class="h-[32px] w-[32px] rounded-lg shadow-sm border-2 border-[#989b8a] !inline-block pointer-events-none cursor-pointer !mb-[-2px] !ml-[-1px]">
@@ -218,10 +214,13 @@ Copyright (c) 2023 Tone Web Design, Molex
 							</button>
 							<button routerLink="/regiments/{{this.sharedDataService.regimentId}}" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
 								<span class="!text-neutral-400 font-[500]">
-									<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic" class="truncate">
-										<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Public Page 
-										<!-- {{this.sharedDataService.regiment.regiment}} -->
+									<div *ngIf="this.sharedDataService.regiment">
+										<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic" class="truncate">
+											<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Public Page 
+											<!-- {{this.sharedDataService.regiment.regiment}} -->
+										</div>
 									</div>
+									
 									
 									<ng-template #noRegPic>
 										<i class="fa-solid fa-tents w-[25px] mr-1.5"></i> Public Page
@@ -235,7 +234,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 			</div>
 
 			<div *ngIf="this.sharedDataService.isLoggedIn"
-				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto">
+				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto top-in">
 
 				<div (click)="menuTrigger.openMenu()"
 					class="mr-2 flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
@@ -330,17 +329,17 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 	<!-- Mobile menu, show/hide based on menu state. -->
-	<div *ngIf="menuOpen" class="sm:hidden h-fit py-[1em] animate-top sm:animate-none mx-auto !m-3" id="mobile-menu">
-		<div class="bg-[#8b8d83]/80 rounded-md drop-shadow-lg !mx-auto !p-3">
+	<div *ngIf="menuOpen" class="sm:hidden h-fit top-in sm:animate-none mx-auto" id="mobile-menu">
+		<div class="!mx-auto !p-3">
 			<mat-list class="!mx-auto">
 				<mat-list-item class="!my-1 !px-[0] !w-full">
 					<button *ngIf="!this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
-						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						routerLinkActive="active-link !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						Home
 					</button>
 					<button *ngIf="this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
-						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						routerLinkActive="active-link !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						<span>Dashboard</span>
 						<!-- <span *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">s</span> -->
@@ -348,14 +347,14 @@ Copyright (c) 2023 Tone Web Design, Molex
 				</mat-list-item>
 				<mat-list-item class="!my-1 !px-[0] !w-full">
 					<button [routerLink]="['/maps']" (click)="toggle()" mat-button
-						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						routerLinkActive="active-link !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						Maps
 					</button>
 				</mat-list-item>
 				<mat-list-item class="!my-1 !px-[0] !w-full">
 					<button [routerLink]="['/regiments']" (click)="toggle()" mat-button
-						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						routerLinkActive="active-link !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						Regiments
 					</button>
@@ -363,7 +362,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 				<mat-list-item class="!my-1 !px-[0] !w-full">
 					<button [routerLink]="['/game-info']" (click)="toggle()" mat-button
-						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						routerLinkActive="active-link !text-[#a09e94]"
 						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 						WoR Hub
 					</button>
@@ -375,3 +374,5 @@ Copyright (c) 2023 Tone Web Design, Molex
 <div class="sm:w-full mx-auto my-2 sm:my-0 sm:mt-10 relative lg:px-5 px-2 h-[calc(100% - 200px)] main-container">
 	<router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
+</div>
+

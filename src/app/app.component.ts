@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 9:24:20 
+ * Last Modified: Thu November 23rd 2023 1:20:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   showMod = false;
   isOwner: boolean = false;
   modRoute?: string;
+  isLoaded:boolean = false;
 
   private roles: string[] = [];
 
@@ -96,9 +97,7 @@ export class AppComponent implements OnInit {
 }
 
   private setRoleProperties(): void {
-    const user = this.tokenStorage.getUser();
     this.roles = this.sharedDataService.currentUser.roles;
-
     this.showAdmin = this.sharedDataService.showAdmin;
     this.showMod = this.sharedDataService.showMod;
     this.showUser = this.sharedDataService.showUser;
@@ -114,27 +113,13 @@ export class AppComponent implements OnInit {
     this.roles = this.sharedDataService.currentUser.roles
 
     if (this.isLoggedIn) {
-      this.roles = this.sharedDataService.currentUser.roles;
       this.showAdmin = this.sharedDataService.showAdmin;
       this.showMod = this.sharedDataService.showMod;
       this.showUser = true;
     }
+
+    this.isLoaded = true;
   
-    const response = await this.regimentService
-      .getRegiment(this.sharedDataService.currentUser.regimentId)
-      .toPromise();
-    // console.log(response);
-  
-    if (response.ownerId === null) {
-      this.isOwner = false;
-      this.modRoute = "/mod/2";
-    } else if (response.ownerId.includes(this.sharedDataService.regimentId)) {
-      this.isOwner = true;
-      this.modRoute = "/mod/1";
-    } else {
-      this.isOwner = false;
-      this.modRoute = "/mod/2";
-    }
   }
   
 

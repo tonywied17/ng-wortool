@@ -219,6 +219,7 @@ $theme: (primary: $theme-primary,
   color-scheme: dark;
   --scrollbar-color: #888;
   --scrollbar-thumb-color: #555;
+  -webkit-tap-highlight-color: transparent;
 }
 
 // Handle buttons appropriately, with respect to line-height
