@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu November 23rd 2023 2:10:01 
+ * Last Modified: Thu November 23rd 2023 2:18:05 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -88,45 +88,26 @@ button.hidden {
 //     transition: 0.5s ease-in-out;
 //   }
 
-.logo-div {
+.logo-div{
   padding: 0 8px;
   color: rgb(20 27 41 / 0.8);
-  border-radius: 0 10px;
+  border-radius: 0 6px;
   font-size: 1.7rem;
   text-align: center;
   font-weight: 900;
   cursor: pointer;
   font-style: italic;
-  transition: all ease .3s;
+  transition: all ease .2s;
 }
 
-@media (max-width: 900px) {
-  .logo-div {
-    padding: 0 8px;
-    font-size: 1.5rem;
-  }
-
-  .logo-span:nth-child(3):after {
-    content: 'com';
-    margin-top: -4px;
-  }
-
-  .logo-div:hover span:nth-child(3):after {
-    width: 57px;
-    margin-left: -1px;
-  }
+.logo-div:hover{
+background-color: rgb(20 27 41 / 0.8);
+color: #88887b;
 }
-
-.logo-div:hover {
-  background: linear-gradient(145deg, #141b29cc, #141b29cc, #141b2934, #141b299f), linear-gradient(-145deg, #141b29e1, #141b2954, #141b29cc, #141b29cc) !important;
-  color: #88887b;
-}
-
 .logo-span {
   display: inline-block;
-
+  
 }
-
 .logo-span:after {
   width: 0px;
   overflow: hidden;
@@ -134,41 +115,29 @@ button.hidden {
   vertical-align: middle;
   transition: .2s linear;
 }
-
 .logo-span:nth-child(1):after {
   content: 'or ';
   margin-top: -4px;
 }
-
 .logo-span:nth-child(2):after {
   content: 'ool ';
   margin-top: -4px;
 }
-
-
-@media (min-width: 900px) {
-  .logo-span:nth-child(3):after {
-    content: "";
-    display: inline-block;
-    width: 70px;
-    height: 27px;
-    background-image: url('https://molex.cloud/files/2023/June/23/_tG3/cannonbayo-color.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-bottom: 2px;
-    margin-left: 5px;
-  }
-  
+.logo-span:nth-child(3):after {
+  content: 'com';
+  margin-top: -4px;
 }
-
 .logo-div:hover span:nth-child(1):after {
   width: 31px;
-  margin-left: -1px;
+  margin-left:-1px;
 }
-
 .logo-div:hover span:nth-child(2):after {
   width: 45px;
-  margin-left: -1px;
+  margin-left:-1px;
+}
+.logo-div:hover span:nth-child(3):after {
+  width: 57px;
+  margin-left:-1px;
 }
 
 
@@ -180,19 +149,15 @@ button.hidden {
 
 #worNav {
   transition: height 0.3s ease;
-  /* Adjust the duration and timing function as needed */
   overflow: hidden;
-  /* Ensures that content beyond the specified height is hidden */
 }
 
-/* Define the initial and final states for the height */
 #worNav.auto-height {
   height: auto;
 }
 
 #worNav.fixed-height {
   height: 50px;
-  /* Set the desired fixed height */
 }
 
 .active-link {
