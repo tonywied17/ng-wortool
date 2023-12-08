@@ -1,5 +1,5 @@
 # WoRTool Angular Frontend
-### Back End API Repo
+### See API Backend Repo
 > This repository serves as the front end for the new paapp2 poject in angular/typescipt.
 > For the backend API view this [repository](https://github.com/tonywied17/wortool-api)   
 
