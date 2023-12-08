@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MusterUserService {
-  private baseUrl = 'https://api.tonewebdesign.com/pa/musteruser';
+  private baseUrl = 'https://api.wortool.com/v2/musteruser';
 
   constructor(private http: HttpClient) { }
 

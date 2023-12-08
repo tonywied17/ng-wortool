@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FileService {
 
-  private baseUrl = 'https://api.tonewebdesign.com/pa';
+  private baseUrl = 'https://api.wortool.com/v2/';
 
   constructor(private http: HttpClient) { }
 

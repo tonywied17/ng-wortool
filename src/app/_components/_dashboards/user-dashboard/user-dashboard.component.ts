@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Thu December 7th 2023 5:55:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -122,7 +122,7 @@ export class UserDashboardComponent implements OnInit {
     this.regimentId = this.currentUser.regimentId;
 
     if (this.discordId) {
-      this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/`;
+      this.discordSyncUrl = `https://api.wortool.com/v2/discord/`;
     }
 
     const userID = this.currentUser.id;
@@ -303,7 +303,7 @@ export class UserDashboardComponent implements OnInit {
     const state = encodeURIComponent(this.currentUser.id);
     const left = window.screenX + 100;
 
-    const popupUrl = `https://api.tonewebdesign.com/pa/discord/?state=${state}`;
+    const popupUrl = `https://api.wortool.com/v2/discord/?state=${state}`;
 
     const popupWindow = window.open(
       popupUrl,
@@ -326,7 +326,7 @@ export class UserDashboardComponent implements OnInit {
           clearInterval(checkClosed);
           // Retrieve the state parameter from the backend and continue authentication flow
           this.continueAuthentication(
-            "https://api.tonewebdesign.com/pa/discord/auth/",
+            "https://api.wortool.com/v2/discord/auth/",
             state
           );
         }
@@ -341,7 +341,7 @@ export class UserDashboardComponent implements OnInit {
 
     const message = `UserID: ${state} has been synced with Discord!`;
 
-    const backendUrl = `https://api.tonewebdesign.com/pa/discord/user/${state}`;
+    const backendUrl = `https://api.wortool.com/v2/discord/user/${state}`;
 
     // once stored in db model we will retrieve the object and update the user object with discord info
     // // console.log("backendUrl: ", backendUrl);
@@ -428,7 +428,7 @@ export class UserDashboardComponent implements OnInit {
         }
       }
 
-      // this.discordSyncUrl = `https://api.tonewebdesign.com/pa/discord/guild/${this.regimentId}/user/${updatedUser.discordId}/get`
+      // this.discordSyncUrl = `https://api.wortool.com/v2/discord/guild/${this.regimentId}/user/${updatedUser.discordId}/get`
     } catch (error: any) {
       if (error.status === 400) {
         this.showSnackBar(error.error.message);

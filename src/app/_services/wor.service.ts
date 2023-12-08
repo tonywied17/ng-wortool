@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:43:02 
+ * Last Modified: Thu December 7th 2023 5:55:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -24,7 +24,7 @@ export class WorService {
     private http: HttpClient
   ) { }
 
-    API = 'https://api.tonewebdesign.com/pa/wor/';
+    API = 'https://api.wortool.com/v2/wor/';
 
     /**
      * Get all recaps

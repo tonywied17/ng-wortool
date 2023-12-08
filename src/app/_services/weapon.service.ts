@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:42:43 
+ * Last Modified: Thu December 7th 2023 5:55:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Weapon } from '../_models/weapon';
 
-const API = 'https://api.tonewebdesign.com/pa/weapons';
+const API = 'https://api.wortool.com/v2/weapons';
 
 @Injectable({
   providedIn: 'root'

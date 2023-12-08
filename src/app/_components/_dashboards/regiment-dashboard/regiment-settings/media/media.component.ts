@@ -277,7 +277,7 @@ export class MediaComponent implements OnInit {
    * @param fileUrl 
    */
   removeCover(fileUrl: string) {
-    const prefixToRemove = 'https://api.tonewebdesign.com/pa/regiments/9/files/cover/';
+    const prefixToRemove = 'https://api.wortool.com/v2/regiments/9/files/cover/';
 
     if (fileUrl.startsWith(prefixToRemove)) {
       const fileName = fileUrl.substring(prefixToRemove.length);

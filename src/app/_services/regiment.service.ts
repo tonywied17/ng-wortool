@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 11:56:07 
+ * Last Modified: Thu December 7th 2023 5:55:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -14,8 +14,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-let API = "https://api.tonewebdesign.com/pa/regiments/";
-let AUTH_API = "https://api.tonewebdesign.com/pa/auth/";
+let API = "https://api.wortool.com/v2/regiments/";
+let AUTH_API = "https://api.wortool.com/v2/auth/";
 
 
 const httpOptions = {
