@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon July 31st 2023 11:27:15 
+ * Last Modified: Thu December 7th 2023 5:55:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Note } from '../_models/note.model';
 
-const API = 'https://api.tonewebdesign.com/pa/notes/map';
+const API = 'https://api.wortool.com/v2/notes/map';
 
 @Injectable({
   providedIn: 'root'

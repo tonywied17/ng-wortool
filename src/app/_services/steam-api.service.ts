@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun November 12th 2023 8:49:57 
+ * Last Modified: Thu December 7th 2023 5:55:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -60,7 +60,7 @@ export class SteamApiService {
    * @returns - Observable<any>
    */
   getAppDetails(): Observable<any> {
-    const url = `https://api.tonewebdesign.com/pa/steam/appdetails?appid=424030`;
+    const url = `https://api.wortool.com/v2/steam/appdetails?appid=424030`;
     return this.http.get<SteamApiResponse>(url).pipe(
       map(response => response['424030'].data)
     );
@@ -72,7 +72,7 @@ export class SteamApiService {
    * @returns - Observable<NewsItem[]>
    */
   getAppNews(): Observable<NewsItem[]> {
-    const url = `https://api.tonewebdesign.com/pa/steam/appnews?appid=424030`;
+    const url = `https://api.wortool.com/v2/steam/appnews?appid=424030`;
     return this.http.get<SteamApiResponse2>(url).pipe(
       map(response => response.appnews.newsitems)
     );
@@ -85,7 +85,7 @@ export class SteamApiService {
    * @returns - Observable<any>
    */
   getSteamId(steamId: string): Observable<any> {
-    const url = `https://api.tonewebdesign.com/pa/steamid/${steamId}`;
+    const url = `https://api.wortool.com/v2/steamid/${steamId}`;
     return this.http.get(url);
   }
 
@@ -95,7 +95,7 @@ export class SteamApiService {
    * @returns 
    */
   getIdsFromProfile(profileUrl: string): Observable<any> {
-    const url = 'https://api.tonewebdesign.com/pa/getSteamId';
+    const url = 'https://api.wortool.com/v2/getSteamId';
     return this.http.post(url, {
       profileUrl
     }, httpOptions);

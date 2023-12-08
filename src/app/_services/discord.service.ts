@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 17th 2023 11:04:15 
+ * Last Modified: Thu December 7th 2023 5:55:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -15,7 +15,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-let API = "https://api.tonewebdesign.com/pa/discord";
+let API = "https://api.wortool.com/v2/discord";
 
 @Injectable({
   providedIn: 'root'

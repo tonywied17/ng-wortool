@@ -1,14 +1,14 @@
-# WoRTool.com / PA Army App 2.0 (Angular Edition)
-### Back End API Repo
+# WoRTool Angular Frontend
+### See API Backend Repo
 > This repository serves as the front end for the new paapp2 poject in angular/typescipt.
-> For the backend API view this [repository](https://github.com/tonywied17/express-paarmy-api)   
+> For the backend API view this [repository](https://github.com/tonywied17/wortool-api)   
 
 ## Live Build
 
 <br> 
 
 > View latest live build:
-[View Live](https://_.molex.cloud/git/ng-paapp2)
+[View Live](https://wortool.com/)
 
 # UPDATE 11-18-23
 
