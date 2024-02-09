@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu November 23rd 2023 2:17:23 
+Last Modified: Fri February 9th 2024 1:11:13 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -12,8 +12,8 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 <!-- class="bg-gradient-to-r from-[#88887bd3] via-[#88887b98] to-[#88887b41]" -->
 
-<div *ngIf="isLoaded">
-	<nav id="worNav" class="bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-xl w-full top-0 left-0 right-0 sm:h-auto sm:min-h-0 z-10 sm:py-1 py-2"
+
+	<nav *ngIf="isLoaded" class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-lg w-full top-0 left-0 right-0 sm:h-auto sm:py-[5px] sm:min-h-0 z-10"
 	style="position: sticky; top: 0;">
 	<div class="mx-auto pr-4">
 		<div class="relative flex h-14 items-center justify-between">
@@ -373,5 +373,3 @@ Copyright (c) 2023 Tone Web Design, Molex
 <div class="sm:w-full mx-auto my-2 sm:my-0 sm:mt-10 relative lg:px-5 px-2 h-[calc(100% - 200px)] main-container">
 	<router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
-</div>
-

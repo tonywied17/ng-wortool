@@ -4,13 +4,13 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Tue November 14th 2023 9:56:59 
+Last Modified: Fri February 9th 2024 1:31:01 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
 -->
 
-<div *ngIf="!isDataLoaded" class="lg:w-[72vw] w-[100vw-2em] m-auto lg:mt-[3.5em] mt-[2em]">
+<div *ngIf="!isDataLoaded" class="container mx-auto lg:mt-[3.5em] mt-[2em]">
   <div class="lds-ellipsis">
     <div></div>
     <div></div>
@@ -20,7 +20,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 </div>
 
 
-<div *ngIf="isDataLoaded" class="lg:w-[72vw] w-[100vw-2em] m-auto lg:mt-[3.5em] mt-[2em]">
+<div *ngIf="isDataLoaded" class="container mx-auto lg:mt-[3.5em] mt-[2em] lg:mb-10">
     <div class="grid grid-cols-[auto_1fr] gap-2">
         <div class="place-self-center">
             <button (click)="goBack()"
