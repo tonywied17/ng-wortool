@@ -339,7 +339,7 @@ export class EventBuilderComponent implements OnInit {
           roundDetails.push(`**Units:** ${round.info}`);
         }
         if (round.numberOfRounds) {
-          roundDetails.push(`Number of Rounds: ${round.numberOfRounds}`);
+          roundDetails.push(`**# of Rounds:** ${round.numberOfRounds}`);
         }
       
         if (roundDetails.length > 0) {

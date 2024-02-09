@@ -18,7 +18,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 
 
-<div *ngIf="!loading" class="lg:w-[80vw] w-[100vw - 2em] m-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
+<div *ngIf="!loading" class="container mx-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
 
 
 	<div [ngClass]="this.sharedDataService.isLoggedIn ? 'grid lg:grid-cols-[2fr_1fr] grid-cols-1 lg:gap-5' : 'grid lg:grid-cols-[1fr_1.5fr_1.2fr] grid-cols-1 lg:gap-0'">
@@ -114,6 +114,14 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 							<mat-divider class="lg:!hidden" *ngIf="showMod"></mat-divider>
 
 								<div class="hidden lg:block !bg-gradient-to-r from-[#4b4b4775] via-[#6b6a644b] to-transparent">
+									<button *ngIf="showMod"
+									routerLink="/mod/1"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-users-gear w-[25px]"></i>
+									Manage Regiment
+									</button>
+
 									<button *ngIf="showMod"
 									routerLink="/mod/2"
 									mat-button
