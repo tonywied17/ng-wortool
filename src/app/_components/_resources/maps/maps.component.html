@@ -324,10 +324,18 @@
 				<div *ngIf="!showMapPage && !loading"
 					class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 	
+					
+
+					<div *ngFor="let map of map; let i = index"
+					class=" animate-load">
+					
 	
-					<div *ngFor="let map of map; index as i;"
-						class="bg-[#1e293b]/80 rounded-lg ring-1 ring-[#0f172a]/5 shadow-xl w-full animate-load p-2">
-	
+						
+					<div
+					[@cardAnimation]="animationStates[i] || 'default'"
+					(mouseenter)="onMouseEnter(i)"
+					(mouseleave)="onMouseLeave(i)"
+					 class="bg-[#1e293b]/80 rounded-lg ring-1 ring-[#0f172a]/5 shadow-xl w-full p-2">
 						<div class="grid grid-cols-[auto_1fr] items-center w-full h-10">
 							<div class="flex justify-start">
 								<span class="text-neutral-200 text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ map.map }}</span>
@@ -371,7 +379,7 @@
 								</button>
 							</div>
 						</div>
-	
+					</div>
 	
 	
 					</div>

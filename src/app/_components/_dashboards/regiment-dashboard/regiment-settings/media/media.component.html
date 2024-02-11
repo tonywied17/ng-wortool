@@ -19,7 +19,7 @@
                 <input #coverInput hidden="true" type="file"
                 (change)="coverInputChange($event);selectCover($event)" accept="image/*">
 
-                <button mat-stroked-button color="primary"
+                <button mat-flat-button color="primary"
                 class="mr-[0.5em]"
                     (click)="coverInput.click();selectCover($event)">
                     <mat-icon>add_to_photos</mat-icon>
@@ -34,7 +34,7 @@
                 <button mat-raised-button [disabled]="!selectedCover" (click)="uploadCover()">Upload</button>
             </div>
             <div class="justify-end">
-                <button mat-stroked-button color="primary"
+                <button mat-flat-button color="primary"
                 (click)="confirmRemoveCover(this.sharedDataService.regiment.cover_photo)">
                 <mat-icon class="!m-0 lg:!mr-1">shuffle</mat-icon>
                 <span class="lg:inline-block hidden">
@@ -98,7 +98,7 @@
         <input #fileInput hidden="true" type="file"
             (change)="fileInputChange($event);selectFile($event)" accept="image/*">
 
-        <button style="margin-right: 0.5em;" mat-stroked-button color="primary"
+        <button style="margin-right: 0.5em;" mat-flat-button color="primary"
             (click)="fileInput.click();selectFile($event)">
             <mat-icon>add_to_photos</mat-icon>
             <span class="lg:inline-block hidden">
