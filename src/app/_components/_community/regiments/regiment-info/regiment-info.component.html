@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Fri February 9th 2024 1:31:01 
+Last Modified: Sun February 11th 2024 3:49:35 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -40,7 +40,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
     <div id="cover-photo"
-     class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex flex-col justify-between items-end slide-bottom"
+     class="relative rounded-lg bg-[#0f172a]/25 shadow-lg p-4 w-full h-[320px] flex flex-col justify-between items-end slide-bottom"
      [style.backgroundImage]="regiment.cover_photo ? 'url(' + regiment.cover_photo + ')' : 'url(' + randomScreenshot + ')'"
      style="background-size: cover; background-position: center;">
 
@@ -89,15 +89,15 @@ Copyright (c) 2023 Tone Web Design, Molex
             </div>
             <mat-nav-list class="text-center">
               <a *ngIf="regiment.invite_link" [href]="regiment.invite_link" target="_blank" mat-list-item>
-                <span class="text-slate-400"><i class="fab fa-discord"></i> Discord</span>
+                <span class="text-[#94a3b8]"><i class="fab fa-discord"></i> Discord</span>
               </a>
               <mat-divider *ngIf="regiment.website"></mat-divider>
               <a *ngIf="regiment.website" [href]="regiment.website" target="_blank" mat-list-item>
-                <span class="text-slate-400"><i class="fas fa-globe"></i> Website</span>
+                <span class="text-[#94a3b8]"><i class="fas fa-globe"></i> Website</span>
               </a>
               <mat-divider *ngIf="regiment.youtube"></mat-divider>
               <a *ngIf="regiment.youtube" [href]="regiment.youtube" target="_blank" mat-list-item>
-                <span class="text-slate-400"><i class="fab fa-youtube"></i> YouTube</span>
+                <span class="text-[#94a3b8]"><i class="fab fa-youtube"></i> YouTube</span>
               </a>
             </mat-nav-list>
 
@@ -120,7 +120,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
             <div *ngFor="let user of regimentUsers">
               <div *ngIf="this.regiment.ownerId.includes(user.discordId)">
-                <div class="bg-slate-800 rounded-lg my-2 h-[45px] flex items-center">
+                <div class="bg-[#1e293b] rounded-lg my-2 h-[45px] flex items-center">
                   <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
 								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
 
@@ -140,7 +140,7 @@ Copyright (c) 2023 Tone Web Design, Molex
             
             <div *ngFor="let user of regimentUsers">
               <div *ngIf="(!this.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');">
-                <div class="bg-slate-800 rounded-lg my-2 h-[45px] flex items-center">
+                <div class="bg-[#1e293b] rounded-lg my-2 h-[45px] flex items-center">
                   <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
 								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
 
@@ -160,7 +160,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
             <!-- <div *ngFor="let user of regimentUsers?.slice(0, 8)">
               <div *ngIf="(!this.regiment.ownerId.includes(user.discordId)) && !user.roles.includes('ROLE_MODERATOR');">
-                <div class="bg-slate-800 rounded-lg my-2 mx-4 h-[45px] flex items-center">
+                <div class="bg-[#1e293b] rounded-lg my-2 mx-4 h-[45px] flex items-center">
                   <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
 								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
 
@@ -197,7 +197,7 @@ Copyright (c) 2023 Tone Web Design, Molex
             </div>
 
               <div *ngIf="scheduleCount <= 0">
-                  <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+                  <div class="bg-[#0f172a]/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
                       <div class="flex">
                         <div class="mr-2">
                           <i class="fas fa-exclamation-triangle"></i>
@@ -224,7 +224,7 @@ Copyright (c) 2023 Tone Web Design, Molex
                             <ng-container *ngIf="filterSchedulesByDayAndName(day, scheduleName).length > 0">
                                 <div class="schedule-day shadow-md">
                                     <div class="day-header">
-                                      <div class="text-center text-slate-400 p-2" style="background: linear-gradient(145deg,#263855e1,#1e293b00,#1e293b00,#1e293b00), linear-gradient(-145deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);; border-bottom: 1px solid rgb(33, 49, 75);">{{ day }}</div>
+                                      <div class="text-center text-[#94a3b8] p-2" style="background: linear-gradient(145deg,#263855e1,#1e293b00,#1e293b00,#1e293b00), linear-gradient(-145deg,#263855e1,#1e293b00,#1e293b00,#1e293b00);; border-bottom: 1px solid rgb(33, 49, 75);">{{ day }}</div>
                                     </div>
                                     <ng-container *ngFor="let schedule of filterSchedulesByDayAndName(day, scheduleName)">
                                       <div class="schedule-entry p-2">
@@ -261,7 +261,7 @@ Copyright (c) 2023 Tone Web Design, Molex
               <div class="right-in col-span-2" *ngIf="fileInfos.length === 0">
                   <div class="mt-3">
 
-                      <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+                      <div class="bg-[#0f172a]/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
                           <div class="flex">
                             <div class="mr-2">
                               <i class="fas fa-exclamation-triangle"></i>
@@ -317,7 +317,7 @@ Copyright (c) 2023 Tone Web Design, Molex
               <!-- Recap Widget -->
               <div class="p-1 right-in col-span-2">
                 <div class="mt-4">
-                    <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+                    <div class="bg-[#0f172a]/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
                         <div class="flex">
                           <div class="mr-2">
                             <i class="fas fa-exclamation-triangle"></i>

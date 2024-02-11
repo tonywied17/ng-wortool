@@ -9,9 +9,9 @@
 
 
 <div *ngIf="isDataLoaded"
-	class="container mx-auto lg:mt-[3.5em] mt-[2em]">
-	<div class="animate-top flex items-center mb-8" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
-		<div class="flex-shrink-0 text-[#88887b] flex justify-center items-center w-6 md:w-16 h-auto pl-1">
+	class="container mx-auto lg:mt-[3.5em] mt-[1em]">
+	<div class="animate-top flex items-center md:mb-8 mb-2" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+		<div class="flex-shrink-0 text-[#88887b] md:flex justify-center items-center w-6 md:w-16 h-auto pl-1 hidden">
 			<i class="fas fa-newspaper fa-2x"></i> <!-- Newspaper icon for news -->
 		</div>
 		<div class="ml-1 flex items-center">
@@ -27,9 +27,9 @@
 
 		<div class="left-in col-span-1 rounded-md first-letter:h-full text-center"
 			style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
-			<div class="text-slate-400 text-3xl">
+			<div class="text-[#94a3b8] text-3xl">
 				Latest News
-				<div class="text-slate-400 text-lg mt-2">
+				<div class="text-[#94a3b8] text-lg mt-2">
 					{{articleLength}} Recent Updates
 					<span class="block text-sm font-[200] mt-1">
 						Last on {{latestDate}} by {{latestAuthor}}
@@ -39,16 +39,21 @@
 		</div>
 
 		<div *ngFor="let article of gameNews; index as i;"
-			class="bg-slate-800/80 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load p-2">
+			class="bg-[#1e293b]/80 rounded-lg ring-1 ring-[#0f172a]/5 shadow-xl w-full m-auto animate-load p-2">
 
 			<div class="grid grid-cols-1 items-center h-10">
 				<span class="text-neutral-200 text-base tracking-tight text-left inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ article.title }}</span>
 			</div>
 			
-			
-			<div class="rounded-md my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
-				style="background-image: url('{{headerImage}}');background-size: 150px;height:150px;background-size: cover;opacity: 80%;background-position: center;">
+			<div (click)="open(article.url , article.title, 1500, 868)" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full flex items-center justify-center" style="height: 150px; opacity: 80%;">
+				<img src="{{headerImage}}" alt="{{article.title}}"
+					class="rounded-md w-full height:150px object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
 			</div>
+			
+			
+			<!-- <div class="rounded-md my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
+				style="background-image: url('{{headerImage}}');background-size: 150px;height:150px;background-size: cover;opacity: 80%;background-position: center;">
+			</div> -->
 
 			<div class="grid grid-cols-2 items-center w-full h-10">
 				<div class="flex justify-start">
@@ -72,7 +77,7 @@
 		</div>
 	</div>
 
-	<!-- <h2 class="text-slate-400 text-xl mt-[1em] ml-[1.5em]">
+	<!-- <h2 class="text-[#94a3b8] text-xl mt-[1em] ml-[1.5em]">
 				<i class="fa-brands fa-steam mr-2"></i>Steam Information
 			</h2> -->
 	<div class="mx-5 mb-5 px-5 pb-5 text-xl text-neutral-200 grid lg:grid-cols-3 md:grid-cols-2">
@@ -122,19 +127,21 @@
 
 		<div class="left-in col-span-1 rounded-md first-letter:h-full text-center"
 			style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
-			<div class="text-slate-400 text-3xl">
+			<div class="text-[#94a3b8] text-3xl">
 				In-Game Screenshots
-				<div class="text-slate-400 text-lg mt-2">Last 8 Screenshots</div>
+				<div class="text-[#94a3b8] text-lg mt-2">Random Community Screenshots</div>
 			</div>
 		</div>
 
 		<div *ngFor="let screenshot of screenshots.slice(0, 8); let i = index;"
-			class="bg-slate-800/80 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load p-2">
+			class="bg-[#1e293b]/80 rounded-lg ring-1 ring-[#0f172a]/5 shadow-xl w-full m-auto animate-load p-2">
 			<div class="grid grid-cols-1 items-center h-10">
 				<span class="text-neutral-200 text-base tracking-tight text-left inline-block">Screenshot #{{ i }}</span>
 			</div>
-			<div class="rounded-sm my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
-				style="background-image: url('{{screenshot.path_thumbnail}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;background-position: center;">
+
+			<div (click)="open(screenshot.path_full, i, 1500, 868)" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full flex items-center justify-center" style="height: 215px; opacity: 80%;">
+				<img src="{{screenshot.path_thumbnail}}" alt="{{i}}"
+					class="rounded-md w-full height:215px object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
 			</div>
 
 

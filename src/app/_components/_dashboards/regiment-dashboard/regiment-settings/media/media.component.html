@@ -51,7 +51,7 @@
     
 
     <div id="cover-photo"
-        class="relative rounded-lg bg-slate-900/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center"
+        class="relative rounded-lg bg-[#0f172a]/25 shadow-lg p-4 w-full h-[320px] flex justify-center items-center"
         [ngStyle]="{'background-image': sharedDataService.regiment.cover_photo ? 'url(' + sharedDataService.regiment.cover_photo + ')' : 'url(' + randomScreenshot + ')',
         'background-size': 'cover',
         'background-position': 'center'}">
@@ -117,7 +117,7 @@
 
         <div class="mt-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                <div *ngFor="let file of fileInfos | async" class="bg-slate-900/50 p-2 rounded-md shadow-xl">
+                <div *ngFor="let file of fileInfos | async" class="bg-[#0f172a]/50 p-2 rounded-md shadow-xl">
                   <!-- Media Icon -->
                   <div class="flex items-center justify-center mb-2">
                     <img 

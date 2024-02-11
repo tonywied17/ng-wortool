@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun February 11th 2024 1:29:41 
+Last Modified: Sun February 11th 2024 4:15:27 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -40,10 +40,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-<div *ngIf="isDataLoaded" class="container mx-auto lg:mt-[3.5em] mt-[2em]">
+<div *ngIf="isDataLoaded" class="container mx-auto lg:mt-[3.5em] mt-[1em]">
 	
-	<div class="animate-top flex items-center mb-8" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
-		<div class="flex-shrink-0 text-[#88887b] flex justify-center items-center w-6 md:w-16 h-auto pl-1">
+	<div class="animate-top flex items-center md:mb-8 mb-2" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+		<div class="flex-shrink-0 text-[#88887b] md:flex justify-center items-center w-6 md:w-16 h-auto pl-1 hidden">
 			<i class="fa-solid fa-tents fa-2x"></i>
 		</div>
 		<div class="ml-1 flex items-center">
@@ -102,7 +102,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 		<div *ngFor="let regiment of paginatedRegiments">
 
 
-			<div class="rounded-lg w-full bg-slate-900/80 shadow-lg scale-center">
+			<div class="rounded-lg w-full bg-[#0f172a]/80 shadow-lg scale-center">
 				<!-- Top -->
 				<a [href]="'/regiments/' + regiment.id">
 					<div class="grid grid-cols-[78px_auto] w-full reg-header">
@@ -118,7 +118,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 								<div class="grid lg:grid-cols-[auto_100px] grid-cols-[auto] grid-container">
 	
 									<div class="flex lg:items-center lg:justify-center pl-2 lg:pl-0">
-										<div class="text-slate-400 lg:text-xl font-[500] lg:text-center">
+										<div class="text-[#94a3b8] lg:text-xl font-[500] lg:text-center">
 											{{ regiment.regiment }}
 											<span class="block font-[500] lg:p-1 lg:text-center lg:text-base">
 	
@@ -163,7 +163,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<mat-divider></mat-divider>
 				<!--  -->
 				
-					<div class="grid lg:grid-cols-[2fr_0.5fr] grid-cols-[2fr_1fr] bg-slate-800/80 rounded-b-lg min-h-[180px] max-h-[180px]">
+					<div class="grid lg:grid-cols-[2fr_0.5fr] grid-cols-[2fr_1fr] bg-[#1e293b]/80 rounded-b-lg min-h-[180px] max-h-[180px]">
 						
 						<div class="font-[300] hidden xl:inline-block p-3 overflow-hidden">
 							{{ ellipsisText(regiment.description, 320) }}
