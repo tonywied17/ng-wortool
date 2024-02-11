@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Fri February 9th 2024 1:11:13 
+Last Modified: Sun February 11th 2024 12:30:59 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -66,12 +66,19 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<!-- <span *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">s</span> -->
 						</button>
 
-						<!-- <button [routerLink]="['/maps']"
+						<button [routerLink]="['/maps']"
 							mat-button
 							routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
 							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Maps
-						</button> -->
+						</button>
+
+						<button [routerLink]="['/regiments']"
+							mat-button
+							routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Regiments
+						</button>
 
 
 						<!-- <button [matMenuTriggerFor]="resources"
@@ -92,7 +99,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 						</ng-template>
 
 						<button
-							*ngIf="currentRoute == '/game-info' || currentRoute == '/weapons' || currentRoute == '/maps'; else notActive"
+							*ngIf="currentRoute == '/game-info' || currentRoute == '/weapons'; else notActive"
 							[matMenuTriggerFor]="resources" mat-button
 							class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Resources
@@ -101,12 +108,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 						<mat-menu #resources="matMenu" xPosition="after"
 							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
-							<button routerLink="/maps" class="ml-2 select-none" mat-menu-item>
+							<!-- <button routerLink="/maps" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
-									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
+									<i class="fa-brands fa-steam mr-1.5"></i>
 									Maps
 								</span>
-							</button>
+							</button> -->
 							<button routerLink="/weapons" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-solid fa-person-rifle mr-1.5"></i> -->
@@ -116,41 +123,41 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<button routerLink="/game-info" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
 									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
-									News
+									Latest News
 								</span>
 							</button>
 						</mat-menu>
 
-						<ng-template #notActive2>
+						<!-- <ng-template #notActive2>
 							<button [matMenuTriggerFor]="regiments" mat-button
 								class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 								Community
 								<i class="fa-solid fa-caret-down"></i>
 							</button>
-						</ng-template>
+						</ng-template> -->
 
-						<button *ngIf="currentRoute == '/regiments' || currentRoute == '/recaps'; else notActive2"
+						<!-- <button *ngIf="currentRoute == '/regiments' || currentRoute == '/recaps'; else notActive2"
 							[matMenuTriggerFor]="regiments" mat-button
 							class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Community
 							<i class="fa-sharp fa-solid fa-caret-down"></i>
-						</button>
+						</button> -->
 
-						<mat-menu #regiments="matMenu" xPosition="after"
+						<!-- <mat-menu #regiments="matMenu" xPosition="after"
 							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
 							<button routerLink="/regiments" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
-									<!-- <i class="fa-solid fa-person-rifle mr-1.5"></i> -->
+									 <i class="fa-solid fa-person-rifle mr-1.5"></i>
 									Regiments
 								</span>
 							</button>
 							<button routerLink="/recaps" class="ml-2 select-none" mat-menu-item>
 								<span class="!text-[#252525ce] font-[500] !text-lg">
-									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
+									 <i class="fa-brands fa-steam mr-1.5"></i> 
 									Event Recaps
 								</span>
 							</button>
-						</mat-menu>
+						</mat-menu> -->
 					</div>
 				</div>
 			</div>

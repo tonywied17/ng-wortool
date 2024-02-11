@@ -2,6 +2,21 @@
 
 <div class="container mx-auto lg:mt-[3.5em] mt-[2em] scroll-container mb-[4em]">
 
+<div class="animate-top flex items-center mb-8" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+    <div class="flex-shrink-0 text-[#88887b] flex justify-center items-center w-6 md:w-16 h-auto pl-1">
+        <i class="fas fa-map-marked-alt fa-2x"></i>
+    </div>
+    <div class="ml-1 flex items-center">
+        <div>
+            <h3 class="text-[#88887b] font-[500] text-base md:text-xl tracking-tight drop-shadow-lg">Explore Maps</h3>
+            <span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">Navigate Battlefields, Strategize Your Moves, and Dominate the Game</span>
+        </div>
+    </div>
+</div>
+
+	
+	
+
 	<div *ngIf="loading" class="text-center text-[#88887b] text-xl opacity-75">
 		<div class="lds-ellipsis">
 			<div></div>
@@ -308,56 +323,55 @@
 		<div class="lg:col-start-2 lg:col-span-3 mb-[4em]">
 			<div *ngIf="!showMapPage && !loading"
 				class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7">
+
+
 				<div *ngFor="let map of map; index as i;"
-					class="bg-slate-800/80 rounded-lg py-4 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load">
-					<h4>
-						<span class="text-slate-200 text-xl tracking-tight px-4 pb-1 text-left !select-text">{{ map.map }}</span>
-						<span class="text-slate-400/80 text-sm px-4  tracking-tight text-right float-right">
-							{{
-							map.campaign }}
-						</span>
-					</h4>
-					<div class="rounded-sm my-2 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
-						style="background-image: url('https://wortool.com/{{map.image}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;">
+					class="bg-slate-800/80 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load p-2">
+
+					<div class="grid grid-cols-2 items-center w-full h-10">
+						<div class="flex justify-start">
+							<span class="text-neutral-200 text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ map.map }}</span>
+						</div>
+
+						<div class="flex justify-end">
+							<span class="text-slate-400/80 text-base tracking-tight">
+								{{ map.campaign }}
+							</span>
+						</div>
+						
 					</div>
 
+					
+					<div [routerLink]="map.id" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 250px; opacity: 80%;">
+						<img src="https://wortool.com/{{map.image}}" alt="{{map.map}}"
+							class="rounded-md w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
+					</div>
 
-					<div class="grid grid-cols-2 gap-2 mb-[-8.5px]">
-
-
-						<div class="cols-start-1 col-span-1 my-auto mr-auto pl-4 text-left">
-							<div *ngIf="map.attacker === 'USA'"
-								class>
+					
+					<div class="grid grid-cols-2 items-center w-full h-10">
+						<div class="flex justify-start">
+							<div *ngIf="map.attacker === 'USA'">
 								<span class=" opacity-40">USA Attacker</span>
 							</div>
-
-
-							<div *ngIf="map.attacker === 'CSA'"
-								class>
+							<div *ngIf="map.attacker === 'CSA'">
 								<span class=" opacity-40">CSA Attacker</span>
 							</div>
-
-
-							<div *ngIf="map.attacker === 'No'"
-								class>
+							<div *ngIf="map.attacker === 'No'">
 								<span class=" opacity-40">No Attacker</span>
 							</div>
 						</div>
-
-
-
-						<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+						<div class="flex justify-end">
 							<button [class.active]="i == currentIndex"
 								[routerLink]="map.id"
-								mat-button
-								color="accent"
-								class="text-[15px] font-[500] !mr-1">
+								mat-raised-button
+								class="!min-h-fit !py-1"
+								color="primary">
 								Enhance
-								<i class="fa-solid fa-magnifying-glass"
-									style="margin-left:5px;margin-top:-2px;"></i>
+								<i class="fa-solid fa-magnifying-glass pl-1"></i>
 							</button>
 						</div>
 					</div>
+
 
 
 				</div>

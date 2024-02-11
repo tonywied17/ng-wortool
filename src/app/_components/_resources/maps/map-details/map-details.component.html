@@ -113,12 +113,12 @@
 	</div>
 
 
-	<div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-0 rounded-lg lg:p-[2em] p-[1em] lg:!h-[70vh]"
+	<div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-0 rounded-md lg:p-[2em] p-[1em] lg:!h-[70vh]"
 		style="background: linear-gradient(180deg, #1e293b, #1e293b00)">
 		<div class="w-full lg:col-start-1 lg:col-span-1 text-center lg:text-left lg:row-start-1 lg:row-span-3">
 
 
-			<div class="p-4 rounded-t-lg" style="
+			<div class="p-4 rounded-t-md" style="
       background: linear-gradient(
         130deg,
         #263855e1,
@@ -139,12 +139,12 @@
 			<img *ngIf="!CamMapBool"
      (click)="openMapImageModal('https://wortool.com/' + currentMap.image)"
      src="https://wortool.com/{{ currentMap.image }}"
-     class="fade-center transition-all active:!translate-y-2 active:translate-x-2 hover:cursor-pointer hover:brightness-[85%] brightness-75 sepia-[50%] lg:mr-auto lg:w-[80%] lg:h-auto block rounded-lg rounded-tl-none shadow-none duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
+     class="fade-center transition-all active:!translate-y-2 active:translate-x-2 hover:cursor-pointer hover:brightness-[85%] brightness-75 sepia-[50%] lg:mr-auto lg:w-[80%] lg:h-auto block rounded-md rounded-tl-none shadow-none duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
 
 
 			<div *ngIf="CamMapBool"
 				id="videoContainer"
-				class="fade-center mb-[100px] lg:mr-auto lg:w-[95%] lg:h-[62%] h-[75%] block rounded-lg rounded-tl-none shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
+				class="fade-center mb-[100px] lg:mr-auto lg:w-[95%] lg:h-[62%] h-[75%] block rounded-md rounded-tl-none shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
 			</div>
 		</div>
 
@@ -179,7 +179,7 @@
 
 
 			<div *ngFor="let unit of currentMap.ATTACKER; index as i"
-				class="lg:pt-[2em] lg:pl-[2em] lg:pr-[2em] p-[1em] rounded-t-3xl left-in"
+				class="lg:pt-[2em] lg:pl-[2em] lg:pr-[2em] p-[1em] rounded-t-md left-in"
 				style="
           background: linear-gradient(
             130deg,
@@ -409,13 +409,13 @@
 
 			<div class="block pr-[20px] text-center text-3xl font-[300] select-none">
 				<img src="https://wortool.com/assets/swords.png"
-					class="icon mx-auto h-[43px] w-auto pointer-events-none brightness-75 sepia-[70%]">
+					class="animate-bounce mx-auto h-[43px] w-auto pointer-events-none brightness-75 sepia-[70%]">
 				<span class="block text-base font-[200]">vs.</span>
 			</div>
 
 
 			<div *ngFor="let unit of currentMap.DEFENDER; index as i"
-				class="lg:pb-[2em] lg:pr-[2em] lg:pl-[2em] p-[1em] rounded-b-3xl text-right right-in"
+				class="lg:pb-[2em] lg:pr-[2em] lg:pl-[2em] p-[1em] rounded-b-md text-right right-in"
 				style="
           background: linear-gradient(
             -25deg,
