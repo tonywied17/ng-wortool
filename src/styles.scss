@@ -251,7 +251,6 @@ $theme: (primary: $theme-primary,
 }
 
 
-/* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -260,11 +259,13 @@ html,
 body {
   height: 100%;
   user-select: none;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   font-family: 'Noto Sans', sans-serif;
+
 }
 
 button {
@@ -693,7 +694,7 @@ button {
 }
 
 .fade-center {
-  animation: fade-center .5s ease 0s 1 normal forwards;
+  animation: fade-center .3s ease 0s 1 normal forwards;
 }
 
 .scale-center {

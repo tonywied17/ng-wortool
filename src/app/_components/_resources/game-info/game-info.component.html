@@ -10,10 +10,20 @@
 
 <div *ngIf="isDataLoaded"
 	class="container mx-auto lg:mt-[3.5em] mt-[2em]">
+	<div class="animate-top flex items-center mb-8" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+		<div class="flex-shrink-0 text-[#88887b] flex justify-center items-center w-6 md:w-16 h-auto pl-1">
+			<i class="fas fa-newspaper fa-2x"></i> <!-- Newspaper icon for news -->
+		</div>
+		<div class="ml-1 flex items-center">
+			<div>
+				<h3 class="text-[#88887b] font-[500] text-base md:text-xl tracking-tight drop-shadow-lg">Latest Game News</h3>
+				<span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">Stay Updated, Discover New Features, and Get Ahead of the Competition</span>
+			</div>
+		</div>
+	</div>
+	
 
-	<h3 class="text-[#88887b]  text-3xl tracking-tight mb-[1em]">War of Rights Hub</h3>
-
-	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 md:px-[2em] pb-[1em]">
+	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 pb-[1em]">
 
 		<div class="left-in col-span-1 rounded-md first-letter:h-full text-center"
 			style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
@@ -29,36 +39,35 @@
 		</div>
 
 		<div *ngFor="let article of gameNews; index as i;"
-			class="bg-slate-800/80 rounded-lg py-2 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load">
-			<h4>
-				<span class="text-neutral-200 text-lg tracking-tight px-4 pb-2 text-left inline-block">{{ article.title }}</span>
+			class="bg-slate-800/80 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load p-2">
 
-			</h4>
-			<div class="rounded-sm my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
+			<div class="grid grid-cols-1 items-center h-10">
+				<span class="text-neutral-200 text-base tracking-tight text-left inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ article.title }}</span>
+			</div>
+			
+			
+			<div class="rounded-md my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
 				style="background-image: url('{{headerImage}}');background-size: 150px;height:150px;background-size: cover;opacity: 80%;background-position: center;">
 			</div>
 
-			<div class="grid grid-cols-2 gap-2 mt-2">
-
-				<div class="cols-start-1 col-span-1 my-auto mr-auto pl-4 text-left">
-
-					<span class=" opacity-40">
+			<div class="grid grid-cols-2 items-center w-full h-10">
+				<div class="flex justify-start">
+					<span class="font-[200] opacity-40">
 						{{formatUnixTimestamp(article.date)}}
 					</span>
-
 				</div>
-
-				<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+				<div class="flex justify-end">
 					<button (click)="open(article.url , article.title, 1500, 868)"
-						mat-button
-						color="accent"
-						class="text-[15px] font-[500] !mr-1">
+							mat-button
+							color="accent"
+							class="text-[15px] font-[500] !mr-1">
 						Read More
 						<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"
-							style="margin-left:5px;margin-top:-2px;"></i>
+						   style="margin-left:5px;margin-top:-2px;"></i>
 					</button>
 				</div>
 			</div>
+			
 
 		</div>
 	</div>
@@ -114,33 +123,32 @@
 		<div class="left-in col-span-1 rounded-md first-letter:h-full text-center"
 			style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
 			<div class="text-slate-400 text-3xl">
-				Community Screenshots
+				In-Game Screenshots
 				<div class="text-slate-400 text-lg mt-2">Last 8 Screenshots</div>
 			</div>
 		</div>
 
 		<div *ngFor="let screenshot of screenshots.slice(0, 8); let i = index;"
-			class="bg-slate-800/80 rounded-lg py-2 ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load">
-			<h4>
-				<span class="text-neutral-200 text-lg tracking-tight px-4 pb-2 text-left inline-block">Screenshot #{{ i }}</span>
-
-			</h4>
+			class="bg-slate-800/80 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full m-auto animate-load p-2">
+			<div class="grid grid-cols-1 items-center h-10">
+				<span class="text-neutral-200 text-base tracking-tight text-left inline-block">Screenshot #{{ i }}</span>
+			</div>
 			<div class="rounded-sm my-1 shadow-md brightness-[55%] sepia-[50%] blur-[0.5px]"
 				style="background-image: url('{{screenshot.path_thumbnail}}');background-size: 250px;height:250px;background-size: cover;opacity: 80%;background-position: center;">
 			</div>
 
-			<div class="grid grid-cols-2 gap-2 mt-2">
 
-				<div class="cols-start-1 col-span-1 my-auto mr-auto pl-4 text-left"></div>
+			<div class="grid grid-cols-2 items-center w-full h-10">
+				<div class="flex justify-start">
 
-				<div class="cols-start-2 col-span-1 my-auto ml-auto text-right">
+				</div>
+				<div class="flex justify-end">
 					<button (click)="open(screenshot.path_full , 'Community Screenshot', 1500, 868)"
 						mat-button
 						color="accent"
-						class="text-[15px] font-[500] !mr-1">
+						class="text-[15px] font-[500]">
 						Full Resolution
-						<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"
-							style="margin-left:5px;margin-top:-2px;"></i>
+						<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
 					</button>
 				</div>
 			</div>

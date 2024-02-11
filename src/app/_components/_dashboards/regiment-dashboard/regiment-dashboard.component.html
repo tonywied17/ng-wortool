@@ -10,6 +10,7 @@
 
 
 <div *ngIf="!this.sharedDataService.isLoggedIn" class="container mx-auto mt-[1em] lg:mt-[4em] mb-[5em]">
+	
 	<div class="p-5 bg-[#1c2537] rounded-md" style="border-left: 5px solid #a13c3c;">
 		<div class="grid grid-cols-1 lg:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 lg:grid-rows-none">
 			<div class="row-start-2 lg:row-start-auto">
@@ -74,7 +75,21 @@
 
 <div *ngIf="isLoaded && regimentSelected" class="container mx-auto mt-[1em] lg:mt-[2em] mb-[5em]">
 
-	<div>
+	<div class="animate-top flex items-center mb-8" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+		<div class="flex-shrink-0 text-[#88887b] flex justify-center items-center w-6 md:w-16 h-auto pl-1">
+			<i class="fas fa-tools fa-2x"></i> <!-- Tools icon for regimental tools -->
+		</div>
+		<div class="ml-1 flex items-center">
+			<div>
+				<h3 class="text-[#88887b] font-[500] text-base md:text-xl tracking-tight drop-shadow-lg">Regimental Tools</h3>
+				<span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">Organize, Recruit, and Strategize: Take Your Regiment to the Next Level</span>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<!-- <div>
 		<button (click)="goBack()"
 		mat-button
 		color="primary"
@@ -82,7 +97,7 @@
 		<i class="fa-sharp fa-solid fa-arrow-left"></i>
 		Back
 	</button>
-	</div>
+	</div> -->
 
 	<!-- <div class="grid grid-cols-2">
 		<div>
@@ -127,7 +142,7 @@
 
 
 
-					<h1 class="mt-2 skewed-text">Tools</h1>
+					<h1 class="mt-2 skewed-text">Modules</h1>
 
 
 

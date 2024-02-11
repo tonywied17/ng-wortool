@@ -19,8 +19,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 
 <div *ngIf="!loading" class="container mx-auto lg:mt-[3.5em] mt-[2em] mb-[5em]">
-
-
+	
 	<div [ngClass]="this.sharedDataService.isLoggedIn ? 'grid lg:grid-cols-[2fr_1fr] grid-cols-1 lg:gap-5' : 'grid lg:grid-cols-[1fr_1.5fr_1.2fr] grid-cols-1 lg:gap-0'">
 
 
@@ -45,7 +44,8 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 			<!-- DASH -->
 			<div *ngIf="this.sharedDataService.isLoggedIn"
-				class="lg:p-6 p-2 w-full !my-auto top-in row-start-1 row-span-1 rounded-lg w-full h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
+				class="lg:p-6 p-2 w-full !my-auto left-in row-start-1 row-span-1 rounded-lg w-full h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
+
 				<div class="grid lg:grid-cols-[auto_auto] lg:px-0 px-4">
 					<div>
 						<h3 class="text-neutral-400 text-lg lg:pb-3 lg:pt-0 pt-3 tracking-tight mb-2 lg:mb-0">
@@ -136,6 +136,14 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
 									<i class="fa-brands fa-steam w-[25px]"></i>
 									Steam Stats
+									</button>
+
+									<button *ngIf="showMod"
+									routerLink="/mod/4"
+									mat-button
+									class="!min-h-fit !h-fit !p-0 dash-sub-item !w-[calc(100%-2.22em)]">
+									<i class="fa-solid fa-clipboard-user w-[25px]"></i>
+									Muster Roster
 									</button>
 
 								</div>
