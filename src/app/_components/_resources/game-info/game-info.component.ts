@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Sun February 11th 2024 4:00:15 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -49,13 +49,30 @@ export class GameInfoComponent implements OnInit {
         this.gameDetails = data;
         this.headerImage = this.gameDetails.header_image;
         this.gameBackground = this.gameDetails.background;
-        this.screenshots = this.gameDetails.screenshots;
+        this.screenshots = this.shuffleArray(this.gameDetails.screenshots).slice(0, 8);
         this.isDataLoaded = true;
       },
       (error) => {
         // // console.log(error);
       }
     );
+  }
+
+  /**
+   * Shuffle array
+   * This function is used to shuffle the array
+   * @param array 
+   * @returns 
+   */
+  shuffleArray(array: any[]): any[] {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    return array;
   }
 
   /**

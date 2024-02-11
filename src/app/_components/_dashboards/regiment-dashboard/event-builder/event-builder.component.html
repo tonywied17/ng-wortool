@@ -1,7 +1,7 @@
 <div class="w-full mx-auto">
 
 
-  <h2 class="lg:text-2xl text-lg text-slate-400 pb-4 ml-2 lg:ml-0">Share Event Information</h2>
+  <h2 class="lg:text-2xl text-lg text-[#94a3b8] pb-4 ml-2 lg:ml-0">Share Event Information</h2>
 
   <div class="grid lg:grid-cols-[1fr_auto]">
 
@@ -22,7 +22,7 @@
                       <input
                       #roleFilterInput
                       id="roleFilterInput"
-                      class="select-input !bg-slate-900/80 rounded-md my-1 shadow-lg"
+                      class="select-input !bg-[#0f172a]/80 rounded-md my-1 shadow-lg"
                       type="text"
                       placeholder="Type to filter..."
                       (input)="updateFilteredRoles()"
@@ -33,7 +33,7 @@
                       <i class="fa-solid fa-filter field-icon"></i>
                     </div>
             
-                    <ul class="dropdown-list rounded-md shadow-sm !bg-slate-900">
+                    <ul class="dropdown-list rounded-md shadow-sm !bg-[#0f172a]">
                       <li *ngIf="filteredRoles.length <= 0">
                         Fetching Roles...
                       </li>
@@ -108,9 +108,9 @@
 
               
 
-              <div *ngFor="let round of rounds.controls; let i = index" [formGroupName]="i" class="my-4 mb-6 p-2 lg:px-5 bg-slate-900/80 rounded-md shadow-sm">
+              <div *ngFor="let round of rounds.controls; let i = index" [formGroupName]="i" class="my-4 mb-6 p-2 lg:px-5 bg-[#0f172a]/80 rounded-md shadow-sm">
 
-                <h2 class="text-lg text-slate-400 my-2">Round {{i + 1}}</h2>
+                <h2 class="text-lg text-[#94a3b8] my-2">Round {{i + 1}}</h2>
 
                 
                 <!-- <div class="field-box my-2">
@@ -205,7 +205,7 @@
                 </div>
 
 
-                <!-- <pre class="p-2 bg-slate-900 rounded-sm">{{ round.value | json }}</pre> -->
+                <!-- <pre class="p-2 bg-[#0f172a] rounded-sm">{{ round.value | json }}</pre> -->
 
 
                 <div class="text-right w-full">
@@ -248,7 +248,7 @@
           </form>
 
     <!-- <div *ngIf="save">
-        <h2 class="text-xl text-slate-400">Full Server Event Object:</h2>
+        <h2 class="text-xl text-[#94a3b8]">Full Server Event Object:</h2>
         <pre>{{ serverData | json }}</pre>
     </div> -->
 

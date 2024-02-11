@@ -75,8 +75,8 @@
 
 <div *ngIf="isLoaded && regimentSelected" class="container mx-auto mt-[1em] lg:mt-[2em] mb-[5em]">
 
-	<div class="animate-top flex items-center mb-8" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
-		<div class="flex-shrink-0 text-[#88887b] flex justify-center items-center w-6 md:w-16 h-auto pl-1">
+	<div class="animate-top flex items-center md:mb-8 mb-2" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+		<div class="flex-shrink-0 text-[#88887b] md:flex justify-center items-center w-6 md:w-16 h-auto pl-1 hidden">
 			<i class="fas fa-tools fa-2x"></i> <!-- Tools icon for regimental tools -->
 		</div>
 		<div class="ml-1 flex items-center">
@@ -205,23 +205,23 @@
 
 
 
-				<div *ngIf="showPage1" class="w-full rounded-lg lg:p-[3em] p-0 mx-auto bg-slate-800/80 fade-center">
+				<div *ngIf="showPage1" class="w-full rounded-lg lg:p-[3em] p-0 mx-auto bg-[#1e293b]/80 fade-center">
 					<app-regiment-settings></app-regiment-settings>
 				</div>
 
 
 
-				<div *ngIf="showPage2" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
+				<div *ngIf="showPage2" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-[#1e293b]/80 fade-center">
 					<app-event-builder></app-event-builder>
 					<!-- <app-server-info></app-server-info> -->
 				</div>
 
-				<div *ngIf="showPage3" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
+				<div *ngIf="showPage3" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-[#1e293b]/80 fade-center">
 					
 					<app-steam-stats></app-steam-stats>
 				</div>
 
-				<div *ngIf="showPage4" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-slate-800/80 fade-center">
+				<div *ngIf="showPage4" class="w-full rounded-lg lg:p-[3em] p-2 mx-auto bg-[#1e293b]/80 fade-center">
 					
 					<app-muster-roster></app-muster-roster>
 				</div>

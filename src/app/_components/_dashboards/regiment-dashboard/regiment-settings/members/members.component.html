@@ -23,7 +23,7 @@
 
     <div *ngFor="let user of regimentUsers">
         <div *ngIf="this.sharedDataService.regiment.ownerId.includes(user.discordId);">
-            <div class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center text-base">
+            <div class="bg-[#0f172a]/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center text-base">
                 <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
                     class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
                     (error)="user.avatar_url = null">
@@ -53,7 +53,7 @@
 
     <div *ngFor="let user of regimentUsers">
         <div *ngIf="(!this.sharedDataService.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');"
-            class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
+            class="bg-[#0f172a]/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
             <div class="flex items-center">
 
                 <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
@@ -87,7 +87,7 @@
 
     <div *ngFor="let user of regimentUsers">
         <div *ngIf="(user.discordId != this.sharedDataService.regiment.ownerId) && !user.roles.includes('ROLE_MODERATOR');"
-            class="bg-slate-900/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
+            class="bg-[#0f172a]/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center justify-between">
             <div class="flex items-center">
                 <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
                     class="h-[45px] w-[45px] inline rounded-l-lg mr-2"

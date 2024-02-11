@@ -44,7 +44,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 
 			<!-- DASH -->
 			<div *ngIf="this.sharedDataService.isLoggedIn"
-				class="lg:p-6 p-2 w-full !my-auto left-in row-start-1 row-span-1 rounded-lg w-full h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
+				class="lg:p-6 p-2 w-full !my-auto left-in row-start-1 row-span-1 rounded-lg h-fit bg-gradient-to-tr from-[#6b6a64d3] via-[#6b6a6498] to-transparent">
 
 				<div class="grid lg:grid-cols-[auto_auto] lg:px-0 px-4">
 					<div>
@@ -52,7 +52,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 							Welcome back <span class="font-[500] text-[#88887b] px-1">{{this.sharedDataService.currentUser.username}}</span>!
 						</h3>
 					</div>
-					<div class="place-self-end flex items-start mb-auto font-[200] text-sm hidden lg:inline-block text-neutral-400">
+					<div class="place-self-end flex items-start mb-auto font-[200] text-sm lg:inline-block text-neutral-400">
 						{{formattedDate}}
 					</div>
 				</div>
@@ -507,7 +507,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 				</h3>
 	
 				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto">
-					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
+					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;" [href]="article.url" target="_blank">{{ article.title }}</a>
 					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
 						<div class="cols-start-1 col-span-1 px-2 text-left">
 							<span class="text-sm opacity-40 font-[200]">

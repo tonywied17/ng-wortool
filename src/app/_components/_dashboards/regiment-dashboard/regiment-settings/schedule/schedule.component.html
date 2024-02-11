@@ -22,7 +22,7 @@
 <mat-divider *ngIf="!creatingSchedule" class="!my-2"></mat-divider>
 
 <div *ngIf="scheduleCount <= 0">
-    <div class="bg-slate-900/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
+    <div class="bg-[#0f172a]/80 rounded-md border-l-4 border-red-700 text-red-300 p-4">
         <div class="flex">
             <div class="mr-2">
                 <i class="fas fa-exclamation-triangle"></i>
@@ -37,7 +37,7 @@
 <!-- Choose a Schedule -->
 <div *ngIf="!creatingSchedule" class="w-full grid lg:grid-cols-3">
     <div *ngFor="let scheduleName of objectKeys(scheduleNames)"
-        class="grid grid-rows-auto gap-4 p-4 m-2 bg-slate-900/80 rounded-sm shadow-md">
+        class="grid grid-rows-auto gap-4 p-4 m-2 bg-[#0f172a]/80 rounded-sm shadow-md">
         <div class="row-start-1 row-span-1">
             <h3 class="text-slate-300 text-base font-[600]"><i
                     class="fa-solid fa-calendar-days"></i> {{scheduleName}}</h3>
