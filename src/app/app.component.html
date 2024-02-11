@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun February 11th 2024 12:30:59 
+Last Modified: Sun February 11th 2024 4:45:14 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -13,370 +13,370 @@ Copyright (c) 2023 Tone Web Design, Molex
 <!-- class="bg-gradient-to-r from-[#88887bd3] via-[#88887b98] to-[#88887b41]" -->
 
 
-	<nav *ngIf="isLoaded" class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-lg w-full top-0 left-0 right-0 sm:h-auto sm:py-[5px] sm:min-h-0 z-10"
-	style="position: sticky; top: 0;">
-	<div class="mx-auto pr-4">
-		<div class="relative flex h-14 items-center justify-between">
-			<div class="absolute sm:hidden">
-				<!-- Mobile menu button -->
-				<button (click)="toggle();scroll()" type="button"
-					class="!ml-2 !mt-auto inline-flex items-center justify-center rounded-md p-2 text-[#141c2a] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#141c2a88]"
-					aria-controls="mobile-menu" aria-expanded="false">
-					
-					<mat-icon>menu</mat-icon>
-
-				</button>
-			</div>
-			<div class="flex flex-1 items-center justify-center sm:items-center sm:justify-start">
-				<div class="flex flex-shrink-0 items-center">
-
-					<button [ngClass]="{'hidden': !(routeService.showButton$ | async)}" (click)="goBack()" mat-button
-						class="!text-[#141b29]/80 mx-2 !hidden sm:!block">
-						<i class="fa-solid fa-angle-left"></i>
-					</button>
-
-					<div class="left-in mr-[-22.2px]">
-						<div routerLink="/home" class="logo-div">
-							<span class="logo-span">W</span>
-							<span class="logo-span">T</span>
-							<span class="logo-span">.</span>
-						</div>
-					</div>
-					
-
-
-
-					<!-- <img class="block h-8 w-auto pointer-events-none" src="https://paarmy.com/assets/pa.png"
-						alt="The Pennsylvania Army"> -->
-
-				</div>
-
-				<div class="hidden sm:ml-10 sm:block">
-					<div class="flex space-x-4">
-						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-						<button *ngIf="!this.sharedDataService.isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
-							mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Home
-						</button>
-						<button *ngIf="this.sharedDataService.isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
-							mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							<span>Dashboard</span>
-							<!-- <span *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">s</span> -->
-						</button>
-
-						<button [routerLink]="['/maps']"
-							mat-button
-							routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Maps
-						</button>
-
-						<button [routerLink]="['/regiments']"
-							mat-button
-							routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Regiments
-						</button>
-
-
-						<!-- <button [matMenuTriggerFor]="resources"
-							mat-button
-							routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Resources
-							<i class="fa-solid fa-caret-down"></i>
-						</button> -->
-
-
-						<ng-template #notActive>
-							<button [matMenuTriggerFor]="resources" mat-button
-								class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-								Resources
-								<i class="fa-solid fa-caret-down"></i>
-							</button>
-						</ng-template>
-
-						<button
-							*ngIf="currentRoute == '/game-info' || currentRoute == '/weapons'; else notActive"
-							[matMenuTriggerFor]="resources" mat-button
-							class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Resources
-							<i class="fa-sharp fa-solid fa-caret-down"></i>
-						</button>
-
-						<mat-menu #resources="matMenu" xPosition="after"
-							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
-							<!-- <button routerLink="/maps" class="ml-2 select-none" mat-menu-item>
-								<span class="!text-[#252525ce] font-[500] !text-lg">
-									<i class="fa-brands fa-steam mr-1.5"></i>
-									Maps
-								</span>
-							</button> -->
-							<button routerLink="/weapons" class="ml-2 select-none" mat-menu-item>
-								<span class="!text-[#252525ce] font-[500] !text-lg">
-									<!-- <i class="fa-solid fa-person-rifle mr-1.5"></i> -->
-									Weapons
-								</span>
-							</button>
-							<button routerLink="/game-info" class="ml-2 select-none" mat-menu-item>
-								<span class="!text-[#252525ce] font-[500] !text-lg">
-									<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
-									Latest News
-								</span>
-							</button>
-						</mat-menu>
-
-						<!-- <ng-template #notActive2>
-							<button [matMenuTriggerFor]="regiments" mat-button
-								class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-								Community
-								<i class="fa-solid fa-caret-down"></i>
-							</button>
-						</ng-template> -->
-
-						<!-- <button *ngIf="currentRoute == '/regiments' || currentRoute == '/recaps'; else notActive2"
-							[matMenuTriggerFor]="regiments" mat-button
-							class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Community
-							<i class="fa-sharp fa-solid fa-caret-down"></i>
-						</button> -->
-
-						<!-- <mat-menu #regiments="matMenu" xPosition="after"
-							class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
-							<button routerLink="/regiments" class="ml-2 select-none" mat-menu-item>
-								<span class="!text-[#252525ce] font-[500] !text-lg">
-									 <i class="fa-solid fa-person-rifle mr-1.5"></i>
-									Regiments
-								</span>
-							</button>
-							<button routerLink="/recaps" class="ml-2 select-none" mat-menu-item>
-								<span class="!text-[#252525ce] font-[500] !text-lg">
-									 <i class="fa-brands fa-steam mr-1.5"></i> 
-									Event Recaps
-								</span>
-							</button>
-						</mat-menu> -->
-					</div>
-				</div>
-			</div>
-
-			<div *ngIf="this.sharedDataService.isLoggedIn && this.sharedDataService.regimentId"
-				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto mr-5 top-in">
-
-				<div (click)="regTrigger.openMenu()"
-					class="flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
-
-					<div class="text-center" *ngIf="this.sharedDataService.regiment">
-						<img *ngIf="this.sharedDataService.regiment.guild_avatar; else noAvatar" (error)="this.sharedDataService.regiment.guild_avatar = null"
-							[src]="this.sharedDataService.regiment.guild_avatar"
-							class="h-[32px] w-[32px] rounded-lg shadow-sm border-2 border-[#989b8a] !inline-block pointer-events-none cursor-pointer !mb-[-2px] !ml-[-1px]">
-					</div>
-
-					<div>
-						<button #regButton #regTrigger="matMenuTrigger" [matMenuTriggerFor]="regMenu"
-							class="font-[400] !text-sm !min-w-fit !min-h-fit !p-0 border-0 outline-none !text-[#c5c7ba]">
-								My Regiment
-								<!-- {{this.sharedDataService.regiment.regiment}} -->
-								<ng-template #noAvatar>
-									<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
-								</ng-template>
-								<i class="fa-solid fa-caret-down"></i>
-					
-						</button>
-					</div>
-				</div>
-
-
-				<mat-menu #regMenu="matMenu" xPosition="before" [yPosition]="'below'"
-					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-[8px] !mr-[-5px] !py-0">
-					<mat-list class="no-padding">
-						<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin" class="!px-[0]">
-							<button routerLink="/mod/2" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
-								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-brands fa-discord mr-1.5 w-[25px]"></i>
-									Event Share
-								</span>
-							</button>
-							<button routerLink="/mod/3" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
-								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-brands fa-steam mr-1.5 w-[25px]"></i>
-									Steam Stats
-								</span>
-							</button>
-							<button routerLink="/mod/4" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
-								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-solid fa-clipboard-user mr-1.5 w-[25px]"></i>
-									Muster Roster
-								</span>
-							</button>
-							<mat-divider></mat-divider>
-							<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
-								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-solid fa-users-gear mr-1.5 w-[25px]"></i>
-									Manage
-								</span>
-							</button>
-							<button routerLink="/regiments/{{this.sharedDataService.regimentId}}" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
-								<span class="!text-neutral-400 font-[500]">
-									<div *ngIf="this.sharedDataService.regiment">
-										<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic" class="truncate">
-											<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Public Page 
-											<!-- {{this.sharedDataService.regiment.regiment}} -->
-										</div>
-									</div>
-									
-									
-									<ng-template #noRegPic>
-										<i class="fa-solid fa-tents w-[25px] mr-1.5"></i> Public Page
-									</ng-template>
-								</span>
-							</button>
-						</div>
-					</mat-list>
-				</mat-menu>
+<nav *ngIf="isLoaded" class="sm:bg-[#88887b]/90 bg-[#88887b]/90 backdrop-blur-sm sm:w-full mx-auto sm:rounded-sm shadow-lg w-full top-0 left-0 right-0 sm:h-auto sm:py-[5px] sm:min-h-0 z-10"
+style="position: sticky; top: 0;">
+<div class="mx-auto pr-4">
+	<div class="relative flex h-14 items-center justify-between">
+		<div class="absolute sm:hidden">
+			<!-- Mobile menu button -->
+			<button (click)="toggle();scroll()" type="button"
+				class="!ml-2 !mt-auto inline-flex items-center justify-center rounded-md p-2 text-[#141c2a] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#141c2a88]"
+				aria-controls="mobile-menu" aria-expanded="false">
 				
-			</div>
+				<mat-icon>menu</mat-icon>
 
-			<div *ngIf="this.sharedDataService.isLoggedIn"
-				class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto top-in">
+			</button>
+		</div>
+		<div class="flex flex-1 items-center justify-center sm:items-center sm:justify-start">
+			<div class="flex flex-shrink-0 items-center">
 
-				<div (click)="menuTrigger.openMenu()"
-					class="mr-2 flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
+				<button [ngClass]="{'hidden': !(routeService.showButton$ | async)}" (click)="goBack()" mat-button
+					class="!text-[#141b29]/80 mx-2 !hidden sm:!block">
+					<i class="fa-solid fa-angle-left"></i>
+				</button>
 
-					<div class="text-center">
-						<img *ngIf="currentUser.avatar_url; else noAvatar" (error)="currentUser.avatar_url = null"
-							[src]="currentUser.avatar_url"
-							class="h-[32px] w-[32px] rounded-lg shadow-sm border-2 border-[#989b8a] !inline-block pointer-events-none cursor-pointer !mb-[-2px] !ml-[-1px]">
-					</div>
-
-					<div>
-						<button #menuButton #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="userMenu"
-							class="font-[400] !text-sm !min-w-fit !min-h-fit !p-0 border-0 outline-none !text-[#c5c7ba]">
-		
-								{{currentUser.username}}
-								<ng-template #noAvatar>
-									<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
-								</ng-template>
-								<i class="fa-solid fa-caret-down"></i>
-					
-						</button>
+				<div class="left-in mr-[-22.2px]">
+					<div routerLink="/home" class="logo-div">
+						<span class="logo-span">W</span>
+						<span class="logo-span">T</span>
+						<span class="logo-span">.</span>
 					</div>
 				</div>
+				
 
 
-				<mat-menu #userMenu="matMenu" xPosition="before" [yPosition]="'below'"
-					class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-[8px] !mr-[-5px] !py-0">
-					<mat-list class="no-padding">
 
-						<!---
-						<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin" class="!px-[0]">
-							<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
-								<span class="!text-neutral-400 font-[500]">
+				<!-- <img class="block h-8 w-auto pointer-events-none" src="https://paarmy.com/assets/pa.png"
+					alt="The Pennsylvania Army"> -->
 
-									<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic">
-										<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Regiment Tool
-									</div>
-									
-									<ng-template #noRegPic>
-										<i class="fa-solid fa-tents w-[25px] mr-1.5"></i> Regiment Tool
-									</ng-template>
-									 
-								</span>
-							</button>
-						</div>
-						-->
-						<div>
-							<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/3" mat-menu-item
-								class="text-[0.8rem] ml-2 select-none">
-								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-solid fa-star w-[25px] mr-1.5"></i>
-									Favorite Maps
-								</span>
-							</button>
-							<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/2" mat-menu-item
-								class="text-[0.8rem] ml-2 select-none">
-								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-solid fa-circle-nodes w-[25px] mr-1.5"></i>
-									Linked Accounts
-								</span>
-							</button>
-							<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/1" mat-menu-item
-								class="text-[0.8rem] ml-2 select-none">
-								<span class="!text-neutral-400 font-[500]">
-									<i class="fa-solid fa-gear w-[25px] mr-1.5"></i>
-									User Settings
-								</span>
-							</button>
-						</div>
-						<mat-divider *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin || showUser"></mat-divider>
-						<div>
-							<button *ngIf="this.sharedDataService.isLoggedIn" (click)="logout()" mat-menu-item
-								class="text-[0.8rem] ml-2 select-none !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent">
-								<span class="!text-[#fa7676] font-[500]">
-									<i class="fa-solid fa-arrow-right-from-bracket w-[25px] mr-1.5 !text-[#fa7676]"></i>
-									Logout
-								</span>
-							</button>
-						</div>
-					</mat-list>
-				</mat-menu>
 			</div>
-			<!-- <div *ngIf="this.sharedDataService.isLoggedIn">
-				<button (click)="logout()" mat-button
-					class="!hidden sm:!block font-[500] !text-[#fa7676] !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent !min-w-fit !h-full" style="border-left:1px solid #fa7676;">
-					<i class="fa-solid fa-arrow-right-from-bracket w-[25px] !text-[#fa7676]"></i>
-				</button>
-			</div> -->
 
-		</div>
-	</div>
-
-
-	<!-- Mobile menu, show/hide based on menu state. -->
-	<div *ngIf="menuOpen" class="sm:hidden h-fit top-in sm:animate-none mx-auto" id="mobile-menu">
-		<div class="!mx-auto !p-3">
-			<mat-list class="!mx-auto">
-				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button *ngIf="!this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
-						routerLinkActive="active-link !text-[#a09e94]"
-						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+			<div class="hidden sm:ml-10 sm:block">
+				<div class="flex space-x-4">
+					<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+					<button *ngIf="!this.sharedDataService.isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
+						mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Home
 					</button>
-					<button *ngIf="this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
-						routerLinkActive="active-link !text-[#a09e94]"
-						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					<button *ngIf="this.sharedDataService.isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
+						mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						<span>Dashboard</span>
 						<!-- <span *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">s</span> -->
 					</button>
-				</mat-list-item>
-				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button [routerLink]="['/maps']" (click)="toggle()" mat-button
-						routerLinkActive="active-link !text-[#a09e94]"
-						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+
+					<button [routerLink]="['/maps']"
+						mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Maps
 					</button>
-				</mat-list-item>
-				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button [routerLink]="['/regiments']" (click)="toggle()" mat-button
-						routerLinkActive="active-link !text-[#a09e94]"
-						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+
+					<button [routerLink]="['/regiments']"
+						mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Regiments
 					</button>
-				</mat-list-item>
 
-				<mat-list-item class="!my-1 !px-[0] !w-full">
-					<button [routerLink]="['/game-info']" (click)="toggle()" mat-button
-						routerLinkActive="active-link !text-[#a09e94]"
-						class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
-						WoR Hub
+
+					<!-- <button [matMenuTriggerFor]="resources"
+						mat-button
+						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
+						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						Resources
+						<i class="fa-solid fa-caret-down"></i>
+					</button> -->
+
+
+					<ng-template #notActive>
+						<button [matMenuTriggerFor]="resources" mat-button
+							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Resources
+							<i class="fa-solid fa-caret-down"></i>
+						</button>
+					</ng-template>
+
+					<button
+						*ngIf="currentRoute == '/game-info' || currentRoute == '/weapons'; else notActive"
+						[matMenuTriggerFor]="resources" mat-button
+						class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						Resources
+						<i class="fa-sharp fa-solid fa-caret-down"></i>
 					</button>
-				</mat-list-item>
-			</mat-list>
+
+					<mat-menu #resources="matMenu" xPosition="after"
+						class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
+						<!-- <button routerLink="/maps" class="ml-2 select-none" mat-menu-item>
+							<span class="!text-[#252525ce] font-[500] !text-lg">
+								<i class="fa-brands fa-steam mr-1.5"></i>
+								Maps
+							</span>
+						</button> -->
+						<button routerLink="/weapons" class="ml-2 select-none" mat-menu-item>
+							<span class="!text-[#252525ce] font-[500] !text-lg">
+								<!-- <i class="fa-solid fa-person-rifle mr-1.5"></i> -->
+								Weapons
+							</span>
+						</button>
+						<button routerLink="/game-info" class="ml-2 select-none" mat-menu-item>
+							<span class="!text-[#252525ce] font-[500] !text-lg">
+								<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
+								Latest News
+							</span>
+						</button>
+					</mat-menu>
+
+					<!-- <ng-template #notActive2>
+						<button [matMenuTriggerFor]="regiments" mat-button
+							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							Community
+							<i class="fa-solid fa-caret-down"></i>
+						</button>
+					</ng-template> -->
+
+					<!-- <button *ngIf="currentRoute == '/regiments' || currentRoute == '/recaps'; else notActive2"
+						[matMenuTriggerFor]="regiments" mat-button
+						class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						Community
+						<i class="fa-sharp fa-solid fa-caret-down"></i>
+					</button> -->
+
+					<!-- <mat-menu #regiments="matMenu" xPosition="after"
+						class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
+						<button routerLink="/regiments" class="ml-2 select-none" mat-menu-item>
+							<span class="!text-[#252525ce] font-[500] !text-lg">
+								 <i class="fa-solid fa-person-rifle mr-1.5"></i>
+								Regiments
+							</span>
+						</button>
+						<button routerLink="/recaps" class="ml-2 select-none" mat-menu-item>
+							<span class="!text-[#252525ce] font-[500] !text-lg">
+								 <i class="fa-brands fa-steam mr-1.5"></i> 
+								Event Recaps
+							</span>
+						</button>
+					</mat-menu> -->
+				</div>
+			</div>
 		</div>
+
+		<div *ngIf="this.sharedDataService.isLoggedIn && this.sharedDataService.regimentId"
+			class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto mr-5 top-in">
+
+			<div (click)="regTrigger.openMenu()"
+				class="flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
+
+				<div class="text-center" *ngIf="this.sharedDataService.regiment">
+					<img *ngIf="this.sharedDataService.regiment.guild_avatar; else noAvatar" (error)="this.sharedDataService.regiment.guild_avatar = null"
+						[src]="this.sharedDataService.regiment.guild_avatar"
+						class="h-[32px] w-[32px] rounded-lg shadow-sm border-2 border-[#989b8a] !inline-block pointer-events-none cursor-pointer !mb-[-2px] !ml-[-1px]">
+				</div>
+
+				<div>
+					<button #regButton #regTrigger="matMenuTrigger" [matMenuTriggerFor]="regMenu"
+						class="font-[400] !text-sm !min-w-fit !min-h-fit !p-0 border-0 outline-none !text-[#c5c7ba]">
+							My Regiment
+							<!-- {{this.sharedDataService.regiment.regiment}} -->
+							<ng-template #noAvatar>
+								<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
+							</ng-template>
+							<i class="fa-solid fa-caret-down"></i>
+				
+					</button>
+				</div>
+			</div>
+
+
+			<mat-menu #regMenu="matMenu" xPosition="before" [yPosition]="'below'"
+				class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-[8px] !mr-[-5px] !py-0">
+				<mat-list class="no-padding">
+					<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin" class="!px-[0]">
+						<button routerLink="/mod/2" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+							<span class="!text-neutral-400 font-[500]">
+								<i class="fa-brands fa-discord mr-1.5 w-[25px]"></i>
+								Event Share
+							</span>
+						</button>
+						<button routerLink="/mod/3" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+							<span class="!text-neutral-400 font-[500]">
+								<i class="fa-brands fa-steam mr-1.5 w-[25px]"></i>
+								Steam Stats
+							</span>
+						</button>
+						<button routerLink="/mod/4" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+							<span class="!text-neutral-400 font-[500]">
+								<i class="fa-solid fa-clipboard-user mr-1.5 w-[25px]"></i>
+								Muster Roster
+							</span>
+						</button>
+						<mat-divider></mat-divider>
+						<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+							<span class="!text-neutral-400 font-[500]">
+								<i class="fa-solid fa-users-gear mr-1.5 w-[25px]"></i>
+								Manage
+							</span>
+						</button>
+						<button routerLink="/regiments/{{this.sharedDataService.regimentId}}" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+							<span class="!text-neutral-400 font-[500]">
+								<div *ngIf="this.sharedDataService.regiment">
+									<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic" class="truncate">
+										<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Public Page 
+										<!-- {{this.sharedDataService.regiment.regiment}} -->
+									</div>
+								</div>
+								
+								
+								<ng-template #noRegPic>
+									<i class="fa-solid fa-tents w-[25px] mr-1.5"></i> Public Page
+								</ng-template>
+							</span>
+						</button>
+					</div>
+				</mat-list>
+			</mat-menu>
+			
+		</div>
+
+		<div *ngIf="this.sharedDataService.isLoggedIn"
+			class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto top-in">
+
+			<div (click)="menuTrigger.openMenu()"
+				class="mr-2 flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
+
+				<div class="text-center">
+					<img *ngIf="currentUser.avatar_url; else noAvatar" (error)="currentUser.avatar_url = null"
+						[src]="currentUser.avatar_url"
+						class="h-[32px] w-[32px] rounded-lg shadow-sm border-2 border-[#989b8a] !inline-block pointer-events-none cursor-pointer !mb-[-2px] !ml-[-1px]">
+				</div>
+
+				<div>
+					<button #menuButton #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="userMenu"
+						class="font-[400] !text-sm !min-w-fit !min-h-fit !p-0 border-0 outline-none !text-[#c5c7ba]">
+	
+							{{currentUser.username}}
+							<ng-template #noAvatar>
+								<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
+							</ng-template>
+							<i class="fa-solid fa-caret-down"></i>
+				
+					</button>
+				</div>
+			</div>
+
+
+			<mat-menu #userMenu="matMenu" xPosition="before" [yPosition]="'below'"
+				class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-[8px] !mr-[-5px] !py-0">
+				<mat-list class="no-padding">
+
+					<!---
+					<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin" class="!px-[0]">
+						<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+							<span class="!text-neutral-400 font-[500]">
+
+								<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic">
+									<img [src]="this.sharedDataService.regiment.guild_avatar" (error)="this.sharedDataService.regiment.guild_avatar = null" class="h-[22px] w-[22px] mr-[9px] !inline rounded-full sepia-[30%] border shadow-sm border-[#989b8a]"> Regiment Tool
+								</div>
+								
+								<ng-template #noRegPic>
+									<i class="fa-solid fa-tents w-[25px] mr-1.5"></i> Regiment Tool
+								</ng-template>
+								 
+							</span>
+						</button>
+					</div>
+					-->
+					<div>
+						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/3" mat-menu-item
+							class="text-[0.8rem] ml-2 select-none">
+							<span class="!text-neutral-400 font-[500]">
+								<i class="fa-solid fa-star w-[25px] mr-1.5"></i>
+								Favorite Maps
+							</span>
+						</button>
+						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/2" mat-menu-item
+							class="text-[0.8rem] ml-2 select-none">
+							<span class="!text-neutral-400 font-[500]">
+								<i class="fa-solid fa-circle-nodes w-[25px] mr-1.5"></i>
+								Linked Accounts
+							</span>
+						</button>
+						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/1" mat-menu-item
+							class="text-[0.8rem] ml-2 select-none">
+							<span class="!text-neutral-400 font-[500]">
+								<i class="fa-solid fa-gear w-[25px] mr-1.5"></i>
+								User Settings
+							</span>
+						</button>
+					</div>
+					<mat-divider *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin || showUser"></mat-divider>
+					<div>
+						<button *ngIf="this.sharedDataService.isLoggedIn" (click)="logout()" mat-menu-item
+							class="text-[0.8rem] ml-2 select-none !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent">
+							<span class="!text-[#fa7676] font-[500]">
+								<i class="fa-solid fa-arrow-right-from-bracket w-[25px] mr-1.5 !text-[#fa7676]"></i>
+								Logout
+							</span>
+						</button>
+					</div>
+				</mat-list>
+			</mat-menu>
+		</div>
+		<!-- <div *ngIf="this.sharedDataService.isLoggedIn">
+			<button (click)="logout()" mat-button
+				class="!hidden sm:!block font-[500] !text-[#fa7676] !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent !min-w-fit !h-full" style="border-left:1px solid #fa7676;">
+				<i class="fa-solid fa-arrow-right-from-bracket w-[25px] !text-[#fa7676]"></i>
+			</button>
+		</div> -->
+
 	</div>
+</div>
+
+
+<!-- Mobile menu, show/hide based on menu state. -->
+<div *ngIf="menuOpen" class="sm:hidden h-fit top-in sm:animate-none mx-auto" id="mobile-menu">
+	<div class="!mx-auto !p-3">
+		<mat-list class="!mx-auto">
+			<mat-list-item class="!my-1 !px-[0] !w-full">
+				<button *ngIf="!this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
+					routerLinkActive="active-link !text-[#a09e94]"
+					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					Home
+				</button>
+				<button *ngIf="this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
+					routerLinkActive="active-link !text-[#a09e94]"
+					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					<span>Dashboard</span>
+					<!-- <span *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">s</span> -->
+				</button>
+			</mat-list-item>
+			<mat-list-item class="!my-1 !px-[0] !w-full">
+				<button [routerLink]="['/maps']" (click)="toggle()" mat-button
+					routerLinkActive="active-link !text-[#a09e94]"
+					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					Maps
+				</button>
+			</mat-list-item>
+			<mat-list-item class="!my-1 !px-[0] !w-full">
+				<button [routerLink]="['/regiments']" (click)="toggle()" mat-button
+					routerLinkActive="active-link !text-[#a09e94]"
+					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					Regiments
+				</button>
+			</mat-list-item>
+
+			<mat-list-item class="!my-1 !px-[0] !w-full">
+				<button [routerLink]="['/game-info']" (click)="toggle()" mat-button
+					routerLinkActive="active-link !text-[#a09e94]"
+					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					WoR Hub
+				</button>
+			</mat-list-item>
+		</mat-list>
+	</div>
+</div>
 </nav>
 <div class="sm:w-full mx-auto my-2 sm:my-0 sm:mt-10 relative lg:px-5 px-2 h-[calc(100% - 200px)] main-container">
-	<router-outlet (activate)="onActivate($event)"></router-outlet>
+<router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
