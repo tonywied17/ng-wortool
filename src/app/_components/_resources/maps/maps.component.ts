@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun February 11th 2024 10:46:22 
+ * Last Modified: Mon February 12th 2024 12:22:29 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -277,7 +277,7 @@ export class MapsComponent implements OnInit {
     this.favoriteService.getByUserId(userID).subscribe(
       (response) => {
         this.currentFavorites = response;
-        // this.filterMaps();
+        this.filterMaps();
       },
       (error) => {
         console.error("Error:", error);
