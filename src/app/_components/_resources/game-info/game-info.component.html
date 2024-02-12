@@ -39,10 +39,11 @@
 		</div>
 
 		<div *ngFor="let article of gameNews; index as i;"
-			class="bg-[#1e293b]/80 rounded-lg ring-1 ring-[#0f172a]/5 shadow-xl w-full m-auto animate-load p-2">
+		
+			class="bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full m-auto animate-load p-2">
 
 			<div class="grid grid-cols-1 items-center h-10">
-				<span class="text-neutral-200 text-base tracking-tight text-left inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ article.title }}</span>
+				<span class="text-[#88887b] font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;filter:drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));">{{ article.title }}</span>
 			</div>
 			
 			<div (click)="open(article.url , article.title, 1500, 868)" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full flex items-center justify-center" style="height: 150px; opacity: 80%;">
@@ -57,7 +58,7 @@
 
 			<div class="grid grid-cols-2 items-center w-full h-10">
 				<div class="flex justify-start">
-					<span class="font-[200] opacity-40">
+					<span  style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class=" opacity-40">
 						{{formatUnixTimestamp(article.date)}}
 					</span>
 				</div>
@@ -123,7 +124,7 @@
 		</div>
 	</div>
 
-	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 md:px-[2em] pb-28">
+	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7 pb-28">
 
 		<div class="left-in col-span-1 rounded-md first-letter:h-full text-center"
 			style="background-image: url('{{gameBackground}}'); background-size: 100%; background-size: cover; opacity: 80%; background-position: center; display: flex; justify-content: center; align-items: center;">
@@ -134,9 +135,9 @@
 		</div>
 
 		<div *ngFor="let screenshot of screenshots.slice(0, 8); let i = index;"
-			class="bg-[#1e293b]/80 rounded-lg ring-1 ring-[#0f172a]/5 shadow-xl w-full m-auto animate-load p-2">
+			class="bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full m-auto animate-load p-2">
 			<div class="grid grid-cols-1 items-center h-10">
-				<span class="text-neutral-200 text-base tracking-tight text-left inline-block">Screenshot #{{ i }}</span>
+				<span class="text-[#88887b] font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;filter:drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));">Screenshot #{{ i }}</span>
 			</div>
 
 			<div (click)="open(screenshot.path_full, i, 1500, 868)" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full flex items-center justify-center" style="height: 215px; opacity: 80%;">
