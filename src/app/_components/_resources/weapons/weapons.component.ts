@@ -4,18 +4,22 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 3rd 2023 5:49:13 
+ * Last Modified: Mon February 12th 2024 12:23:45 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { WeaponService } from "src/app/_services/weapon.service";
 import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { AuthService } from "src/app/_services/auth.service";
 import { Location } from "@angular/common";
+import { Overlay, OverlayRef } from "@angular/cdk/overlay";
+import { MatDialog } from "@angular/material/dialog";
+import { TemplatePortal } from "@angular/cdk/portal";
+import { MapImageModalComponent } from "../maps/map-image-modal/map-image-modal.component";
 
 @Component({
   selector: "app-weapons",
@@ -37,6 +41,11 @@ export class WeaponsComponent implements OnInit {
     notes: null,
   };
 
+  @ViewChild("dialogTemplate")
+  _dialogTemplate!: TemplateRef<any>;
+  private _overlayRef!: OverlayRef;
+  private _portal!: TemplatePortal;
+
   errorMessage = "";
   weaponsObj: any;
   currentUser: any;
@@ -52,7 +61,10 @@ export class WeaponsComponent implements OnInit {
     private token: TokenStorageService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private dialog: MatDialog,
+    private _overlay: Overlay,
+    private _viewContainerRef: ViewContainerRef
   ) {}
 
   /**
@@ -136,4 +148,53 @@ export class WeaponsComponent implements OnInit {
         left
     );
   }
+
+  openImageModal(imageUrl: string): void {
+    this.dialog.open(MapImageModalComponent, {
+      data: { imageUrl },
+    });
+  }
+
+    /**
+   * on after view init
+   */
+    ngAfterViewInit() {
+      this._portal = new TemplatePortal(
+        this._dialogTemplate,
+        this._viewContainerRef
+      );
+      this._overlayRef = this._overlay.create({
+        positionStrategy: this._overlay
+          .position()
+          .global()
+          .centerHorizontally()
+          .centerVertically(),
+        hasBackdrop: true,
+      });
+      this._overlayRef.backdropClick().subscribe(() => this._overlayRef.detach());
+    }
+  
+    /**
+     * on destroy
+     */
+    ngOnDestroy() {
+      this._overlayRef.dispose();
+    }
+  
+    /**
+     * open dialog
+     * This is a function that opens a dialog
+     */
+    openDialog() {
+      this._overlayRef.attach(this._portal);
+    }
+  
+    /**
+     * close popup
+     */
+    closePopup() {
+      if (this._overlayRef && this._overlayRef.hasAttached()) {
+        this._overlayRef.detach();
+      }
+    }
 }

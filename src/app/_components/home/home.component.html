@@ -291,7 +291,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 									<i class="fa-solid fa-key field-icon"></i>
 									<i class="fa-solid fa-lock field-icon"></i>
 								</div>
-								<div class="field-box">
+								<div class="field-box mt-2 md:mt-0">
 									<input #passwordConfirm="ngModel"
 										[(ngModel)]="registerForm.passwordConfirm"
 										[required]="true"
@@ -544,7 +544,7 @@ Copyright (c) 2023 Tone Web Design, Molex -->
 				</h3>
 	
 				<div *ngFor="let article of gameNews; index as i; last as isLast" class="my-2 m-auto">
-					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news" [href]="article.url" target="_blank">{{ article.title }}</a>
+					<a class="text-neutral-400 text-sm tracking-tight m-2 text-left inline-block dash-news overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;" [href]="article.url" target="_blank">{{ article.title }}</a>
 					<div class="grid grid-cols-[auto_auto] gap-2 p-2">
 						<div class="cols-start-1 col-span-1 px-2 text-left">
 							<span class="text-sm opacity-40 font-[200]">

@@ -4,13 +4,13 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun February 11th 2024 6:30:17 
+ * Last Modified: Mon February 12th 2024 12:22:29 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, HostListener, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, HostListener, OnInit } from "@angular/core";
 import { MapService } from "src/app/_services/map.service";
 import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { FavoriteService } from "src/app/_services/favorite.service";
@@ -98,18 +98,19 @@ export class MapsComponent implements OnInit {
   constructor(
     private mapService: MapService,
     private token: TokenStorageService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
 
-    await this.retrieveFilterState();
+    
 
-    await this.getMaps();
-    await this.getFavorites();
-    await this.filterMaps();
+    await Promise.all([this.getMaps(), this.getFavorites()]).then(() => {
+      // console.log("Maps and favorites loaded");
+    });
     
   }
 
@@ -179,15 +180,23 @@ export class MapsComponent implements OnInit {
    * This function is used to get all maps
    */
   async getMaps(): Promise<void> {
-    this.mapService.getAll().subscribe({
-      next: async (data) => {
-        this.map = data;
-        this.originalMap = data;
-        this.uniqueCampaigns = await this.getUniqueCampaigns(data);
-
-        this.loading = false;
-      },
-      error: (e) => console.error(e),
+    await this.retrieveFilterState();
+    return new Promise((resolve, reject) => {
+      
+      this.mapService.getAll().subscribe({
+        next: async (data) => {
+          this.map = data;
+          this.originalMap = data;
+          this.uniqueCampaigns = await this.getUniqueCampaigns(data);
+          this.loading = false;
+          resolve();
+          await this.filterMaps();
+        },
+        error: (e) => {
+          console.error(e);
+          reject();
+        },
+      });
     });
   }
 
