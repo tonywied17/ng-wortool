@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu December 7th 2023 5:55:46 
+ * Last Modified: Mon February 12th 2024 5:06:01 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -137,37 +137,7 @@ export class UserDashboardComponent implements OnInit {
         this.getFavorites();
         await this.getRegiment();
         this.loading = false;
-
-        if (this.discordData && this.regimentData) {
-          const discordResponse = await this.discordService
-            .getUserGuildInfo(
-              this.discordData.discordId,
-              this.regimentData.guild_id
-            )
-            .toPromise();
-          // // console.log(discordResponse);
-
-          this.discordData.username = discordResponse.USER_SPECIFIC.DISCORD_USERNAME;
-          this.regimentData.regiment = discordResponse.GUILD_SPECIFIC.GUILD_NAME;
-
-          // Users profile picture has been changed on discord, old url is no longer valid so update it.
-          if(this.discordData.avatar !== discordResponse.USER_SPECIFIC.DISCORD_AVATAR){
-            this.discordData.avatar = discordResponse.USER_SPECIFIC.DISCORD_AVATAR;
-            this.avatar_url = discordResponse.USER_SPECIFIC.DISCORD_AVATAR;
-            this.updateProfile(false);
-          }
-
-          // const rolesArray = Object.entries(discordResponse.GUILD_SPECIFIC.GUILD_ROLES).map(([roleName, roleId]) => ({
-          //   roleName,
-          //   roleId,
-          // }));
-          
-          // rolesArray.forEach((role) => {
-          //   // console.log("Role Name:", role.roleName);
-          //   // console.log("Role ID:", role.roleId);
-          // });
-
-        }
+        
       } catch (error: any) {
         if (error.status === 403) {
           this.showUser = false;

@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 9:24:34 
+ * Last Modified: Mon February 12th 2024 4:58:06 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -47,10 +47,10 @@ export class HomeComponent implements OnInit {
   errorMessage = "";
   registerTask = false;
   loginTask = true;
-  showAdmin = false;
-  showUser = false;
-  showMod = false;
-  roles: string[] = [];
+  // showAdmin = false;
+  // showUser = false;
+  // showMod = false;
+  // roles: string[] = [];
   // currentUser: any;
   loading = true;
   gameDetails: any;
@@ -134,79 +134,94 @@ export class HomeComponent implements OnInit {
    * @returns void
    */
   async initializeComponent(): Promise<void> {
+
+    // this.sharedDataService.checkAndUpdateUserAvatar().catch(error => console.error("Error updating user avatar:", error));
+
     this.getScreenshots();
     this.getAppNews();
-    this.sharedDataService.isLoggedIn = !!this.tokenStorage.getToken();
-    this.sharedDataService.currentUser = this.tokenStorage.getUser();
-    const userID = this.sharedDataService.currentUser.id;
 
-    if (this.sharedDataService.isLoggedIn && this.sharedDataService.currentUser) {
-      try {
-        const response = await this.regimentService.getRegiment(this.sharedDataService.currentUser.regimentId).toPromise();
-        if (response.ownerId !== null) {
-          this.isOwner = response.ownerId.includes(this.sharedDataService.currentUser.discordId);
-        } else {
-          this.isOwner = false;
-        }
-        this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
-      } catch (error) {
-        console.error("Error fetching regiment:", error);
-      }
-      
-
-      this.authService.checkUserRole(userID).subscribe(
-        (response) => {
-          this.showUser = response.access;
-          this.loading = false;
-        },
-        (error) => {
-          if (error.status === 403) {
-            this.showUser = false;
-            
-            // 
-          } else {
-            
-            console.error("Error:", error);
-          }
-          this.loading = false;
-        }
-      );
-
-      this.authService
-        .checkModeratorRole(userID, this.sharedDataService.currentUser.regimentId)
-        .subscribe(
-          (response) => {
-            this.showMod = response.access;
-            this.loading = false;
-          },
-          (error) => {
-            if (error.status === 403) {
-              this.showMod = false;
-            } else {
-              console.error("Error:", error);
-            }
-            this.loading = false;
-          }
-        );
-
-      this.authService.checkAdminRole(userID).subscribe(
-        (response) => {
-          this.showAdmin = response.access;
-          this.loading = false;
-        },
-        (error) => {
-          if (error.status === 403) {
-            this.showAdmin = false;
-          } else {
-            console.error("Error:", error);
-          }
-          this.loading = false;
-        }
-      );
-    } else {
+    this.sharedDataService.retrieveInitialData()
+    .then(async () => {
       this.loading = false;
+      // Processed
+    })
+    .catch(error => {
+      console.error("Error initializing shared data:", error);
+    });
+
+    // this.sharedDataService.isLoggedIn = !!this.tokenStorage.getToken();
+    // this.sharedDataService.currentUser = this.tokenStorage.getUser();
+
+
+    // const userID = this.sharedDataService.currentUser.id;
+
+    // if (this.sharedDataService.isLoggedIn && this.sharedDataService.currentUser) {
+    //   try {
+    //     const response = await this.regimentService.getRegiment(this.sharedDataService.currentUser.regimentId).toPromise();
+    //     if (response.ownerId !== null) {
+    //       this.isOwner = response.ownerId.includes(this.sharedDataService.currentUser.discordId);
+    //     } else {
+    //       this.isOwner = false;
+    //     }
+    //     this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
+    //   } catch (error) {
+    //     console.error("Error fetching regiment:", error);
+    //   }
       
-    }
+
+    //   this.authService.checkUserRole(userID).subscribe(
+    //     (response) => {
+    //       this.showUser = response.access;
+    //       this.loading = false;
+    //     },
+    //     (error) => {
+    //       if (error.status === 403) {
+    //         this.showUser = false;
+            
+    //         // 
+    //       } else {
+            
+    //         console.error("Error:", error);
+    //       }
+    //       this.loading = false;
+    //     }
+    //   );
+
+    //   this.authService
+    //     .checkModeratorRole(userID, this.sharedDataService.currentUser.regimentId)
+    //     .subscribe(
+    //       (response) => {
+    //         this.showMod = response.access;
+    //         this.loading = false;
+    //       },
+    //       (error) => {
+    //         if (error.status === 403) {
+    //           this.showMod = false;
+    //         } else {
+    //           console.error("Error:", error);
+    //         }
+    //         this.loading = false;
+    //       }
+    //     );
+
+    //   this.authService.checkAdminRole(userID).subscribe(
+    //     (response) => {
+    //       this.showAdmin = response.access;
+    //       this.loading = false;
+    //     },
+    //     (error) => {
+    //       if (error.status === 403) {
+    //         this.showAdmin = false;
+    //       } else {
+    //         console.error("Error:", error);
+    //       }
+    //       this.loading = false;
+    //     }
+    //   );
+    // } else {
+    //   this.loading = false;
+      
+    // }
 
     this.cdRef.detectChanges();
     
@@ -243,7 +258,7 @@ export class HomeComponent implements OnInit {
       next: async (data) => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
-        this.roles = data.roles;
+        this.sharedDataService.currentUser.roles = data.roles;
         // this.sharedDataService.currentUser = data;
         this.sharedDataService.currentUser = data;
 
@@ -251,22 +266,22 @@ export class HomeComponent implements OnInit {
         this.authService.isAuthenticated = true;
         localStorage.setItem("isAuthenticated", "true");
 
-        this.authService.isAdministrator = this.roles.includes("ROLE_ADMIN");
+        this.authService.isAdministrator = this.sharedDataService.currentUser.roles.includes("ROLE_ADMIN");
         localStorage.setItem(
           "isAdmin",
-          this.roles.includes("ROLE_ADMIN") ? "true" : "false"
+          this.sharedDataService.currentUser.roles.includes("ROLE_ADMIN") ? "true" : "false"
         );
 
-        this.authService.isModerator = this.roles.includes("ROLE_MODERATOR");
+        this.authService.isModerator = this.sharedDataService.currentUser.roles.includes("ROLE_MODERATOR");
         localStorage.setItem(
           "isModerator",
-          this.roles.includes("ROLE_MODERATOR") ? "true" : "false"
+          this.sharedDataService.currentUser.roles.includes("ROLE_MODERATOR") ? "true" : "false"
         );
 
         this.sharedDataService.isLoggedIn = this.authService.isAuthenticated;
-        this.showUser = this.authService.isAuthenticated;
-        this.showAdmin = this.authService.isAdministrator;
-        this.showMod = this.authService.isModerator;
+        this.sharedDataService.showUser = this.authService.isAuthenticated;
+        this.sharedDataService.showAdmin = this.authService.isAdministrator;
+        this.sharedDataService.showMod = this.authService.isModerator;
 
         this.authService.authenticationEvent.next();
 
@@ -283,10 +298,10 @@ export class HomeComponent implements OnInit {
           try {
             const response = await this.regimentService.getRegiment(data.regimentId).toPromise();
             if (response.ownerId === null) {
-              this.isOwner = false;
+              this.sharedDataService.isOwner = false;
               this.modRoute = "/mod/2";
             } else {
-              this.isOwner = response.ownerId ? response.ownerId.includes(data.discordId) : false;
+              this.sharedDataService.isOwner = response.ownerId ? response.ownerId.includes(data.discordId) : false;
               this.modRoute = this.isOwner ? "/mod/1" : "/mod/2";
             }
           } catch (error) {
@@ -370,9 +385,9 @@ export class HomeComponent implements OnInit {
     localStorage.setItem("isAdmin", "false");
     localStorage.setItem("isModerator", "false");
     this.sharedDataService.isLoggedIn = this.authService.isAuthenticated;
-    this.showMod = this.authService.isModerator;
-    this.showAdmin = this.authService.isAdministrator;
-    this.showUser = this.authService.isAuthenticated;
+    this.sharedDataService.showMod = this.authService.isModerator;
+    this.sharedDataService.showAdmin = this.authService.isAdministrator;
+    this.sharedDataService.showUser = this.authService.isAuthenticated;
     this.sharedService.triggerLogoutEvent();
     this.sharedService.setIsLoggedIn(false);
 

@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday August 6th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun February 11th 2024 3:49:35 
+Last Modified: Mon February 12th 2024 5:06:38 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -28,21 +28,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 	<div *ngIf="isLoggedIn">
-
-
-
-
-
-		<button (click)="goBack()"
-			mat-button
-			color="primary"
-			class="!mb-[1em]">
-			<i class="fa-sharp fa-solid fa-arrow-left"></i>
-			Back
-		</button>
-
-
-
 
 		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
 			<div class="col-span-1 bg-[#1e293b]/80 rounded-lg shadow-md h-fit w-full">
@@ -188,35 +173,6 @@ Copyright (c) 2023 Tone Web Design, Molex
 									placeholder="Your email...">
 								<i class="fa-solid fa-envelope field-icon"></i>
 							</div>
-
-
-
-
-							<div class="field-box">
-								<input [(ngModel)]="avatar_url"
-									name="avatar_url"
-									style="
-                padding-top: 11px;
-                padding-bottom: 11px;
-                font-size: 15px;
-                border: 1px solid #7c7d72 !important;"
-									class="field-input my-[0.5em]"
-									type="email"
-									placeholder="Avatar url...">
-								<i class="fa-solid fa-camera-retro field-icon"></i>
-							</div>
-
-
-
-							<button *ngIf="discordIsSynced && avatar_url !== discordData.avatar"
-								(click)="updateAvatarUrl()"
-								mat-button
-								type="button"
-								color="primary"
-								class="!ml-auto">
-								<i class="fa-brands fa-discord"></i>
-								Use Discord Avatar
-							</button>
 
 
 

@@ -30,8 +30,15 @@ export class SharedDataService {
   ) {}
 
   async retrieveInitialData(): Promise<void> {
-    await Promise.all([this.getUser()]);
-  }
+    const userPromise = this.getUser();
+    userPromise.then(() => {
+        this.checkAndUpdateUserAvatar().catch(error => console.error("Error updating user avatar:", error));
+    }).catch(error => console.error("Error retrieving user data:", error));
+
+    await userPromise;
+}
+
+
 
   async getUser(): Promise<void> {
       this.isLoggedIn = !!this.token.getToken();
@@ -45,6 +52,29 @@ export class SharedDataService {
               await this.getRegiment(this.regimentId);
             }
       }
+  }
+
+  async checkAndUpdateUserAvatar(): Promise<void> {
+    if (this.isLoggedIn && this.currentUser.discordId && this.currentUser.regimentId) {
+      try {
+        const regimentData = await firstValueFrom(this.regimentService.getRegiment(this.currentUser.regimentId));
+        const discordResponse = await firstValueFrom(this.discordService.getUserGuildInfo(this.currentUser.discordId, regimentData.guild_id));
+        
+  
+        if (discordResponse.USER_SPECIFIC.DISCORD_AVATAR && this.currentUser.avatar_url !== discordResponse.USER_SPECIFIC.DISCORD_AVATAR) {
+          await firstValueFrom(this.authService.profile(this.currentUser.id, this.currentUser.email, discordResponse.USER_SPECIFIC.DISCORD_AVATAR, this.currentUser.discordId, this.currentUser.regimentId));
+          
+          this.currentUser.avatar_url = discordResponse.USER_SPECIFIC.DISCORD_AVATAR;
+          this.token.saveUser(this.currentUser);
+
+          console.log("User avatar updated from Discord:", this.currentUser.avatar_url);
+        }else{
+          console.log("User avatar is already up to date.");
+        }
+      } catch (error) {
+        console.error("Error updating user avatar from Discord:", error);
+      }
+    }
   }
 
   async getRegiment(id: any): Promise<void> {
