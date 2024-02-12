@@ -4,7 +4,7 @@
  * Created Date: Thursday November 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu November 16th 2023 7:08:51 
+ * Last Modified: Mon February 12th 2024 11:59:54 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 MolexWorks / Tone Web Design
@@ -50,6 +50,8 @@ export class ResetPasswordComponent {
         this.snackBar.open('Password reset email sent. Check your email and Spam Folder for instructions.', 'OK', {
           duration: 5000, 
         });
+        this.resetComplete = true;
+        this.isForgotScenario = true;
       },
       (error) => {
         this.snackBar.open('Error sending password reset email. Please try again.', 'OK', {
@@ -73,6 +75,7 @@ export class ResetPasswordComponent {
     this.authService.reset(this.resetToken, this.newPassword).subscribe(
       () => {
         this.resetComplete = true;
+        this.isForgotScenario = false;
         this.snackBar.open('Password reset successful. You can now log in with your new password.', 'OK', {
           duration: 5000,
         });

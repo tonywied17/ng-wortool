@@ -140,7 +140,7 @@
 				<span class="text-[#88887b] font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;filter:drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));">Screenshot #{{ i }}</span>
 			</div>
 
-			<div (click)="open(screenshot.path_full, i, 1500, 868)" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full flex items-center justify-center" style="height: 215px; opacity: 80%;">
+			<div (click)="openImageModal(screenshot.path_full)" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full flex items-center justify-center" style="height: 215px; opacity: 80%;">
 				<img src="{{screenshot.path_thumbnail}}" alt="{{i}}"
 					class="rounded-md w-full height:215px object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
 			</div>
@@ -151,7 +151,7 @@
 
 				</div>
 				<div class="flex justify-end">
-					<button (click)="open(screenshot.path_full , 'Community Screenshot', 1500, 868)"
+					<button (click)="openImageModal(screenshot.path_full)"
 						mat-button
 						color="accent"
 						class="text-[15px] font-[500]">

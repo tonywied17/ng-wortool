@@ -4,14 +4,18 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun February 11th 2024 4:00:15 
+ * Last Modified: Mon February 12th 2024 12:23:04 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
 import { SteamApiService } from "src/app/_services/steam-api.service";
+import { MapImageModalComponent } from "../maps/map-image-modal/map-image-modal.component";
+import { MatDialog } from "@angular/material/dialog";
+import { Overlay, OverlayRef } from "@angular/cdk/overlay";
+import { TemplatePortal } from "@angular/cdk/portal";
 
 @Component({
   selector: "app-game-info",
@@ -19,6 +23,12 @@ import { SteamApiService } from "src/app/_services/steam-api.service";
   styleUrls: ["./game-info.component.scss"],
 })
 export class GameInfoComponent implements OnInit {
+  
+  @ViewChild("dialogTemplate")
+  _dialogTemplate!: TemplateRef<any>;
+  private _overlayRef!: OverlayRef;
+  private _portal!: TemplatePortal;
+
   gameNews: any;
   gameDetails: any;
   headerImage: any;
@@ -28,8 +38,13 @@ export class GameInfoComponent implements OnInit {
   latestDate: any;
   screenshots: any;
   isDataLoaded: boolean = false;
+  
 
-  constructor(private steamApiService: SteamApiService) {}
+  constructor(
+    private steamApiService: SteamApiService, 
+    private dialog: MatDialog,
+    private _overlay: Overlay,
+    private _viewContainerRef: ViewContainerRef) {}
 
   /**
    * On init
@@ -148,4 +163,53 @@ export class GameInfoComponent implements OnInit {
         left
     );
   }
+
+  openImageModal(imageUrl: string): void {
+    this.dialog.open(MapImageModalComponent, {
+      data: { imageUrl },
+    });
+  }
+
+    /**
+   * on after view init
+   */
+    ngAfterViewInit() {
+      this._portal = new TemplatePortal(
+        this._dialogTemplate,
+        this._viewContainerRef
+      );
+      this._overlayRef = this._overlay.create({
+        positionStrategy: this._overlay
+          .position()
+          .global()
+          .centerHorizontally()
+          .centerVertically(),
+        hasBackdrop: true,
+      });
+      this._overlayRef.backdropClick().subscribe(() => this._overlayRef.detach());
+    }
+  
+    /**
+     * on destroy
+     */
+    ngOnDestroy() {
+      this._overlayRef.dispose();
+    }
+  
+    /**
+     * open dialog
+     * This is a function that opens a dialog
+     */
+    openDialog() {
+      this._overlayRef.attach(this._portal);
+    }
+  
+    /**
+     * close popup
+     */
+    closePopup() {
+      if (this._overlayRef && this._overlayRef.hasAttached()) {
+        this._overlayRef.detach();
+      }
+    }
 }

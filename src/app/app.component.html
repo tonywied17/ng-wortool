@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun February 11th 2024 4:45:14 
+Last Modified: Mon February 12th 2024 12:12:55 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -93,7 +93,7 @@ style="position: sticky; top: 0;">
 					<ng-template #notActive>
 						<button [matMenuTriggerFor]="resources" mat-button
 							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-							Resources
+							More..
 							<i class="fa-solid fa-caret-down"></i>
 						</button>
 					</ng-template>
@@ -102,7 +102,7 @@ style="position: sticky; top: 0;">
 						*ngIf="currentRoute == '/game-info' || currentRoute == '/weapons'; else notActive"
 						[matMenuTriggerFor]="resources" mat-button
 						class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
-						Resources
+						More..
 						<i class="fa-sharp fa-solid fa-caret-down"></i>
 					</button>
 
@@ -120,10 +120,24 @@ style="position: sticky; top: 0;">
 								Weapons
 							</span>
 						</button>
+
 						<button routerLink="/game-info" class="ml-2 select-none" mat-menu-item>
 							<span class="!text-[#252525ce] font-[500] !text-lg">
 								<!-- <i class="fa-brands fa-steam mr-1.5"></i> -->
 								Latest News
+							</span>
+						</button>
+						<mat-divider></mat-divider>
+						<button disabled="true" routerLink="/guides" class="ml-2 select-none" mat-menu-item>
+							<span class="!text-[#252525ce] font-[500] !text-lg">
+								<i class="fa-brands fa-dev mr-1.5"></i>
+								Guides
+							</span>
+						</button>
+						<button disabled="true" routerLink="/guides" class="ml-2 select-none" mat-menu-item>
+							<span class="!text-[#252525ce] font-[500] !text-lg">
+								<i class="fa-brands fa-dev mr-1.5"></i>
+								CVar List
 							</span>
 						</button>
 					</mat-menu>
@@ -370,7 +384,7 @@ style="position: sticky; top: 0;">
 				<button [routerLink]="['/game-info']" (click)="toggle()" mat-button
 					routerLinkActive="active-link !text-[#a09e94]"
 					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
-					WoR Hub
+					Latest News
 				</button>
 			</mat-list-item>
 		</mat-list>
