@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu November 23rd 2023 1:20:46 
+ * Last Modified: Mon February 12th 2024 4:48:57 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -30,15 +30,10 @@ export class AppComponent implements OnInit {
   title = "paapp2";
   content?: string;
   currentUser: any;
-  isLoggedIn = false;
-  showAdmin = false;
-  showUser = false;
-  showMod = false;
-  isOwner: boolean = false;
+
   modRoute?: string;
   isLoaded:boolean = false;
 
-  private roles: string[] = [];
 
   message = "";
 
@@ -57,7 +52,7 @@ export class AppComponent implements OnInit {
   ) {
     this.versionChecker.listenForUpdates();
     this.authService.authenticationEvent.subscribe(() => {
-      this.initializeComponent();
+      this.currentUser = this.tokenStorage.getUser();
     });
 
     this.currentRoute = "";
@@ -86,42 +81,15 @@ export class AppComponent implements OnInit {
 
     this.sharedDataService.retrieveInitialData()
     .then(async () => {
-      this.setRoleProperties()
+      this.isLoaded = true;
+      // Processed
     })
     .catch(error => {
       console.error("Error initializing shared data:", error);
     });
     
-    await this.initializeComponent();
     
 }
-
-  private setRoleProperties(): void {
-    this.roles = this.sharedDataService.currentUser.roles;
-    this.showAdmin = this.sharedDataService.showAdmin;
-    this.showMod = this.sharedDataService.showMod;
-    this.showUser = this.sharedDataService.showUser;
-}
-
-  /**
-   * Initialize component
-   * This function is used to initialize the component
-   */
-  async initializeComponent(): Promise<void> {
-    this.isLoggedIn = !!this.tokenStorage.getToken();
-    this.currentUser = this.sharedDataService.currentUser
-    this.roles = this.sharedDataService.currentUser.roles
-
-    if (this.isLoggedIn) {
-      this.showAdmin = this.sharedDataService.showAdmin;
-      this.showMod = this.sharedDataService.showMod;
-      this.showUser = true;
-    }
-
-    this.isLoaded = true;
-  
-  }
-  
 
 
   menuOpen = false;
@@ -157,11 +125,6 @@ export class AppComponent implements OnInit {
     localStorage.setItem("isAuthenticated", "false");
     localStorage.setItem("isAdmin", "false");
     localStorage.setItem("isModerator", "false");
-
-    this.isLoggedIn = this.authService.isAuthenticated;
-    this.showMod = this.authService.isModerator;
-    this.showAdmin = this.authService.isAdministrator;
-    this.showUser = this.authService.isAuthenticated;
 
     this.sharedDataService.isLoggedIn = false;
     this.sharedDataService.showMod = false;

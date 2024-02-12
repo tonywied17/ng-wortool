@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Mon February 12th 2024 12:12:55 
+Last Modified: Mon February 12th 2024 5:12:44 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -206,33 +206,33 @@ style="position: sticky; top: 0;">
 			<mat-menu #regMenu="matMenu" xPosition="before" [yPosition]="'below'"
 				class="bg-[#646258bb] backdrop-blur-sm w-[200px] !mt-[8px] !mr-[-5px] !py-0">
 				<mat-list class="no-padding">
-					<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin" class="!px-[0]">
-						<button routerLink="/mod/2" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+					<div *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin || this.sharedDataService.showUser" class="!px-[0]">
+						<button routerLink="/mod/2" class="text-[0.8rem] ml-2 select-none" mat-menu-item *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">
 							<span class="!text-neutral-400 font-[500]">
 								<i class="fa-brands fa-discord mr-1.5 w-[25px]"></i>
 								Event Share
 							</span>
 						</button>
-						<button routerLink="/mod/3" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+						<button routerLink="/mod/3" class="text-[0.8rem] ml-2 select-none" mat-menu-item *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">
 							<span class="!text-neutral-400 font-[500]">
 								<i class="fa-brands fa-steam mr-1.5 w-[25px]"></i>
 								Steam Stats
 							</span>
 						</button>
-						<button routerLink="/mod/4" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+						<button routerLink="/mod/4" class="text-[0.8rem] ml-2 select-none" mat-menu-item *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">
 							<span class="!text-neutral-400 font-[500]">
 								<i class="fa-solid fa-clipboard-user mr-1.5 w-[25px]"></i>
 								Muster Roster
 							</span>
 						</button>
 						<mat-divider></mat-divider>
-						<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+						<button routerLink="/mod/1" class="text-[0.8rem] ml-2 select-none" mat-menu-item *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">
 							<span class="!text-neutral-400 font-[500]">
 								<i class="fa-solid fa-users-gear mr-1.5 w-[25px]"></i>
 								Manage
 							</span>
 						</button>
-						<button routerLink="/regiments/{{this.sharedDataService.regimentId}}" class="text-[0.8rem] ml-2 select-none" mat-menu-item>
+						<button routerLink="/regiments/{{this.sharedDataService.regimentId}}" class="text-[0.8rem] ml-2 select-none" mat-menu-item *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin || this.sharedDataService.showUser">
 							<span class="!text-neutral-400 font-[500]">
 								<div *ngIf="this.sharedDataService.regiment">
 									<div *ngIf="this.sharedDataService.regiment.guild_avatar; else noRegPic" class="truncate">
@@ -260,8 +260,8 @@ style="position: sticky; top: 0;">
 				class="mr-2 flex flex-col items-center !hidden sm:!block hover:bg-[#646460] active:bg-[#a3a596] active:shadow-inner p-1 px-1.5 rounded-sm transition-all duration-200 cursor-pointer active:brightness-75 hover:opacity-80">
 
 				<div class="text-center">
-					<img *ngIf="currentUser.avatar_url; else noAvatar" (error)="currentUser.avatar_url = null"
-						[src]="currentUser.avatar_url"
+					<img *ngIf="this.sharedDataService.currentUser.avatar_url; else noAvatar" (error)="this.sharedDataService.currentUser.avatar_url = null"
+						[src]="this.sharedDataService.currentUser.avatar_url"
 						class="h-[32px] w-[32px] rounded-lg shadow-sm border-2 border-[#989b8a] !inline-block pointer-events-none cursor-pointer !mb-[-2px] !ml-[-1px]">
 				</div>
 
@@ -269,7 +269,7 @@ style="position: sticky; top: 0;">
 					<button #menuButton #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="userMenu"
 						class="font-[400] !text-sm !min-w-fit !min-h-fit !p-0 border-0 outline-none !text-[#c5c7ba]">
 	
-							{{currentUser.username}}
+							{{this.sharedDataService.currentUser.username}}
 							<ng-template #noAvatar>
 								<i class="fa-sharp fa-solid fa-user mr-1.5"></i>
 							</ng-template>
@@ -324,7 +324,7 @@ style="position: sticky; top: 0;">
 							</span>
 						</button>
 					</div>
-					<mat-divider *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin || showUser"></mat-divider>
+					<mat-divider *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin || this.sharedDataService.showUser"></mat-divider>
 					<div>
 						<button *ngIf="this.sharedDataService.isLoggedIn" (click)="logout()" mat-menu-item
 							class="text-[0.8rem] ml-2 select-none !bg-gradient-to-r from-[#964b4b75] via-[#964b4b4b] to-transparent">
