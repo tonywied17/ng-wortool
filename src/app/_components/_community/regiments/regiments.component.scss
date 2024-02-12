@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat November 18th 2023 12:56:01 
+ * Last Modified: Sun February 11th 2024 8:38:22 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -57,7 +57,7 @@
   vertical-align: middle;
   width: 20px;
   height: 5px;
-  background: #6488c5;
+  background: #5575a5;
   transform-origin: center;
   animation: wave-usa 0.5s ease-in-out infinite;
 }
@@ -185,6 +185,10 @@ select {
 }
 
 .reg-header:hover{
-  filter: brightness(1.5);
+  filter: brightness(1.2);
+}
+
+.reg-header:active{
+  opacity: 0.679;
 }
 

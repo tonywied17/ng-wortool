@@ -4,27 +4,61 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed November 22nd 2023 11:27:54 
+ * Last Modified: Sun February 11th 2024 6:30:17 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
  */
 
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { MapService } from "src/app/_services/map.service";
 import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { FavoriteService } from "src/app/_services/favorite.service";
 import { Map } from "src/app/_models/map.model";
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: "app-maps",
   templateUrl: "./maps.component.html",
   styleUrls: ["./maps.component.scss"],
+  animations: [
+    trigger('cardAnimation', [
+      state('default', style({
+        transform: 'scale(1)',
+        opacity: '0.8',
+      })),
+      state('hover', style({
+        transform: 'scale(1.04)',
+        opacity: '1',
+      })),
+      transition('default <=> hover', animate('300ms ease-in-out'))
+    ])
+  ]
 })
 export class MapsComponent implements OnInit {
   map?: Map[];
   currentMap: Map = {};
   currentIndex = -1;
+  isDesktop: boolean = true;
+  animationStates: {[index: number]: string} = {};
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkDeviceType();
+  }
+  checkDeviceType() {
+    this.isDesktop = window.innerWidth > 768;
+  }
+  onMouseEnter(i: number) {
+    if (this.isDesktop) { 
+      this.animationStates[i] = 'hover';
+    }
+  }
+
+  onMouseLeave(i: number) {
+    if (this.isDesktop) { 
+      this.animationStates[i] = 'default';
+    }
+  }
   showMapPage = false;
   loading = true;
   currentUser: any;

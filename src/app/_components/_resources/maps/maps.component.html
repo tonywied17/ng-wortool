@@ -322,19 +322,30 @@
 			<!--  -->
 			<div class="lg:col-start-2 lg:col-span-3 mb-[4em]">
 				<div *ngIf="!showMapPage && !loading"
-					class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+					class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
 	
-	
-					<div *ngFor="let map of map; index as i;"
-						class="bg-[#1e293b]/80 rounded-lg ring-1 ring-[#0f172a]/5 shadow-xl w-full animate-load p-2">
-	
+					
+
+					<div *ngFor="let map of map; let i = index"
+					class=" animate-load">
+				
+
+						
+					<div
+					[@cardAnimation]="animationStates[i] || 'default'"
+					(mouseenter)="onMouseEnter(i)"
+					(mouseleave)="onMouseLeave(i)"
+					
+					 class="bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full p-2">
 						<div class="grid grid-cols-[auto_1fr] items-center w-full h-10">
 							<div class="flex justify-start">
-								<span class="text-neutral-200 text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ map.map }}</span>
+								<span style="filter: drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));" 
+								class="text-[#88887b] font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ map.map }}</span>
 							</div>
 	
 							<div class="flex justify-end">
-								<span class="text-[#94a3b8]/80 text-base tracking-tight">
+								<span class="text-[#94a3b8]/80 text-base tracking-tight font-[300]"
+								style="filter: drop-shadow(2px 0px 6px #2e3f5998);">
 									{{ map.campaign }}
 								</span>
 							</div>
@@ -342,28 +353,29 @@
 						</div>
 	
 						
-						<div [routerLink]="map.id" class="rounded-md my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 250px; opacity: 80%;">
+						<div [routerLink]="map.id" class="rounded-sm my-2 shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 250px; opacity: 80%;">
 							<img src="https://wortool.com/{{map.image}}" alt="{{map.map}}"
-								class="rounded-md w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
+								class="rounded-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
 						</div>
 	
 						
 						<div class="grid grid-cols-2 items-center w-full h-10">
 							<div class="flex justify-start">
 								<div *ngIf="map.attacker === 'USA'">
-									<span class=" opacity-40">USA Attacker</span>
+									<span style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class=" opacity-40">USA Attacker</span>
 								</div>
 								<div *ngIf="map.attacker === 'CSA'">
-									<span class=" opacity-40">CSA Attacker</span>
+									<span style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class=" opacity-40">CSA Attacker</span>
 								</div>
 								<div *ngIf="map.attacker === 'No'">
-									<span class=" opacity-40">No Attacker</span>
+									<span style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class=" opacity-40">No Attacker</span>
 								</div>
 							</div>
 							<div class="flex justify-end">
 								<button [class.active]="i == currentIndex"
 									[routerLink]="map.id"
 									mat-raised-button
+									style="filter: drop-shadow(2px 0px 5px rgba(125, 126, 116, 0.222));"
 									class="!min-h-fit !py-1"
 									color="primary">
 									Enhance
@@ -371,7 +383,7 @@
 								</button>
 							</div>
 						</div>
-	
+					</div>
 	
 	
 					</div>

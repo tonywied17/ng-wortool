@@ -17,7 +17,6 @@ module.exports = {
             transform: 'translateX(0)',
           },
         },
-
         load: {
           '0%': {
             opacity: 0,
@@ -27,13 +26,18 @@ module.exports = {
             opacity: 1, 
             transform: 'scale(1)',
           },
-        }
+        },
+        pulsie: {
+          '0%, 100%': { transform: 'scale(1.05)', opacity: '1' },
+          '50%': { transform: 'scale(1.05)', opacity: '.7' },
+        },
 
       },
 
       animation: {
         top: 'top .2s ease 0s 1 normal forwards',
         load: 'load .2s ease 0s 1 normal forwards',
+        pulsie: 'pulsie 1s ease-in-out infinite',
       }
     },
   },
