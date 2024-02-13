@@ -14,7 +14,7 @@
               <div class="custom-select-container" #dropdownContainer>
                 <div class="custom-select">
                   <button class="select-button !min-w-[222px]" (click)="toggleDropdown()" mat-stroked-button color="primary">
-                    {{ selectedRole ? selectedRole.name : 'Select a role...' }}
+                    {{ selectedRoleName ? selectedRoleName : 'Select a role...' }}
                   </button>
             
                   <div class="dropdown-container" *ngIf="isDropdownOpen">
