@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu December 7th 2023 5:55:46 
+ * Last Modified: Tue February 13th 2024 11:23:39 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -86,6 +86,21 @@ export class RegimentService {
       youtube,
       description,
       side,
+    }, httpOptions);
+  }
+
+  /**
+   * Update the mention role
+   * This observable is used to update the mention role in the database
+   * @param userId 
+   * @param regimentId 
+   * @param mention_role 
+   * @returns 
+   */
+  updateMentionRole(userId:any, regimentId: number, webhook_mention: any): Observable<any> {
+    return this.http.put(API + regimentId + '/update', {
+      userId,
+      webhook_mention
     }, httpOptions);
   }
 

@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } fro
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { MapService } from 'src/app/_services/map.service'; 
 import { DiscordService } from "src/app/_services/discord.service";
+import { RegimentService } from "src/app/_services/regiment.service";
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ConfirmCancelSnackbarComponent } from 'src/app/_components/confirm-cancel-snackbar/confirm-cancel-snackbar.component';
@@ -44,10 +45,13 @@ export class EventBuilderComponent implements OnInit {
   targetChannel: any;
   webhook: any;
   
+  selectedRoleName: string | null = null;
+  selectedRoleId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private discordService: DiscordService,
+    private regimentService: RegimentService,
     private mapService: MapService,
     public sharedDataService: SharedDataService,
     private snackBar: MatSnackBar,
@@ -65,29 +69,25 @@ export class EventBuilderComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    
     this.serverForm = this.fb.group({
       serverName: [''],
       password: [''],
       extra: [''],
       rounds: this.fb.array([]),
     });
-    
+    this.preselectRoleNameAndId()
     this.addRound();
     this.addRound();
     this.getMaps();
-
-
-    this.sharedDataService.retrieveInitialData()
-    .then(async () => {
+  
+    try {
+      await this.sharedDataService.retrieveInitialData();
       await this.retrieveComponentData();
-    })
-    .catch(error => {
-      console.error("Error initializing shared data:", error);
-    });
-
-    await this.getRegimentChannels(this.sharedDataService.regiment.guild_id);
-    
+      await this.getRegimentChannels(this.sharedDataService.regiment.guild_id);
+      
+    } catch (error) {
+      console.error("Error initializing data:", error);
+    }
   }
 
   async retrieveComponentData(): Promise<void> {
@@ -96,21 +96,33 @@ export class EventBuilderComponent implements OnInit {
     ]);
   }
 
+  preselectRoleNameAndId(): void {
+    const webhookMention = this.sharedDataService.regiment.webhook_mention;
+    console.log('Webhook Mention:', webhookMention);
+    if (webhookMention) {
+      const [name, id] = webhookMention.split(", ");
+      this.selectedRoleName = name;
+      this.selectedRoleId = id;
+    }
+  }
+
   async getRoles(regimentId: any): Promise<void> {
     try {
       const data: any = await this.discordService.getGuildRoles(regimentId).toPromise();
       this.roles = data;
       this.filteredRoles = [...this.roles];
-
+  
       this.filteredRoles.sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
         return nameA.localeCompare(nameB);
       });
     } catch (error) {
-      console.error(error);
+      console.error("Failed to get roles:", error);
     }
   }
+
+
 
 
   updateFilteredRoles(): void {
@@ -147,10 +159,28 @@ export class EventBuilderComponent implements OnInit {
       roleFilterControl.setValue(role.name);
     }
     this.selectedRole = role;
-    console.log(role)
+    this.selectedRoleName = role.name;
+    this.selectedRoleId = role.id;
     this.toggleDropdown();
+  
+    const userId = this.sharedDataService.currentUser.id;
+    const regimentId = this.sharedDataService.currentUser.regimentId
+  
+    if (userId && regimentId && role.id) {
+      console.log('Updating mention role:', userId, regimentId, role);
+      let concatNameAndId = `${role.name}, ${role.id}`;
+      this.regimentService.updateMentionRole(userId, regimentId, concatNameAndId).subscribe({
+        next: (response: any) => {
+          console.log('Mention role updated successfully', response);
+        },
+        error: (error: any) => {
+          console.error('Failed to update mention role', error);
+        }
+      });
+    } else {
+      console.error('Missing information for updating mention role');
+    }
   }
-
 
   addRound() {
     const roundForm = this.fb.group({
@@ -374,8 +404,8 @@ export class EventBuilderComponent implements OnInit {
 
   taggedRoles(): string {
     let roles = "";
-    if (this.selectedRole) {
-      roles += `<@&${this.selectedRole.id}>`;
+    if (this.selectedRoleId) {
+      roles += `<@&${this.selectedRoleId}>`;
     }
 
     return roles.trim();
@@ -456,6 +486,9 @@ async createWebhook(guildId: string, channelId: string): Promise<void> {
     .toPromise()
     .then((response: any) => {
       this.webhook = response;
+      console.log('Webhook:', this.webhook.webhook);
+      this.sharedDataService.regiment.webhook = this.webhook.webhook;
+      console.log('Webhook:', this.sharedDataService.regiment.webhook);
       this.snackBar.open(
         `$Webhook created for channel ${this.targetChannel}!`,
         "Close",
