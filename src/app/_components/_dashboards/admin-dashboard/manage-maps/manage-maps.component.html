@@ -1,0 +1,142 @@
+<div class="container mx-auto p-4" *ngIf="!editMode; else editMapTemplate">
+    <ul class="list-disc">
+      <li *ngFor="let map of maps" class="mb-2">
+        {{ map.map }} 
+        <button mat-button color="primary" (click)="selectMap(map)" class="ml-2">Edit</button>
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #editMapTemplate>
+    <div class="container mx-auto p-4">
+      <button mat-button (click)="editMode = false; currentMap = null;" class="mb-4">Go Back</button>
+      <h2 class="text-lg font-bold mb-4">Editing {{currentMap.map}}</h2>
+      
+      <div class="mb-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Map Name</mat-label>
+          <input matInput [(ngModel)]="currentMap.map">
+        </mat-form-field>
+      </div>
+
+      <div class="mb-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Map Image</mat-label>
+          <input matInput [(ngModel)]="currentMap.image">
+        </mat-form-field>
+      </div>
+  
+      <!-- USA Regiments Section -->
+      <h1 class="text-2xl font-bold my-4">USA</h1>
+      <mat-accordion multi="true">
+        <ng-container *ngFor="let regiment of currentMap.wor_mapsRegiments; let i = index">
+          <div *ngIf="regiment.side === 'USA'">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ regiment.name }} ({{ regiment.type }})
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+  
+              <div class="p-4">
+                <mat-form-field appearance="fill" class="w-full mb-4">
+                  <mat-label>Regiment Name</mat-label>
+                  <input matInput [(ngModel)]="regiment.name">
+                </mat-form-field>
+                
+                
+                <mat-form-field appearance="fill" class="w-full mb-4">
+                  <mat-label>Type</mat-label>
+                  <mat-select [(ngModel)]="regiment.type">
+                    <mat-option value="Infantry">Infantry</mat-option>
+                    <mat-option value="Artillery">Artillery</mat-option>
+                    <mat-option value="Cavalry">Cavalry</mat-option>
+                  </mat-select>
+                </mat-form-field>
+  
+                <div *ngFor="let weapon of regiment.wor_mapsRegimentWeapons; let j = index" class="mb-4">
+                  <div class="weapon-container">
+                    <mat-form-field appearance="fill" class="!max-w-fit">
+                      <mat-label>Weapon</mat-label>
+                      <mat-select [(ngModel)]="weapon.unitWeaponId">
+                        <mat-option *ngFor="let weaponOption of weapons" [value]="weaponOption.id">
+                          {{ weaponOption.weapon }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <button mat-icon-button color="warn" (click)="removeWeapon(i, j)">
+                      <mat-icon>remove</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                
+                
+                <button mat-raised-button color="primary" (click)="addWeapon(i)">Add Weapon</button>
+                <button mat-raised-button color="warn" (click)="removeRegiment(i)">Remove Regiment</button>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </ng-container>
+      </mat-accordion>
+  
+      <!-- CSA Regiments Section -->
+      <h1 class="text-2xl font-bold my-4">CSA</h1>
+      <mat-accordion multi="true">
+        <ng-container *ngFor="let regiment of currentMap.wor_mapsRegiments; let i = index">
+          <div *ngIf="regiment.side === 'CSA'">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ regiment.name }} ({{ regiment.type }})
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+    
+                <div class="p-4">
+                  <mat-form-field appearance="fill" class="w-full mb-4">
+                    <mat-label>Regiment Name</mat-label>
+                    <input matInput [(ngModel)]="regiment.name">
+                  </mat-form-field>
+                  
+                  
+                  <mat-form-field appearance="fill" class="w-full mb-4">
+                    <mat-label>Type</mat-label>
+                    <mat-select [(ngModel)]="regiment.type">
+                      <mat-option value="Infantry">Infantry</mat-option>
+                      <mat-option value="Artillery">Artillery</mat-option>
+                      <mat-option value="Cavalry">Cavalry</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <div *ngFor="let weapon of regiment.wor_mapsRegimentWeapons; let j = index" class="mb-4">
+                    <div class="weapon-container">
+                      <mat-form-field appearance="fill" class="!max-w-fit">
+                        <mat-label>Weapon</mat-label>
+                        <mat-select [(ngModel)]="weapon.unitWeaponId">
+                          <mat-option *ngFor="let weaponOption of weapons" [value]="weaponOption.id">
+                            {{ weaponOption.weapon }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <button mat-icon-button color="warn" (click)="removeWeapon(i, j)">
+                        <mat-icon>remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                  <button mat-raised-button color="primary" (click)="addWeapon(i)">Add Weapon</button>
+                  <button mat-raised-button color="warn" (click)="removeRegiment(i)">Remove Regiment</button>
+                </div>
+              </mat-expansion-panel>
+          </div>
+        </ng-container>
+      </mat-accordion>
+  
+      <button mat-raised-button color="primary" (click)="addRegiment('USA')" class="my-4">Add USA Regiment</button>
+      <button mat-raised-button color="primary" (click)="addRegiment('CSA')" class="my-4">Add CSA Regiment</button>
+      <button mat-raised-button color="primary" (click)="updateCompleteMap()">Save All Changes</button>
+    </div>
+  </ng-template>
+  
+  

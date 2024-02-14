@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue February 13th 2024 11:51:31 
+ * Last Modified: Tue February 13th 2024 8:52:48 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -51,6 +51,7 @@ import { ScheduleComponent } from "./_components/_dashboards/regiment-dashboard/
 import { MembersComponent } from "./_components/_dashboards/regiment-dashboard/regiment-settings/members/members.component";
 import { MediaComponent } from "./_components/_dashboards/regiment-dashboard/regiment-settings/media/media.component";
 import { EventBuilderComponent } from "./_components/_dashboards/regiment-dashboard/event-builder/event-builder.component";
+import { ManageMapsComponent } from "./_components/_dashboards/admin-dashboard/manage-maps/manage-maps.component";
 
 /**
  * Routes for the application
@@ -109,6 +110,7 @@ const routes: Routes = [
     MembersComponent,
     MediaComponent,
     EventBuilderComponent,
+    ManageMapsComponent,
   ],
   imports: [
     BrowserModule,

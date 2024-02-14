@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu December 7th 2023 5:55:46 
+ * Last Modified: Tue February 13th 2024 8:52:34 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -42,4 +42,31 @@ export class MapService {
   get(id: any): Observable<Map[]> {
     return this.http.get<Map[]>(`${baseUrl}/${id}`);
   }
+  
+
+  getAllMaps(): Observable<Map[]> {
+    return this.http.get<Map[]>(`${baseUrl}/new`);
+  }
+
+  getMap(id: any): Observable<Map[]> {
+    return this.http.get<Map[]>(`${baseUrl}/${id}`);
+  }
+
+  createMap(map: any): Observable<any> {
+    return this.http.post(`${baseUrl}/new`, map);
+  }
+
+  updateMap(id: any, map: any): Observable<any> {
+    return this.http.put(`${baseUrl}/new/map/${id}`, map);
+  }
+
+  updateRegiment(regimentId: number, regimentData: any): Observable<any> {
+    return this.http.put(`${baseUrl}/new/regiment/${regimentId}`, regimentData);
+  }
+  
+  updateUnit(unitId: number, unitData: any): Observable<any> {
+    return this.http.put(`${baseUrl}/new/unit/${unitId}`, unitData);
+  }
+  
+  
 }
