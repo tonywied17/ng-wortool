@@ -16,7 +16,7 @@
 
 
 	<div *ngIf="!sharedDataService.showAdmin && sharedDataService.isLoggedIn"
-		class="p-5 bg-[#1c2537] rounded-md"
+		class="p-5 bg-[#1c2537] rounded-sm"
 		style="border-left: 5px solid #a13c3c;">
 		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">
 			<div class="row-start-2 sm:row-start-auto">
@@ -85,87 +85,63 @@
 
 
 
-		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
-			<div class="col-span-1 bg-[#1e293b]/80 rounded-lg shadow-md h-fit">
-				<div class>
-
-
-
-					<mat-list class="my-2">
+		<div class="grid lg:grid-cols-[auto_1fr] lg:gap-2 grid-cols-1">
+			<div class="bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full py-1 h-fit">
+					<mat-list>
 						<mat-action-list>
 							<button routerLinkActive="active_btn"
-								routerLink="/admin/1"
-								mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-sharp fa-solid fa-map w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Manage Maps
+									routerLink="/admin/1"
+									mat-list-item
+									class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
+								<i class="fa-sharp fa-solid fa-map !text-white"></i>
+								<span class="ml-4">Manage Maps</span>
 							</button>
-
-
-
-
+			
 							<mat-divider></mat-divider>
-
-
-
-
+			
 							<button routerLinkActive="active_btn"
-								routerLink="/admin/2"
-								mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-solid fa-gun w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Manage Weapons
+									routerLink="/admin/2"
+									mat-list-item
+									class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
+								<i class="fa-solid fa-gun  !text-white"></i>
+								<span class="ml-4">Manage Weapons</span>
 							</button>
-
-
-
-
+			
 							<mat-divider></mat-divider>
-
-
-
-
+			
 							<button routerLinkActive="active_btn"
-								routerLink="/admin/3"
-								mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-sharp fa-solid fa-person-military-rifle w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
-								Manage Regiments
+									routerLink="/admin/3"
+									mat-list-item
+									class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
+								<i class="fa-sharp fa-solid fa-person-military-rifle !text-white"></i>
+								<span class="ml-4">Manage Regiments</span>
 							</button>
 						</mat-action-list>
-
-
-
-
 					</mat-list>
-
-
-
-
-				</div>
 			</div>
+			
 
 
 
 
-			<div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
+			<div class="lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
 
 
 
 
 				<div *ngIf="showPage1"
-					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-[#1e293b]/80 scale-center">
-					<h2 class="text-2xl  text-[#94a3b8] py-4 ml-2 lg:ml-0">Edit Maps</h2>
+					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-2 px-6 scale-center">
+					<h2 class="text-2xl  text-[#94a3b8] py-4 ml-2 lg:ml-0">Manage Maps</h2>
 					<app-manage-maps></app-manage-maps>
 				</div>
 				<div *ngIf="showPage2"
-					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-[#1e293b]/80 scale-center">
+					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-2 px-6 scale-center">
 					<h2 class="text-2xl  text-[#94a3b8] py-4 ml-2 lg:ml-0">Manage Weapons</h2>
 					<app-manage-weapons></app-manage-weapons>
 				</div>
 				<div *ngIf="showPage3"
-					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-[1em] mx-auto bg-[#1e293b]/80 scale-center">
-					<h2 class="text-2xl  text-[#94a3b8] py-4 ml-2 lg:ml-0">Edit Regiments</h2>
+					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-2 px-6 scale-center">
+					<h2 class="text-2xl  text-[#94a3b8] py-4 ml-2 lg:ml-0">Mange Regiments</h2>
 				</div>
 
 
