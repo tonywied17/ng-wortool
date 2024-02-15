@@ -1,3 +1,22 @@
 :host {
   display: block;
 }
+.mat-mdc-tab-body-wrapper {
+  padding: 0 !important;
+}
+
+.mat-expansion-panel {
+  background: rgb(15 23 42 / 0.5);
+  color: #7d7e7385 !important;
+}
+
+.mat-expansion-panel-header-title {
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.csa-reg {
+  background: #7d7e7385;
+  color: rgb(15 23 42 / 0.5) !important;
+}
+

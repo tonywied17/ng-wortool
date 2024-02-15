@@ -75,13 +75,13 @@
 					</select>
 				</div>
 
-				<div class="lg:col-start-4 text-right">
+				<div class="lg:col-start-4">
 					<span class="hidden sm:block">&nbsp;</span>
 					<button (click)="createNew()"
 						type="button"
-						class="!h-[60px] !mt-[8px] text-neutral-200 font-[300] text-xl"
+						class="text-neutral-200 ml-2 mt-2"
 						mat-button>
-						<i class="fa-sharp fa-solid fa-plus pb-1 pr-2"></i>
+						<i class="fa-sharp fa-solid fa-plus"></i>
 						Create New
 					</button>
 				</div>
@@ -192,32 +192,46 @@
 					class="field-input my-[0.5em]"
 					type="text"
 					placeholder="Weapon notes...">
-					<i class="fa-regular fa-note-sticky field-icon"></i>
+					<i class="fa-regular fa-note-sticky field-icon"></i> 
 			</div>
 
 		</div>
 	</div>
 
-	<button *ngIf="isCreating && !isUpdating"
-		mat-raised-button
-		type="submit"
-		class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-		Create Weapon
-	</button>
+	<div class="pb-2">
+		<div *ngIf="isCreating && !isUpdating" class="text-right">
+			<button
+				mat-flat-button
+				color="primary"
+				type="submit"
+				class="text-neutral-200">
+					Create Weapon
+			</button>
+		</div>
+	
 
-	<button *ngIf="isUpdating && !isCreating"
-		mat-raised-button
-		type="submit"
-		class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl !bg-gradient-to-tr from-[#4b4a48]/80 to-[#a3a197]/80 opacity-[65%] !transition !duration-300 ease-in hover:opacity-[80%]">
-		Update Weapon
-	</button>
+		<div *ngIf="isUpdating && !isCreating" class="text-right">
+			<button
+				(click)="confirmDelete()"
+				mat-flat-button
+				type="button"
+				class="!bg-red-700">
+				Delete
+			</button>
+			<button 
+				mat-flat-button
+				color="primary"
+				type="submit"
+				class="text-neutral-200 ml-2">
+				Update Weapon
+			</button>
+		</div>
+	</div>
 
-	<button *ngIf="isUpdating && !isCreating"
-		(click)="confirmDelete()"
-		mat-stroked-button
-		type="button"
-		class="w-full !mt-[0.5em] !py-2 !sm:py-[5px] sm:text-lg text-xl">
-		Delete Weapon
-	</button>
+	
+
+	
+
+	
 
 </form>
