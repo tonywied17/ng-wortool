@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun February 11th 2024 8:16:55 
+Last Modified: Thu February 15th 2024 2:57:17 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -73,7 +73,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 					<div class="">
 						<form (ngSubmit)="updateRegiment()">
 							<div class="form-group p-2 lg:m-2">
-								<div class="field-box">
+								<div class="field-box !hidden">
 									<input [(ngModel)]="this.sharedDataService.regiment.regiment" name="regiment"
 									 class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Display Name..." />
 								</div>
@@ -99,12 +99,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 									<i class="fa-solid fa-arrows-up-down field-icon"></i>
 								</div>
 
-								<div class="field-box">
+								<div class="field-box !hidden">
 									<input [(ngModel)]="this.sharedDataService.regiment.guild_id" name="guild_id"
 									 class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Discord ID..." />
 								</div>
 
-								<div class="field-box">
+								<div class="field-box !hidden">
 									<input [(ngModel)]="this.sharedDataService.regiment.guild_avatar"
 										name="guild_avatar"
 										 class="field-input !font-[300] my-[0.5em]" type="hidden" placeholder="Avatar Url..." />
