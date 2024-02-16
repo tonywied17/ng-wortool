@@ -515,29 +515,53 @@ button {
 
 .field-box {
   position: relative;
+  display: block;
+  margin: 0.75rem 0 0 0;
+}
+
+.field-box::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.777px; 
+  background: #7c7d723a; 
+  border-radius: 2.22px;
+  transition: height .3s ease, background-color .3s ease; 
 }
 
 .field-input {
   box-sizing: border-box;
-  font-family: 'Noto Sans', sans-serif !important;;
-  padding: 10px 36px 10px 48px;
+  font-family: 'Noto Sans', sans-serif;
+  padding-left :48px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  margin: 0;
   width: 100%;
-  border: 1px solid #7c7d7271 !important;
-  border-radius: 4px;
-  // background: linear-gradient(9deg, #121a29, #121a2900, #7c7d7234);
-  background-color: #1d2735;
-  color: #eeeeeed2 !important;
+  background: linear-gradient(90deg,#263855ad,#1e293b79,#1e293b10,#1e293b05);
+  color: #eeeeeed2;
   outline: none;
-  transition: all .2s ease;
   font-weight: 400;
   font-size: 14px;
+  border: none; 
+  border-radius: 2.22px;
+  transition: background-color .3s ease; 
+}
+
+.field-input:focus + .field-box::after,
+.field-box:focus-within::after {
+  height: 2.777px; 
+  background: #7c7d72d0; 
 }
 
 .field-input:focus {
-  // transform: scale(1.01);
-  border: 1px solid #7c7d72d0 !important;
-  filter: brightness(1.1)
+  background: #263855;
+  filter: brightness(1.1); 
 }
+
+
+
 
 .field-input2 {
   font-family: 'Noto Sans', sans-serif !important;;
@@ -573,7 +597,6 @@ button {
 .field-input:focus::placeholder {
   opacity: 1;
   text-indent: 0;
-  /* Adjusted text-indent value */
 }
 
 .mat-mdc-paginator-page-size-label,
@@ -582,11 +605,14 @@ button {
   color: rgb(158 159 152) !important;
 }
 
+textarea{
+  margin-bottom: -5px !important;
+}
+
 .field-icon {
   position: absolute;
   top: 50%;
   left: 1em;
-  /* Adjusted left value */
   transform: translate(0, -50%);
   transition: all .2s ease;
   color: #7c7d72 !important;
@@ -594,14 +620,12 @@ button {
 
 .field-input:focus+.field-icon {
   margin-left: -3px;
-  /* Adjusted left value */
 }
 
 .field-icon2 {
   position: absolute;
   top: 50%;
   left: 0.7em;
-  /* Adjusted left value */
   transform: translate(0, -50%);
   transition: all .2s ease;
   color: #7c7d72 !important;
@@ -609,7 +633,6 @@ button {
 
 .field-input2:focus+.field-icon2 {
   margin-left: -6px;
-  /* Adjusted left value */
 }
 
 // .field-input:hover {
