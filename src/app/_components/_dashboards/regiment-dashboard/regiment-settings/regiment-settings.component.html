@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Thu February 15th 2024 7:30:40 
+Last Modified: Fri February 16th 2024 12:35:38 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -29,12 +29,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 			<div class="w-full mb-[3em] grid grid-cols-[auto_1fr]">
 
 				<div>
-					<img class="rounded-l-lg shadow-md pointer-events-none brightness-90 sepia-[22%]" [src]="this.sharedDataService.regiment.guild_avatar">
+					<img class="rounded-l-lg shadow-md pointer-events-none brightness-90 sepia-[22%] w-auto h-[69px] md:h-full" [src]="this.sharedDataService.regiment.guild_avatar">
 				</div>
 			
 				<div *ngIf="this.sharedDataService.regiment.side == 'USA'" class="flex flex-col justify-center items-center rounded-r-md shadow-lg"
 				style="background: linear-gradient(130deg,#263855e1,#1e293b4b,#1e293b10,#1e293b05),linear-gradient(-25deg,#263855e1,#1e293b4b,#1e293b10,#1e293b05);">
-					<h1 class="font-[400] mb-[0] text-neutral-200 text-lg">{{this.sharedDataService.regiment.regiment}}</h1>
+					<h1 class="font-[400] mb-[0] text-neutral-200 md:text-lg">{{this.sharedDataService.regiment.regiment}}</h1>
 					<span class="text-[#5575a5] text-sm font-[300]">{{this.sharedDataService.regiment.side}} Regiment | {{this.sharedDataService.regiment.memberCount}} <i class="fa-brands fa-discord ml-1"></i> Members</span>
 				</div>
 

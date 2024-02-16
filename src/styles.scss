@@ -161,7 +161,7 @@ $theme-primary: mat.define-palette($mat-primary, main, lighter, darker);
 
 
 body {
-  --accent-color: #7d7e73;
+  --accent-color: #313f57;
   --accent-lighter-color: #95968a;
   --accent-darker-color: #7d7e73;
   --text-accent-color: #{$light-primary-text};
@@ -169,7 +169,7 @@ body {
   --text-accent-darker-color: #{$light-primary-text};
 }
 
-$mat-accent: (main: #7d7e73,
+$mat-accent: (main: #3f4f6b,
 lighter: #7d7e73,
 darker: #7d7e73,
 200: #7d7e73, // For slide toggle,
@@ -314,7 +314,7 @@ button {
 
 .active_btn_nco {
   background-color: #7c7d724f;
-  border-bottom: 3px solid #97978d !important;
+  border-right: 3px solid #97978d !important;
   color: #fff !important;
   font-weight: 700 !important;
   transform: rotateX('angle') !important;
@@ -430,11 +430,11 @@ mat-radio-button:hover {
   transform: translateX(0.25em);
 }
 
-button {
-  height: max-content !important;
-  min-height: 40px;
-  letter-spacing: normal !important;
-}
+// button {
+//   height: max-content !important;
+//   min-height: 40px;
+//   letter-spacing: normal !important;
+// }
 
 .mat-mdc-radio-background {
   border-color: #888278 !important;
@@ -883,9 +883,14 @@ html {
     --mat-tab-header-label-text-weight: 300;
   }
 
-  .active_btn {
-    border-right: 0 !important;
+  .active_btn_nco {
+    border-right: unset !important;
     border-bottom: 3px solid #97978d !important;
+  }
+
+  .active_btn {
+    // border-right: 0 !important;
+    // border-bottom: 3px solid #97978d !important;
   }
   
   // .mat-icon {

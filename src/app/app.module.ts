@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu February 15th 2024 7:01:16 
+ * Last Modified: Fri February 16th 2024 2:25:56 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -52,6 +52,7 @@ import { MembersComponent } from "./_components/_dashboards/regiment-dashboard/r
 import { MediaComponent } from "./_components/_dashboards/regiment-dashboard/regiment-settings/media/media.component";
 import { EventBuilderComponent } from "./_components/_dashboards/regiment-dashboard/event-builder/event-builder.component";
 import { ManageMapsComponent } from "./_components/_dashboards/admin-dashboard/manage-maps/manage-maps.component";
+import { MapsBetaComponent } from "./_components/_resources/maps-beta/maps-beta.component";
 
 /**
  * Routes for the application
@@ -60,9 +61,11 @@ import { ManageMapsComponent } from "./_components/_dashboards/admin-dashboard/m
 const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "maps", component: MapsComponent },
+  { path: "maps-beta", component: MapsBetaComponent},
   { path: "regiments", component: RegimentsComponent },
   { path: "game-info", component: GameInfoComponent },
   { path: "maps/:id", component: MapDetailsComponent },
+  { path: "maps-beta/:id", component: MapsBetaComponent},
   { path: "weapons", component: WeaponsComponent },
   { path: "weapons/:weapon", component: WeaponsComponent },
   { path: "user", component: UserDashboardComponent },
@@ -111,6 +114,7 @@ const routes: Routes = [
     MediaComponent,
     EventBuilderComponent,
     ManageMapsComponent,
+    MapsBetaComponent,
   ],
   imports: [
     BrowserModule,

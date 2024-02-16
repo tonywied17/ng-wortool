@@ -149,7 +149,7 @@
 					<div style="border-left: dotted 1px #7c7d738f;"
 						class="p-2 grid lg:grid-cols-1 grid-cols-3 gap-2 !text-center border-x-[1px] lg:border-l-[1px] lg:border-r-0 border-dotted border-[#7c7d738f]">
 
-						<button *ngIf="this.sharedDataService.showMod || this.sharedDataService.isOwner" routerLinkActive="active_btn" routerLink="/mod/1" mat-button
+						<button *ngIf="this.sharedDataService.showMod || this.sharedDataService.isOwner" routerLinkActive="active_btn_nco" routerLink="/mod/1" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Manage Regiment-Specific Settings."
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
@@ -159,7 +159,7 @@
 						
 
 
-						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn" routerLink="/mod/2" mat-button
+						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn_nco" routerLink="/mod/2" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Submit event details for sharing on your designated Discord event share channel."
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
@@ -168,7 +168,7 @@
 						</button>
 
 
-						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn" routerLink="/mod/3" mat-button
+						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn_nco" routerLink="/mod/3" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Collect Steam IDs for Unbanning and Statistics Tracking."
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
@@ -176,7 +176,7 @@
 							Steam Stats
 						</button>
 
-						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn" routerLink="/mod/4" mat-button
+						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn_nco" routerLink="/mod/4" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Keep track of events and drills attended by your regiment members."
 							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
@@ -205,23 +205,23 @@
 
 
 
-				<div *ngIf="showPage1" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-6 scale-center">
+				<div *ngIf="showPage1" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 py-2.5 md:p-6 scale-center">
 					<app-regiment-settings></app-regiment-settings>
 				</div>
 
 
 
-				<div *ngIf="showPage2" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-6 scale-center">
+				<div *ngIf="showPage2" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 py-2.5 md:p-6 scale-center">
 					<app-event-builder></app-event-builder>
 					<!-- <app-server-info></app-server-info> -->
 				</div>
 
-				<div *ngIf="showPage3" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-6 scale-center">
+				<div *ngIf="showPage3" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 py-2.5 md:p-6 scale-center">
 					
 					<app-steam-stats></app-steam-stats>
 				</div>
 
-				<div *ngIf="showPage4" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-6 scale-center">
+				<div *ngIf="showPage4" class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 py-2.5 md:p-6 scale-center">
 					
 					<app-muster-roster></app-muster-roster>
 				</div>

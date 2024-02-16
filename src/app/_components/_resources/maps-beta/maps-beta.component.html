@@ -1,0 +1,133 @@
+<div class="container mx-auto mt-[1em] scroll-container mb-[4em]">
+
+    <div *ngIf="!isLoaded" class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div *ngIf="isLoaded" class="grid grid-cols-[auto_1fr] gap-2 md:gap-6">
+        <div class="p-2 bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl h-fit sticky top-[5em]">
+            <!-- Filter By Artillery -->
+            <div class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">Filter By Artillery</div>
+            <label class="font-[200] text-neutral-200">
+                <input type="checkbox" [(ngModel)]="csaArtillery" (change)="filterMaps()"> CSA Artillery
+            </label>
+    
+            <label class="font-[200] text-neutral-200">
+                <input type="checkbox" [(ngModel)]="usaArtillery" (change)="filterMaps()"> USA Artillery
+            </label>
+
+            <!-- Filter by Campaign -->
+            <div class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight overflow-hidden whitespace-nowrap mt-2">Filter By Campaign</div>
+            <div *ngFor="let campaign of uniqueCampaigns">
+            <label class="font-[200] text-neutral-200">
+                <input type="checkbox" [(ngModel)]="selectedCampaigns[campaign]" (change)="filterMaps()"> {{ campaign }}
+            </label>
+            </div>
+
+    
+          <!-- Filter by Weapons, Grouped by Type -->
+            <div class="text-[#88887b] text-lg font-[500] tracking-tight overflow-hidden whitespace-nowrap mt-2" style="max-width: 100%;text-overflow: ellipsis;">Filter By Weapons</div>
+            <div *ngFor="let type of objectKeys(weaponsGroupedByType)">
+            <div class="text-[#94a3b8]/80 text-base tracking-tight font-[400] mt-1"
+            style="filter: drop-shadow(2px 0px 6px #2e3f5998);">{{ type }}</div>
+            <div *ngFor="let weapon of weaponsGroupedByType[type]">
+                <label class="font-[200] text-neutral-200">
+                <input type="checkbox" [(ngModel)]="selectedWeapons[weapon.weapon]" (change)="filterMaps()"> {{ weapon.weapon }}
+                </label>
+            </div>
+            </div>
+
+
+
+            <!-- Filter by Favorites -->
+            <div class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight overflow-hidden whitespace-nowrap mt-2" style="max-width: 100%;text-overflow: ellipsis;">Filter By Favorites</div>
+            <div>
+                <label class="font-[200] text-neutral-200">
+                    <input type="checkbox" [(ngModel)]="filterFavorites" (change)="filterMaps()"> {{this.sharedDataService.currentUser.username}}'s Favorites
+                  </label>
+            </div>
+
+            <div class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight overflow-hidden whitespace-nowrap mt-2" style="max-width: 100%;text-overflow: ellipsis;">Sort by</div>
+            <div>
+                <!-- Sorting Criterion Select Box -->
+                <select class="sort-select" [(ngModel)]="sortBy" (change)="sortMaps()">
+                  <option value="favorites">Sort by Favorites</option>
+                  <option value="name">Sort Alphabetically</option>
+                </select>
+              
+                <!-- Toggle Direction Button -->
+                <button class="sort-button" (click)="toggleSortDirection(); sortMaps()">
+                {{ sortDirection === 'ascending' ? 'ASC ↑' : 'DESC ↓' }}
+                </button>
+              </div>
+              
+        </div>
+    
+        <div class="grid grid-cols-3 md:gap-6 gap-3 w-full h-fit">
+    
+            <div *ngFor="let map of filteredMaps; let i = index" class="animate-load">
+                <div
+                [@cardAnimation]="animationStates[i] || 'default'"
+                (mouseenter)="onMouseEnter(i)"
+                (mouseleave)="onMouseLeave(i)"
+                class="bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full p-2">
+    
+    
+                    <div class="flex justify-between">
+                        <div class="flex items-center">
+                            <span style="filter: drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));" 
+                                    class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ map.name }}</span>
+                        </div>
+                        <div>
+                            <span class="text-[#94a3b8]/80 md:text-lg text-base tracking-tight font-[300]"
+                            style="filter: drop-shadow(2px 0px 6px #2e3f5998);">{{map.campaign}}</span>
+                            
+                        </div>
+                    </div>
+    
+                    <div class="my-[12px]" [routerLink]="['/maps-beta', map.id]">
+                        <div class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
+                            <img [src]="map.map_image" [alt]="map.name"
+                              class="rounded-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
+                        </div>
+                    </div>
+    
+      
+                    <div class="flex justify-between">
+                        
+                        <div class="flex items-center">
+                            <span style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class=" opacity-40">{{map.attacker}} Attacker</span>
+                        </div>
+    
+                        <div class="flex items-end gap-x-2">
+                            <button
+                                [matBadge]="map.map_favorite_count"
+                                matBadgeColor="accent"
+                                matBadgeSize="small"
+                                mat-mini-fab
+                                (click)="toggleFavorite(map)"
+                                [ngClass]="{'fav-active': isFavorite(map)}"
+                                class="!bg-slate-700/80 !text-neutral-300">
+                                <mat-icon>thumb_up</mat-icon>
+                            </button>
+    
+    
+                            <button [routerLink]="['/maps-beta', map.id]" mat-mini-fab color="primary">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                        
+                        
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>
