@@ -70,3 +70,15 @@
   color: rgb(51 65 85 / 0.8) !important;
   box-shadow: inset 0px 0px 0px 2px #d4d4d4 !important;
 }
+
+.sort-select, .sort-button {
+  margin-right: 8px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #1d2738;
+}
+
+.sort-button {
+  cursor: pointer;
+}
