@@ -1,0 +1,63 @@
+<div class="container mx-auto mt-[1em] scroll-container mb-[4em]">
+
+    <div *ngIf="!isLoaded" class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div *ngIf="isLoaded" class="grid grid-cols-3 md:gap-6 gap-3 w-full">
+        <div *ngFor="let map of maps; let i = index" class="animate-load">
+            <div
+            [@cardAnimation]="animationStates[i] || 'default'"
+			(mouseenter)="onMouseEnter(i)"
+			(mouseleave)="onMouseLeave(i)"
+            class="bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full p-2">
+
+
+                <div class="flex justify-between">
+                    <div class="flex items-center">
+                        <span style="filter: drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));" 
+								class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">{{ map.name }}</span>
+                    </div>
+                    <div>
+                        <span class="text-[#94a3b8]/80 md:text-lg text-base tracking-tight font-[300]"
+                        style="filter: drop-shadow(2px 0px 6px #2e3f5998);">{{map.campaign}}</span>
+                        
+                    </div>
+                </div>
+
+                <div class="my-[12px]">
+                    <div class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
+                        <img [src]="map.map_image" [alt]="map.name"
+                          class="rounded-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
+                    </div>
+                </div>
+
+  
+                <div class="flex justify-between">
+                    
+                    <div class="flex items-center">
+                        <span style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class=" opacity-40">{{map.attacker}} Attacker</span>
+                    </div>
+
+                    <div class="flex items-end gap-x-2">
+                        <button [matBadge]="map.map_favorite_count" matBadgeColor="primary" matBadgeSize="small" mat-mini-fab class=" !bg-slate-700/80 text-neutral-300">
+                            <mat-icon>favorite</mat-icon>
+                        </button>
+                        <button
+                            [routerLink]="map.id"
+                            mat-mini-fab
+                            color="primary">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
