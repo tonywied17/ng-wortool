@@ -55,7 +55,7 @@
             <h3 class="text-slate-300 ml-1 lg:mt-6 mb-3 lg:text-xl font-[300]">
               <i class="fa-solid fa-hashtag"></i>Event Channel
             </h3>
-                <select #channelSelect class="event-field-input !w-fit !pl-2" id="channel-select" (change)="updateTargetChannel(channelSelect.value)">
+                <select #channelSelect class="field-input !w-fit !pl-2" id="channel-select" (change)="updateTargetChannel(channelSelect.value)">
                   <option value="0">{{this.sharedDataService.regiment.webhook_channel}}</option>
                   <option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
                     {{ channel.name }}
@@ -78,12 +78,12 @@
 
             <div class="grid lg:grid-cols-2 gap-2">
                 <div class="field-box">
-                  <input id="serverName" class="event-field-input" placeholder="Server Name..." formControlName="serverName" />
+                  <input id="serverName" class="field-input" placeholder="Server Name..." formControlName="serverName" />
                   <i class="fa-solid fa-tag field-icon"></i>
                 </div>
 
                 <div class="field-box">
-                  <input id="password" class="event-field-input h-[44px]" placeholder="Password..." formControlName="password" />
+                  <input id="password" class="field-input" placeholder="Password..." formControlName="password" />
                   <i class="fa-solid fa-key field-icon"></i>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 </h3>
               </div>
               <div>
-                <button mat-stroked-button type="button" (click)="addRound()" class="my-2"><i class="fa-solid fa-plus pr-1"></i>Add a Round</button>
+                <button mat-flat-button color="primary" type="button" (click)="addRound()" class="my-2 !text-neutral-200"><i class="fa-solid fa-plus pr-1"></i>Add a Round</button>
               </div>
             </div>
             
@@ -115,16 +115,16 @@
                 
                 <!-- <div class="field-box my-2">
                   <label for="map" class="label">Game Mode</label>
-                  <select class="event-field-input" id="gameMode" formControlName="gameMode" (change)="onSelectGameMode(i, round.get('gameMode')?.value)">
+                  <select class="field-input" id="gameMode" formControlName="gameMode" (change)="onSelectGameMode(i, round.get('gameMode')?.value)">
                     <option *ngFor="let mode of gameModes" [value]="mode">{{ mode }}</option>
                   </select>
                   <i class="fa-solid fa-campground event-icon"></i>
                 </div> -->
                 
-                <div class="field-box my-2">
+                <div class="my-2">
                   <!-- <label class="label">Game Mode</label> -->
                   <div class="button-group text-center">
-                    <button class="m-2" mat-stroked-button *ngFor="let mode of gameModes" (click)="onSelectGameMode(i, mode)" 
+                    <button class="m-2 !text-[#7e7f75]" mat-stroked-button *ngFor="let mode of gameModes" (click)="onSelectGameMode(i, mode)" 
                             [ngClass]="{'active': selectedGameModes[i] === mode}">
                       {{ mode }}
                     </button>
@@ -141,7 +141,7 @@
                   <div class="grid lg:grid-cols-2 gap-2 lg:gap-4">
                     <div class="field-box my-2">
                       <label class="label">Campaign</label>
-                      <select class="event-field-input" id="skirmishArea" formControlName="skirmishArea">
+                      <select class="field-input" id="skirmishArea" formControlName="skirmishArea">
                         <option *ngFor="let area of skirmishAreas" [value]="area">{{ area }}</option>
                         </select>
                         <i class="fa-solid fa-map-pin event-icon"></i>
@@ -150,7 +150,7 @@
             
                     <div class="field-box my-2">
                       <label class="label">Map</label>
-                      <select class="event-field-input" id="map" formControlName="map" (change)="thisMapDetails()">
+                      <select class="field-input" id="map" formControlName="map" (change)="thisMapDetails()">
                       <option *ngFor="let map of getFilteredMaps(round.get('skirmishArea')?.value)" [value]="map.map">{{ map.map }}</option>
                       </select>
                       <i class="fa-regular fa-map event-icon"></i>
@@ -160,7 +160,7 @@
                   <div class="grid lg:grid-cols-2 gap-2 lg:gap-4">
                     <div class="field-box my-2">
                       <label class="label">Side</label>
-                      <select class="event-field-input" id="side" formControlName="side">
+                      <select class="field-input" id="side" formControlName="side">
                         <option *ngFor="let side of sides" [value]="side">{{ side }}</option>
                       </select>
                       <i class="fa-solid fa-arrows-up-down event-icon"></i>
@@ -168,7 +168,7 @@
 
                     <div class="field-box my-2">
                       <label class="label">Regiment</label>
-                      <input id="regiment" class="event-field-input h-[44px]" formControlName="regiment" />
+                      <input id="regiment" class="field-input" formControlName="regiment" />
                       <i class="fa-solid fa-shield event-icon"></i>
                     </div>
 
@@ -178,7 +178,7 @@
           
                   <div class="field-box my-2">
                     <label class="label" class="label">Reserved Units <span class="font-[200] italic">(Officer, NCOs, Flag)</span></label>
-                    <textarea class="event-field-input" id="info" formControlName="info"></textarea>
+                    <textarea class="field-input !mb-[-5px]" id="info" formControlName="info"></textarea>
                     <i class="fa-solid fa-users field-icon"></i>
                   </div>
                   
@@ -190,13 +190,13 @@
 
                   <div class="field-box my-2">
                     <label class="label"># of Rounds:</label>
-                    <input class="event-field-input h-[44px]" id="numberOfRounds" formControlName="numberOfRounds" />
+                    <input class="field-input" id="numberOfRounds" formControlName="numberOfRounds" />
                     <i class="fa-solid fa-hashtag event-icon"></i>
                   </div>
                   
                   <div class="field-box my-2">
                     <label class="label">Side</label>
-                    <select class="event-field-input" id="side" formControlName="side">
+                    <select class="field-input" id="side" formControlName="side">
                       <option *ngFor="let side of sides" [value]="side">{{ side }}</option>
                     </select>
                     <i class="fa-solid fa-arrows-up-down event-icon"></i>
@@ -209,7 +209,10 @@
 
 
                 <div class="text-right w-full">
-                    <button mat-stroked-button type="button" (click)="removeRound(i)" class="!min-h-fit"><i class="fa-regular fa-circle-xmark pr-1"></i>Remove Round</button>
+                    <button type="button" (click)="removeRound(i)" mat-stroked-button
+                    style="filter: drop-shadow(2px 0px 5px rgba(125, 126, 116, 0.222));"
+                    class="!min-h-fit !py-1"
+                    color="primary"><i class="fa-regular fa-circle-xmark pr-1"></i>Remove Round</button>
                 </div>
                 
               </div>
@@ -219,7 +222,7 @@
   
             <div class="field-box my-2">
                 <label for="extra">Extra:</label>
-                <textarea class="event-field-input"id="extra" formControlName="extra"></textarea>
+                <textarea class="field-input"id="extra" formControlName="extra"></textarea>
             </div>
 
             

@@ -51,7 +51,7 @@
             matTooltipClass="form-tooltip"
             matTooltipPosition="left"
             class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-            matTooltip="Attacker" id="existing-select">
+            matTooltip="Attacker">
             <option [value]="currentMap.attacker">{{ currentMap.attacker }}</option>
             <option [value]="currentMap.attacker == 'USA' ? 'CSA' : 'USA'">{{ currentMap.attacker == 'USA' ? 'CSA' : 'USA' }}</option>
           </select>
@@ -109,7 +109,7 @@
             matTooltipClass="form-tooltip"
             matTooltipPosition="left"
             class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-            matTooltip="USA Artillery" id="existing-select">
+            matTooltip="USA Artillery">
             <option [value]="currentMap.usaArty">{{ currentMap.usaArty == 'true' ? 'true' : 'false' }}</option>
             <option [value]="currentMap.usaArty == 'true' ? 'false' : 'true'">{{ currentMap.usaArty == 'true' ? 'false' : 'true' }}</option>
           </select>
@@ -121,7 +121,7 @@
             matTooltipClass="form-tooltip"
             matTooltipPosition="left"
             class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-            matTooltip="CSA Artillery" id="existing-select">
+            matTooltip="CSA Artillery">
             <option [value]="currentMap.csaArty">{{ currentMap.csaArty == 'true' ? 'true' : 'false' }}</option>
             <option [value]="currentMap.csaArty == 'true' ? 'false' : 'true'">{{ currentMap.csaArty == 'true' ? 'false' : 'true' }}</option>
           </select>

@@ -539,7 +539,7 @@ button {
   padding-bottom: 14px;
   margin: 0;
   width: 100%;
-  background: linear-gradient(90deg,#26385560,#1e293b34,#1e293b10,#1e293b05);
+  background: linear-gradient(90deg,#263855ad,#1e293b79,#1e293b10,#1e293b05);
   color: #eeeeeed2;
   outline: none;
   font-weight: 400;
@@ -556,7 +556,7 @@ button {
 }
 
 .field-input:focus {
-  background: #1e293b;
+  background: #263855;
   filter: brightness(1.1); 
 }
 
@@ -603,6 +603,10 @@ button {
 .mat-mdc-paginator-range-actions,
 .mat-mdc-select-value {
   color: rgb(158 159 152) !important;
+}
+
+textarea{
+  margin-bottom: -5px !important;
 }
 
 .field-icon {

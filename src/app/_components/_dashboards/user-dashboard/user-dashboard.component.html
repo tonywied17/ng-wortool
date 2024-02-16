@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday August 6th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Mon February 12th 2024 5:06:38 
+Last Modified: Thu February 15th 2024 7:53:24 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -21,7 +21,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 <div *ngIf="!loading"
-	class="container mx-auto mt-[1em] lg:mt-[2em] mb-[5em]">
+	class="container mx-auto md:px-[2em] mt-[1em] lg:mt-[2em] mb-[5em]">
 
 
 
@@ -29,46 +29,46 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 	<div *ngIf="isLoggedIn">
 
-		<div class="grid lg:grid-cols-3 lg:gap-4 grid-cols-1">
-			<div class="col-span-1 bg-[#1e293b]/80 rounded-lg shadow-md h-fit w-full">
-				<div class="my-2">
+		<div class="grid lg:grid-cols-[auto_1fr] lg:gap-2 grid-cols-1">
+
+				<div class="bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full py-1 h-fit">
 					<mat-list>
 						<mat-action-list>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/1"
 								mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-solid fa-key w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
+								<i class="fa-solid fa-key !text-white"></i>
 								Change Password
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/2"
 								mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-solid fa-circle-nodes w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
+								<i class="fa-solid fa-circle-nodes !text-white"></i>
 								Profile & Accounts
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/3"
 								mat-list-item
-								class="py-2 !text-neutral-300 !h-[55px]">
-								<i class="fa-solid fa-star w-[25px] ml-[1.5em] mr-[0.5em] !text-white"></i>
+								class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
+								<i class="fa-solid fa-star !text-white"></i>
 								Manage Favorites
 							</button>
 						</mat-action-list>
 					</mat-list>
 				</div>
-			</div>
+		
 
 
 
 
 
-			<div class="lg:col-span-2 col-span-1 lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
+				<div class="lg:ml-5 w-full mt-[1em] lg:mt-[unset]">
 				<div *ngIf="showPage1"
-					class="w-full rounded-lg py-[1.5em] lg:px-[2em] px-3 mx-auto bg-[#1e293b]/80 scale-center">
+					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-6 scale-center">
 					<h2 class="text-2xl text-[#94a3b8] mb-[1em] ml-2 lg:ml-0">Change Password</h2>
 					<form (ngSubmit)="updatePassword()">
 						<div class="form-group m-4">
@@ -79,11 +79,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<div class="field-box">
 								<input [(ngModel)]="passwordCurrent"
 									name="passwordCurrent"
-									style="
-                padding-top: 11px;
-                padding-bottom: 11px;
-                font-size: 15px;
-                border: 1px solid #7c7d72 !important;"
+									
 									class="field-input my-[0.5em]"
 									type="password"
 									placeholder="Current Password...">
@@ -96,11 +92,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<div class="field-box">
 								<input [(ngModel)]="passwordNew"
 									name="passwordNew"
-									style="
-                padding-top: 11px;
-                padding-bottom: 11px;
-                font-size: 15px;
-                border: 1px solid #7c7d72 !important;"
+									
 									class="field-input my-[0.5em]"
 									type="password"
 									placeholder="New Password...">
@@ -113,11 +105,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<div class="field-box">
 								<input [(ngModel)]="passwordNewConfirm"
 									name="passwordNewConfirm"
-									style="
-                padding-top: 11px;
-                padding-bottom: 11px;
-                font-size: 15px;
-                border: 1px solid #7c7d72 !important;"
+									
 									class="field-input my-[0.5em]"
 									type="password"
 									placeholder="Confirm Password...">
@@ -162,11 +150,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 							<div class="field-box">
 								<input [(ngModel)]="email"
 									name="email"
-									style="
-                padding-top: 11px;
-                padding-bottom: 11px;
-                font-size: 15px;
-                border: 1px solid #7c7d72 !important;"
+									
 									class="field-input my-[0.5em]"
 									type="email"
 									value="{{currentUser.email}}"
@@ -178,15 +162,11 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 							<div *ngIf="discordIsSynced"
-								class="field-box">
+								class="!hidden">
 								<input [(ngModel)]="discordId"
 									name="discordId"
-									style="
-                padding-top: 11px;
-                padding-bottom: 11px;
-                font-size: 15px;
-                border: 1px solid #7c7d72 !important;"
-									class="field-input my-[0.5em]"
+									
+									class="field-input my-[0.5em] !hidden"
 									type="hidden"
 									value="{{currentUser.discordId}}"
 									placeholder="Your discord id..."
@@ -197,14 +177,10 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 							<div *ngIf="regimentSelected"
-								class="field-box">
+								class="">
 								<input [(ngModel)]="regimentId"
 									name="regimentId"
-									style="
-                padding-top: 11px;
-                padding-bottom: 11px;
-                font-size: 15px;
-                border: 1px solid #7c7d72 !important;"
+									
 									class="field-input my-[0.5em]"
 									type="hidden"
 									value="{{currentUser.regimentId}}"
@@ -227,10 +203,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-							<div class="field-box my-[1em] p-3 rounded-sm hover:opacity-70 transition-all duration-300"
-							style="border: 1px solid #5f62607a !important;
-							border-radius: 10px;
-							box-shadow: #17202e 0px 0px 2px 0px, #17202e 0px 0px 2px 0px, #17202e 0px 0px 2px 0px;">
+							<div class="my-[1em] p-3 rounded-sm hover:opacity-70 transition-all duration-300">
 								<span class="text-xl text-[#94a3b8]">Linked Accounts</span>
 
 
