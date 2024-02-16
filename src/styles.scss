@@ -314,7 +314,7 @@ button {
 
 .active_btn_nco {
   background-color: #7c7d724f;
-  border-bottom: 3px solid #97978d !important;
+  border-right: 3px solid #97978d !important;
   color: #fff !important;
   font-weight: 700 !important;
   transform: rotateX('angle') !important;
@@ -883,9 +883,14 @@ html {
     --mat-tab-header-label-text-weight: 300;
   }
 
-  .active_btn {
-    border-right: 0 !important;
+  .active_btn_nco {
+    border-right: unset !important;
     border-bottom: 3px solid #97978d !important;
+  }
+
+  .active_btn {
+    // border-right: 0 !important;
+    // border-bottom: 3px solid #97978d !important;
   }
   
   // .mat-icon {
