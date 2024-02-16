@@ -43,16 +43,23 @@
                     </div>
 
                     <div class="flex items-end gap-x-2">
-                        <button [matBadge]="map.map_favorite_count" matBadgeColor="primary" matBadgeSize="small" mat-mini-fab class=" !bg-slate-700/80 text-neutral-300">
-                            <mat-icon>favorite</mat-icon>
-                        </button>
                         <button
-                            [routerLink]="map.id"
+                            [matBadge]="map.map_favorite_count"
+                            matBadgeColor="accent"
+                            matBadgeSize="small"
                             mat-mini-fab
-                            color="primary">
+                            (click)="toggleFavorite(map)"
+                            [ngClass]="{'fav-active': isFavorite(map)}"
+                            class="!bg-slate-700/80 !text-neutral-300">
+                            <mat-icon>thumb_up</mat-icon>
+                        </button>
+
+
+                        <button [routerLink]="map.id" mat-mini-fab color="primary">
                             <mat-icon>search</mat-icon>
                         </button>
                     </div>
+                    
                     
                 </div>
 

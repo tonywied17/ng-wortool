@@ -64,3 +64,9 @@
       transform: translate(24px, 0);
   }
 }
+
+.fav-active, .mat-badge-content {
+  background-color: rgba(212, 212, 212, 0.8)  !important;
+  color: rgb(51 65 85 / 0.8) !important;
+  box-shadow: inset 0px 0px 0px 2px #d4d4d4 !important;
+}
