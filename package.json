@@ -23,7 +23,6 @@
     "@angular/router": "^17.2.1",
     "@angular/service-worker": "^17.2.1",
     "discord.js": "^14.14.1",
-    "material-theme-creator": "^3.2.1",
     "querystring": "^0.2.1",
     "rxjs": "~7.8.1"
   },
