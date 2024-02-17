@@ -88,7 +88,7 @@
                         </div>
                     </div>
     
-                    <div class="my-[12px]" [routerLink]="['/maps-beta', map.id]">
+                    <div class="my-[12px]" [routerLink]="['/maps', map.id]">
                         <div class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
                             <img [src]="map.map_image" [alt]="map.name"
                               class="rounded-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
@@ -115,7 +115,7 @@
                             </button>
     
     
-                            <button [routerLink]="['/maps-beta', map.id]" mat-mini-fab color="primary">
+                            <button [routerLink]="['/maps', map.id]" mat-mini-fab color="primary">
                                 <mat-icon>search</mat-icon>
                             </button>
                         </div>

@@ -75,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "paapp2:build:production"
+              "buildTarget": "paapp2:build:production"
             },
             "development": {
-              "browserTarget": "paapp2:build:development"
+              "buildTarget": "paapp2:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "paapp2:build"
+            "buildTarget": "paapp2:build:production"
           }
         },
         "test": {

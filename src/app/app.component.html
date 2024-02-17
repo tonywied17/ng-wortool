@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Mon February 12th 2024 5:12:44 
+Last Modified: Sat February 17th 2024 2:09:50 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -56,12 +56,12 @@ style="position: sticky; top: 0;">
 					<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 					<button *ngIf="!this.sharedDataService.isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
 						mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						class="navitem !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Home
 					</button>
 					<button *ngIf="this.sharedDataService.isLoggedIn" [routerLink]="['/home']" [routerLinkActiveOptions]="{exact: true}"
 						mat-button routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						class="navitem !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						<span>Dashboard</span>
 						<!-- <span *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">s</span> -->
 					</button>
@@ -69,14 +69,14 @@ style="position: sticky; top: 0;">
 					<button [routerLink]="['/maps']"
 						mat-button
 						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						class="navitem !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Maps
 					</button>
 
 					<button [routerLink]="['/regiments']"
 						mat-button
 						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						class="navitem !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Regiments
 					</button>
 
@@ -84,7 +84,7 @@ style="position: sticky; top: 0;">
 					<!-- <button [matMenuTriggerFor]="resources"
 						mat-button
 						routerLinkActive="!bg-[#141b29]/80 !text-[#a09e94]"
-						class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						class="navitem !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Resources
 						<i class="fa-solid fa-caret-down"></i>
 					</button> -->
@@ -92,7 +92,7 @@ style="position: sticky; top: 0;">
 
 					<ng-template #notActive>
 						<button [matMenuTriggerFor]="resources" mat-button
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							class="navitem !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							More..
 							<i class="fa-solid fa-caret-down"></i>
 						</button>
@@ -101,13 +101,13 @@ style="position: sticky; top: 0;">
 					<button
 						*ngIf="currentRoute == '/game-info' || currentRoute == '/weapons'; else notActive"
 						[matMenuTriggerFor]="resources" mat-button
-						class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						class="navitem !bg-[#141b29]/80 !text-[#a09e94] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						More..
 						<i class="fa-sharp fa-solid fa-caret-down"></i>
 					</button>
 
 					<mat-menu #resources="matMenu" xPosition="after"
-						class="!mt-[14.5px] !ml-3 bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
+						class="!mt-[14.5px] !ml-3 !bg-[#88887b]/90 backdrop-blur-sm w-[200px]">
 						<!-- <button routerLink="/maps" class="ml-2 select-none" mat-menu-item>
 							<span class="!text-[#252525ce] font-[500] !text-lg">
 								<i class="fa-brands fa-steam mr-1.5"></i>
@@ -144,7 +144,7 @@ style="position: sticky; top: 0;">
 
 					<!-- <ng-template #notActive2>
 						<button [matMenuTriggerFor]="regiments" mat-button
-							class="navitem !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+							class="navitem !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 							Community
 							<i class="fa-solid fa-caret-down"></i>
 						</button>
@@ -152,7 +152,7 @@ style="position: sticky; top: 0;">
 
 					<!-- <button *ngIf="currentRoute == '/regiments' || currentRoute == '/recaps'; else notActive2"
 						[matMenuTriggerFor]="regiments" mat-button
-						class="navitem !bg-[#141b29]/80 !text-[#a09e94] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+						class="navitem !bg-[#141b29]/80 !text-[#a09e94] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
 						Community
 						<i class="fa-sharp fa-solid fa-caret-down"></i>
 					</button> -->
@@ -355,12 +355,12 @@ style="position: sticky; top: 0;">
 			<mat-list-item class="!my-1 !px-[0] !w-full">
 				<button *ngIf="!this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
 					routerLinkActive="active-link !text-[#a09e94]"
-					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					class="navitem !mx-auto !w-full !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 					Home
 				</button>
 				<button *ngIf="this.sharedDataService.isLoggedIn" [routerLink]="['/home']" (click)="toggle()" mat-button
 					routerLinkActive="active-link !text-[#a09e94]"
-					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					class="navitem !mx-auto !w-full !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 					<span>Dashboard</span>
 					<!-- <span *ngIf="this.sharedDataService.showMod || this.sharedDataService.showAdmin">s</span> -->
 				</button>
@@ -368,14 +368,14 @@ style="position: sticky; top: 0;">
 			<mat-list-item class="!my-1 !px-[0] !w-full">
 				<button [routerLink]="['/maps']" (click)="toggle()" mat-button
 					routerLinkActive="active-link !text-[#a09e94]"
-					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					class="navitem !mx-auto !w-full !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 					Maps
 				</button>
 			</mat-list-item>
 			<mat-list-item class="!my-1 !px-[0] !w-full">
 				<button [routerLink]="['/regiments']" (click)="toggle()" mat-button
 					routerLinkActive="active-link !text-[#a09e94]"
-					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					class="navitem !mx-auto !w-full !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 					Regiments
 				</button>
 			</mat-list-item>
@@ -383,7 +383,7 @@ style="position: sticky; top: 0;">
 			<mat-list-item class="!my-1 !px-[0] !w-full">
 				<button [routerLink]="['/game-info']" (click)="toggle()" mat-button
 					routerLinkActive="active-link !text-[#a09e94]"
-					class="navitem !mx-auto !w-full !text-[#252525ce] text-lg duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
+					class="navitem !mx-auto !w-full !text-[#252525ce] !text-lg !tracking-tight duration-150 transition transform active:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none !py-2">
 					Latest News
 				</button>
 			</mat-list-item>

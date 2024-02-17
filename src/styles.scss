@@ -440,7 +440,9 @@ mat-radio-button:hover {
   border-color: #888278 !important;
   border-width: 2px;
 }
-
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-stroked-button, .mat-mdc-flat-button, .mat-mdc-icon-button, .mat-mdc-fab, .mat-mdc-mini-fab {
+  letter-spacing: 0 !important;
+}
 .mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
   color: #afaf9b !important;
 }
@@ -974,7 +976,7 @@ html {
 }
 
 .mat-mdc-tab-list {
-  background: linear-gradient(0deg,#1d273923,#1e293b00);
+  // background: linear-gradient(0deg,#1d273923,#1e293b00);
   box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.1);
 }
 
