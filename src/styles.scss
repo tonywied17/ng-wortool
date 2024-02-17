@@ -256,17 +256,6 @@ $theme: (primary: $theme-primary,
 @tailwind components;
 @tailwind utilities;
 
-/* Order */
-@layer reset, primeng;
-
-/* Reset CSS */
-@layer reset {
-    button,
-    input {
-        /* CSS to Reset */
-    }
-}
-
 @layer components {
   .animate-pulse-on-hover:hover {
     animation: pulse 3s ease-in infinite;
