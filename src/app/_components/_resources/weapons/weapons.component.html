@@ -39,7 +39,7 @@
 							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
 								(click)="loadWeapon(weapon)"
 								mat-button
-								class="w-full">
+								class="w-full !tracking-tight">
 								{{ weapon.weapon }}
 								<sup>
 									<i class="fa-solid fa-circle-info"></i>
@@ -62,7 +62,7 @@
 							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
 								(click)="loadWeapon(weapon)"
 								mat-button
-								class="w-full">
+								class="w-full !tracking-tight">
 								{{ weapon.weapon }}
 								<sup>
 									<i class="fa-solid fa-circle-info"></i>
@@ -85,7 +85,7 @@
 							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
 								(click)="loadWeapon(weapon)"
 								mat-button
-								class="w-full">
+								class="w-full !tracking-tight">
 								{{ weapon.weapon }}
 								<sup>
 									<i class="fa-solid fa-circle-info"></i>
@@ -108,7 +108,7 @@
 							<button [ngClass]="{ 'active': activeWeaponId === weapon.id }"
 								(click)="loadWeapon(weapon)"
 								mat-button
-								class="w-full">
+								class="w-full !tracking-tight">
 								{{ weapon.weapon }}
 								<sup>
 									<i class="fa-solid fa-circle-info"></i>
@@ -159,7 +159,7 @@
 							<button *ngIf="showAdmin"
 								mat-button
 								routerLink="/admin/2/{{spotlight.id}}"
-								class="!text-[#a2a398] !mb-0">
+								class="!text-[#a2a398] !mb-0 !tracking-tight">
 								<i class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>
 								Edit Weapon
 							</button>
