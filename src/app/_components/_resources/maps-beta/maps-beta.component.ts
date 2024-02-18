@@ -158,19 +158,22 @@ export class MapsBetaComponent implements OnInit {
       const matchesCSAArtillery = !this.csaArtillery || map.csa_artillery === this.csaArtillery;
       const matchesUSAArtillery = !this.usaArtillery || map.usa_artillery === this.usaArtillery;
       const matchesFavorites = !this.filterFavorites || this.isFavorite(map);
-      const matchesCampaign = !this.uniqueCampaigns.some(campaign => this.selectedCampaigns[campaign]) || this.selectedCampaigns[map.campaign];
   
-      const matchesWeapons = Object.keys(this.selectedWeapons).every(weaponName => {
-        if (!this.selectedWeapons[weaponName]) return true;
-    
-        return map.usa_regiments.Infantry.concat(map.csa_regiments.Infantry, map.usa_regiments.Artillery, map.csa_regiments.Artillery, map.usa_regiments.Cavalry, map.csa_regiments.Cavalry).some((regiment: { regiment_weaponry: any[]; }) => {
+      const matchesCampaign = this.uniqueCampaigns.every(campaign => !this.selectedCampaigns[campaign] || this.selectedCampaigns[map.campaign]);
+  
+      const selectedWeaponNames = Object.keys(this.selectedWeapons).filter(key => this.selectedWeapons[key]);
+  
+      const matchesWeapons = selectedWeaponNames.length === 0 || selectedWeaponNames.some(weaponName => {
+        const allRegiments = [...(map.usa_regiments?.Infantry || []), ...(map.csa_regiments?.Infantry || [])];
+        return allRegiments.some(regiment => {
           return regiment.regiment_weaponry.some((weapon: { weapon_info: { weapon: string; }; }) => weapon.weapon_info.weapon === weaponName);
         });
       });
   
-      return matchesCSAArtillery && matchesUSAArtillery && matchesWeapons && matchesFavorites && matchesCampaign;
+      return matchesCSAArtillery && matchesUSAArtillery && matchesFavorites && matchesCampaign && matchesWeapons;
     });
   }
+  
   
   sortDirection: 'ascending' | 'descending' = 'descending'; 
   sortBy: 'favorites' | 'name' = 'favorites'; 
@@ -198,6 +201,28 @@ export class MapsBetaComponent implements OnInit {
   toggleSortDirection(): void {
     this.sortDirection = this.sortDirection === 'ascending' ? 'descending' : 'ascending';
   }
+
+  hasBuckNBall(map: any): boolean {
+    const weaponId = '6'; // Example weapon ID for "Springfield M1842"
+    const weaponName = 'Springfield M1842'; // The name to check for
+  
+    // Directly access Infantry regiments from both sides
+    const usaInfantry = map.usa_regiments?.Infantry || [];
+    const csaInfantry = map.csa_regiments?.Infantry || [];
+  
+    // Combine Infantry regiments into a single array
+    const allInfantry = [...usaInfantry, ...csaInfantry];
+  
+    // Check if any Infantry regiment has the specified weapon
+    return allInfantry.some(regiment => {
+      const weaponry = regiment.regiment_weaponry || [];
+      return weaponry.some((weapon: { weapon_info: { id: { toString: () => string; }; weapon: string; }; }) => {
+        // Ensure comparison works by converting IDs to strings if necessary
+        return weapon.weapon_info.id.toString() === weaponId || weapon.weapon_info.weapon === weaponName;
+      });
+    });
+  }
+  
   
 // Custom animation for map cards
   animationStates: {[index: number]: string} = {};

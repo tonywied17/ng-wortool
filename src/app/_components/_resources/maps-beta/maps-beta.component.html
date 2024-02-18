@@ -8,7 +8,7 @@
     </div>
 
     <div *ngIf="isLoaded" class="grid md:grid-cols-[auto_1fr] gap-2 md:gap-6">
-        <div class="p-2 bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl h-fit md:sticky md:top-[5em]">
+        <div class="p-2 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl h-fit md:sticky md:top-[5em]">
             <!-- Filter By Artillery -->
             <div class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight overflow-hidden whitespace-nowrap text-overflow: ellipsis;" style="max-width: 100%;">Filter By Artillery</div>
             <label class="font-[200] text-neutral-200">
@@ -69,60 +69,86 @@
         <!-- Map Cards -->
         <div class="grid md:grid-cols-3 gap-8 w-full h-fit">
             <div *ngFor="let map of filteredMaps; let i = index">
-                <div class="relative animate-load bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full py-2 grid grid-cols-[1fr_auto]">
+                <div
+                [@cardAnimation]="animationStates[i] || 'default'"
+					(mouseenter)="onMouseEnter(i)"
+					(mouseleave)="onMouseLeave(i)">
+                    <div class="relative animate-load bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full py-2 grid grid-cols-[1fr_auto]">
                
-                    <div class="col-start-1 col-span-1 pl-1">
-                        <span class="text-[#88887b] md:text-lg font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap text-ellipsis" style="filter: drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281)); max-width: 100%;">{{ map.name }}</span>
-                    </div>
-                    <div class="col-start-2 col-span-1 pr-1">
-                        <span class="text-[#94a3b8]/80 md:text-lg text-base tracking-tight font-[300]" style="filter: drop-shadow(2px 0px 6px #2e3f5998);">{{ map.campaign }}</span>
-                    </div>
-        
-        
-                    <div class="cols-start-1 col-span-2">
-                        <div class="grid grid-cols-[1fr_auto] mb-2">
-                            <div [routerLink]="['/maps', map.id]">
-                                <div class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
-                                    <img [src]="map.map_image" [alt]="map.name" class="rounded-bl-sm rounded-tl-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
+                        <div class="col-start-1 col-span-1 pl-2 cursor-pointer" [routerLink]="['/maps', map.id]">
+                            <span style="filter: drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));" 
+                                    class="text-[#88887b] font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">{{ map.name }}</span>
+                        </div>
+                        <div class="col-start-2 col-span-1 pr-2 cursor-pointer" [routerLink]="['/maps', map.id]">
+                            <span class="text-[#94a3b8]/80 text-base tracking-tight font-[300]"
+                            style="filter: drop-shadow(2px 0px 6px #2e3f5998);">
+                                {{ map.campaign }}
+                            </span>
+                        </div>
+            
+            
+                        <div class="cols-start-1 col-span-2">
+                            <div class="grid grid-cols-[1fr_auto] mb-2">
+                                <div>
+                                    <div class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
+                                        <img [src]="map.map_image" [alt]="map.name" class="rounded-bl-sm rounded-tl-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-col !justify-start items-center bg-slate-900/50 mr-[-1px] h-full">
+                                    <button
+                                        mat-button
+                                        color="primary"
+                                        [matBadge]="map.map_favorite_count"
+                                        matBadgeColor="accent"
+                                        matBadgeSize="small"
+                                        matTooltip="Add to Favorites"
+                                        (click)="toggleFavorite(map)"
+                                        [ngClass]="{'fav-active': isFavorite(map)}"
+                                        class="!text-[#7e7f74] !min-w-fit">
+                                        <span *ngIf="isFavorite(map)"><i class="fa-solid fa-heart text-xl"></i></span>
+                                        <span *ngIf="!isFavorite(map)"><i class="fa-regular fa-heart text-xl"></i></span>     
+                                    </button>
+    
+    
+                                    <div class="my-auto pb-[2em]">
+                                        <div class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80" 
+                                        matTooltip="{{map.usa_infantry_regiments}} USA units, {{map.csa_infantry_regiments}} CSA units" matTooltipPosition="left">
+                                            <img src="https://molex.cloud/2024/February/18/_Jzw/infantry.png" class="w-[22px] py-1 h-auto pointer-events-none mx-auto">
+                                        </div>
+    
+                                        <div *ngIf="hasBuckNBall(map)" class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80" 
+                                        matTooltip="Buck 'N Ball" matTooltipPosition="left">
+                                            <img src="https://molex.cloud/2024/February/18/_kDg/bucknball.png" class="w-[22px] h-auto pointer-events-none mx-auto">
+                                        </div>
+    
+                                        <div *ngIf="map.usa_artillery || map.csa_artillery" class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80" 
+                                        matTooltip="{{map.usa_artillery_regiments}} USA units, {{map.csa_artillery_regiments}} CSA units" matTooltipPosition="left">
+                                            <img src="https://molex.cloud/2024/February/18/_cyG/artillery-icon.png" class="w-[22px] h-auto pointer-events-none mx-auto">
+                                        </div>
+    
+                                        
+                                    </div>
+    
                                 </div>
                             </div>
                             
-                            <div class="flex flex-col !justify-start items-center bg-slate-900/50 mr-[-1px] h-full">
-                                <button
-                                    mat-button
-                                    color="primary"
-                                    [matBadge]="map.map_favorite_count"
-                                    matBadgeColor="accent"
-                                    matBadgeSize="small"
-                                    matTooltip="Add to Favorites"
-                                    (click)="toggleFavorite(map)"
-                                    [ngClass]="{'fav-active': isFavorite(map)}"
-                                    class="!text-[#7e7f74] !min-w-fit">
-                                    <span *ngIf="isFavorite(map)"><i class="fa-solid fa-heart text-xl"></i></span>
-                                    <span *ngIf="!isFavorite(map)"><i class="fa-regular fa-heart text-xl"></i></span>     
-                                </button>
-                                
-                                <div class="mt-auto w-full text-center" matTooltip="Artillery" matTooltipPosition="right">
-                                    <div *ngIf="map.csa_artillery" class="text-[#7e7f74] text-xs">CSA</div>
-                                    <div *ngIf="map.usa_artillery" class="text-[#7e7f74] text-xs">USA</div>
-                                </div>
-                            </div>
+                            
                         </div>
-                        
-                        
+    
+                        <div class="col-start-1 col-span-1 flex items-center pl-2 cursor-pointer" [routerLink]="['/maps', map.id]">    
+                            <span style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class="text-sm opacity-40">{{ map.attacker }} Attacker</span>
+                        </div>
+    
+                        <div class="col-start-2 col-span-1 text-right pr-2 cursor-pointer" [routerLink]="['/maps', map.id]">
+                            <!-- <button [routerLink]="['/maps', map.id]" mat-mini-fab color="primary" class=" !scale-75">
+                                <mat-icon>search</mat-icon>
+                            </button> -->
+                        </div>
+           
                     </div>
-
-                    <div class="col-start-1 col-span-1 flex items-center pl-1">    
-                            <span class="opacity-40" style="filter: drop-shadow(2px 0px 6px #c4c4c44f);">{{ map.attacker }} Attacker</span>
-                    </div>
-
-                    <div class="col-start-2 col-span-1 text-right pr-1">
-                        <button [routerLink]="['/maps', map.id]" mat-mini-fab color="primary">
-                            <mat-icon>search</mat-icon>
-                        </button>
-                    </div>
-       
                 </div>
+                
             </div>
         </div>
         
