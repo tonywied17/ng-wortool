@@ -110,8 +110,8 @@
             matTooltipPosition="left"
             class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
             matTooltip="USA Artillery">
-            <option [value]="currentMap.usaArty">{{ currentMap.usaArty == 'true' ? 'true' : 'false' }}</option>
-            <option [value]="currentMap.usaArty == 'true' ? 'false' : 'true'">{{ currentMap.usaArty == 'true' ? 'false' : 'true' }}</option>
+            <option [value]="currentMap.usaArty ? 'true' : 'false'">{{ currentMap.usaArty ? 'true' : 'false' }}</option>
+            <option [value]="currentMap.usaArty ? 'false' : 'true'">{{ currentMap.usaArty ? 'false' : 'true' }}</option>
           </select>
           <i class="fa-solid fa-bowling-ball field-icon"></i>
         </div>
@@ -122,8 +122,8 @@
             matTooltipPosition="left"
             class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
             matTooltip="CSA Artillery">
-            <option [value]="currentMap.csaArty">{{ currentMap.csaArty == 'true' ? 'true' : 'false' }}</option>
-            <option [value]="currentMap.csaArty == 'true' ? 'false' : 'true'">{{ currentMap.csaArty == 'true' ? 'false' : 'true' }}</option>
+            <option [value]="currentMap.csaArty ? 'true' : 'false'">{{ currentMap.csaArty ? 'true' : 'false' }}</option>
+            <option [value]="currentMap.csaArty ? 'false' : 'true'">{{ currentMap.csaArty ? 'false' : 'true' }}</option>
           </select>
           <i class="fa-solid fa-bowling-ball field-icon"></i>
         </div>

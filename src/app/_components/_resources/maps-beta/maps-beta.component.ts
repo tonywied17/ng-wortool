@@ -5,7 +5,6 @@ import { WeaponService } from "src/app/_services/weapon.service";
 import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { SharedDataService } from "src/app/_services/shared-data.service";
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-maps-beta",
@@ -50,8 +49,6 @@ export class MapsBetaComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     public sharedDataService: SharedDataService,
     public favoriteService: FavoriteService,
-    private route: ActivatedRoute,
-    private router: Router,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -60,6 +57,7 @@ export class MapsBetaComponent implements OnInit {
       await Promise.all([this.retrieveMaps(), this.retrieveWeapons()]);
       this.isLoaded = true;
       console.log("All data is loaded:", this.isLoaded);
+      console.log("Maps:", this.maps);
     } catch (error) {
       console.error("Error during initialization:", error);
     }
@@ -120,7 +118,7 @@ export class MapsBetaComponent implements OnInit {
   }
 
   toggleFavorite(map: any): void {
-    const currentRoute = this.router.url;
+    const currentRoute = `/maps/${map.id}`;
     const isFav = this.isFavorite(map);
     
     if (isFav) {
@@ -156,19 +154,22 @@ export class MapsBetaComponent implements OnInit {
       const matchesCSAArtillery = !this.csaArtillery || map.csa_artillery === this.csaArtillery;
       const matchesUSAArtillery = !this.usaArtillery || map.usa_artillery === this.usaArtillery;
       const matchesFavorites = !this.filterFavorites || this.isFavorite(map);
-      const matchesCampaign = !this.uniqueCampaigns.some(campaign => this.selectedCampaigns[campaign]) || this.selectedCampaigns[map.campaign];
   
-      const matchesWeapons = Object.keys(this.selectedWeapons).every(weaponName => {
-        if (!this.selectedWeapons[weaponName]) return true;
-    
-        return map.usa_regiments.Infantry.concat(map.csa_regiments.Infantry, map.usa_regiments.Artillery, map.csa_regiments.Artillery, map.usa_regiments.Cavalry, map.csa_regiments.Cavalry).some((regiment: { regiment_weaponry: any[]; }) => {
+      const matchesCampaign = this.uniqueCampaigns.every(campaign => !this.selectedCampaigns[campaign] || this.selectedCampaigns[map.campaign]);
+  
+      const selectedWeaponNames = Object.keys(this.selectedWeapons).filter(key => this.selectedWeapons[key]);
+  
+      const matchesWeapons = selectedWeaponNames.length === 0 || selectedWeaponNames.some(weaponName => {
+        const allRegiments = [...(map.usa_regiments?.Infantry || []), ...(map.csa_regiments?.Infantry || [])];
+        return allRegiments.some(regiment => {
           return regiment.regiment_weaponry.some((weapon: { weapon_info: { weapon: string; }; }) => weapon.weapon_info.weapon === weaponName);
         });
       });
   
-      return matchesCSAArtillery && matchesUSAArtillery && matchesWeapons && matchesFavorites && matchesCampaign;
+      return matchesCSAArtillery && matchesUSAArtillery && matchesFavorites && matchesCampaign && matchesWeapons;
     });
   }
+  
   
   sortDirection: 'ascending' | 'descending' = 'descending'; 
   sortBy: 'favorites' | 'name' = 'favorites'; 
@@ -196,6 +197,26 @@ export class MapsBetaComponent implements OnInit {
   toggleSortDirection(): void {
     this.sortDirection = this.sortDirection === 'ascending' ? 'descending' : 'ascending';
   }
+
+  getBuckNBallSides(map: any): string {
+    const weaponId = '6';
+    const weaponName = 'Springfield M1842';
+  
+    let sidesWithWeapon: string[] = [];
+  
+    const usaInfantry = map.usa_regiments?.Infantry || [];
+    const csaInfantry = map.csa_regiments?.Infantry || [];
+  
+    const usaHasWeapon = usaInfantry.some((regiment: { regiment_weaponry: any[]; }) => regiment.regiment_weaponry.some((weapon: { weapon_info: { id: { toString: () => string; }; weapon: string; }; }) => weapon.weapon_info.id.toString() === weaponId || weapon.weapon_info.weapon === weaponName));
+    if (usaHasWeapon) sidesWithWeapon.push('USA');
+  
+    const csaHasWeapon = csaInfantry.some((regiment: { regiment_weaponry: any[]; }) => regiment.regiment_weaponry.some((weapon: { weapon_info: { id: { toString: () => string; }; weapon: string; }; }) => weapon.weapon_info.id.toString() === weaponId || weapon.weapon_info.weapon === weaponName));
+    if (csaHasWeapon) sidesWithWeapon.push('CSA');
+  
+    return sidesWithWeapon.join(' & ');
+  }
+  
+  
   
 // Custom animation for map cards
   animationStates: {[index: number]: string} = {};
