@@ -100,6 +100,13 @@ export class ManageMapsComponent implements OnInit {
   }
 
   updateCompleteMap(): void {
+    if (this.currentMap.usaArty !== undefined) {
+        this.currentMap.usaArty = this.currentMap.usaArty === 'true' ? 'true' : 'false';
+    }
+    if (this.currentMap.csaArty !== undefined) {
+        this.currentMap.csaArty = this.currentMap.csaArty === 'true' ? 'true' : 'false';
+    }
+
     console.log('sending data::', this.currentMap);
     this.mapService.updateMap(this.currentMap.id, this.currentMap).subscribe({
       next: (response) => {
@@ -111,7 +118,8 @@ export class ManageMapsComponent implements OnInit {
         console.error("Error updating the map:", error);
       }
     });
-  }
+}
+
   
   
 }
