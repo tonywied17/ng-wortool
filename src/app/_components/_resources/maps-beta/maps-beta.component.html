@@ -90,7 +90,7 @@
                         <div class="cols-start-1 col-span-2">
                             <div class="grid grid-cols-[1fr_auto] mb-2">
                                 <div>
-                                    <div class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
+                                    <div [routerLink]="['/maps', map.id]" class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
                                         <img [src]="map.map_image" [alt]="map.name" class="rounded-bl-sm rounded-tl-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
                                     </div>
                                 </div>
@@ -117,10 +117,10 @@
                                             <img src="https://molex.cloud/2024/February/18/_Jzw/infantry.png" class="w-[22px] py-1 h-auto pointer-events-none mx-auto">
                                         </div>
     
-                                        <div *ngIf="hasBuckNBall(map)" class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80" 
-                                        matTooltip="Buck 'N Ball" matTooltipPosition="left">
-                                            <img src="https://molex.cloud/2024/February/18/_kDg/bucknball.png" class="w-[22px] h-auto pointer-events-none mx-auto">
-                                        </div>
+                                        <div *ngIf="getBuckNBallSides(map)" class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80"
+                                        matTooltip="Buck 'N Ball ({{getBuckNBallSides(map)}})" matTooltipPosition="left">
+                                        <img src="https://molex.cloud/2024/February/18/_kDg/bucknball.png" class="w-[22px] h-auto pointer-events-none mx-auto">
+                                    </div>
     
                                         <div *ngIf="map.usa_artillery || map.csa_artillery" class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80" 
                                         matTooltip="{{map.usa_artillery_regiments}} USA units, {{map.csa_artillery_regiments}} CSA units" matTooltipPosition="left">

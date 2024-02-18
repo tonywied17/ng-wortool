@@ -5,7 +5,6 @@ import { WeaponService } from "src/app/_services/weapon.service";
 import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { SharedDataService } from "src/app/_services/shared-data.service";
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-maps-beta",
@@ -50,8 +49,6 @@ export class MapsBetaComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     public sharedDataService: SharedDataService,
     public favoriteService: FavoriteService,
-    private route: ActivatedRoute,
-    private router: Router,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -121,7 +118,6 @@ export class MapsBetaComponent implements OnInit {
   }
 
   toggleFavorite(map: any): void {
-    // const currentRoute = this.router.url;
     const currentRoute = `/maps/${map.id}`;
     const isFav = this.isFavorite(map);
     
@@ -202,26 +198,24 @@ export class MapsBetaComponent implements OnInit {
     this.sortDirection = this.sortDirection === 'ascending' ? 'descending' : 'ascending';
   }
 
-  hasBuckNBall(map: any): boolean {
-    const weaponId = '6'; // Example weapon ID for "Springfield M1842"
-    const weaponName = 'Springfield M1842'; // The name to check for
+  getBuckNBallSides(map: any): string {
+    const weaponId = '6';
+    const weaponName = 'Springfield M1842';
   
-    // Directly access Infantry regiments from both sides
+    let sidesWithWeapon: string[] = [];
+  
     const usaInfantry = map.usa_regiments?.Infantry || [];
     const csaInfantry = map.csa_regiments?.Infantry || [];
   
-    // Combine Infantry regiments into a single array
-    const allInfantry = [...usaInfantry, ...csaInfantry];
+    const usaHasWeapon = usaInfantry.some((regiment: { regiment_weaponry: any[]; }) => regiment.regiment_weaponry.some((weapon: { weapon_info: { id: { toString: () => string; }; weapon: string; }; }) => weapon.weapon_info.id.toString() === weaponId || weapon.weapon_info.weapon === weaponName));
+    if (usaHasWeapon) sidesWithWeapon.push('USA');
   
-    // Check if any Infantry regiment has the specified weapon
-    return allInfantry.some(regiment => {
-      const weaponry = regiment.regiment_weaponry || [];
-      return weaponry.some((weapon: { weapon_info: { id: { toString: () => string; }; weapon: string; }; }) => {
-        // Ensure comparison works by converting IDs to strings if necessary
-        return weapon.weapon_info.id.toString() === weaponId || weapon.weapon_info.weapon === weaponName;
-      });
-    });
+    const csaHasWeapon = csaInfantry.some((regiment: { regiment_weaponry: any[]; }) => regiment.regiment_weaponry.some((weapon: { weapon_info: { id: { toString: () => string; }; weapon: string; }; }) => weapon.weapon_info.id.toString() === weaponId || weapon.weapon_info.weapon === weaponName));
+    if (csaHasWeapon) sidesWithWeapon.push('CSA');
+  
+    return sidesWithWeapon.join(' & ');
   }
+  
   
   
 // Custom animation for map cards
