@@ -60,6 +60,7 @@ export class MapsBetaComponent implements OnInit {
       await Promise.all([this.retrieveMaps(), this.retrieveWeapons()]);
       this.isLoaded = true;
       console.log("All data is loaded:", this.isLoaded);
+      console.log("Maps:", this.maps);
     } catch (error) {
       console.error("Error during initialization:", error);
     }
@@ -120,7 +121,8 @@ export class MapsBetaComponent implements OnInit {
   }
 
   toggleFavorite(map: any): void {
-    const currentRoute = this.router.url;
+    // const currentRoute = this.router.url;
+    const currentRoute = `/maps/${map.id}`;
     const isFav = this.isFavorite(map);
     
     if (isFav) {
