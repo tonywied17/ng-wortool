@@ -22,7 +22,6 @@ export class ManageMapsComponent implements OnInit {
     this.retrieveWeapons();
   }
 
-
   filterAndSortRegiments(): void {
     this.usaRegiments = this.currentMap.wor_mapsRegiments
       .filter((regiment: { side: string; }) => regiment.side === 'USA')
@@ -55,6 +54,23 @@ export class ManageMapsComponent implements OnInit {
     const weapon = this.weapons.find(weapon => weapon.id === id);
     return weapon ? weapon.weapon : 'Unknown Weapon';
   }
+
+  getFilteredWeapons(regimentType: string): any[] {
+    let filteredWeapons = [];
+  
+    if (regimentType === 'Infantry' || regimentType === 'Cavalry') {
+      // Assuming you have a way to identify weapons by type, e.g., a property 'type'
+      filteredWeapons = this.weapons.filter(weapon => weapon.type === 'Rifle' || weapon.type === 'Revolver' || weapon.type === 'Sword');
+    } else if (regimentType === 'Artillery') {
+      filteredWeapons = this.weapons.filter(weapon => weapon.type === 'Artillery');
+    }
+  
+    // Sort filteredWeapons if necessary
+    // Example: filteredWeapons.sort((a, b) => a.name.localeCompare(b.name));
+  
+    return filteredWeapons;
+  }
+  
   
   selectMap(map: any): void {
     console.log("Selected map:", map); 

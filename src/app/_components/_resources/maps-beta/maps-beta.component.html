@@ -75,11 +75,11 @@
 					(mouseleave)="onMouseLeave(i)">
                     <div class="relative animate-load bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl w-full py-2 grid grid-cols-[1fr_auto]">
                
-                        <div class="col-start-1 col-span-1 pl-2 cursor-pointer" [routerLink]="['/maps', map.id]">
+                        <div class="col-start-1 col-span-1 pl-2 cursor-pointer" [routerLink]="['/maps-beta', map.id]">
                             <span style="filter: drop-shadow(2px 0px 6px rgba(125, 126, 116, 0.281));" 
                                     class="text-[#88887b] font-[500] text-base tracking-tight inline-block overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">{{ map.name }}</span>
                         </div>
-                        <div class="col-start-2 col-span-1 pr-2 cursor-pointer" [routerLink]="['/maps', map.id]">
+                        <div class="col-start-2 col-span-1 pr-2 cursor-pointer" [routerLink]="['/maps-beta', map.id]">
                             <span class="text-[#94a3b8]/80 text-base tracking-tight font-[300]"
                             style="filter: drop-shadow(2px 0px 6px #2e3f5998);">
                                 {{ map.campaign }}
@@ -90,7 +90,7 @@
                         <div class="cols-start-1 col-span-2">
                             <div class="grid grid-cols-[1fr_auto] mb-2">
                                 <div>
-                                    <div [routerLink]="['/maps', map.id]" class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
+                                    <div [routerLink]="['/maps-beta', map.id]" class="rounded-sm shadow-md overflow-hidden relative cursor-pointer transition-all duration-300 w-full" style="height: 222px; opacity: 80%;">
                                         <img [src]="map.map_image" [alt]="map.name" class="rounded-bl-sm rounded-tl-sm w-full h-full object-cover brightness-[55%] sepia-[50%] blur-[0.5px] scale-100 hover:scale-110 transition-transform duration-300 active:scale-95" />
                                     </div>
                                 </div>
@@ -136,12 +136,12 @@
                             
                         </div>
     
-                        <div class="col-start-1 col-span-1 flex items-center pl-2 cursor-pointer" [routerLink]="['/maps', map.id]">    
+                        <div class="col-start-1 col-span-1 flex items-center pl-2 cursor-pointer" [routerLink]="['/maps-beta', map.id]">    
                             <span style="filter: drop-shadow(2px 0px 6px #c4c4c44f);" class="text-sm opacity-40">{{ map.attacker }} Attacker</span>
                         </div>
     
-                        <div class="col-start-2 col-span-1 text-right pr-2 cursor-pointer" [routerLink]="['/maps', map.id]">
-                            <!-- <button [routerLink]="['/maps', map.id]" mat-mini-fab color="primary" class=" !scale-75">
+                        <div class="col-start-2 col-span-1 text-right pr-2 cursor-pointer" [routerLink]="['/maps-beta', map.id]">
+                            <!-- <button [routerLink]="['/maps-beta', map.id]" mat-mini-fab color="primary" class=" !scale-75">
                                 <mat-icon>search</mat-icon>
                             </button> -->
                         </div>

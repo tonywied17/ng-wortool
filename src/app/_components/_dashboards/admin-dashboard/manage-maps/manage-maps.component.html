@@ -104,31 +104,6 @@
         </div>
 
 
-        <div class="field-box">
-          <select [(ngModel)]="currentMap.usaArty"
-            matTooltipClass="form-tooltip"
-            matTooltipPosition="left"
-            class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-            matTooltip="USA Artillery">
-            <option [value]="currentMap.usaArty ? 'true' : 'false'">{{ currentMap.usaArty ? 'true' : 'false' }}</option>
-            <option [value]="currentMap.usaArty ? 'false' : 'true'">{{ currentMap.usaArty ? 'false' : 'true' }}</option>
-          </select>
-          <i class="fa-solid fa-bowling-ball field-icon"></i>
-        </div>
-
-        <div class="field-box">
-          <select [(ngModel)]="currentMap.csaArty"
-            matTooltipClass="form-tooltip"
-            matTooltipPosition="left"
-            class="field-input my-[0.5em] text-xl !inline-block hover:!scale-100 focus:!scale-100 !transition-none"
-            matTooltip="CSA Artillery">
-            <option [value]="currentMap.csaArty ? 'true' : 'false'">{{ currentMap.csaArty ? 'true' : 'false' }}</option>
-            <option [value]="currentMap.csaArty ? 'false' : 'true'">{{ currentMap.csaArty ? 'false' : 'true' }}</option>
-          </select>
-          <i class="fa-solid fa-bowling-ball field-icon"></i>
-        </div>
-
-
 
       <div class="grid md:grid-cols-2 gap-8">
 
@@ -163,13 +138,12 @@
                               <mat-option value="Cavalry">Cavalry</mat-option>
                             </mat-select>
                           </mat-form-field>
-            
                           <div *ngFor="let weapon of regiment.wor_mapsRegimentWeapons; let j = index" class="mb-4">
                             <div class="weapon-container">
                               <mat-form-field appearance="fill" class="!max-w-fit">
                                 <mat-label>Weapon</mat-label>
                                 <mat-select [(ngModel)]="weapon.unitWeaponId">
-                                  <mat-option *ngFor="let weaponOption of weapons" [value]="weaponOption.id">
+                                  <mat-option *ngFor="let weaponOption of getFilteredWeapons(regiment.type)" [value]="weaponOption.id">
                                     {{ weaponOption.weapon }}
                                   </mat-option>
                                 </mat-select>
@@ -178,9 +152,7 @@
                                 <mat-icon>remove</mat-icon>
                               </button>
                             </div>
-                          </div>
-                          
-                          
+                          </div>   
                           <button mat-raised-button color="primary" (click)="addWeapon(i)">Add Weapon</button>
                           <button mat-raised-button color="warn" (click)="removeRegiment(i)">Remove Regiment</button>
                         </div>
@@ -227,7 +199,7 @@
                                 <mat-form-field appearance="fill" class="!max-w-fit">
                                   <mat-label>Weapon</mat-label>
                                   <mat-select [(ngModel)]="weapon.unitWeaponId">
-                                    <mat-option *ngFor="let weaponOption of weapons" [value]="weaponOption.id">
+                                    <mat-option *ngFor="let weaponOption of getFilteredWeapons(regiment.type)" [value]="weaponOption.id">
                                       {{ weaponOption.weapon }}
                                     </mat-option>
                                   </mat-select>
@@ -237,6 +209,7 @@
                                 </button>
                               </div>
                             </div>
+
                             <button mat-raised-button color="primary" (click)="addWeapon(i)">Add Weapon</button>
                             <button mat-raised-button color="warn" (click)="removeRegiment(i)">Remove Regiment</button>
                           </div>

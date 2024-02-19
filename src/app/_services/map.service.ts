@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri February 16th 2024 2:22:25 
+ * Last Modified: Sun February 18th 2024 8:34:15 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -53,7 +53,7 @@ export class MapService {
   }
 
   getMap(id: any): Observable<Map[]> {
-    return this.http.get<Map[]>(`${baseUrl}/${id}`);
+    return this.http.get<Map[]>(`${baseUrl}/new/${id}`);
   }
 
   createMap(map: any): Observable<any> {

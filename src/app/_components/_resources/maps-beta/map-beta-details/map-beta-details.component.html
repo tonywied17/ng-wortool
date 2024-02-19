@@ -1,0 +1,113 @@
+
+<div *ngIf="!isLoaded" class="text-[#88887b] text-xl opacity-75">
+	<div class="lds-ellipsis">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</div>
+
+<div *ngIf="isLoaded" class="container mx-auto p-4">
+    <div class="col-start-1 col-span-1">
+        <div class="animate-top flex items-center" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+            <div class="flex-shrink-0 text-[#88887b] md:flex justify-center items-center w-6 md:w-16 h-auto pl-1 hidden">
+                <i class="fas fa-map-marked-alt fa-2x"></i>
+            </div>
+            <div class="ml-1 flex items-center">
+                <div>
+                    <h3 class="text-[#88887b] font-[500] text-base md:text-xl tracking-tight drop-shadow-lg">{{ map.name }}</h3>
+                    <span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">{{ map.campaign }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="grid md:grid-cols-[2fr_1fr] gap-2 h-full mt-2">
+        <div class="p-2 bg-slate-800/80 rounded-sm shadow-lg">
+            
+        </div>
+        <div>
+            <div class="p-4 rounded-t-sm"
+                style="background: linear-gradient(130deg,#28364d,#1f2b3ecb,#1e293b00,#1e293b00);">
+                <mat-slide-toggle (change)="toggle($event)" class="font-[200]">
+                    <div
+                        class="text-[#88887b] lg:text-lg text-base font-[400] inline-block ml-3 hover:opacity-80 transition-all duration-200 cursor-pointer">
+                        <i class="fa-brands fa-youtube"></i> Flyover Cam</div>
+                </mat-slide-toggle>
+            </div>
+            <div>
+                <img *ngIf="!CamMapBool" src="{{map.map_image}}"
+                (click)="openImageModal(map.map_image)"
+                class="fade-center transition-all active:!translate-y-2 active:translate-x-2 hover:cursor-pointer hover:brightness-[75%] brightness-[50%] sepia-[50%] lg:mr-auto lg:w-[100%] lg:h-auto block rounded-sm rounded-tl-none shadow-none duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
+
+
+                <div *ngIf="CamMapBool" id="videoContainer"
+                    class="brightness-[75%] h-[322px] fade-center block rounded-md rounded-tl-none shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <!-- Regiment Details -->
+    <div class="mb-4">
+        <div class="font-semibold mb-2">Regiments and Artillery</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div *ngFor="let regiment of map.usa_regiments.Infantry">
+                <div class="bg-slate-900 p-4 rounded-lg shadow">
+                    <div class="font-bold">{{regiment.name}} (USA)</div>
+                    <ul>
+                        <li *ngFor="let weapon of regiment.regiment_weaponry">
+                            {{weapon.weapon_info.weapon}} - Range: {{weapon.weapon_info.range}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngFor="let regiment of map.usa_regiments.Artillery">
+                <div class="bg-slate-900 p-4 rounded-lg shadow">
+                    <div class="font-bold">{{regiment.name}} (USA)</div>
+                    <ul>
+                        <li *ngFor="let weapon of regiment.regiment_weaponry">
+                            {{weapon.weapon_info.weapon}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div *ngFor="let regiment of map.csa_regiments.Infantry">
+                <div class="bg-slate-900 p-4 rounded-lg shadow">
+                    <div class="font-bold">{{regiment.name}} (CSA)</div>
+                    <ul>
+                        <li *ngFor="let weapon of regiment.regiment_weaponry">
+                            {{weapon.weapon_info.weapon}} - Range: {{weapon.weapon_info.range}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngFor="let regiment of map.csa_regiments.Artillery">
+                <div class="bg-slate-900 p-4 rounded-lg shadow">
+                    <div class="font-bold">{{regiment.name}} (CSA)</div>
+                    <ul>
+                        <li *ngFor="let weapon of regiment.regiment_weaponry">
+                            {{weapon.weapon_info.weapon}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorite Count -->
+    <div class="mb-4">
+        <i class="fas fa-heart"></i> Favorites: {{map.map_favorite_count}}
+    </div>
+
+    <!-- Map Strategy Link -->
+    <div class="mb-4">
+        <a [href]="map.stratsketch_url" target="_blank" class="text-blue-500 hover:text-blue-700">Strategy Sketch</a>
+    </div>
+</div>
