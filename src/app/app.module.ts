@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun February 18th 2024 5:53:02 
+ * Last Modified: Sun February 18th 2024 8:23:16 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -53,6 +53,7 @@ import { MediaComponent } from "./_components/_dashboards/regiment-dashboard/reg
 import { EventBuilderComponent } from "./_components/_dashboards/regiment-dashboard/event-builder/event-builder.component";
 import { ManageMapsComponent } from "./_components/_dashboards/admin-dashboard/manage-maps/manage-maps.component";
 import { MapsBetaComponent } from "./_components/_resources/maps-beta/maps-beta.component";
+import { MapBetaDetailsComponent } from "./_components/_resources/maps-beta/map-beta-details/map-beta-details.component";
 
 /**
  * Routes for the application
@@ -65,7 +66,7 @@ const routes: Routes = [
   { path: "regiments", component: RegimentsComponent },
   { path: "game-info", component: GameInfoComponent },
   { path: "maps/:id", component: MapDetailsComponent },
-  { path: "maps-beta/:id", component: MapsBetaComponent},
+  { path: "maps-beta/:id", component: MapBetaDetailsComponent},
   { path: "weapons", component: WeaponsComponent },
   { path: "weapons/:weapon", component: WeaponsComponent },
   { path: "user", component: UserDashboardComponent },
@@ -115,6 +116,7 @@ const routes: Routes = [
     EventBuilderComponent,
     ManageMapsComponent,
     MapsBetaComponent,
+    MapBetaDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,8 +128,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      // enabled: !isDevMode(),
-      enabled: environment.production,
+      enabled: !isDevMode(),
+      // enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",
