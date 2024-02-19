@@ -35,7 +35,7 @@ export class MapsBetaComponent implements OnInit {
   userFavorites: any[] = [];
   uniqueCampaigns: string[] = [];
   selectedCampaigns: { [key: string]: boolean } = {};
-
+  searchText: string = '';
   csaArtillery: boolean = false;
   usaArtillery: boolean = false;
   filterFavorites: boolean = false;
@@ -151,24 +151,23 @@ export class MapsBetaComponent implements OnInit {
 
   filterMaps(): void {
     this.filteredMaps = this.maps.filter(map => {
-      const matchesCSAArtillery = !this.csaArtillery || map.csa_artillery === this.csaArtillery;
-      const matchesUSAArtillery = !this.usaArtillery || map.usa_artillery === this.usaArtillery;
-      const matchesFavorites = !this.filterFavorites || this.isFavorite(map);
-  
-      const matchesCampaign = this.uniqueCampaigns.every(campaign => !this.selectedCampaigns[campaign] || this.selectedCampaigns[map.campaign]);
-  
-      const selectedWeaponNames = Object.keys(this.selectedWeapons).filter(key => this.selectedWeapons[key]);
-  
-      const matchesWeapons = selectedWeaponNames.length === 0 || selectedWeaponNames.some(weaponName => {
-        const allRegiments = [...(map.usa_regiments?.Infantry || []), ...(map.csa_regiments?.Infantry || [])];
-        return allRegiments.some(regiment => {
-          return regiment.regiment_weaponry.some((weapon: { weapon_info: { weapon: string; }; }) => weapon.weapon_info.weapon === weaponName);
+        const matchesSearchText = this.searchText === '' || map.name.toLowerCase().includes(this.searchText.toLowerCase());
+        const matchesCSAArtillery = !this.csaArtillery || map.csa_artillery === this.csaArtillery;
+        const matchesUSAArtillery = !this.usaArtillery || map.usa_artillery === this.usaArtillery;
+        const matchesFavorites = !this.filterFavorites || this.isFavorite(map);
+        const matchesCampaign = this.uniqueCampaigns.every(campaign => !this.selectedCampaigns[campaign] || map.campaign.includes(campaign));
+        const selectedWeaponNames = Object.keys(this.selectedWeapons).filter(key => this.selectedWeapons[key]);
+        const matchesWeapons = selectedWeaponNames.length === 0 || selectedWeaponNames.some(weaponName => {
+            const allRegiments = [...(map.usa_regiments?.Infantry || []), ...(map.csa_regiments?.Infantry || [])];
+            return allRegiments.some(regiment => {
+                return regiment.regiment_weaponry.some((weapon: { weapon_info: { weapon: string; }; }) => weapon.weapon_info.weapon === weaponName);
+            });
         });
-      });
-  
-      return matchesCSAArtillery && matchesUSAArtillery && matchesFavorites && matchesCampaign && matchesWeapons;
+
+        return matchesSearchText && matchesCSAArtillery && matchesUSAArtillery && matchesFavorites && matchesCampaign && matchesWeapons;
     });
-  }
+}
+
   
   
   sortDirection: 'ascending' | 'descending' = 'descending'; 
