@@ -32,7 +32,7 @@ export class SharedDataService {
   async retrieveInitialData(): Promise<void> {
     const userPromise = this.getUser();
     userPromise.then(() => {
-        this.checkAndUpdateUserAvatar().catch(error => console.error("Error updating user avatar:", error));
+        // this.checkAndUpdateUserAvatar().catch(error => console.error("Error updating user avatar:", error));
     }).catch(error => console.error("Error retrieving user data:", error));
 
     await userPromise;

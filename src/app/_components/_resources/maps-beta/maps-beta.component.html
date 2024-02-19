@@ -1,5 +1,17 @@
 <div class="container mx-auto mt-[1em] scroll-container mb-[4em]">
 
+    <div class="animate-top flex items-center md:mb-8 mb-2" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+		<div class="flex-shrink-0 text-[#88887b] md:flex justify-center items-center w-6 md:w-16 h-auto pl-1 hidden">
+			<i class="fas fa-map-marked-alt fa-2x"></i>
+		</div>
+		<div class="ml-1 flex items-center">
+			<div>
+				<h3 class="text-[#88887b] font-[500] text-base md:text-xl tracking-tight drop-shadow-lg">Explore Maps</h3>
+				<span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">Navigate Battlefields, Strategize Your Moves, and Dominate the Game</span>
+			</div>
+		</div>
+	</div>
+
     <div *ngIf="!isLoaded" class="lds-ellipsis">
         <div></div>
         <div></div>
@@ -8,50 +20,61 @@
     </div>
 
     <div *ngIf="isLoaded" class="grid md:grid-cols-[0.55fr_2fr] gap-2 md:gap-6">
-        <div class="p-2 h-fit md:sticky md:top-[3em]">
+        <div class="p-2 h-fit">
 
-            <div class="mb-6">
-                <div class="my-2">
+            <div class="mb-2">
+                <div class="mb-2">
                     <div class="field-box">
-                        <input type="text" class="field-input" placeholder="Search name..." [(ngModel)]="searchText" (keyup)="filterMaps()">
+                        <input type="text" class="field-input" placeholder="Search maps..." [(ngModel)]="searchText" (keyup)="filterMaps()">
                         <i class="field-icon fas fa-search"></i>
                     </div>
                 </div>
                 
                 <!-- Sorting Criterion/Direction -->
                 <div class="flex items-center w-full">
-                    <div class="text-left flex-grow">
-                        <select class="sort-select w-full" [(ngModel)]="sortBy" (change)="sortMaps()">
+                    <div class="text-left flex-grow field-box !m-0">
+                        <select class="field-input w-full !py-2" [(ngModel)]="sortBy" (change)="sortMaps()">
                             <option value="favorites">Sort by Favorites</option>
                             <option value="name">Sort Alphabetically</option>
                         </select>
+                        <span *ngIf="this.sortBy == 'favorites'"><i class="fa-solid fa-star field-icon"></i></span>
+                        <span *ngIf="this.sortBy == 'name'"><i class="fa-solid fa-arrow-down-a-z field-icon"></i></span>
                     </div>
                     <div class="text-right ml-2">
-                        <button class="sort-button" (click)="toggleSortDirection(); sortMaps()">
+                        <button mat-stroked-button color="primary" class="!text-neutral-[#88887b]" (click)="toggleSortDirection(); sortMaps()">
                             {{ sortDirection === 'ascending' ? 'ASC ↑' : 'DESC ↓' }}
                         </button>
                     </div>
-                </div>
-                
-            </div>
-   
-            <!-- Filter by Favorites -->
-            <div *ngIf="this.sharedDataService.isLoggedIn" class="border-x border-b border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
-                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b7a);">
-                    <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">My Favorites</div>
-                </div>
-                <div class="p-2 max-h-[300px]">
-                    <div class="checkbox-wrapper-47">
-                            <input id="fav-check" type="checkbox" [(ngModel)]="filterFavorites" (change)="filterMaps()"> 
-                            <label for="fav-check" class="text-sm">{{this.sharedDataService.currentUser.username}}'s Favorites</label>
+                    
+                     </div>
+                    <div class="checkbox-wrapper-47 mt-0.5">
+                        <input id="fav-check" type="checkbox" [(ngModel)]="filterFavorites" (change)="filterMaps()"> 
+                        <label for="fav-check" class="text-sm">{{this.sharedDataService.currentUser.username}}'s Favorites</label>
                     </div>
                 </div>
+
+
+            <!-- Filter by Attacker -->
+            <div class="border-l border-dotted border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
+                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
+                    <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">Attacker</div>
+                </div>
+                <div class="p-2 max-h-[300px]">
+                    <div class="field-box !m-0">
+                        <select class="field-input !py-2" [(ngModel)]="selectedAttacker" (change)="filterMaps()">
+                            <option value="">All</option>
+                            <option value="USA">USA</option>
+                            <option value="CSA">CSA</option>
+                        </select>
+                        <i class="fa-solid fa-crosshairs field-icon"></i>
+                    </div>
+                    
+                </div>
             </div>
 
-
             <!-- Filter By Artillery -->
-            <div class="border-x border-b border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
-                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b7a);">
+            <div class="border-l border-dotted border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
+                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
                     <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">Artillery</div>
                 </div>
                 <div class="p-2 max-h-[300px]">
@@ -68,8 +91,8 @@
             </div>
 
             <!-- Filter by Campaign -->
-            <div class="border-x border-b border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
-                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b7a);">
+            <div class="border-l border-dotted border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
+                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
                     <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">Campaign</div>
                 </div>
                 <div class="p-2 max-h-[200px] overflow-y-scroll">
@@ -83,14 +106,12 @@
             </div>
     
           <!-- Filter by Weapons, Grouped by Type -->
-          <div class="border-x border-b border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
-            <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b7a);">
+          <div class="border-l border-dotted border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
+            <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
                 <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">Weaponry</div>
             </div>
             <div class="p-2 max-h-[270px] overflow-y-scroll">
                 <div *ngFor="let type of objectKeys(weaponsGroupedByType); let typeIndex = index">
-                    <!-- <div class="text-[#94a3b8]/80 text-base tracking-tight font-[400] mt-1"
-                    style="filter: drop-shadow(2px 0px 6px #2e3f5998);">{{ type }}</div> -->
                     <div *ngFor="let weapon of weaponsGroupedByType[type]; let weaponIndex = index">
                         <div class="checkbox-wrapper-47">
                             <input id="{{'weapon-check-' + typeIndex + '-' + weaponIndex}}" type="checkbox" [(ngModel)]="selectedWeapons[weapon.weapon]" (change)="filterMaps()">
@@ -101,13 +122,37 @@
                 </div>
             </div>
           </div>
+          
 
+            <!-- Filter by Infantry Units -->
+            <div class="border-l border-dotted border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
+                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
+                <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%; text-overflow: ellipsis;">Infantry Units</div>
+                </div>
+                <div class="p-2 max-h-[200px] overflow-y-scroll">
+                <div *ngFor="let unit of uniqueInfantryUnits; let i = index">
+                    <div class="checkbox-wrapper-47">
+                    <input id="{{'infantry-unit-check-' + i}}" type="checkbox" [(ngModel)]="selectedInfantryUnits[unit]" (change)="filterMaps()">
+                    <label for="{{'infantry-unit-check-' + i}}" class="text-sm">{{ unit }}</label>
+                    </div>
+                </div>
+                </div>
+            </div>
             
-
-            
-
-
-            
+            <!-- Filter by Artillery Units -->
+            <div class="border-l border-dotted border-[#88887be6] rounded-t-md my-3 opacity-70 hover:opacity-100 transition-opacity duration-200">
+                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
+                <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%; text-overflow: ellipsis;">Artillery Units</div>
+                </div>
+                <div class="p-2 max-h-[200px] overflow-y-scroll">
+                <div *ngFor="let unit of uniqueArtilleryUnits; let i = index">
+                    <div class="checkbox-wrapper-47">
+                    <input id="{{'artillery-unit-check-' + i}}" type="checkbox" [(ngModel)]="selectedArtilleryUnits[unit]" (change)="filterMaps()">
+                    <label for="{{'artillery-unit-check-' + i}}" class="text-sm">{{ unit }}</label>
+                    </div>
+                </div>
+                </div>
+            </div>
 
               
 
@@ -116,7 +161,7 @@
         </div>
     
         <!-- Map Cards -->
-        <div class="grid md:grid-cols-3 gap-6 w-full h-fit">
+        <div class="grid md:grid-cols-3 gap-6 w-full h-fit mt-6">
             <div *ngFor="let map of filteredMaps; let i = index">
                 <div
                 [@cardAnimation]="animationStates[i] || 'default'"

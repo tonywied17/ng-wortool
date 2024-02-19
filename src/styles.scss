@@ -251,7 +251,6 @@ $theme: (primary: $theme-primary,
 }
 
 
-/* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -539,7 +538,7 @@ button {
   padding-bottom: 14px;
   margin: 0;
   width: 100%;
-  background: linear-gradient(90deg,#263855ad,#1e293b79,#1e293b10,#1e293b05);
+  background: linear-gradient(90deg,#263855ad,#1e293b96,#1e293b2c);
   color: #eeeeeed2;
   outline: none;
   font-weight: 400;
