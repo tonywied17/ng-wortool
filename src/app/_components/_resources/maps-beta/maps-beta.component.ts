@@ -2,10 +2,11 @@ import { Component, HostListener, type OnInit } from "@angular/core";
 import { MapService } from "src/app/_services/map.service";
 import { FavoriteService } from "src/app/_services/favorite.service";
 import { WeaponService } from "src/app/_services/weapon.service";
-import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { SharedDataService } from "src/app/_services/shared-data.service";
 import { trigger, state, style, transition, animate } from '@angular/animations';
-
+interface CollapseState {
+  [key: string]: boolean;
+}
 @Component({
   selector: "app-maps-beta",
   templateUrl: "./maps-beta.component.html",
@@ -25,7 +26,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class MapsBetaComponent implements OnInit {
-  objectKeys = Object.keys;
+  objectKeys(obj: any): string[] {
+    return Object.keys(obj);
+  }
 
   isLoaded: boolean = false;
   isDesktop: boolean = true;
@@ -47,14 +50,21 @@ export class MapsBetaComponent implements OnInit {
   selectedInfantryUnits: { [key: string]: boolean } = {};
   selectedArtilleryUnits: { [key: string]: boolean } = {};
 
+  isCollapsed: CollapseState = {
+    attacker: false,
+    artillery: false,
+    campaign: false,
+    weaponry: false,
+    infantryUnits: false,
+    artilleryUnits: false,
+  };
 
   constructor(
     private mapService: MapService,
     private weaponService: WeaponService,
-    private tokenStorageService: TokenStorageService,
     public sharedDataService: SharedDataService,
     public favoriteService: FavoriteService,
-  ) { }
+  ) { this.adjustForWindowSize(window.innerWidth) }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -68,6 +78,11 @@ export class MapsBetaComponent implements OnInit {
     } catch (error) {
       console.error("Error during initialization:", error);
     }
+  }
+
+  toggleCollapse(section: string): void {
+    this.isCollapsed[section] = !this.isCollapsed[section];
+    this.saveFilterState();
   }
 
   async retrieveMaps(): Promise<void> {
@@ -294,6 +309,7 @@ export class MapsBetaComponent implements OnInit {
       usaArtillery: this.usaArtillery,
       filterFavorites: this.filterFavorites,
       selectedAttacker: this.selectedAttacker,
+      isCollapsed: this.isCollapsed,
     };
     localStorage.setItem('filterState', JSON.stringify(filterState));
   }
@@ -310,16 +326,17 @@ export class MapsBetaComponent implements OnInit {
       this.usaArtillery = filterState.usaArtillery || false;
       this.filterFavorites = filterState.filterFavorites || false;
       this.selectedAttacker = filterState.selectedAttacker || '';
+      this.isCollapsed = filterState.isCollapsed || this.isCollapsed;
       this.filterMaps();
     }
   }
 
-
-  // Custom animation for map cards
+  // Custom animation for map cards and other resize events
   animationStates: { [index: number]: string } = {};
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkDeviceType();
+    this.adjustForWindowSize(event.target.innerWidth);
   }
   checkDeviceType() {
     this.isDesktop = window.innerWidth > 768;
@@ -333,6 +350,17 @@ export class MapsBetaComponent implements OnInit {
   onMouseLeave(i: number) {
     if (this.isDesktop) {
       this.animationStates[i] = 'default';
+    }
+  }
+
+  adjustForWindowSize(width: number) {
+    this.checkDeviceType();
+    if (!this.isDesktop) {
+      Object.keys(this.isCollapsed).forEach(key => {
+        this.isCollapsed[key] = true;
+      });
+    } else {
+      this.restoreFilterState();
     }
   }
 }

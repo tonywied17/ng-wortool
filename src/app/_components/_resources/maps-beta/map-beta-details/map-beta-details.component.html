@@ -8,7 +8,7 @@
 	</div>
 </div>
 
-<div *ngIf="isLoaded" class="container mx-auto p-4">
+<div *ngIf="isLoaded" class="container mx-auto md:p-4 p-1">
     <div class="flex items-center justify-between mb-4" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
 
         <div class="flex items-center">
@@ -27,7 +27,7 @@
            
 
            <div>
-                <button (click)="goBack()"
+                <button routerLink="/maps"
 					mat-button
 					class="block !text-[#9ea18a] !mr-2">
 					<i class="fa-sharp fa-solid fa-arrow-left pr-2"></i>
@@ -43,7 +43,7 @@
 
     <div class="mt-2 grid md:grid-cols-[1fr_1.5fr] auto-rows-min md:gap-x-8">
 
-            <div class="col-start-1 col-span-1 row-start-1 row-span-3">
+            <div class="md:col-start-1 md:col-span-1 md:row-start-1 md:row-span-3 scale-center">
                 <div class="p-4 rounded-t-sm"
                     style="background: linear-gradient(130deg,#28364d,#1f2b3ecb,#1e293b00,#1e293b00);">
                     <mat-slide-toggle (change)="toggle($event)" class="font-[200]">
@@ -70,10 +70,29 @@
                         <div>
                             <div class="flex items-center justify-between w-full">
                                 <div class="flex items-center">
-                                  <button *ngIf="this.sharedDataService.showUser" (click)="toggleFavorite(map)" class="!text-[#b9b8b0] font-[400]" mat-stroked-button color="primary">
-                                    <span *ngIf="isFavorite(map)" class="!text-neutral-400 font-[500]"><i class="fa-solid fa-heart pr-2 !text-red-400"></i> Unfavorite</span>
-                                    <span *ngIf="!isFavorite(map)" class="!text-neutral-400 font-[500]"><i class="fa-regular fa-heart pr-2 !text-red-400"></i> Favorite</span>
-                                  </button>
+                                    <div 
+                                        matTooltip="Login or Sign Up to favorite this map."
+                                        matTooltipPosition="above"
+                                        [matTooltipDisabled]="this.sharedDataService.isLoggedIn"
+                                        [class.opacity-80]="!this.sharedDataService.isLoggedIn"
+                                        [class.cursor-not-allowed]="!this.sharedDataService.isLoggedIn">
+
+                                        <button
+                                            (click)="toggleFavorite(map)" 
+                                            [disabled]="!this.sharedDataService.isLoggedIn"
+                                            mat-stroked-button 
+                                            color="primary"
+                                            class="!text-[#b9b8b0] font-[400]">
+                                                <span *ngIf="isFavorite(map)" class="!text-neutral-400 font-[500]">
+                                                    <i class="fa-solid fa-heart pr-2 !text-red-400"></i> Unfavorite
+                                                </span>
+                                                <span *ngIf="!isFavorite(map)" class="!text-neutral-400 font-[500]">
+                                                    <i class="fa-regular fa-heart pr-2 !text-red-400"></i> Favorite
+                                                </span>
+                                        </button>
+                                    </div>
+
+
                                 </div>
                                     <div class="flex flex-row items-end space-x-3">
                                         
@@ -92,10 +111,11 @@
                                             <img src="https://molex.cloud/2024/February/18/_kDg/bucknball.png" class="w-[22px] h-auto pointer-events-none">
                                         </div>
                                 
-                                        <div matTooltip="Favorites" matTooltipPosition="above" class="cursor-help hover:opacity-80 transition-opacity duration-200">
+                                        <div matTooltip="{{getFavoritesTooltip()}}" matTooltipPosition="above" class="cursor-help hover:opacity-80 transition-opacity duration-200">
                                             <span class="!text-[#b9b8b0] font-[400]"><i class="fa-solid fa-heart pr-1 !text-red-500"></i></span>
                                             <span class="!text-[#b9b8b0] font-[900]">{{map.map_favorite_count ? map.map_favorite_count : 0}}</span>
-                                        </div> 
+                                        </div>
+                                          
                                 </div>
                               </div>
                               
@@ -132,7 +152,7 @@
             </div>
 
 
-        <div class="col-start-2 col-span-1 row-start-1 row-span-1">
+        <div class="md:col-start-2 md:col-span-1 md:row-start-1 md:row-span-1 mt-8 md:mt-0 fade-center">
 
             <mat-tab-group animationDuration="222ms" dynamicHeight>
                 <mat-tab>
@@ -330,8 +350,8 @@
 		resizable>
 		<div cdkDragHandle
 			class="py-2 bg-slate-700 grid grid-cols-2">
-			<div class="col-start-1 text-left pl-2">Map Notes</div>
-			<div class="col-start-2 text-right pr-2" (click)="closePopup()">
+			<div class="md:col-start-1 text-left pl-2">Map Notes</div>
+			<div class="md:col-start-2 text-right pr-2" (click)="closePopup()">
                 <i class="fa-sharp fa-solid fa-circle-xmark cursor-pointer hover:opacity-75"></i>
 			</div>
 		</div>

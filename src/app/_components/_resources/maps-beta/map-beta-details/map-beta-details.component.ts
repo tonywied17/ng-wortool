@@ -16,6 +16,8 @@ import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { Clipboard } from "@angular/cdk/clipboard";
 import { Note } from "src/app/_models/note.model";
 
+
+
 @Component({
   selector: 'app-map-beta-details',
   templateUrl: './map-beta-details.component.html',
@@ -47,6 +49,8 @@ export class MapBetaDetailsComponent implements OnInit {
     private _overlayRef!: OverlayRef;
     private _portal!: TemplatePortal;
 
+
+
     pageRoute = this.route.snapshot.paramMap.get('id');
     weapons: any[] = [];
     map: any;
@@ -60,15 +64,20 @@ export class MapBetaDetailsComponent implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-       try {
-          await this.sharedDataService.retrieveInitialData();
-          await Promise.all([this.retrieveMaps(), this.retrieveWeapons(), this.getCurrentNotes()]);
-          this.isLoaded = true;
-          console.log("All data is loaded:", this.isLoaded);
-          console.log("Maps:", this.map);
-        } catch (error) {
-          console.error("Error during initialization:", error);
+      try {
+        await this.sharedDataService.retrieveInitialData();
+        await Promise.all([this.retrieveMaps(), this.retrieveWeapons()]);
+        console.log(this.sharedDataService.isLoggedIn)
+        if (this.sharedDataService.isLoggedIn) {
+          console.log(this.sharedDataService)
+          await this.getCurrentNotes();
         }
+        this.isLoaded = true;
+        console.log("All data is loaded:", this.isLoaded);
+        console.log("Maps:", this.map);
+      } catch (error) {
+        console.error("Error during initialization:", error);
+      }
     }
 
     async retrieveMaps(): Promise<void> {
@@ -86,6 +95,8 @@ export class MapBetaDetailsComponent implements OnInit {
         });
       });
     }
+
+    
 
     async retrieveWeapons(): Promise<void> {
       return new Promise((resolve, reject) => {
@@ -146,9 +157,7 @@ export class MapBetaDetailsComponent implements OnInit {
       const favorites = map?.map_favorites ?? [];
       return favorites.some((fav: { id: number; }) => fav.id === this.sharedDataService.currentUser.id);
     }
-    
-    
-    
+     
     toggleFavorite(map: any): void {
       const currentRoute = `/maps/${map.id}`;
       const isFav = this.isFavorite(map);
@@ -250,6 +259,27 @@ export class MapBetaDetailsComponent implements OnInit {
         });
       });
     }
+    
+    getFavoritesTooltip(): string {
+      if (!this.map.map_favorites || this.map.map_favorites.length === 0) {
+        return 'Be the first to favorite this map.';
+      }
+    
+      const validUsernames = this.map.map_favorites.map((fav: { username: string; }) => fav.username).filter((username: string) => !!username);
+    
+      if (validUsernames.length === 0) {
+        return 'Be the first to favorite this map.';
+      }
+    
+      if (validUsernames.length === 1) {
+        return `${validUsernames[0]} favorited this.`;
+      }
+    
+      const allButLast = validUsernames.slice(0, -1);
+      const lastUsername = validUsernames[validUsernames.length - 1];
+      return `Favorited by ${allButLast.join(', ')}, and ${lastUsername}.`;
+    }
+    
     
   
     /**
