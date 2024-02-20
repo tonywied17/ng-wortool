@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon February 19th 2024 12:04:08 
+ * Last Modified: Mon February 19th 2024 9:26:52 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -61,12 +61,12 @@ import { MapBetaDetailsComponent } from "./_components/_resources/maps-beta/map-
  */
 const routes: Routes = [
   { path: "home", component: HomeComponent },
-  { path: "maps", component: MapsComponent },
-  { path: "maps-beta", component: MapsBetaComponent},
+  { path: "maps", component: MapsBetaComponent },
+  // { path: "maps-beta", component: MapsBetaComponent},
   { path: "regiments", component: RegimentsComponent },
   { path: "game-info", component: GameInfoComponent },
-  { path: "maps/:id", component: MapDetailsComponent },
-  { path: "maps-beta/:id", component: MapBetaDetailsComponent},
+  { path: "maps/:id", component: MapBetaDetailsComponent },
+  // { path: "maps-beta/:id", component: MapBetaDetailsComponent},
   { path: "weapons", component: WeaponsComponent },
   { path: "weapons/:weapon", component: WeaponsComponent },
   { path: "user", component: UserDashboardComponent },

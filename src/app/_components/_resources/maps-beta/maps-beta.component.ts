@@ -257,6 +257,11 @@ export class MapsBetaComponent implements OnInit {
     }
   }
 
+  clearSearchText() {
+    this.searchText = "";
+    this.filterMaps();
+  }
+
   toggleSortDirection(): void {
     this.sortDirection = this.sortDirection === 'ascending' ? 'descending' : 'ascending';
   }

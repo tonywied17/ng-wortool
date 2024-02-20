@@ -9,8 +9,9 @@
 </div>
 
 <div *ngIf="isLoaded" class="container mx-auto p-4">
-    <div class="col-start-1 col-span-1">
-        <div class="animate-top flex items-center" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+    <div class="flex items-center justify-between mb-4" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+
+        <div class="flex items-center">
             <div class="flex-shrink-0 text-[#88887b] md:flex justify-center items-center w-6 md:w-16 h-auto pl-1 hidden">
                 <i class="fas fa-map-marked-alt fa-2x"></i>
             </div>
@@ -21,93 +22,364 @@
                 </div>
             </div>
         </div>
+    
+        <div class="flex items-center space-x-4">
+           
 
+           <div>
+                <button (click)="goBack()"
+					mat-button
+					class="block !text-[#9ea18a] !mr-2">
+					<i class="fa-sharp fa-solid fa-arrow-left pr-2"></i>
+					Back
+				</button>
+               <button [matMenuTriggerFor]="optMenu" class="!text-neutral-200" color="primary" mat-raised-button><i class="fa-solid fa-ellipsis-vertical pr-2"></i> More</button>
+           </div>
+       </div>
+    
     </div>
+    
 
-    <div class="grid md:grid-cols-[2fr_1fr] gap-2 h-full mt-2">
-        <div class="p-2 bg-slate-800/80 rounded-sm shadow-lg">
-            
+
+    <div class="mt-2 grid md:grid-cols-[1fr_1.5fr] auto-rows-min md:gap-x-8">
+
+            <div class="col-start-1 col-span-1 row-start-1 row-span-3">
+                <div class="p-4 rounded-t-sm"
+                    style="background: linear-gradient(130deg,#28364d,#1f2b3ecb,#1e293b00,#1e293b00);">
+                    <mat-slide-toggle (change)="toggle($event)" class="font-[200]">
+                        <div
+                            class="text-[#88887b] lg:text-lg text-base font-[400] inline-block ml-3 hover:opacity-80 transition-all duration-200 cursor-pointer">
+                            <i class="fa-brands fa-youtube"></i> Flyover Cam</div>
+                    </mat-slide-toggle>
+                </div>
+                <div>
+                    <div *ngIf="!CamMapBool" 
+                        (click)="openImageModal(map.map_image)"
+                        class="w-full h-0 pb-[80%] bg-center bg-cover overflow-hidden brightness-[75%] sepia-[50%] hover:brightness-[75%] transition-all duration-300 ease-in-out cursor-pointer active:!translate-y-2 active:translate-x-2"
+                        style="background-image: url('{{map.map_image}}'); background-position: center; background-size: cover;">
+                    </div>
+               
+                    <div *ngIf="CamMapBool" id="videoContainer"
+                            class="brightness-[75%] h-[322px] fade-center block rounded-md rounded-tl-none shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
+                    </div>
+               
+                </div>
+
+                <div>
+                    <div class="p-2 bg-slate-800/80 rounded-b-md shadow-lg">
+                        <div>
+                            <div class="flex items-center justify-between w-full">
+                                <div class="flex items-center">
+                                  <button *ngIf="this.sharedDataService.showUser" (click)="toggleFavorite(map)" class="!text-[#b9b8b0] font-[400]" mat-stroked-button color="primary">
+                                    <span *ngIf="isFavorite(map)" class="!text-neutral-400 font-[500]"><i class="fa-solid fa-heart pr-2 !text-red-400"></i> Unfavorite</span>
+                                    <span *ngIf="!isFavorite(map)" class="!text-neutral-400 font-[500]"><i class="fa-regular fa-heart pr-2 !text-red-400"></i> Favorite</span>
+                                  </button>
+                                </div>
+                                    <div class="flex flex-row items-end space-x-3">
+                                        
+                                        <div class="w-[26px] h-[26px] rounded-sm cursor-help hover:opacity-80 transition-opacity duration-200 ring-1 ring-[#6a6d67] flex items-center justify-center" 
+                                                matTooltip="{{map.usa_infantry_regiments}} USA units, {{map.csa_infantry_regiments}} CSA units" matTooltipPosition="above">
+                                            <img src="https://molex.cloud/2024/February/18/_Jzw/infantry.png" class="w-[22px] h-auto pointer-events-none">
+                                        </div>
+
+                                        <div *ngIf="map.usa_artillery || map.csa_artillery" class="w-[26px] h-[26px] rounded-sm cursor-help hover:opacity-80 transition-opacity duration-200 ring-1 ring-[#6a6d67] flex items-center justify-center" 
+                                            matTooltip="{{map.usa_artillery_regiments}} USA units, {{map.csa_artillery_regiments}} CSA units" matTooltipPosition="above">
+                                                <img src="https://molex.cloud/2024/February/18/_cyG/artillery-icon.png" class="w-[22px] h-auto pointer-events-none">
+                                        </div>
+                               
+                                        <div *ngIf="getBuckNBallSides(map)" class="w-[26px] h-[26px] rounded-sm cursor-help hover:opacity-80 transition-opacity duration-200 ring-1 ring-[#6a6d67] flex items-center justify-center"
+                                                matTooltip="Buck 'N Ball ({{getBuckNBallSides(map)}})" matTooltipPosition="above">
+                                            <img src="https://molex.cloud/2024/February/18/_kDg/bucknball.png" class="w-[22px] h-auto pointer-events-none">
+                                        </div>
+                                
+                                        <div matTooltip="Favorites" matTooltipPosition="above" class="cursor-help hover:opacity-80 transition-opacity duration-200">
+                                            <span class="!text-[#b9b8b0] font-[400]"><i class="fa-solid fa-heart pr-1 !text-red-500"></i></span>
+                                            <span class="!text-[#b9b8b0] font-[900]">{{map.map_favorite_count ? map.map_favorite_count : 0}}</span>
+                                        </div> 
+                                </div>
+                              </div>
+                              
+                            
+                       
+                               
+                                <mat-divider class="!my-2"></mat-divider>
+                                <div>
+                                    <div class="text-center my-4">
+                                        <div class="flex items-center justify-center text-center">
+                                            <div class="flex flex-col items-center">
+                                                <div class="text-[#5575a5] text-3xl font-[700]" style="filter: drop-shadow(3px 3px 8px #141414c2)">
+                                                    USA
+                                                </div>
+                                                <span class="text-lg font-[300] text-neutral-200">{{ map.attacker == 'CSA' ? 'Defender' : 'Attacker' }}</span>
+                                            </div>
+                                        
+                                            <div class="text-xl font-bold px-5">VS.</div>
+                                        
+                                            <div class="flex flex-col items-center">
+                                                <div class="text-[#88887b] text-3xl font-[700]" style="filter: drop-shadow(3px 3px 8px #141414c2)">
+                                                    CSA
+                                                </div>
+                                                <span class="text-lg font-[300] text-neutral-200">{{ map.attacker == 'USA' ? 'Defender' : 'Attacker' }}</span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                     
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="col-start-2 col-span-1 row-start-1 row-span-1">
+
+            <mat-tab-group animationDuration="222ms" dynamicHeight>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <img src="https://molex.cloud/2024/February/19/_KUp/usa.png" class="w-auto h-[24px] pr-2 sepia-[50%]"> USA
+                    </ng-template>
+                    <!-- USA Column -->
+                    <div class="mt-4 pb-[22px]">
+                        <!-- USA Infantry -->
+                        <div *ngIf="map.usa_infantry_regiments <= 0">No USA Regiments Found.</div>
+                        <div *ngIf="map.usa_infantry_regiments > 0" class="font-[300] text-lg text-neutral-200 mb-[-10px]"><img src="https://molex.cloud/2024/February/18/_Jzw/infantry.png" class="h-auto w-[35px] pl-1 pr-2 pointer-events-none inline">Infantry</div>
+                        <div *ngIf="map.usa_infantry_regiments > 0">
+                            <div *ngFor="let regiment of map.usa_regiments.Infantry" class="border-l border-dotted border-[#5575a5e6] rounded-t-md mt-4 opacity-70 hover:opacity-100 transition-opacity duration-200 md:mx-4">
+                                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #5575a5e6, #5575a554, #5575a500);">
+                                    <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;"> {{regiment.name}}</div>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
+                                    <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 rounded-md shadow-md text-neutral-300 p-1 w-full">
+                                        <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                        <div class="flex flex-col">
+                                            <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
+                                            <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div *ngIf="map.usa_artillery_regiments > 0" class="mt-5 mb-[-10px] font-[300] text-lg text-neutral-200"><img src="https://molex.cloud/2024/February/18/_cyG/artillery-icon.png" class="h-[22px] pl-1 pr-2 w-[35px] pointer-events-none inline">Artillery</div>
+                        <!-- USA Artillery -->
+                        <div *ngIf="map.usa_artillery_regiments > 0">
+                            <div *ngFor="let regiment of map.usa_regiments.Artillery" class="border-l border-dotted border-[#5575a5e6] rounded-t-md mt-4 opacity-70 hover:opacity-100 transition-opacity duration-200 md:mx-4">
+                                <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #5575a5e6, #5575a554, #5575a500);">
+                                    <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">{{regiment.name}}</div>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
+                                    <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 opacity-80 hover:opacity-100 transition-opacity duration-200 rounded-md shadow-md text-neutral-300 p-1 w-full relative">
+                                        <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                        <div class="flex flex-col">
+                                            <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
+                                            <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>
+                                        </div>
+    
+                                        <div class="absolute bottom-[4px] left-[4px] bg-black/90 rounded-sm rounded-bl-md shadow-sm text-sm font-[300] px-[2px]" *ngIf="weapon.quantity > 1">
+                                            <span class="text-neutral-100 font-[400]">x{{weapon.quantity}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </mat-tab>
+                <mat-tab class="pb-[100px]">
+                    <ng-template mat-tab-label>
+                        <img src="https://molex.cloud/2024/February/19/_KUp/csa.png" class="w-auto h-[24px] pr-2 sepia-[50%]"> CSA
+                    </ng-template>
+                    <!-- CSA Column -->
+                    <div class="mt-4 pb-[22px]">
+                            <!-- CSA Infantry -->
+                            <div *ngIf="map.csa_infantry_regiments <= 0">No CSA Regiments Found.</div>
+                            <div *ngIf="map.csa_infantry_regiments > 0" class="font-[300] text-lg text-neutral-200 mb-[-10px]"><img src="https://molex.cloud/2024/February/18/_Jzw/infantry.png" class="h-auto w-[35px] pl-1 pr-2 pointer-events-none inline">Infantry</div>
+                            <div *ngIf="map.usa_infantry_regiments > 0">
+                                <div *ngFor="let regiment of map.csa_regiments.Infantry" class="border-l border-dotted border-[#88887be6] rounded-t-md mt-4 opacity-70 hover:opacity-100 transition-opacity duration-200 md:mx-4">
+                                    <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
+                                        <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">{{regiment.name}}</div>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
+                                        <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 opacity-80 hover:opacity-100 transition-opacity duration-200 rounded-md shadow-md text-neutral-300 p-1 w-full relative">
+                                            <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                            <div class="flex flex-col">
+                                                <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
+                                                <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div *ngIf="map.csa_artillery_regiments > 0" class="mt-5 mb-[-10px] font-[300] text-lg text-neutral-200"><img src="https://molex.cloud/2024/February/18/_cyG/artillery-icon.png" class="h-[22px] pl-1 pr-2 w-[35px] pointer-events-none inline">Artillery</div>
+                            <!-- CSA Artillery -->
+                            <div *ngIf="map.csa_artillery_regiments > 0">
+                                <div *ngFor="let regiment of map.csa_regiments.Artillery" class="border-l border-dotted border-[#88887be6] rounded-t-md mt-4 opacity-70 hover:opacity-100 transition-opacity duration-200 md:mx-4">
+                                    <div class="px-2 py-1.5 rounded-t-md" style="background: linear-gradient(90deg, #88887be6, #88887b54, #88887b00);">
+                                        <div class="text-neutral-200 text-base font-[400] tracking-tight overflow-hidden whitespace-nowrap" style="max-width: 100%;text-overflow: ellipsis;">{{regiment.name}}</div>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
+                                        <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 opacity-80 hover:opacity-100 transition-opacity duration-200 rounded-md shadow-md text-neutral-300 p-1 w-full relative">
+                                            <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                            <div class="flex flex-col">
+                                                <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
+                                                <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>
+                                            </div>
+    
+                                            <div class="absolute bottom-[4px] left-[4px] bg-black/90 rounded-sm rounded-bl-md shadow-sm text-sm font-[300] px-[2px]" *ngIf="weapon.quantity > 1">
+                                                <span class="text-neutral-100 font-[400]">x{{weapon.quantity}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+
         </div>
-        <div>
-            <div class="p-4 rounded-t-sm"
-                style="background: linear-gradient(130deg,#28364d,#1f2b3ecb,#1e293b00,#1e293b00);">
-                <mat-slide-toggle (change)="toggle($event)" class="font-[200]">
-                    <div
-                        class="text-[#88887b] lg:text-lg text-base font-[400] inline-block ml-3 hover:opacity-80 transition-all duration-200 cursor-pointer">
-                        <i class="fa-brands fa-youtube"></i> Flyover Cam</div>
-                </mat-slide-toggle>
-            </div>
-            <div>
-                <img *ngIf="!CamMapBool" src="{{map.map_image}}"
-                (click)="openImageModal(map.map_image)"
-                class="fade-center transition-all active:!translate-y-2 active:translate-x-2 hover:cursor-pointer hover:brightness-[75%] brightness-[50%] sepia-[50%] lg:mr-auto lg:w-[100%] lg:h-auto block rounded-sm rounded-tl-none shadow-none duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
 
-
-                <div *ngIf="CamMapBool" id="videoContainer"
-                    class="brightness-[75%] h-[322px] fade-center block rounded-md rounded-tl-none shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30">
-                </div>
-            </div>
-            
-        </div>
-        
-    </div>
-    <!-- Regiment Details -->
-    <div class="mb-4">
-        <div class="font-semibold mb-2">Regiments and Artillery</div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div *ngFor="let regiment of map.usa_regiments.Infantry">
-                <div class="bg-slate-900 p-4 rounded-lg shadow">
-                    <div class="font-bold">{{regiment.name}} (USA)</div>
-                    <ul>
-                        <li *ngFor="let weapon of regiment.regiment_weaponry">
-                            {{weapon.weapon_info.weapon}} - Range: {{weapon.weapon_info.range}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div *ngFor="let regiment of map.usa_regiments.Artillery">
-                <div class="bg-slate-900 p-4 rounded-lg shadow">
-                    <div class="font-bold">{{regiment.name}} (USA)</div>
-                    <ul>
-                        <li *ngFor="let weapon of regiment.regiment_weaponry">
-                            {{weapon.weapon_info.weapon}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div *ngFor="let regiment of map.csa_regiments.Infantry">
-                <div class="bg-slate-900 p-4 rounded-lg shadow">
-                    <div class="font-bold">{{regiment.name}} (CSA)</div>
-                    <ul>
-                        <li *ngFor="let weapon of regiment.regiment_weaponry">
-                            {{weapon.weapon_info.weapon}} - Range: {{weapon.weapon_info.range}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div *ngFor="let regiment of map.csa_regiments.Artillery">
-                <div class="bg-slate-900 p-4 rounded-lg shadow">
-                    <div class="font-bold">{{regiment.name}} (CSA)</div>
-                    <ul>
-                        <li *ngFor="let weapon of regiment.regiment_weaponry">
-                            {{weapon.weapon_info.weapon}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                
+    
     </div>
 
-    <!-- Favorite Count -->
-    <div class="mb-4">
-        <i class="fas fa-heart"></i> Favorites: {{map.map_favorite_count}}
-    </div>
 
-    <!-- Map Strategy Link -->
-    <div class="mb-4">
-        <a [href]="map.stratsketch_url" target="_blank" class="text-blue-500 hover:text-blue-700">Strategy Sketch</a>
-    </div>
+   
 </div>
+
+
+<mat-menu #optMenu="matMenu"
+			xPosition="before"
+			class="bg-[#646258]/70 backdrop-blur-sm !mt-1 !w-[200px]">
+			<button *ngIf="this.sharedDataService.showAdmin"
+				class="!text-[#b9b8b0] opacity-20 font-[400]"
+				mat-menu-item
+				disabled>
+				<i class="pr-2 fa-solid fa-pen-to-square"></i>
+				Edit Map
+			</button>
+
+
+			<button *ngIf="this.sharedDataService.showUser"
+				(click)="openDialog()"
+				class="!text-[#b9b8b0]/80 font-[400]"
+				mat-menu-item>
+				<span class="!text-neutral-400 font-[500]">
+					<i class="pr-2 fa-regular fa-clipboard"></i>
+					Map Notes
+				</span>
+			</button>
+
+
+			<button *ngIf="this.sharedDataService.showUser"
+			(click)="open(map.stratsketch_url, map.name, 1500, 868)"
+				class="!text-[#b9b8b0]/80 font-[400]"
+				mat-menu-item>
+				<span class="!text-neutral-400 font-[500]">
+					<i class="fa-solid fa-pen-ruler pr-2"></i>
+					StratSketch
+				</span>
+			</button>
+
+
+			<button *ngIf="this.sharedDataService.showUser"
+				class="!text-[#b9b8b0] opacity-20 font-[400]"
+				mat-menu-item
+				disabled>
+				<i class="pr-2 fa-solid fa-plus"></i>
+				Add to Event
+			</button>
+			<mat-divider *ngIf="this.sharedDataService.showUser"></mat-divider>
+
+
+			<button *ngIf="this.sharedDataService.showUser"
+				(click)="toggleFavorite(map)"
+				class="!text-[#b9b8b0] font-[400]"
+				mat-menu-item>
+				<span *ngIf="isFavorite(map)"
+					class="!text-neutral-400 font-[500]">
+					<i class="fa-solid fa-heart fa-heart pr-2 !text-red-400"></i>
+					Unfavorite
+				</span>
+				<span *ngIf="!isFavorite(map)"
+					class="!text-neutral-400 font-[500]">
+					<i class="fa-regular fa-heart pr-2 !text-red-400"></i>
+					Favorite
+				</span>
+			</button>
+
+
+			<button (click)="openSnackBar(map.name + ' share link copied to clipboard.', 6000);copyToClipboard('https://wortool.com/maps/' + map.id)"
+				class="!text-[#b9b8b0]/80 font-[400]"
+				mat-menu-item>
+				<span class="!text-neutral-400 font-[500]">
+					<i class="pr-2 fa-sharp fa-solid fa-share-nodes"></i>
+					Share
+				</span>
+			</button>
+	</mat-menu>
+
+<ng-template #dialogTemplate>
+	<div class="notes-dialog"
+		cdkDrag
+		cdkDragRootElement=".cdk-overlay-pane"
+		resizable>
+		<div cdkDragHandle
+			class="py-2 bg-slate-700 grid grid-cols-2">
+			<div class="col-start-1 text-left pl-2">Map Notes</div>
+			<div class="col-start-2 text-right pr-2" (click)="closePopup()">
+                <i class="fa-sharp fa-solid fa-circle-xmark cursor-pointer hover:opacity-75"></i>
+			</div>
+		</div>
+
+
+		<mat-tab-group>
+			<mat-tab label="My Notes">
+				<div class="tab-content">
+					<div class="p-[1em]">
+						<div class="post-it">
+							<textarea #notesTextarea placeholder="No notes found..">{{currentNotes}}</textarea>
+							<div class="textarea-overlay">
+								<i class="fa-sharp fa-solid fa-up-right-and-down-left-from-center fa-rotate-90"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</mat-tab>
+			<mat-tab label="My Regiment Notes">
+				<div class="tab-content">
+					<div class="p-[1em]">
+						<div class="post-it">
+							<textarea #notesTextareaReg
+								placeholder="No notes found.."
+								disabled>
+								Not Yet Implemented
+							</textarea>
+							<div class="textarea-overlay">
+								<i class="fa-sharp fa-solid fa-up-right-and-down-left-from-center fa-rotate-90"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</mat-tab>
+		</mat-tab-group>
+
+
+		<div class="text-right mr-[1em] pb-[1em]">
+			<button (click)="closePopup()"
+				mat-button
+				class="!text-[#c24646] !mr-2">
+				Close
+			</button>
+			<button (click)="saveNotes(notesTextarea.value, map.id)"
+				mat-stroked-button
+				class="!text-[#afaf9b]">
+				Save
+			</button>
+		</div>
+	</div>
+</ng-template>
