@@ -19,21 +19,33 @@
         <div></div>
     </div>
 
-    <div *ngIf="isLoaded" class="grid md:grid-cols-[0.55fr_2fr] gap-2 md:gap-6">
-        <div class="p-2 h-fit">
+    <div *ngIf="isLoaded" class="grid md:grid-cols-[0.55fr_2fr] gap-2 md:gap-x-10">
 
-            <div class="mb-2">
-                <div class="mb-2">
-                    <div class="field-box">
-                        <input type="text" class="field-input" placeholder="Search maps..." [(ngModel)]="searchText" (keyup)="filterMaps()">
-                        <i class="field-icon fas fa-search"></i>
-                    </div>
-                </div>
+        <div class="mb-2 col-start-1 col-span-2">
+            <div class="search-box">
+                <input [(ngModel)]="searchText"
+                    (input)="filterMaps()"
+                    class="search-input"
+                    type="text"
+                    placeholder="Search maps...">
+                <i class="fa-solid fa-search search-icon"></i>
+                <span *ngIf="searchText"
+                    (click)="clearSearchText()"
+                    class="clear-button">
+                    &times;
+                </span>
+            </div>
+        </div>
+
+        <div class="mt-3 h-fit">
+
+            <div class="mt-[-1em]">
+                
                 
                 <!-- Sorting Criterion/Direction -->
                 <div class="flex items-center w-full">
                     <div class="text-left flex-grow field-box !m-0">
-                        <select class="field-input w-full !py-2" [(ngModel)]="sortBy" (change)="sortMaps()">
+                        <select class="field-input w-full !py-[5px] !text-sm" [(ngModel)]="sortBy" (change)="sortMaps()">
                             <option value="favorites">Sort by Favorites</option>
                             <option value="name">Sort Alphabetically</option>
                         </select>
@@ -41,7 +53,7 @@
                         <span *ngIf="this.sortBy == 'name'"><i class="fa-solid fa-arrow-down-a-z field-icon"></i></span>
                     </div>
                     <div class="text-right ml-2">
-                        <button mat-stroked-button color="primary" class="!text-neutral-[#88887b]" (click)="toggleSortDirection(); sortMaps()">
+                        <button mat-stroked-button color="primary" class="!text-neutral-[#88887b] !h-[31px]" (click)="toggleSortDirection(); sortMaps()">
                             {{ sortDirection === 'ascending' ? 'ASC ↑' : 'DESC ↓' }}
                         </button>
                     </div>
@@ -161,7 +173,7 @@
         </div>
     
         <!-- Map Cards -->
-        <div class="grid md:grid-cols-3 gap-6 w-full h-fit mt-6">
+        <div class="grid md:grid-cols-3 gap-6 w-full h-fit mt-3">
             <div *ngFor="let map of filteredMaps; let i = index">
                 <div
                 [@cardAnimation]="animationStates[i] || 'default'"
@@ -214,7 +226,7 @@
                                         <div *ngIf="getBuckNBallSides(map)" class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80"
                                         matTooltip="Buck 'N Ball ({{getBuckNBallSides(map)}})" matTooltipPosition="left">
                                         <img src="https://molex.cloud/2024/February/18/_kDg/bucknball.png" class="w-[22px] h-auto pointer-events-none mx-auto">
-                                    </div>
+                                        </div>
     
                                         <div *ngIf="map.usa_artillery || map.csa_artillery" class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80" 
                                         matTooltip="{{map.usa_artillery_regiments}} USA units, {{map.csa_artillery_regiments}} CSA units" matTooltipPosition="left">

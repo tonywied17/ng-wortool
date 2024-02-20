@@ -162,3 +162,71 @@
   scrollbar-color: #88887b transparent
 }
 
+.search-box {
+  position: relative;
+}
+
+.search-input {
+  font-family: "Noto Sans", sans-serif;
+  padding: 12px 36px 12px 48px;
+  width: 100%;
+  border: 2px solid #7c7d72;
+  border-radius: 4px;
+  background: linear-gradient(9deg, #121a29, #121a29, #7c7d727a);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  // transform: scale(1.01);
+}
+.clear-button {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.8rem;
+}
+
+::placeholder {
+  color: #fff;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus::placeholder {
+  opacity: 1;
+  text-indent: 0;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 1em;
+  transform: translate(0, -50%);
+  transition: all 0.3s ease;
+  color: #7c7d72;
+}
+
+.search-input:focus + .search-icon {
+  // margin-left: -4px;
+}
+
+.search-input:hover {
+  opacity: 0.7;
+}
+
+.search-input:focus {
+  opacity: 1;
+  // transform: scale(1.02);
+}
+
+.search-input::placeholder {
+  color: #ccc;
+}
+
+.filter-options {
+  color: #7c7d72 !important;
+}
