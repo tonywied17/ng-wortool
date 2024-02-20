@@ -150,7 +150,7 @@ export class MapBetaDetailsComponent implements OnInit {
     
     
     toggleFavorite(map: any): void {
-      const currentRoute = `/maps-beta/${map.id}`;
+      const currentRoute = `/maps/${map.id}`;
       const isFav = this.isFavorite(map);
       
       if (isFav) {
