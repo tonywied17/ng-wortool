@@ -7,6 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 interface CollapseState {
   [key: string]: boolean;
 }
+
 @Component({
   selector: "app-maps-beta",
   templateUrl: "./maps-beta.component.html",
@@ -54,9 +55,9 @@ export class MapsBetaComponent implements OnInit {
     attacker: false,
     artillery: false,
     campaign: false,
-    weaponry: false,
-    infantryUnits: false,
-    artilleryUnits: false,
+    weaponry: true,
+    infantryUnits: true,
+    artilleryUnits: true,
   };
 
   constructor(
@@ -309,13 +310,14 @@ export class MapsBetaComponent implements OnInit {
       usaArtillery: this.usaArtillery,
       filterFavorites: this.filterFavorites,
       selectedAttacker: this.selectedAttacker,
+      selectedWeapons: this.selectedWeapons,
       isCollapsed: this.isCollapsed,
     };
-    localStorage.setItem('filterState', JSON.stringify(filterState));
+    localStorage.setItem('mapSideBarStates', JSON.stringify(filterState));
   }
 
   restoreFilterState(): void {
-    const savedState = localStorage.getItem('filterState');
+    const savedState = localStorage.getItem('mapSideBarStates');
     if (savedState) {
       const filterState = JSON.parse(savedState);
       this.selectedCampaigns = filterState.selectedCampaigns || this.selectedCampaigns;
@@ -326,10 +328,68 @@ export class MapsBetaComponent implements OnInit {
       this.usaArtillery = filterState.usaArtillery || false;
       this.filterFavorites = filterState.filterFavorites || false;
       this.selectedAttacker = filterState.selectedAttacker || '';
+      this.selectedWeapons = filterState.selectedWeapons || this.selectedWeapons;
       this.isCollapsed = filterState.isCollapsed || this.isCollapsed;
       this.filterMaps();
     }
   }
+
+
+  clearAllFilters(): void {
+    Object.keys(this.selectedCampaigns).forEach(campaign => {
+      this.selectedCampaigns[campaign] = false;
+    });
+  
+    Object.keys(this.selectedInfantryUnits).forEach(unit => {
+      this.selectedInfantryUnits[unit] = false;
+    });
+    Object.keys(this.selectedArtilleryUnits).forEach(unit => {
+      this.selectedArtilleryUnits[unit] = false;
+    });
+  
+    Object.keys(this.selectedWeapons).forEach(weapon => {
+      this.selectedWeapons[weapon] = false;
+    });
+  
+    this.searchText = '';
+    this.csaArtillery = false;
+    this.usaArtillery = false;
+    this.filterFavorites = false;
+    this.selectedAttacker = '';
+  
+    this.filterMaps();
+  }
+
+  clearFilters(filter: string): void {
+
+    switch (filter) {
+      case 'campaign':
+        Object.keys(this.selectedCampaigns).forEach(campaign => {
+          this.selectedCampaigns[campaign] = false;
+        });
+        break;
+      case 'infantryUnits':
+        Object.keys(this.selectedInfantryUnits).forEach(unit => {
+          this.selectedInfantryUnits[unit] = false;
+        });
+        break;
+      case 'artilleryUnits':
+        Object.keys(this.selectedArtilleryUnits).forEach(unit => {
+          this.selectedArtilleryUnits[unit] = false;
+        });
+        break;
+      case 'weaponry':
+        Object.keys(this.selectedWeapons).forEach(weapon => {
+          this.selectedWeapons[weapon] = false;
+        });
+        break;
+      default:
+        break;
+    }
+    this.filterMaps();
+
+  }
+  
 
   // Custom animation for map cards and other resize events
   animationStates: { [index: number]: string } = {};

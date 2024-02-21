@@ -230,3 +230,26 @@
 .filter-options {
   color: #7c7d72 !important;
 }
+
+.filter-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-chip {
+  padding: 5px 10px;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.filter-chip-remove-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
