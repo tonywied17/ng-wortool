@@ -30,9 +30,10 @@ export class SharedDataService {
   ) {}
 
   async retrieveInitialData(): Promise<void> {
+    console.log('retrieveInitialData ran')
     const userPromise = this.getUser();
     userPromise.then(() => {
-        // this.checkAndUpdateUserAvatar().catch(error => console.error("Error updating user avatar:", error));
+
     }).catch(error => console.error("Error retrieving user data:", error));
 
     await userPromise;
@@ -44,11 +45,10 @@ export class SharedDataService {
       this.isLoggedIn = !!this.token.getToken();
       this.currentUser = this.token.getUser();
       this.userId = this.currentUser.id;
-  
       if (this.isLoggedIn) {
+        await this.getAccess();
             if (this.currentUser.regimentId) {
               this.regimentId = this.currentUser.regimentId;
-              await this.getAccess();
               await this.getRegiment(this.regimentId);
             }
       }
@@ -121,6 +121,7 @@ export class SharedDataService {
   }
 
   async getAccess() {
+    console.log('get access ran')
     this.isLoggedIn = !!this.token.getToken();
     this.currentUser = this.token.getUser();
     const userID = this.currentUser.id;
