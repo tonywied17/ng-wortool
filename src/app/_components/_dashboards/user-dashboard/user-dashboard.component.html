@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday August 6th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed February 21st 2024 2:14:15 
+Last Modified: Wed February 21st 2024 3:08:23 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -22,7 +22,18 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 <div *ngIf="!loading"
 	class="container mx-auto md:px-[2em] mt-[1em] lg:mt-[2em] mb-[5em]">
-
+	
+	<div *ngIf="this.sharedDataService.isLoggedIn" class="animate-top flex items-center md:mb-8 mb-2" style="filter: drop-shadow(2px 0px 10px rgba(125, 126, 116, 0.507));">
+		<div class="flex-shrink-0 text-[#88887b] md:flex justify-center items-center w-6 md:w-16 h-auto pl-1 hidden">
+			<i class="fas fa-user-gear fa-2x"></i>
+		</div>
+		<div class="ml-1 flex items-center">
+			<div>
+				<h3 class="text-[#88887b] font-[500] text-base md:text-xl tracking-tight drop-shadow-lg">User Preferences</h3>
+				<span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">Profile Management and Account Integration for a Tailored Experience</span>
+			</div>	
+		</div>
+	</div>
 
 	<div *ngIf="this.sharedDataService.isLoggedIn">
 
