@@ -38,11 +38,14 @@
             </div>
         </div>
 
+       
         <div class="w-full md:col-start-2 col-span-1">
             <div class="grid md:grid-cols-[1fr_auto]">
-                <div>
-
-                </div>
+                  <div class="hidden md:inline-block pt-2">
+                     <button mat-button color="primary" (click)="clearAllFilters()" class="!w-fit !h-fit !font-[500] !my-auto"><i class="fa-solid fa-circle-xmark pr-1"></i>Clear All Filters</button>
+                  </div>
+                  
+                  
                 <div class="flex items-center md:justify-end">
                     <div class="flex-grow">
                         <select class="field-input w-full !py-[5px] !px-[5px] !text-sm" [(ngModel)]="sortBy" (change)="sortMaps()">
@@ -98,7 +101,7 @@
                     </div>
                     <div *ngIf="!isCollapsed['artillery']" class="filter-content p-2">
                         <div class="checkbox-wrapper-47">
-                            <input id="csa-artillery-check" type="checkbox" [(ngModel)]="csaArtillery" (change)="filterMaps()">
+                            <input id="csa-artillery-check" type="checkbox" [(ngModel)]="csaArtillery" (change)="filterMaps();">
                             <label for="csa-artillery-check" class="text-sm">CSA Artillery</label>
                         </div>
                         <div class="checkbox-wrapper-47">
@@ -116,9 +119,10 @@
                         <span *ngIf="isCollapsed['campaign']"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div *ngIf="!isCollapsed['campaign']" class="filter-content p-2">
+                        <button mat-button color="primary" (click)="clearFilters('campaign')" class="!w-fit !h-fit float-right !font-[500]">Clear<i class="fa-regular fa-circle-xmark pl-1"></i></button>
                         <div *ngFor="let campaign of uniqueCampaigns; let i = index">
                             <div class="checkbox-wrapper-47">
-                                <input id="{{'campaign-check-' + i}}" type="checkbox" [(ngModel)]="selectedCampaigns[campaign]" (change)="filterMaps()">
+                                <input id="{{'campaign-check-' + i}}" type="checkbox" (change)="filterMaps();" [(ngModel)]="selectedCampaigns[campaign]">
                                 <label for="{{'campaign-check-' + i}}" class="text-sm">{{ campaign }}</label>
                             </div>
                         </div>
@@ -133,6 +137,7 @@
                         <span *ngIf="isCollapsed['weaponry']"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div *ngIf="!isCollapsed['weaponry']" class="filter-content p-2">
+                        <button mat-button color="primary" (click)="clearFilters('weaponry')" class="!w-fit !h-fit float-right !font-[500]">Clear<i class="fa-regular fa-circle-xmark pl-1"></i></button>
                         <div *ngFor="let type of objectKeys(weaponsGroupedByType); let typeIndex = index">
                             <div *ngFor="let weapon of weaponsGroupedByType[type]; let weaponIndex = index">
                                 <div class="checkbox-wrapper-47">
@@ -153,6 +158,7 @@
                         <span *ngIf="isCollapsed['infantryUnits']"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div *ngIf="!isCollapsed['infantryUnits']" class="filter-content p-2">
+                        <button mat-button color="primary" (click)="clearFilters('infantryUnits')" class="!w-fit !h-fit float-right !font-[500]">Clear<i class="fa-regular fa-circle-xmark pl-1"></i></button>
                         <div *ngFor="let unit of uniqueInfantryUnits; let i = index">
                             <div class="checkbox-wrapper-47">
                                 <input id="{{'infantry-unit-check-' + i}}" type="checkbox" [(ngModel)]="selectedInfantryUnits[unit]" (change)="filterMaps()">
@@ -170,6 +176,7 @@
                         <span *ngIf="isCollapsed['artilleryUnits']"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
                     <div *ngIf="!isCollapsed['artilleryUnits']" class="filter-content p-2">
+                        <button mat-button color="primary" (click)="clearFilters('artilleryUnits')" class="!w-fit !h-fit float-right !font-[500]">Clear<i class="fa-regular fa-circle-xmark pl-1"></i></button>
                         <div *ngFor="let unit of uniqueArtilleryUnits; let i = index">
                             <div class="checkbox-wrapper-47">
                                 <input id="{{'artillery-unit-check-' + i}}" type="checkbox" [(ngModel)]="selectedArtilleryUnits[unit]" (change)="filterMaps()">
@@ -178,8 +185,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
         
     
         <!-- Map Cards -->
