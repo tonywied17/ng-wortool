@@ -54,12 +54,43 @@ export class SharedDataService {
       }
   }
 
+  async checkAndUpdateOtherUserAvatar(user: any): Promise<void> {
+    console.log("User:", user)
+    if (user.discordId && user.guildId) {
+      try {
+        const discordResponse = await firstValueFrom(this.discordService.getUserGuildInfo(user.discordId, user.guildId));
+        
+  
+        if (user.avatar_url !== discordResponse.USER_SPECIFIC.DISCORD_AVATAR) {
+          await firstValueFrom(this.authService.sync(user.id, discordResponse.USER_SPECIFIC.DISCORD_AVATAR, user.discordId, user.regimentId));
+          
+          user.avatar_url = discordResponse.USER_SPECIFIC.DISCORD_AVATAR;
+          let returnUrl = discordResponse.USER_SPECIFIC.DISCORD_AVATAR;
+          this.returnUrl(returnUrl)
+
+          console.log("User avatar updated from Discord:", this.currentUser.avatar_url);
+        }else{
+          console.log("User avatar is already up to date.");
+        }
+      } catch (error) {
+        console.error("Error updating user avatar from Discord:", error);
+      }
+    } 
+  }
+
+  returnUrl(returnUrl: any) {
+    return returnUrl;
+  }
+
   async checkAndUpdateUserAvatar(): Promise<void> {
+
     if (this.isLoggedIn && this.currentUser.discordId && this.currentUser.regimentId) {
+      console.log("User:", this.currentUser)
       try {
         const regimentData = await firstValueFrom(this.regimentService.getRegiment(this.currentUser.regimentId));
         const discordResponse = await firstValueFrom(this.discordService.getUserGuildInfo(this.currentUser.discordId, regimentData.guild_id));
         
+        console.log("Discord Response:", discordResponse);
   
         if (discordResponse.USER_SPECIFIC.DISCORD_AVATAR && this.currentUser.avatar_url !== discordResponse.USER_SPECIFIC.DISCORD_AVATAR) {
           await firstValueFrom(this.authService.profile(this.currentUser.id, this.currentUser.email, discordResponse.USER_SPECIFIC.DISCORD_AVATAR, this.currentUser.discordId, this.currentUser.regimentId));
@@ -74,7 +105,7 @@ export class SharedDataService {
       } catch (error) {
         console.error("Error updating user avatar from Discord:", error);
       }
-    }
+    } 
   }
 
   async getRegiment(id: any): Promise<void> {

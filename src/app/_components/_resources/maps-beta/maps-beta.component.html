@@ -219,20 +219,27 @@
                                 </div>
                                 
                                 <div class="flex flex-col !justify-start items-center bg-slate-900/50 mr-[-1px] h-full">
-                                    <button
-                                        mat-button
-                                        color="primary"
-                                        [matBadge]="map.map_favorite_count"
-                                        matBadgeColor="accent"
-                                        matBadgeSize="small"
-                                        matTooltip="Add to Favorites"
-                                        (click)="toggleFavorite(map)"
-                                        [ngClass]="{'fav-active': isFavorite(map)}"
-                                        class="!text-[#7e7f74] !min-w-fit">
-                                        <span *ngIf="isFavorite(map)"><i class="fa-solid fa-heart text-xl"></i></span>
-                                        <span *ngIf="!isFavorite(map)"><i class="fa-regular fa-heart text-xl"></i></span>     
-                                    </button>
-    
+                                    <div 
+                                        matTooltip="Login or Sign Up to favorite this map."
+                                        [matTooltipDisabled]="this.sharedDataService.isLoggedIn"
+                                        [class.opacity-80]="!this.sharedDataService.isLoggedIn"
+                                        [class.cursor-not-allowed]="!this.sharedDataService.isLoggedIn">
+
+                                        <button
+                                            mat-button
+                                            color="primary"
+                                            [matBadge]="map.map_favorite_count"
+                                            matBadgeColor="accent"
+                                            matBadgeSize="small"
+                                            matTooltip="Add to Favorites"
+                                            [disabled]="!this.sharedDataService.isLoggedIn"
+                                            (click)="toggleFavorite(map)"
+                                            [ngClass]="{'fav-active': isFavorite(map)}"
+                                            class="!text-[#7e7f74] !min-w-fit">
+                                            <span *ngIf="isFavorite(map)"><i class="fa-solid fa-heart text-xl"></i></span>
+                                            <span *ngIf="!isFavorite(map)"><i class="fa-regular fa-heart text-xl"></i></span>     
+                                        </button>
+                                    </div>
     
                                     <div class="my-auto pb-[2em]">
                                         <div class="w-fit text-center bg-gray-800 p-1.5 rounded-sm m-0.5 cursor-help hover:opacity-80" 

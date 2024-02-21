@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu December 7th 2023 5:55:46 
+ * Last Modified: Wed February 21st 2024 3:20:45 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -142,6 +142,14 @@ export class AuthService {
   profile(id: string, email: string, avatar_url: string, discordId: string, regimentId: string): Observable<any> {
     return this.http.put(AUTH_API + id + '/updateProfile', {
       email,
+      avatar_url,
+      discordId,
+      regimentId
+    }, httpOptions);
+  }
+
+  sync(id: string, avatar_url: string, discordId: string, regimentId: string): Observable<any> {
+    return this.http.put(AUTH_API + id + '/syncPic', {
       avatar_url,
       discordId,
       regimentId
