@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Wed February 21st 2024 3:51:30 
+ * Last Modified: Wed February 21st 2024 1:50:10 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -54,6 +54,9 @@ import { EventBuilderComponent } from "./_components/_dashboards/regiment-dashbo
 import { ManageMapsComponent } from "./_components/_dashboards/admin-dashboard/manage-maps/manage-maps.component";
 import { MapsBetaComponent } from "./_components/_resources/maps-beta/maps-beta.component";
 import { MapBetaDetailsComponent } from "./_components/_resources/maps-beta/map-beta-details/map-beta-details.component";
+import { ChangePasswordComponent } from "./_components/_dashboards/user-dashboard/change-password/change-password.component";
+import { LinkedAccountsComponent } from "./_components/_dashboards/user-dashboard/linked-accounts/linked-accounts.component"; 
+import { FavoriteMapsComponent } from "./_components/_dashboards/user-dashboard/favorite-maps/favorite-maps.component";
 
 /**
  * Routes for the application
@@ -117,6 +120,9 @@ const routes: Routes = [
     ManageMapsComponent,
     MapsBetaComponent,
     MapBetaDetailsComponent,
+    ChangePasswordComponent,
+    LinkedAccountsComponent,
+    FavoriteMapsComponent
   ],
   imports: [
     BrowserModule,
@@ -128,8 +134,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register("ngsw-worker.js", {
-      // enabled: !isDevMode(),
-      enabled: environment.production,
+      enabled: !isDevMode(),
+      // enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",

@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed February 21st 2024 2:28:59 
+Last Modified: Wed February 21st 2024 2:57:43 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -178,7 +178,7 @@ style="position: sticky; top: 0;">
 			</div>
 		</div>
 
-		<div *ngIf="this.sharedDataService.isLoggedIn && this.sharedDataService.regimentId"
+		<div *ngIf="this.sharedDataService.isLoggedIn && this.sharedDataService.regiment"
 			class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto mr-5 top-in">
 
 			<div (click)="regTrigger.openMenu()"
