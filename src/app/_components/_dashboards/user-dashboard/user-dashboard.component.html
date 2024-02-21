@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday August 6th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Fri February 16th 2024 12:25:01 
+Last Modified: Wed February 21st 2024 3:46:09 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -27,7 +27,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-	<div *ngIf="isLoggedIn">
+	<div *ngIf="this.sharedDataService.isLoggedIn">
 
 		<div class="grid lg:grid-cols-[auto_1fr] lg:gap-2 grid-cols-1">
 
@@ -153,7 +153,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 									
 									class="field-input my-[0.5em]"
 									type="email"
-									value="{{currentUser.email}}"
+									value="{{this.sharedDataService.currentUser.email}}"
 									placeholder="Your email...">
 								<i class="fa-solid fa-envelope field-icon"></i>
 							</div>
@@ -168,7 +168,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 									
 									class="field-input my-[0.5em] !hidden"
 									type="hidden"
-									value="{{currentUser.discordId}}"
+									value="{{this.sharedDataService.currentUser.discordId}}"
 									placeholder="Your discord id..."
 									disabled>
 
@@ -183,7 +183,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 									
 									class="field-input my-[0.5em]"
 									type="hidden"
-									value="{{currentUser.regimentId}}"
+									value="{{this.sharedDataService.currentUser.regimentId}}"
 									placeholder="Your regiment id..."
 									disabled>
 							</div>
@@ -234,7 +234,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 												<div>
-													<img *ngIf="avatar_url; else noAvatar" [src]="avatar_url" (error)="avatar_url = null"
+													<img *ngIf="this.sharedDataService.currentUser.avatar_url; else noAvatar" [src]="this.sharedDataService.currentUser.avatar_url" (error)="this.sharedDataService.checkAndUpdateUserAvatar()"
 														class="h-[80px] mt-2 pointer-events-none">
 
 													<ng-template #noAvatar>
@@ -328,12 +328,12 @@ Copyright (c) 2023 Tone Web Design, Molex
 														<i class="fa-brands fa-discord text-neutral-300"></i>
 														{{regimentData?.guild_id}}
 														<div class="cursor-pointer hover:opacity-80 mt-2">
-															<span *ngIf="!regimentData.ownerId.includes(currentUser.discordId)" (click)="confirmUnSyncRegiment()"
+															<span *ngIf="!regimentData.ownerId.includes(this.sharedDataService.currentUser.discordId)" (click)="confirmUnSyncRegiment()"
 																class="text-red-400">
 																<i class="fa-regular fa-circle-xmark"></i>
 																Unlink
 															</span>
-															<span *ngIf="regimentData.ownerId.includes(currentUser.discordId)"
+															<span *ngIf="regimentData.ownerId.includes(this.sharedDataService.currentUser.discordId)"
 																class="text-red-400/50 !cursor-not-allowed">
 																<i class="fa-regular fa-circle-xmark"></i>
 																Regiment Owner
@@ -461,7 +461,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 
 
 
-	<div *ngIf="!isLoggedIn"
+	<div *ngIf="!this.sharedDataService.isLoggedIn"
 		class="p-5 bg-[#1c2537] rounded-md"
 		style="border-left: 5px solid #a13c3c;">
 		<div class="grid grid-cols-1 sm:grid-cols-[120px_minmax(900px,_1fr)_100px] grid-rows-2 sm:grid-rows-none">

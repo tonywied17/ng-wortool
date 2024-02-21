@@ -4,7 +4,7 @@
  * Created Date: Sunday July 16th 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Fri November 17th 2023 4:52:43 
+ * Last Modified: Wed February 21st 2024 3:11:42 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -243,6 +243,7 @@ export class RegimentInfoComponent implements OnInit {
   async fetchRegimentUsers(): Promise<void> {
     this.regimentUsers = await firstValueFrom(
       this.regimentService.getRegimentUsers(this.regimentID)
+      
     );
     this.regiment.members = this.regimentUsers;
 
@@ -268,7 +269,7 @@ export class RegimentInfoComponent implements OnInit {
     //       console.log(user.username);
     //   }
     // });
-
+    // console.log(this.regimentUsers)
   }
 
   /**

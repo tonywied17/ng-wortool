@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon February 12th 2024 5:06:01 
+ * Last Modified: Wed February 21st 2024 3:42:04 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -25,6 +25,7 @@ import { HttpClient } from "@angular/common/http";
 import { Location } from "@angular/common";
 import { DiscordService } from "src/app/_services/discord.service";
 import { RegimentService } from "src/app/_services/regiment.service";
+import { SharedDataService } from "src/app/_services/shared-data.service";
 
 @Component({
   selector: 'app-user-dashboard',
@@ -90,7 +91,8 @@ export class UserDashboardComponent implements OnInit {
     private httpClient: HttpClient,
     private location: Location,
     private discordService: DiscordService,
-    private regimentService: RegimentService
+    private regimentService: RegimentService,
+    public sharedDataService: SharedDataService
   ) {}
 
   /**
@@ -114,40 +116,20 @@ export class UserDashboardComponent implements OnInit {
 
     this.getAllRegiments();
 
-    this.isLoggedIn = !!this.token.getToken();
-    this.currentUser = this.token.getUser();
-    this.email = this.currentUser.email;
-    this.avatar_url = this.currentUser.avatar_url;
-    this.discordId = this.currentUser.discordId;
-    this.regimentId = this.currentUser.regimentId;
+    this.sharedDataService.retrieveInitialData()
+    .then(async () => {
+      await this.getDiscordUser();
+      await this.getRegiment();
+      this.getFavorites();
+      this.loading = false;
+      // Processed
+    })
+    .catch(error => {
+      console.error("Error initializing shared data:", error);
+    });
 
     if (this.discordId) {
       this.discordSyncUrl = `https://api.wortool.com/v2/discord/`;
-    }
-
-    const userID = this.currentUser.id;
-
-    if (this.isLoggedIn) {
-      try {
-        const response = await this.authService
-          .checkUserRole(userID)
-          .toPromise();
-        this.showUser = response.access;
-        await this.getDiscordUser();
-        this.getFavorites();
-        await this.getRegiment();
-        this.loading = false;
-        
-      } catch (error: any) {
-        if (error.status === 403) {
-          this.showUser = false;
-        } else {
-          console.error("Error:", error);
-        }
-        this.loading = false;
-      }
-    } else {
-      this.loading = false;
     }
 
     const storedPageSize = localStorage.getItem("pageSize");
@@ -160,7 +142,7 @@ export class UserDashboardComponent implements OnInit {
    * @returns - void
    */
   private getFavorites(): void {
-    const userID = this.currentUser.id;
+    const userID = this.sharedDataService.currentUser.id;
 
     this.favoriteService.getByUserId(userID).subscribe(
       (response) => {
@@ -246,7 +228,7 @@ export class UserDashboardComponent implements OnInit {
       return;
     }
 
-    const userId = this.currentUser.id;
+    const userId = this.sharedDataService.currentUser.id;
     try {
       await this.authService
         .password(userId, this.passwordCurrent, this.passwordNew)
@@ -270,7 +252,7 @@ export class UserDashboardComponent implements OnInit {
    * This function is used to sync the user account with discord
    */
   sync(): void {
-    const state = encodeURIComponent(this.currentUser.id);
+    const state = encodeURIComponent(this.sharedDataService.currentUser.id);
     const left = window.screenX + 100;
 
     const popupUrl = `https://api.wortool.com/v2/discord/?state=${state}`;
@@ -345,7 +327,7 @@ export class UserDashboardComponent implements OnInit {
    * @param alert - boolean - whether to show the snackbar or not
    */
   async updateProfile(alert: boolean = true) {
-    const userId = this.currentUser.id;
+    const userId = this.sharedDataService.currentUser.id;
 
     this.email = this.email || '';
     this.avatar_url = this.avatar_url || '';
@@ -371,7 +353,7 @@ export class UserDashboardComponent implements OnInit {
       this.stillSelecting = false;
 
       const updatedUser = {
-        ...this.currentUser,
+        ...this.sharedDataService.currentUser,
         email: this.email,
         avatar_url: this.avatar_url,
         discordId: this.discordId,
@@ -419,14 +401,20 @@ export class UserDashboardComponent implements OnInit {
     localStorage.setItem("isAuthenticated", "false");
     localStorage.setItem("isAdmin", "false");
     localStorage.setItem("isModerator", "false");
-    this.isLoggedIn = this.authService.isAuthenticated;
-    this.showMod = this.authService.isModerator;
-    this.showAdmin = this.authService.isAdministrator;
-    this.showUser = this.authService.isAuthenticated;
-
+    this.sharedDataService.isLoggedIn = this.authService.isAuthenticated;
+    this.sharedDataService.showMod = this.authService.isModerator;
+    this.sharedDataService.showAdmin = this.authService.isAdministrator;
+    this.sharedDataService.showUser = this.authService.isAuthenticated;
     this.sharedService.triggerLogoutEvent();
-
     this.sharedService.setIsLoggedIn(false);
+
+    this.sharedDataService.isLoggedIn = false;
+    this.sharedDataService.showMod = false;
+    this.sharedDataService.showAdmin = false;
+    this.sharedDataService.showUser = false;
+    this.sharedDataService.regiment = null;
+    this.sharedDataService.regimentId = NaN;
+    this.sharedDataService.currentUser = null;
 
     this.router.navigate(["/home"]);
   }
@@ -449,7 +437,7 @@ export class UserDashboardComponent implements OnInit {
    * @param mapId - string - the map id
    */
   deleteFavorite(mapId: string) {
-    let userId = this.currentUser.id;
+    let userId = this.sharedDataService.currentUser.id;
 
     this.favoriteService.delete(mapId, userId).subscribe((response) => {
       this.getFavorites();
@@ -511,8 +499,8 @@ export class UserDashboardComponent implements OnInit {
    */
   async getDiscordUser(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      const userId = this.currentUser.id;
-      const discordId = this.currentUser.discordId;
+      const userId = this.sharedDataService.currentUser.id;
+      const discordId = this.sharedDataService.currentUser.discordId;
 
       if (!discordId) {
         this.discordIsSynced = false;
@@ -540,8 +528,9 @@ export class UserDashboardComponent implements OnInit {
    */
   async getRegiment(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      const regimentId = this.currentUser.regimentId;
-
+      
+      const regimentId = this.sharedDataService.currentUser.regimentId;
+      console.log(regimentId)
       if (!regimentId) {
         this.regimentSelected = false;
         resolve(); 
@@ -550,6 +539,7 @@ export class UserDashboardComponent implements OnInit {
           (response) => {
             // // console.log(response);
             this.regimentData = response;
+            console.log(this.regimentData)
             this.regimentSelected = true;
             resolve();
           },
@@ -596,7 +586,7 @@ export class UserDashboardComponent implements OnInit {
    */
   remove() {
     this.discordService
-      .removeDiscordUser(this.currentUser.id)
+      .removeDiscordUser(this.sharedDataService.currentUser.id)
       .subscribe((response) => {
         // // console.log(response);
         this.discordData = null;
@@ -660,7 +650,7 @@ export class UserDashboardComponent implements OnInit {
    */
   removeRegiment() {
     this.regimentService
-      .removeUsersRegiment(this.currentUser.id)
+      .removeUsersRegiment(this.sharedDataService.currentUser.id)
       .subscribe((response: any) => {
         // // console.log(response);
         this.regimentData = null;

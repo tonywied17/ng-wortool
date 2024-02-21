@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 16th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Sun February 11th 2024 3:49:35 
+Last Modified: Wed February 21st 2024 3:28:38 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -122,7 +122,7 @@ Copyright (c) 2023 Tone Web Design, Molex
               <div *ngIf="this.regiment.ownerId.includes(user.discordId)">
                 <div class="bg-[#1e293b] rounded-lg my-2 h-[45px] flex items-center">
                   <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
+								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="this.sharedDataService.checkAndUpdateOtherUserAvatar(user)">
 
 								<ng-template #noAvatar>
 									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
@@ -142,7 +142,7 @@ Copyright (c) 2023 Tone Web Design, Molex
               <div *ngIf="(!this.regiment.ownerId.includes(user.discordId)) && user.roles.includes('ROLE_MODERATOR');">
                 <div class="bg-[#1e293b] rounded-lg my-2 h-[45px] flex items-center">
                   <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
-								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="user.avatar_url = null">
+								class="h-[45px] w-[45px] inline rounded-l-lg mr-2" (error)="this.sharedDataService.checkAndUpdateOtherUserAvatar(user)">
 
 								<ng-template #noAvatar>
 									<i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>

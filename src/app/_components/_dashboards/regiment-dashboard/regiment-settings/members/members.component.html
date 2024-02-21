@@ -26,7 +26,7 @@
             <div class="bg-[#0f172a]/80 rounded-lg my-2 lg:mx-4 h-[45px] flex items-center text-base">
                 <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
                     class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
-                    (error)="user.avatar_url = null">
+                    (error)="this.sharedDataService.checkAndUpdateOtherUserAvatar(user)">
 
                 <ng-template #noAvatar>
                     <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
@@ -58,7 +58,7 @@
 
                 <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
                     class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
-                    (error)="user.avatar_url = null">
+                    (error)="this.sharedDataService.checkAndUpdateOtherUserAvatar(user)">
 
                 <ng-template #noAvatar>
                     <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
@@ -91,7 +91,7 @@
             <div class="flex items-center">
                 <img *ngIf="user.avatar_url; else noAvatar" [src]="user.avatar_url"
                     class="h-[45px] w-[45px] inline rounded-l-lg mr-2"
-                    (error)="user.avatar_url = null">
+                    (error)="this.sharedDataService.checkAndUpdateOtherUserAvatar(user)">
 
                 <ng-template #noAvatar>
                     <i class="fa-solid fa-user h-[28px] w-[45px] inline rounded-l-lg mr-2"></i>
