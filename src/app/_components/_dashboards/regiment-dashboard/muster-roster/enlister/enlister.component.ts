@@ -3,11 +3,11 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { DiscordService } from "src/app/_services/discord.service";
 import { SharedDataService } from "src/app/_services/shared-data.service";
 import { MusterUserService } from "src/app/_services/muster-user.service";
+import { RegimentService } from "src/app/_services/regiment.service";
 
 interface Role {
-  id: string;
-  name: string;
-  color: number;
+  roleId: string;
+  roleName: string;
 }
 @Component({
   selector: 'app-enlister',
@@ -32,7 +32,8 @@ export class EnlisterComponent implements OnInit {
     private snackBar: MatSnackBar,
     private discordService: DiscordService,
     public sharedDataService: SharedDataService,
-    private musterUserService: MusterUserService
+    private musterUserService: MusterUserService,
+    private regimentService: RegimentService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -47,7 +48,7 @@ export class EnlisterComponent implements OnInit {
 
   async retrieveComponentData(): Promise<void> {
     await Promise.all([
-      this.getRoles(this.sharedDataService.guildId),
+      this.getRoles(this.sharedDataService.regimentId),
       this.getAllMusterUsers() 
     ]);
     this.isDataLoaded = true;
@@ -55,7 +56,7 @@ export class EnlisterComponent implements OnInit {
 
   async getRoles(regimentId: any): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.discordService.getGuildRoles(regimentId).subscribe(
+      this.regimentService.getRegimentRoles(regimentId).subscribe(
         (data: any) => {
           this.roles = data;
           this.filteredRoles = [...this.roles];
@@ -104,7 +105,7 @@ export class EnlisterComponent implements OnInit {
 
   updateFilteredRoles(): void {
     this.filteredRoles = this.roles.filter(role =>
-      role.name.toLowerCase().includes(this.roleFilter.toLowerCase())
+      role.roleName.toLowerCase().includes(this.roleFilter.toLowerCase())
     );
   }
 
@@ -117,7 +118,7 @@ export class EnlisterComponent implements OnInit {
   async selectRole(role: Role): Promise<void> {
     this.selectedRole = role;
     this.isDropdownOpen = false;
-    this.getUsersFromRole(this.sharedDataService.guildId, this.selectedRole.name)
+    this.getUsersFromRole(this.sharedDataService.guildId, this.selectedRole.roleName)
   }
 
   filterUsers(): any[] {

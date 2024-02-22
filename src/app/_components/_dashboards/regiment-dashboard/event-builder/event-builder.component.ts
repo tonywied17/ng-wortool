@@ -8,9 +8,8 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ConfirmCancelSnackbarComponent } from 'src/app/_components/confirm-cancel-snackbar/confirm-cancel-snackbar.component';
 
 interface Role {
-  id: string;
-  name: string;
-  color: number;
+  roleId: string;
+  roleName: string;
 }
 
 @Component({
@@ -92,7 +91,7 @@ export class EventBuilderComponent implements OnInit {
 
   async retrieveComponentData(): Promise<void> {
     await Promise.all([
-      this.getRoles(this.sharedDataService.guildId),
+      this.getRoles(this.sharedDataService.regimentId),
     ]);
   }
 
@@ -108,13 +107,13 @@ export class EventBuilderComponent implements OnInit {
 
   async getRoles(regimentId: any): Promise<void> {
     try {
-      const data: any = await this.discordService.getGuildRoles(regimentId).toPromise();
+      const data: any = await this.regimentService.getRegimentRoles(regimentId).toPromise();
       this.roles = data;
       this.filteredRoles = [...this.roles];
   
       this.filteredRoles.sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
+        const nameA = a.roleName.toLowerCase();
+        const nameB = b.roleName.toLowerCase();
         return nameA.localeCompare(nameB);
       });
     } catch (error) {
@@ -130,7 +129,7 @@ export class EventBuilderComponent implements OnInit {
     
     if (filterValue.trim() !== '') {
       this.filteredRoles = this.roles.filter(role =>
-        role.name.toLowerCase().includes(filterValue)
+        role.roleName.toLowerCase().includes(filterValue)
       );
     } else {
       this.filteredRoles = [...this.roles];
@@ -156,19 +155,19 @@ export class EventBuilderComponent implements OnInit {
   selectRole(role: Role): void {
     const roleFilterControl = this.serverForm.get('roleFilter');
     if (roleFilterControl) {
-      roleFilterControl.setValue(role.name);
+      roleFilterControl.setValue(role.roleName);
     }
     this.selectedRole = role;
-    this.selectedRoleName = role.name;
-    this.selectedRoleId = role.id;
+    this.selectedRoleName = role.roleName;
+    this.selectedRoleId = role.roleId;
     this.toggleDropdown();
   
     const userId = this.sharedDataService.currentUser.id;
     const regimentId = this.sharedDataService.currentUser.regimentId
   
-    if (userId && regimentId && role.id) {
+    if (userId && regimentId && role.roleId) {
       console.log('Updating mention role:', userId, regimentId, role);
-      let concatNameAndId = `${role.name}, ${role.id}`;
+      let concatNameAndId = `${role.roleName}, ${role.roleId}`;
       this.regimentService.updateMentionRole(userId, regimentId, concatNameAndId).subscribe({
         next: (response: any) => {
           console.log('Mention role updated successfully', response);

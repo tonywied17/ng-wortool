@@ -3,9 +3,9 @@
 
     <mat-tab-group dynamicHeight="">
       <mat-tab label="Mass Enlist by Roles"> 
-        <div class="grid grid-cols-[auto_1fr] gap-4 p-4">
+        <div class="grid md:grid-cols-[0.7fr_2fr] gap-4 p-4">
 
-          <div>
+          <div class="w-full">
             <div class="custom-select-container">
               <div class="custom-select">
                 <!-- <button class="select-button" (click)="toggleDropdown()" mat-flat-button color="primary">
@@ -20,13 +20,13 @@
                     <i class="fa-solid fa-filter field-icon"></i>
                   </div>
           
-                  <ul class="dropdown-list">
+                  <ul class="dropdown-list px-10">
                     <li *ngIf="filteredRoles.length <= 0">
                       Fetching Roles...
                     </li>
           
                     <li *ngFor="let role of filteredRoles" (click)="selectRole(role)" class="bg-[#1e293b] p-1 mx-1 rounded-sm my-1 font-[300]">
-                      {{ role.name }}
+                      {{ role.roleName }}
                     </li>
                   </ul>
                 </div>

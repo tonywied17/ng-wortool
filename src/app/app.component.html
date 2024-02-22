@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday July 2nd 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed February 21st 2024 2:57:43 
+Last Modified: Thu February 22nd 2024 3:00:21 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -304,25 +304,18 @@ style="position: sticky; top: 0;">
 					</div>
 					-->
 					<div>
-						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/3" mat-menu-item
-							class="text-[0.8rem] ml-2 select-none">
-							<span class="!text-neutral-400 font-[500]">
-								<i class="fa-solid fa-star w-[25px] mr-1.5"></i>
-								Favorite Maps
-							</span>
-						</button>
-						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/2" mat-menu-item
+						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/1" mat-menu-item
 							class="text-[0.8rem] ml-2 select-none">
 							<span class="!text-neutral-400 font-[500]">
 								<i class="fa-solid fa-circle-nodes w-[25px] mr-1.5"></i>
 								Linked Accounts
 							</span>
 						</button>
-						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/1" mat-menu-item
+						<button *ngIf="this.sharedDataService.isLoggedIn" routerLink="/user/2" mat-menu-item
 							class="text-[0.8rem] ml-2 select-none">
 							<span class="!text-neutral-400 font-[500]">
-								<i class="fa-solid fa-gear w-[25px] mr-1.5"></i>
-								User Settings
+								<i class="fa-solid fa-star w-[25px] mr-1.5"></i>
+								Favorite Maps
 							</span>
 						</button>
 					</div>
