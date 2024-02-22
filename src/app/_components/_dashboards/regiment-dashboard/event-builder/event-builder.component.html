@@ -57,8 +57,8 @@
             </h3>
                 <select #channelSelect class="field-input !w-fit !pl-2" id="channel-select" (change)="updateTargetChannel(channelSelect.value)">
                   <option value="0">{{this.sharedDataService.regiment.webhook_channel}}</option>
-                  <option *ngFor="let channel of this.regimentChannels" [value]="channel.id">
-                    {{ channel.name }}
+                  <option *ngFor="let channel of this.regimentChannels" [value]="channel.channelId">
+                    {{ channel.channelName }}
                   </option>
                 </select>
           </div>
