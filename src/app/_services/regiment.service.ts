@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Tue February 13th 2024 11:23:39 
+ * Last Modified: Thu February 22nd 2024 2:23:41 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -40,6 +40,7 @@ export class RegimentService {
     return this.http.get(API);
   }
 
+
   /**
    * Get regiment by id
    * This observable is used to get a regiment by id from the database
@@ -58,6 +59,10 @@ export class RegimentService {
    */
   getRegimentUsers(regimentId: any): Observable<any> {
     return this.http.get(API + regimentId  + '/users');
+  }
+
+  getRegimentRoles(regimentId: any): Observable<any> {
+    return this.http.get(API + regimentId  + '/roles');
   }
 
   /**

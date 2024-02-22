@@ -147,13 +147,13 @@
 
 
 					<div style="border-left: dotted 1px #7c7d738f;"
-						class="p-2 grid lg:grid-cols-1 grid-cols-3 gap-2 !text-center border-x-[1px] lg:border-l-[1px] lg:border-r-0 border-dotted border-[#7c7d738f]">
+						class="p-2 grid lg:grid-cols-1 grid-cols-4 gap-2 !text-center border-x-[1px] lg:border-l-[1px] lg:border-r-0 border-dotted border-[#7c7d738f]">
 
 						<button *ngIf="this.sharedDataService.showMod || this.sharedDataService.isOwner" routerLinkActive="active_btn_nco" routerLink="/mod/1" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Manage Regiment-Specific Settings."
-							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
-							<i class="fa-solid fa-users-gear !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
+							class="!py-2 !h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-solid fa-users-gear !text-neutral-400 !text-center !block lg:text-3xl text-base !mx-auto"></i>
 							Manage
 						</button>
 						
@@ -162,26 +162,30 @@
 						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn_nco" routerLink="/mod/2" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Submit event details for sharing on your designated Discord event share channel."
-							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
-							<i class="fa-brands fa-discord !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
-							Event Share
+							class="!py-2 !h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-solid fa-bullhorn !text-neutral-400 !text-center !block lg:text-3xl text-base !mx-auto"></i>
+							<span class="hidden md:inline-block">Event Share</span>
+							<span style="font-size:12px !important;" class="md:hidden inline-block">Events</span>
 						</button>
 
 
 						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn_nco" routerLink="/mod/3" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Collect Steam IDs for Unbanning and Statistics Tracking."
-							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
-							<i class="fa-brands fa-steam !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
-							Steam Stats
+							class="!py-2 !h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-brands fa-steam !text-neutral-400 !text-center !block lg:text-3xl text-base !mx-auto"></i>
+							
+							<span class="hidden md:inline-block">Steam Stats</span>
+							<span style="font-size:12px !important;" class="md:hidden inline-block">Stats</span>
 						</button>
 
 						<button *ngIf="this.sharedDataService.showMod" routerLinkActive="active_btn_nco" routerLink="/mod/4" mat-button
 							matTooltipClass="form-tooltip" matTooltipPosition="right"
 							matTooltip="Keep track of events and drills attended by your regiment members."
-							class="!py-2 lg:!h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
-							<i class="fa-solid fa-clipboard-user !text-neutral-400 !text-center !block lg:text-3xl text-xl !mx-auto"></i>
-							Muster Roster
+							class="!py-2 !h-full lg:!pt-4 !text-neutral-400 !block !min-w-full">
+							<i class="fa-solid fa-clipboard-user !text-neutral-400 !text-center !block lg:text-3xl text-base !mx-auto"></i>
+							<span class="hidden md:inline-block">Muster Roster</span>
+							<span style="font-size:12px !important;" class="md:hidden inline-block">Muster</span>
 						</button>
 
 

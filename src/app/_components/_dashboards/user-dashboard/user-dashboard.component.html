@@ -4,7 +4,7 @@ Project: c:\Users\tonyw\Desktop\WoRTool NG\ng-paapp2
 Created Date: Sunday August 6th 2023
 Author: Tony Wiedman
 -----
-Last Modified: Wed February 21st 2024 3:08:23 
+Last Modified: Thu February 22nd 2024 3:01:11 
 Modified By: Tony Wiedman
 -----
 Copyright (c) 2023 Tone Web Design, Molex
@@ -30,7 +30,7 @@ Copyright (c) 2023 Tone Web Design, Molex
 		<div class="ml-1 flex items-center">
 			<div>
 				<h3 class="text-[#88887b] font-[500] text-base md:text-xl tracking-tight drop-shadow-lg">User Preferences</h3>
-				<span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">Profile Management and Account Integration for a Tailored Experience</span>
+				<span class="text-[#88887b] font-[300] text-sm md:text-base tracking-tight drop-shadow-lg inline-block">Profile Management and Account Integration</span>
 			</div>	
 		</div>
 	</div>
@@ -46,25 +46,26 @@ Copyright (c) 2023 Tone Web Design, Molex
 								routerLink="/user/1"
 								mat-list-item
 								class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
-								<i class="fa-solid fa-key !text-white"></i>
-								Change Password
+								<i class="fa-solid fa-circle-nodes !text-white"></i>
+								Profile & Accounts
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/2"
 								mat-list-item
 								class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
-								<i class="fa-solid fa-circle-nodes !text-white"></i>
-								Profile & Accounts
+								<i class="fa-solid fa-star !text-white"></i>
+								Manage Favorites
 							</button>
 							<mat-divider></mat-divider>
 							<button routerLinkActive="active_btn"
 								routerLink="/user/3"
 								mat-list-item
 								class="!px-8 !text-neutral-300 !h-[55px] flex items-center">
-								<i class="fa-solid fa-star !text-white"></i>
-								Manage Favorites
+								<i class="fa-solid fa-key !text-white"></i>
+								Change Password
 							</button>
+							
 						</mat-action-list>
 					</mat-list>
 				</div>
@@ -78,31 +79,15 @@ Copyright (c) 2023 Tone Web Design, Molex
 				<div *ngIf="showPage1"
 					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 md:p-6 scale-center">
 					
-	
-					<app-change-password></app-change-password>
+					<app-linked-accounts></app-linked-accounts>
+					
 
 
 
 				</div>
 				<div *ngIf="showPage2"
 					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 md:p-6 scale-center">
-					<app-linked-accounts></app-linked-accounts>
-
-
-
-
-
-
-
-				</div>
-				<!--  -->
-				<div *ngIf="showPage3"
-					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 md:p-6 scale-center">
-					<h2 class="text-2xl text-[#94a3b8] ml-2 lg:ml-0">Manage Favorites</h2>
-
-
-
-
+					
 
 					<div *ngIf="currentFavorites"
 						class="m-4 table-container">
@@ -168,6 +153,19 @@ Copyright (c) 2023 Tone Web Design, Molex
 							[showFirstLastButtons]="true"
 							(page)="onPageSizeChange($event)"></mat-paginator>
 					</div>
+
+
+				</div>
+				<!--  -->
+				<div *ngIf="showPage3"
+					class="w-full bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl p-1 md:p-6 scale-center">
+					<h2 class="text-2xl text-[#94a3b8] ml-2 lg:ml-0">Manage Favorites</h2>
+
+					<app-change-password></app-change-password>
+
+
+
+					
 				</div>
 			</div>
 		</div>
