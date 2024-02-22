@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu February 22nd 2024 2:23:41 
+ * Last Modified: Thu February 22nd 2024 4:01:27 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -63,6 +63,10 @@ export class RegimentService {
 
   getRegimentRoles(regimentId: any): Observable<any> {
     return this.http.get(API + regimentId  + '/roles');
+  }
+
+  getRegimentChannels(regimentId: any): Observable<any> {
+    return this.http.get(API + regimentId  + '/channels');
   }
 
   /**
