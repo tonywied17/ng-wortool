@@ -468,17 +468,12 @@ async getRegimentChannels(regimentId: any): Promise<void> {
 
 async updateTargetChannel(selectedValue: string): Promise<void> {
   this.targetChannel = selectedValue;
-  // console.log('Target Channel ID:', this.targetChannel);
 
   const selectedChannel = this.regimentChannels.find((channel: { channelId: any; }) => channel.channelId === this.targetChannel);
 
-  if (selectedChannel) {
-    this.sharedDataService.regiment.webhook_channel = selectedChannel.channelName;
-  } else {
+  if (!selectedChannel) {
     console.error('Selected channel not found in regimentChannels');
-  }
-
-  // console.log('Updated Webhook Channel:', this.sharedDataService.regiment.webhook_channel);
+  } 
 
   const snackBarRef = this.snackBar.openFromComponent(
     ConfirmCancelSnackbarComponent,
@@ -493,10 +488,10 @@ async updateTargetChannel(selectedValue: string): Promise<void> {
   );
 
   snackBarRef.onAction().subscribe(async () => {
+    this.sharedDataService.regiment.webhook_channel = selectedChannel.channelName;
     await this.createWebhook(this.sharedDataService.regiment.guild_id, this.targetChannel, selectedChannel.channelName);
   });
 }
-
 
 async createWebhook(guildId: string, channelId: string, channelName: string): Promise<void> {
   await this.discordService
@@ -504,9 +499,7 @@ async createWebhook(guildId: string, channelId: string, channelName: string): Pr
     .toPromise()
     .then((response: any) => {
       this.webhook = response;
-      // console.log('Webhook:', this.webhook.webhook);
       this.sharedDataService.regiment.webhook = this.webhook.webhook;
-      // console.log('Webhook:', this.sharedDataService.regiment.webhook);
       this.snackBar.open(
         `Webhook created for channel ${channelName}!`,
         "Close",

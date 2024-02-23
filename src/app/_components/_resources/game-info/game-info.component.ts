@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon February 12th 2024 12:23:04 
+ * Last Modified: Fri February 23rd 2024 11:13:10 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -12,7 +12,7 @@
 
 import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
 import { SteamApiService } from "src/app/_services/steam-api.service";
-import { MapImageModalComponent } from "../maps/map-image-modal/map-image-modal.component";
+import { MapImageModalComponent } from "../maps-beta/map-image-modal/map-image-modal.component";
 import { MatDialog } from "@angular/material/dialog";
 import { Overlay, OverlayRef } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";

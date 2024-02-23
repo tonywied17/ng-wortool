@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router, Params } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthService } from "src/app/_services/auth.service";
 import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ConfirmCancelSnackbarComponent } from "../../../confirm-cancel-snackbar/confirm-cancel-snackbar.component";
 import { AuthInjectionServiceService } from "src/app/_services/auth-injection-service.service";
 import { SharedDataService } from "src/app/_services/shared-data.service";
 
@@ -16,7 +15,6 @@ import { SharedDataService } from "src/app/_services/shared-data.service";
 export class ChangePasswordComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private snackBar: MatSnackBar,

@@ -55,7 +55,7 @@
                 <div>
                     <div *ngIf="!CamMapBool" 
                         (click)="openImageModal(map.map_image)"
-                        class="w-full h-0 pb-[80%] bg-center bg-cover overflow-hidden brightness-[75%] sepia-[50%] hover:brightness-[75%] transition-all duration-300 ease-in-out cursor-pointer active:!translate-y-2 active:translate-x-2"
+                        class="w-full h-0 pb-[80%] bg-center bg-cover overflow-hidden brightness-[75%] sepia-[50%] hover:brightness-[75%] transition-transform duration-200 ease-in-out cursor-pointer active:!scale-[0.97]"
                         style="background-image: url('{{map.map_image}}'); background-position: center; background-size: cover;">
                     </div>
                
@@ -171,7 +171,7 @@
                                 </div>
                                 <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
                                     <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 rounded-md shadow-md text-neutral-300 p-1 w-full">
-                                        <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                        <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%] active:scale-[0.95] transition-transform duration-200">
                                         <div class="flex flex-col">
                                             <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
                                             <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
                                     <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 opacity-80 hover:opacity-100 transition-opacity duration-200 rounded-md shadow-md text-neutral-300 p-1 w-full relative">
-                                        <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                        <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%] active:scale-[0.95] transition-transform duration-200">
                                         <div class="flex flex-col">
                                             <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
                                             <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>
@@ -223,7 +223,7 @@
                                     </div>
                                     <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
                                         <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 opacity-80 hover:opacity-100 transition-opacity duration-200 rounded-md shadow-md text-neutral-300 p-1 w-full relative">
-                                            <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                            <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%] active:scale-[0.95] transition-transform duration-200">
                                             <div class="flex flex-col">
                                                 <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
                                                 <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>
@@ -242,7 +242,7 @@
                                     </div>
                                     <div class="grid md:grid-cols-2 gap-1 px-1 pt-1">
                                         <div *ngFor="let weapon of regiment.regiment_weaponry" class="flex items-center bg-gray-600 opacity-80 hover:opacity-100 transition-opacity duration-200 rounded-md shadow-md text-neutral-300 p-1 w-full relative">
-                                            <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%]">
+                                            <img (click)="openImageModal(weapon.weapon_info.image)" [src]="weapon.weapon_info.image" alt="weapon" class="w-16 h-16 rounded-md shadow-md bg-white mr-4 cursor-pointer object-cover sepia-[50%] active:scale-[0.95] transition-transform duration-200">
                                             <div class="flex flex-col">
                                                 <div class="font-[500] text-base">{{weapon.weapon_info.weapon}}</div>
                                                 <div class="font-[300] text-sm">{{weapon.weapon_info.ammo}}</div>

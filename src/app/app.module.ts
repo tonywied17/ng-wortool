@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Thu February 22nd 2024 8:56:58 
+ * Last Modified: Fri February 23rd 2024 11:32:35 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -18,10 +18,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeComponent } from "./_components/home/home.component";
 import { RegimentsComponent } from "./_components/_community/regiments/regiments.component";
 import { RouterModule, Routes } from "@angular/router";
-import { MapsComponent } from "./_components/_resources/maps/maps.component";
 import { HttpClientModule } from "@angular/common/http";
 import { WeaponsComponent } from "./_components/_resources/weapons/weapons.component";
-import { MapDetailsComponent } from "./_components/_resources/maps/map-details/map-details.component";
 import { FormsModule } from "@angular/forms";
 import { UserDashboardComponent } from "./_components/_dashboards/user-dashboard/user-dashboard.component";
 import { AdminDashboardComponent } from "./_components/_dashboards/admin-dashboard/admin-dashboard.component";
@@ -42,7 +40,7 @@ import { RegimentInfoComponent } from "./_components/_community/regiments/regime
 import { EventRecapsComponent } from "./_components/_community/event-recaps/event-recaps.component";
 import { SteamStatsComponent } from "./_components/_dashboards/regiment-dashboard/steam-stats/steam-stats.component";
 import { ImageModalComponent } from "./_components/_community/regiments/image-modal/image-modal.component";
-import { MapImageModalComponent } from "./_components/_resources/maps/map-image-modal/map-image-modal.component";
+import { MapImageModalComponent } from "./_components/_resources/maps-beta/map-image-modal/map-image-modal.component";
 import { ResetPasswordComponent } from "./_components/home/reset-password/reset-password.component";
 import { MusterRosterComponent } from "./_components/_dashboards/regiment-dashboard/muster-roster/muster-roster.component";
 import { EnlisterComponent } from "./_components/_dashboards/regiment-dashboard/muster-roster/enlister/enlister.component";
@@ -93,9 +91,7 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     RegimentsComponent,
-    MapsComponent,
     WeaponsComponent,
-    MapDetailsComponent,
     UserDashboardComponent,
     RegimentDashboardComponent,
     AdminDashboardComponent,
