@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { FileService } from 'src/app/_services/file.service';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { MapImageModalComponent } from 'src/app/_components/_resources/maps/map-image-modal/map-image-modal.component';
+import { MapImageModalComponent } from 'src/app/_components/_resources/maps-beta/map-image-modal/map-image-modal.component';
 
 @Component({
   selector: 'app-media',

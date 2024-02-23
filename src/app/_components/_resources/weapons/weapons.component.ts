@@ -4,7 +4,7 @@
  * Created Date: Sunday July 2nd 2023
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon February 12th 2024 12:23:45 
+ * Last Modified: Fri February 23rd 2024 11:13:10 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2023 Tone Web Design, Molex
@@ -19,7 +19,7 @@ import { Location } from "@angular/common";
 import { Overlay, OverlayRef } from "@angular/cdk/overlay";
 import { MatDialog } from "@angular/material/dialog";
 import { TemplatePortal } from "@angular/cdk/portal";
-import { MapImageModalComponent } from "../maps/map-image-modal/map-image-modal.component";
+import { MapImageModalComponent } from "../maps-beta/map-image-modal/map-image-modal.component";
 
 @Component({
   selector: "app-weapons",

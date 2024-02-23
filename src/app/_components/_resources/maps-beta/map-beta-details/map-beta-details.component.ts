@@ -9,7 +9,7 @@ import { WeaponService } from "src/app/_services/weapon.service";
 import { FavoriteService } from "src/app/_services/favorite.service";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { TemplatePortal } from "@angular/cdk/portal";
-import { MapImageModalComponent } from "../../maps/map-image-modal/map-image-modal.component";
+import { MapImageModalComponent } from "../../maps-beta/map-image-modal/map-image-modal.component";
 import { Overlay, OverlayRef } from "@angular/cdk/overlay";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";

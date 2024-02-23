@@ -8,7 +8,72 @@
 </div>
 
 <div *ngIf="isLoaded">
+	<h2 class="text-2xl text-[#94a3b8] ml-2 lg:ml-0">Manage Favorites</h2>
 
+	<div *ngIf="currentFavorites"
+		class="m-4 table-container">
+		<mat-table [dataSource]="dataSource"
+			matSort>
+			<ng-container matColumnDef="map">
+				<mat-header-cell *matHeaderCellDef>Map Name</mat-header-cell>
+				<mat-cell *matCellDef="let fav"
+					class="font-[400] text-neutral-100">
+
+
+
+
+
+					<button [routerLink]="fav.route"
+						class="!my-2"
+						mat-stroked-button
+						color="primary">
+						{{fav.mapData.map}}
+					</button>
+
+
+
+
+				</mat-cell>
+			</ng-container>
+
+
+
+
+
+			<ng-container matColumnDef="route">
+				<mat-header-cell *matHeaderCellDef></mat-header-cell>
+				<mat-cell *matCellDef="let fav"
+					class="actions-cell action-column">
+
+
+
+
+
+					<button (click)="confirmDelete(fav.mapId, fav.mapData.map)"
+						mat-button
+						class="!text-[#9b3f3f] !font-[900] !mx-1">
+						<i class="fa-solid fa-trash sm:pr-2"></i>
+						<span class="hidden sm:inline">Delete</span>
+					</button>
+				</mat-cell>
+			</ng-container>
+
+
+
+
+
+			<mat-header-row *matHeaderRowDef="['map', 'route']"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: ['map', 'route'];"></mat-row>
+		</mat-table>
+		<p *ngIf="!hasFavorites"
+			class="m-4 text-neutral-100">
+			No favorites yet...
+		</p>
+		<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+			[pageSize]="pageSize"
+			[showFirstLastButtons]="true"
+			(page)="onPageSizeChange($event)"></mat-paginator>
+	</div>
     
 
 

@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router, Params } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/_services/auth.service";
 import { DiscordService } from "src/app/_services/discord.service";
 import { TokenStorageService } from "src/app/_services/token-storage.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ConfirmCancelSnackbarComponent } from "../../../confirm-cancel-snackbar/confirm-cancel-snackbar.component";
-import { AuthInjectionServiceService } from "src/app/_services/auth-injection-service.service";
 import { SharedDataService } from "src/app/_services/shared-data.service";
 import { RegimentService } from "src/app/_services/regiment.service";
 
@@ -18,13 +16,10 @@ import { RegimentService } from "src/app/_services/regiment.service";
 export class LinkedAccountsComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private authService: AuthService,
     private snackBar: MatSnackBar,
     public sharedDataService: SharedDataService,
     private token: TokenStorageService,
-    private sharedService: AuthInjectionServiceService,
     private discordService: DiscordService,
     private regimentService: RegimentService,
   ) { }
@@ -179,12 +174,6 @@ export class LinkedAccountsComponent implements OnInit {
       });
   }
 
-
-
-
-
-
-
   sync(): void {
     const state = encodeURIComponent(this.sharedDataService.currentUser.id);
     const left = window.screenX + 100;
@@ -218,12 +207,8 @@ export class LinkedAccountsComponent implements OnInit {
     }
   }
 
-
   continueAuthentication(origin: string, state: string): void {
     const message = `UserID: ${state} has been synced with Discord!`;
-
-    const backendUrl = `https://api.wortool.com/v2/discord/user/${state}`;
-
     this.discordService.getOne(state).subscribe((response) => {
       this.discordData = response;
       this.discordId = this.discordData.discordId;
@@ -236,7 +221,6 @@ export class LinkedAccountsComponent implements OnInit {
       });
     });
   }
-
 
   async updateProfile(alert: boolean = true) {
     try {
@@ -279,7 +263,6 @@ export class LinkedAccountsComponent implements OnInit {
         }
       }
 
-      // this.discordSyncUrl = `https://api.wortool.com/v2/discord/guild/${this.regimentId}/user/${updatedUser.discordId}/get`
     } catch (error: any) {
       if (error.status === 400) {
         this.showSnackBar(error.error.message);
@@ -288,7 +271,6 @@ export class LinkedAccountsComponent implements OnInit {
       }
     }
   }
-
 
   private showSnackBar(message: string) {
     this.snackBar.open(message, "Close", {
