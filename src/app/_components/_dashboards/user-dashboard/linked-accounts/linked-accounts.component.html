@@ -63,9 +63,9 @@
         
         
                                             <span class="block text-base text-slate-300 my-2">
-                                                {{
-                                                    this.sharedDataService.currentUser?.username }}
-                                            </span>
+                                                {{ (this.sharedDataService.currentUser?.discordUser?.username) || this.sharedDataService.currentUser?.username }}
+                                              </span>
+                                              
         
         
                                             <i class="fa-brands fa-discord text-neutral-300"></i>
