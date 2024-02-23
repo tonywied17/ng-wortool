@@ -21,6 +21,7 @@ export class SharedDataService {
   isOwner:boolean = false;
   showAdmin:boolean = false;
   regimentSettingTabIndex: any;
+  discordData: any;
 
   constructor(
     private regimentService: RegimentService,

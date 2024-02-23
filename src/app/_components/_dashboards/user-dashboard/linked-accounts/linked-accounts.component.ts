@@ -42,6 +42,7 @@ export class LinkedAccountsComponent implements OnInit {
       await this.sharedDataService.retrieveInitialData();
       await Promise.all([ this.getAllRegiments() ]);
       this.isLoaded = true;
+      console.log(this.sharedDataService.currentUser)
     } catch (error) {
       console.error("Error during initialization:", error);
     }
@@ -59,6 +60,7 @@ export class LinkedAccountsComponent implements OnInit {
         this.discordService.getOne(userId).subscribe(
           (response) => {
             this.discordData = response;
+            console.log("Discord Data:", this.discordData);
             this.discordIsSynced = true;
             resolve(); 
           },
@@ -187,7 +189,7 @@ export class LinkedAccountsComponent implements OnInit {
     const state = encodeURIComponent(this.sharedDataService.currentUser.id);
     const left = window.screenX + 100;
 
-    const popupUrl = `https://api.wortool.com/v2/discord/?state=${state}`;
+    const popupUrl = `https://api.wortool.com/v2/discord/auth/?state=${state}`;
 
     const popupWindow = window.open(
       popupUrl,
