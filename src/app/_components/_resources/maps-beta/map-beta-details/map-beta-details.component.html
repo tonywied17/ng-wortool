@@ -344,30 +344,31 @@
 	</mat-menu>
 
 <ng-template #dialogTemplate>
-	<div class="notes-dialog"
+	<div class="notes-dialog scale-center bg-[#1e293b]/80 rounded-sm ring-2 ring-[#28364d]/70 shadow-xl"
 		cdkDrag
 		cdkDragRootElement=".cdk-overlay-pane"
 		resizable>
-		<div cdkDragHandle
-			class="py-2 bg-slate-700 grid grid-cols-2">
-			<div class="md:col-start-1 text-left pl-2">Map Notes</div>
-			<div class="md:col-start-2 text-right pr-2" (click)="closePopup()">
-                <i class="fa-sharp fa-solid fa-circle-xmark cursor-pointer hover:opacity-75"></i>
+		<div cdkDragHandle style="background: linear-gradient(90deg, #28364d, #28364da9, #28364d62);"
+			class="grid grid-cols-[1fr_auto]">
+			<div class="cursor-move md:col-start-1 text-left p-2 opacity-70 hover:opacity-100 transition-opacity duration-300"><i class="fa-regular fa-clipboard pr-2"></i><span class="font-bold text-[#a0a08a]">{{map.name}}</span></div>
+			<div class="md:col-start-2 text-right flex items-center" (click)="closePopup()">
+                <i class="fa-sharp fa-solid fa-circle-xmark cursor-pointer hover:opacity-75 p-2 !text-[#c24646] hover:scale-125 active:scale-95 transition-transform duration-200"></i>
 			</div>
 		</div>
 
-
-		<mat-tab-group>
-			<mat-tab label="My Notes">
-				<div class="tab-content">
-					<div class="p-[1em]">
-						<div class="post-it">
-							<textarea #notesTextarea placeholder="No notes found..">{{currentNotes}}</textarea>
-							<div class="textarea-overlay">
-								<i class="fa-sharp fa-solid fa-up-right-and-down-left-from-center fa-rotate-90"></i>
-							</div>
-						</div>
-					</div>
+        <mat-divider></mat-divider>
+        <div class="p-[1em]">
+            <div class="post-it">
+                <textarea #notesTextarea placeholder="No notes found..">{{currentNotes}}</textarea>
+                <div class="textarea-overlay">
+                    <i class="fa-sharp fa-solid fa-up-right-and-down-left-from-center fa-rotate-90"></i>
+                </div>
+            </div>
+        </div>
+		<!-- <mat-tab-group class="!text-sm">
+			<mat-tab label="My Notes" class="!text-sm">
+				<div class="tab-content !text-sm">
+					
 				</div>
 			</mat-tab>
 			<mat-tab label="My Regiment Notes">
@@ -386,18 +387,14 @@
 					</div>
 				</div>
 			</mat-tab>
-		</mat-tab-group>
+		</mat-tab-group> -->
 
 
 		<div class="text-right mr-[1em] pb-[1em]">
-			<button (click)="closePopup()"
-				mat-button
-				class="!text-[#c24646] !mr-2">
-				Close
-			</button>
 			<button (click)="saveNotes(notesTextarea.value, map.id)"
-				mat-stroked-button
-				class="!text-[#afaf9b]">
+				mat-flat-button
+                color="primary"
+				class="!text-neutral-200">
 				Save
 			</button>
 		</div>
